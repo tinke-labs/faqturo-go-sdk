@@ -23,7 +23,8 @@ timeouts, proxies, tracing, or other transport behavior.
 ## Common workflows
 
 - Invoicing: construct an `InvoiceRequest` and call `CreateInvoiceWithResponse`.
-- Queries: use the typed `GetDocumentsWithResponse`, catalog, client, issuer, and tax-authority methods.
+- Queries: use `GetAllDocumentsWithResponse` and the typed catalog, client, issuer, and tax-authority methods.
+- JSON responses expose status-specific fields such as `JSON200`; raw `Body` remains available for diagnostics.
 - Files: PDF/XML methods return typed responses while CSV export responses preserve their binary body.
 - Multipart: generated helpers cover receiver XML, fiscal certificates, and tenant logos.
 - Errors: call `ErrorFromResponse(response, body)` for a structured `*APIError` containing validation errors and metadata.

@@ -73,7 +73,7 @@
           "200" : {
             "description" : "OK",
             "content" : {
-              "*/*" : {
+              "application/json" : {
                 "schema" : {
                   "$ref" : "#/components/schemas/WebhookEndpointResponse"
                 }
@@ -120,7 +120,7 @@
           "200" : {
             "description" : "OK",
             "content" : {
-              "*/*" : {
+              "application/json" : {
                 "schema" : {
                   "$ref" : "#/components/schemas/WebhookEndpointResponse"
                 }
@@ -190,7 +190,7 @@
           "200" : {
             "description" : "OK",
             "content" : {
-              "*/*" : {
+              "application/json" : {
                 "schema" : {
                   "$ref" : "#/components/schemas/TenantInvoicingStatusResponse"
                 }
@@ -220,7 +220,7 @@
           "200" : {
             "description" : "OK",
             "content" : {
-              "*/*" : {
+              "application/json" : {
                 "schema" : {
                   "$ref" : "#/components/schemas/TenantLogoResponse"
                 }
@@ -265,7 +265,7 @@
           "200" : {
             "description" : "OK",
             "content" : {
-              "*/*" : {
+              "application/json" : {
                 "schema" : {
                   "$ref" : "#/components/schemas/TenantLogoResponse"
                 }
@@ -335,7 +335,7 @@
           "200" : {
             "description" : "OK",
             "content" : {
-              "*/*" : {
+              "application/json" : {
                 "schema" : {
                   "$ref" : "#/components/schemas/SequenceResponse"
                 }
@@ -373,7 +373,7 @@
           "200" : {
             "description" : "OK",
             "content" : {
-              "*/*" : {
+              "application/json" : {
                 "schema" : {
                   "$ref" : "#/components/schemas/TenantIssuerResponse"
                 }
@@ -418,7 +418,7 @@
           "200" : {
             "description" : "OK",
             "content" : {
-              "*/*" : {
+              "application/json" : {
                 "schema" : {
                   "$ref" : "#/components/schemas/PageResponseClientReceiverResponse"
                 }
@@ -464,7 +464,7 @@
           "200" : {
             "description" : "OK",
             "content" : {
-              "*/*" : {
+              "application/json" : {
                 "schema" : {
                   "$ref" : "#/components/schemas/ClientReceiverResponse"
                 }
@@ -516,7 +516,7 @@
           "200" : {
             "description" : "OK",
             "content" : {
-              "*/*" : {
+              "application/json" : {
                 "schema" : {
                   "$ref" : "#/components/schemas/ClientReceiverResponse"
                 }
@@ -554,7 +554,7 @@
           "200" : {
             "description" : "OK",
             "content" : {
-              "*/*" : {
+              "application/json" : {
                 "schema" : {
                   "$ref" : "#/components/schemas/CashRegisterResponse"
                 }
@@ -592,7 +592,7 @@
           "200" : {
             "description" : "OK",
             "content" : {
-              "*/*" : {
+              "application/json" : {
                 "schema" : {
                   "$ref" : "#/components/schemas/BranchResponse"
                 }
@@ -638,7 +638,7 @@
           "200" : {
             "description" : "OK",
             "content" : {
-              "*/*" : {
+              "application/json" : {
                 "schema" : {
                   "$ref" : "#/components/schemas/BranchResponse"
                 }
@@ -705,7 +705,7 @@
           "200" : {
             "description" : "OK",
             "content" : {
-              "*/*" : {
+              "application/json" : {
                 "schema" : {
                   "$ref" : "#/components/schemas/BranchResponse"
                 }
@@ -751,7 +751,7 @@
           "200" : {
             "description" : "OK",
             "content" : {
-              "*/*" : {
+              "application/json" : {
                 "schema" : {
                   "$ref" : "#/components/schemas/CashRegisterResponse"
                 }
@@ -805,7 +805,7 @@
           "200" : {
             "description" : "OK",
             "content" : {
-              "*/*" : {
+              "application/json" : {
                 "schema" : {
                   "$ref" : "#/components/schemas/CashRegisterResponse"
                 }
@@ -859,7 +859,7 @@
       "put" : {
         "tags" : [ "Cash Registers" ],
         "summary" : "Actualizar ultimo consecutivo usado por tipo de comprobante",
-        "operationId" : "updateSequence_1",
+        "operationId" : "updateCashRegisterSequence",
         "parameters" : [ {
           "name" : "branchId",
           "in" : "path",
@@ -899,7 +899,7 @@
           "200" : {
             "description" : "OK",
             "content" : {
-              "*/*" : {
+              "application/json" : {
                 "schema" : {
                   "$ref" : "#/components/schemas/CashRegisterSequenceResponse"
                 }
@@ -949,7 +949,7 @@
           "200" : {
             "description" : "Clasificación guardada",
             "content" : {
-              "*/*" : {
+              "application/json" : {
                 "schema" : {
                   "$ref" : "#/components/schemas/DocumentItemAccountingClassificationResponse"
                 }
@@ -959,7 +959,7 @@
           "400" : {
             "description" : "Datos inválidos",
             "content" : {
-              "*/*" : {
+              "application/json" : {
                 "schema" : {
                   "$ref" : "#/components/schemas/DocumentItemAccountingClassificationResponse"
                 }
@@ -969,7 +969,7 @@
           "404" : {
             "description" : "Línea de documento no encontrada",
             "content" : {
-              "*/*" : {
+              "application/json" : {
                 "schema" : {
                   "$ref" : "#/components/schemas/DocumentItemAccountingClassificationResponse"
                 }
@@ -1000,7 +1000,7 @@
           "200" : {
             "description" : "OK",
             "content" : {
-              "*/*" : {
+              "application/json" : {
                 "schema" : {
                   "type" : "array",
                   "items" : {
@@ -1042,7 +1042,7 @@
           "200" : {
             "description" : "OK",
             "content" : {
-              "*/*" : {
+              "application/json" : {
                 "schema" : {
                   "$ref" : "#/components/schemas/WebhookEndpointResponse"
                 }
@@ -1081,7 +1081,7 @@
           "200" : {
             "description" : "OK",
             "content" : {
-              "*/*" : {
+              "application/json" : {
                 "schema" : {
                   "$ref" : "#/components/schemas/WebhookTestResponse"
                 }
@@ -1111,7 +1111,7 @@
           "200" : {
             "description" : "OK",
             "content" : {
-              "*/*" : {
+              "application/json" : {
                 "schema" : {
                   "$ref" : "#/components/schemas/TenantResponse"
                 }
@@ -1149,7 +1149,7 @@
           "200" : {
             "description" : "OK",
             "content" : {
-              "*/*" : {
+              "application/json" : {
                 "schema" : {
                   "$ref" : "#/components/schemas/TenantResponse"
                 }
@@ -1190,7 +1190,7 @@
           "200" : {
             "description" : "OK",
             "content" : {
-              "*/*" : {
+              "application/json" : {
                 "schema" : {
                   "$ref" : "#/components/schemas/DocumentPaymentResponse"
                 }
@@ -1239,7 +1239,7 @@
           "200" : {
             "description" : "OK",
             "content" : {
-              "*/*" : {
+              "application/json" : {
                 "schema" : {
                   "$ref" : "#/components/schemas/DocumentPaymentResponse"
                 }
@@ -1288,7 +1288,7 @@
           "200" : {
             "description" : "OK",
             "content" : {
-              "*/*" : {
+              "application/json" : {
                 "schema" : {
                   "$ref" : "#/components/schemas/DocumentPaymentResponse"
                 }
@@ -1337,7 +1337,7 @@
           "200" : {
             "description" : "OK",
             "content" : {
-              "*/*" : {
+              "application/json" : {
                 "schema" : {
                   "$ref" : "#/components/schemas/DocumentPaymentApplicationResponse"
                 }
@@ -1391,7 +1391,7 @@
           "200" : {
             "description" : "OK",
             "content" : {
-              "*/*" : {
+              "application/json" : {
                 "schema" : {
                   "$ref" : "#/components/schemas/PageResponseTenantIssuerResponse"
                 }
@@ -1429,7 +1429,7 @@
           "200" : {
             "description" : "OK",
             "content" : {
-              "*/*" : {
+              "application/json" : {
                 "schema" : {
                   "$ref" : "#/components/schemas/TenantIssuerResponse"
                 }
@@ -1467,7 +1467,7 @@
           "200" : {
             "description" : "OK",
             "content" : {
-              "*/*" : {
+              "application/json" : {
                 "schema" : {
                   "type" : "object",
                   "additionalProperties" : { }
@@ -1506,7 +1506,7 @@
           "200" : {
             "description" : "OK",
             "content" : {
-              "*/*" : {
+              "application/json" : {
                 "schema" : {
                   "type" : "object",
                   "additionalProperties" : {
@@ -1526,7 +1526,7 @@
       "post" : {
         "tags" : [ "Documents" ],
         "summary" : "Emitir Mensaje Receptor desde XML recibido",
-        "operationId" : "createReceiverMessageFromXml",
+        "operationId" : "createReceiverMessage",
         "parameters" : [ {
           "name" : "xml",
           "in" : "query",
@@ -1611,7 +1611,7 @@
           "200" : {
             "description" : "OK",
             "content" : {
-              "*/*" : {
+              "application/json" : {
                 "schema" : {
                   "$ref" : "#/components/schemas/DocumentResponse"
                 }
@@ -1652,7 +1652,7 @@
           "200" : {
             "description" : "OK",
             "content" : {
-              "*/*" : {
+              "application/json" : {
                 "schema" : {
                   "$ref" : "#/components/schemas/DocumentResponse"
                 }
@@ -1693,7 +1693,7 @@
           "200" : {
             "description" : "OK",
             "content" : {
-              "*/*" : {
+              "application/json" : {
                 "schema" : {
                   "$ref" : "#/components/schemas/DocumentResponse"
                 }
@@ -1734,7 +1734,7 @@
           "200" : {
             "description" : "OK",
             "content" : {
-              "*/*" : {
+              "application/json" : {
                 "schema" : {
                   "$ref" : "#/components/schemas/DocumentResponse"
                 }
@@ -1775,7 +1775,7 @@
           "200" : {
             "description" : "OK",
             "content" : {
-              "*/*" : {
+              "application/json" : {
                 "schema" : {
                   "$ref" : "#/components/schemas/DocumentResponse"
                 }
@@ -1816,7 +1816,7 @@
           "200" : {
             "description" : "OK",
             "content" : {
-              "*/*" : {
+              "application/json" : {
                 "schema" : {
                   "$ref" : "#/components/schemas/DocumentResponse"
                 }
@@ -1857,7 +1857,7 @@
           "200" : {
             "description" : "OK",
             "content" : {
-              "*/*" : {
+              "application/json" : {
                 "schema" : {
                   "$ref" : "#/components/schemas/DocumentResponse"
                 }
@@ -1898,7 +1898,7 @@
           "200" : {
             "description" : "OK",
             "content" : {
-              "*/*" : {
+              "application/json" : {
                 "schema" : {
                   "$ref" : "#/components/schemas/DocumentResponse"
                 }
@@ -1952,7 +1952,7 @@
           "200" : {
             "description" : "OK",
             "content" : {
-              "*/*" : {
+              "application/json" : {
                 "schema" : {
                   "$ref" : "#/components/schemas/PageResponseClientResponse"
                 }
@@ -1990,7 +1990,7 @@
           "200" : {
             "description" : "OK",
             "content" : {
-              "*/*" : {
+              "application/json" : {
                 "schema" : {
                   "$ref" : "#/components/schemas/ClientResponse"
                 }
@@ -2028,7 +2028,7 @@
           "200" : {
             "description" : "OK",
             "content" : {
-              "*/*" : {
+              "application/json" : {
                 "schema" : {
                   "type" : "array",
                   "items" : {
@@ -2077,7 +2077,7 @@
           "200" : {
             "description" : "OK",
             "content" : {
-              "*/*" : {
+              "application/json" : {
                 "schema" : {
                   "$ref" : "#/components/schemas/ClientExonerationResponse"
                 }
@@ -2123,7 +2123,7 @@
           "200" : {
             "description" : "OK",
             "content" : {
-              "*/*" : {
+              "application/json" : {
                 "schema" : {
                   "$ref" : "#/components/schemas/ClientExonerationResponse"
                 }
@@ -2153,7 +2153,7 @@
           "200" : {
             "description" : "OK",
             "content" : {
-              "*/*" : {
+              "application/json" : {
                 "schema" : {
                   "type" : "array",
                   "items" : {
@@ -2194,7 +2194,7 @@
           "200" : {
             "description" : "OK",
             "content" : {
-              "*/*" : {
+              "application/json" : {
                 "schema" : {
                   "$ref" : "#/components/schemas/BranchResponse"
                 }
@@ -2232,7 +2232,7 @@
           "200" : {
             "description" : "OK",
             "content" : {
-              "*/*" : {
+              "application/json" : {
                 "schema" : {
                   "type" : "array",
                   "items" : {
@@ -2281,7 +2281,7 @@
           "200" : {
             "description" : "OK",
             "content" : {
-              "*/*" : {
+              "application/json" : {
                 "schema" : {
                   "$ref" : "#/components/schemas/CashRegisterResponse"
                 }
@@ -2319,7 +2319,7 @@
           "200" : {
             "description" : "OK",
             "content" : {
-              "*/*" : {
+              "application/json" : {
                 "schema" : {
                   "$ref" : "#/components/schemas/TenantIssuerResponse"
                 }
@@ -2355,7 +2355,7 @@
           "200" : {
             "description" : "OK",
             "content" : {
-              "*/*" : {
+              "application/json" : {
                 "schema" : {
                   "type" : "object",
                   "additionalProperties" : {
@@ -2404,7 +2404,7 @@
           "200" : {
             "description" : "OK",
             "content" : {
-              "*/*" : {
+              "application/json" : {
                 "schema" : {
                   "$ref" : "#/components/schemas/TenantIssuerResponse"
                 }
@@ -2442,7 +2442,7 @@
           "200" : {
             "description" : "OK",
             "content" : {
-              "*/*" : {
+              "application/json" : {
                 "schema" : {
                   "$ref" : "#/components/schemas/ClientResponse"
                 }
@@ -2517,7 +2517,7 @@
           "200" : {
             "description" : "OK",
             "content" : {
-              "*/*" : {
+              "application/json" : {
                 "schema" : {
                   "$ref" : "#/components/schemas/ClientResponse"
                 }
@@ -2556,7 +2556,7 @@
           "200" : {
             "description" : "OK",
             "content" : {
-              "*/*" : {
+              "application/json" : {
                 "schema" : {
                   "type" : "array",
                   "items" : {
@@ -2589,7 +2589,7 @@
           "200" : {
             "description" : "OK",
             "content" : {
-              "*/*" : {
+              "application/json" : {
                 "schema" : {
                   "$ref" : "#/components/schemas/TenantInvoicingStatusResponse"
                 }
@@ -2626,7 +2626,7 @@
           "200" : {
             "description" : "OK",
             "content" : {
-              "*/*" : {
+              "application/json" : {
                 "schema" : {
                   "$ref" : "#/components/schemas/TaxpayerInfoResponse"
                 }
@@ -2664,7 +2664,7 @@
           "200" : {
             "description" : "OK",
             "content" : {
-              "*/*" : {
+              "application/json" : {
                 "schema" : {
                   "$ref" : "#/components/schemas/TaxpayerInfoResponse"
                 }
@@ -2702,7 +2702,7 @@
           "200" : {
             "description" : "OK",
             "content" : {
-              "*/*" : {
+              "application/json" : {
                 "schema" : {
                   "$ref" : "#/components/schemas/ProducerRegistryResponse"
                 }
@@ -2718,7 +2718,7 @@
     "/tax-authority/exonerations/{authorization}" : {
       "get" : {
         "tags" : [ "Tax Authority Queries" ],
-        "operationId" : "getExoneration",
+        "operationId" : "getTaxAuthorityExoneration",
         "parameters" : [ {
           "name" : "authorization",
           "in" : "path",
@@ -2741,7 +2741,7 @@
           "200" : {
             "description" : "OK",
             "content" : {
-              "*/*" : {
+              "application/json" : {
                 "schema" : {
                   "$ref" : "#/components/schemas/TaxAuthorityExonerationResponse"
                 }
@@ -2771,7 +2771,7 @@
           "200" : {
             "description" : "OK",
             "content" : {
-              "*/*" : {
+              "application/json" : {
                 "schema" : {
                   "$ref" : "#/components/schemas/ExchangeRateResponse"
                 }
@@ -2821,7 +2821,7 @@
           "200" : {
             "description" : "OK",
             "content" : {
-              "*/*" : {
+              "application/json" : {
                 "schema" : {
                   "$ref" : "#/components/schemas/CabysQueryResponse"
                 }
@@ -2859,7 +2859,7 @@
           "200" : {
             "description" : "OK",
             "content" : {
-              "*/*" : {
+              "application/json" : {
                 "schema" : {
                   "$ref" : "#/components/schemas/CabysQueryResponse"
                 }
@@ -2897,7 +2897,7 @@
           "200" : {
             "description" : "OK",
             "content" : {
-              "*/*" : {
+              "application/json" : {
                 "schema" : {
                   "$ref" : "#/components/schemas/ProducerRegistryResponse"
                 }
@@ -2928,7 +2928,7 @@
           "200" : {
             "description" : "OK",
             "content" : {
-              "*/*" : {
+              "application/json" : {
                 "schema" : {
                   "type" : "array",
                   "items" : {
@@ -2970,7 +2970,7 @@
           "200" : {
             "description" : "OK",
             "content" : {
-              "*/*" : {
+              "application/json" : {
                 "schema" : {
                   "$ref" : "#/components/schemas/DocumentPaymentResponse"
                 }
@@ -3009,7 +3009,7 @@
           "200" : {
             "description" : "OK",
             "content" : {
-              "*/*" : {
+              "application/json" : {
                 "schema" : {
                   "$ref" : "#/components/schemas/DocumentPaymentStatementResponse"
                 }
@@ -3070,7 +3070,7 @@
           "200" : {
             "description" : "OK",
             "content" : {
-              "*/*" : {
+              "application/json" : {
                 "schema" : {
                   "$ref" : "#/components/schemas/PageResponseDocumentResponse"
                 }
@@ -3108,7 +3108,7 @@
           "200" : {
             "description" : "OK",
             "content" : {
-              "*/*" : {
+              "application/json" : {
                 "schema" : {
                   "$ref" : "#/components/schemas/DocumentResponse"
                 }
@@ -3156,15 +3156,7 @@
             }
           },
           "204" : {
-            "description" : "El documento aún no tiene respuesta XML de Hacienda",
-            "content" : {
-              "*/*" : {
-                "schema" : {
-                  "type" : "string",
-                  "format" : "byte"
-                }
-              }
-            }
+            "description" : "El documento aún no tiene respuesta XML de Hacienda"
           }
         },
         "security" : [ {
@@ -3207,15 +3199,7 @@
             }
           },
           "204" : {
-            "description" : "El documento aún no tiene XML firmado",
-            "content" : {
-              "*/*" : {
-                "schema" : {
-                  "type" : "string",
-                  "format" : "byte"
-                }
-              }
-            }
+            "description" : "El documento aún no tiene XML firmado"
           }
         },
         "security" : [ {
@@ -3250,7 +3234,7 @@
           "200" : {
             "description" : "OK",
             "content" : {
-              "*/*" : {
+              "application/json" : {
                 "schema" : {
                   "type" : "object",
                   "additionalProperties" : {
@@ -3299,7 +3283,7 @@
           "200" : {
             "description" : "OK",
             "content" : {
-              "*/*" : {
+              "application/json" : {
                 "schema" : {
                   "$ref" : "#/components/schemas/ClientReceiverResponse"
                 }
@@ -3352,7 +3336,7 @@
     "/clients/{clientId}/exonerations/{id}" : {
       "get" : {
         "tags" : [ "Clients" ],
-        "operationId" : "getExoneration_1",
+        "operationId" : "getClientExoneration",
         "parameters" : [ {
           "name" : "clientId",
           "in" : "path",
@@ -3382,7 +3366,7 @@
           "200" : {
             "description" : "OK",
             "content" : {
-              "*/*" : {
+              "application/json" : {
                 "schema" : {
                   "$ref" : "#/components/schemas/ClientExonerationResponse"
                 }
@@ -3449,7 +3433,7 @@
           "200" : {
             "description" : "OK",
             "content" : {
-              "*/*" : {
+              "application/json" : {
                 "schema" : {
                   "type" : "array",
                   "items" : {
@@ -3482,7 +3466,7 @@
           "200" : {
             "description" : "OK",
             "content" : {
-              "*/*" : {
+              "application/json" : {
                 "schema" : {
                   "type" : "array",
                   "items" : {
@@ -3515,7 +3499,7 @@
           "200" : {
             "description" : "OK",
             "content" : {
-              "*/*" : {
+              "application/json" : {
                 "schema" : {
                   "type" : "array",
                   "items" : {
@@ -3548,7 +3532,7 @@
           "200" : {
             "description" : "OK",
             "content" : {
-              "*/*" : {
+              "application/json" : {
                 "schema" : {
                   "type" : "array",
                   "items" : {
@@ -3581,7 +3565,7 @@
           "200" : {
             "description" : "OK",
             "content" : {
-              "*/*" : {
+              "application/json" : {
                 "schema" : {
                   "type" : "array",
                   "items" : {
@@ -3614,7 +3598,7 @@
           "200" : {
             "description" : "OK",
             "content" : {
-              "*/*" : {
+              "application/json" : {
                 "schema" : {
                   "type" : "array",
                   "items" : {
@@ -3647,7 +3631,7 @@
           "200" : {
             "description" : "OK",
             "content" : {
-              "*/*" : {
+              "application/json" : {
                 "schema" : {
                   "type" : "array",
                   "items" : {
@@ -3680,7 +3664,7 @@
           "200" : {
             "description" : "OK",
             "content" : {
-              "*/*" : {
+              "application/json" : {
                 "schema" : {
                   "type" : "array",
                   "items" : {
@@ -3713,7 +3697,7 @@
           "200" : {
             "description" : "OK",
             "content" : {
-              "*/*" : {
+              "application/json" : {
                 "schema" : {
                   "type" : "array",
                   "items" : {
@@ -3760,7 +3744,7 @@
           "200" : {
             "description" : "OK",
             "content" : {
-              "*/*" : {
+              "application/json" : {
                 "schema" : {
                   "type" : "array",
                   "items" : {
@@ -3793,7 +3777,7 @@
           "200" : {
             "description" : "OK",
             "content" : {
-              "*/*" : {
+              "application/json" : {
                 "schema" : {
                   "type" : "array",
                   "items" : {
@@ -3833,7 +3817,7 @@
           "200" : {
             "description" : "OK",
             "content" : {
-              "*/*" : {
+              "application/json" : {
                 "schema" : {
                   "type" : "array",
                   "items" : {
@@ -3907,7 +3891,7 @@
           "200" : {
             "description" : "Resumen de IVA calculado",
             "content" : {
-              "*/*" : {
+              "application/json" : {
                 "schema" : {
                   "$ref" : "#/components/schemas/FiscalVatSummaryResponse"
                 }
@@ -3917,7 +3901,7 @@
           "400" : {
             "description" : "Parámetros inválidos",
             "content" : {
-              "*/*" : {
+              "application/json" : {
                 "schema" : {
                   "$ref" : "#/components/schemas/FiscalVatSummaryResponse"
                 }
@@ -3988,7 +3972,7 @@
           "200" : {
             "description" : "Resumen por tarifa calculado",
             "content" : {
-              "*/*" : {
+              "application/json" : {
                 "schema" : {
                   "$ref" : "#/components/schemas/FiscalTaxRatesSummaryResponse"
                 }
@@ -3998,7 +3982,7 @@
           "400" : {
             "description" : "Parámetros inválidos",
             "content" : {
-              "*/*" : {
+              "application/json" : {
                 "schema" : {
                   "$ref" : "#/components/schemas/FiscalTaxRatesSummaryResponse"
                 }
@@ -4069,7 +4053,7 @@
           "200" : {
             "description" : "Reporte fiscal calculado",
             "content" : {
-              "*/*" : {
+              "application/json" : {
                 "schema" : {
                   "$ref" : "#/components/schemas/FiscalReportResponse"
                 }
@@ -4079,7 +4063,7 @@
           "400" : {
             "description" : "Parámetros inválidos",
             "content" : {
-              "*/*" : {
+              "application/json" : {
                 "schema" : {
                   "$ref" : "#/components/schemas/FiscalReportResponse"
                 }
@@ -4158,7 +4142,7 @@
           "200" : {
             "description" : "Export generado",
             "content" : {
-              "*/*" : {
+              "application/json" : {
                 "schema" : {
                   "type" : "object"
                 }
@@ -4168,7 +4152,7 @@
           "400" : {
             "description" : "Parámetros inválidos",
             "content" : {
-              "*/*" : {
+              "application/json" : {
                 "schema" : {
                   "type" : "object"
                 }
@@ -6886,13 +6870,10 @@
           "specificTaxData" : {
             "$ref" : "#/components/schemas/SpecificTaxDataRequest"
           },
-          "otherTaxDataValid" : {
-            "type" : "boolean"
-          },
-          "vatRateCodeValidForVatTax" : {
-            "type" : "boolean"
-          },
           "taxRatePresentWhenRequiredForCalculation" : {
+            "type" : "boolean"
+          },
+          "otherTaxDataValid" : {
             "type" : "boolean"
           },
           "usedGoodsVatCalculationDataValid" : {
@@ -6902,6 +6883,9 @@
             "type" : "boolean"
           },
           "vatSpecialCalculationDataValid" : {
+            "type" : "boolean"
+          },
+          "vatRateCodeValidForVatTax" : {
             "type" : "boolean"
           }
         },

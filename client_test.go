@@ -24,10 +24,20 @@ func TestAPIKeyClientAddsAuthenticationAndVersion(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	_, err = client.GetTaxCodesWithResponse(context.Background(), nil)
+	response, err := client.GetTaxCodesWithResponse(context.Background(), nil)
 	if err != nil {
 		t.Fatal(err)
 	}
+	if response.JSON200 == nil {
+		t.Fatal("expected typed JSON200 response")
+	}
+}
+
+func TestStableOperationNamesAreGenerated(t *testing.T) {
+	client := &ClientWithResponses{}
+	_ = client.UpdateCashRegisterSequenceWithResponse
+	_ = client.GetClientExonerationWithResponse
+	_ = client.GetTaxAuthorityExonerationWithResponse
 }
 
 func TestAPIError(t *testing.T) {

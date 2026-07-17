@@ -722,15 +722,15 @@ func (e UpdateCashRegisterParamsAPIVersion) Valid() bool {
 	}
 }
 
-// Defines values for UpdateSequence1ParamsAPIVersion.
+// Defines values for UpdateCashRegisterSequenceParamsAPIVersion.
 const (
-	UpdateSequence1ParamsAPIVersionV1 UpdateSequence1ParamsAPIVersion = "v1"
+	UpdateCashRegisterSequenceParamsAPIVersionV1 UpdateCashRegisterSequenceParamsAPIVersion = "v1"
 )
 
-// Valid indicates whether the value is a known member of the UpdateSequence1ParamsAPIVersion enum.
-func (e UpdateSequence1ParamsAPIVersion) Valid() bool {
+// Valid indicates whether the value is a known member of the UpdateCashRegisterSequenceParamsAPIVersion enum.
+func (e UpdateCashRegisterSequenceParamsAPIVersion) Valid() bool {
 	switch e {
-	case UpdateSequence1ParamsAPIVersionV1:
+	case UpdateCashRegisterSequenceParamsAPIVersionV1:
 		return true
 	default:
 		return false
@@ -1067,15 +1067,15 @@ func (e DeactivateExonerationParamsAPIVersion) Valid() bool {
 	}
 }
 
-// Defines values for GetExoneration1ParamsAPIVersion.
+// Defines values for GetClientExonerationParamsAPIVersion.
 const (
-	GetExoneration1ParamsAPIVersionV1 GetExoneration1ParamsAPIVersion = "v1"
+	GetClientExonerationParamsAPIVersionV1 GetClientExonerationParamsAPIVersion = "v1"
 )
 
-// Valid indicates whether the value is a known member of the GetExoneration1ParamsAPIVersion enum.
-func (e GetExoneration1ParamsAPIVersion) Valid() bool {
+// Valid indicates whether the value is a known member of the GetClientExonerationParamsAPIVersion enum.
+func (e GetClientExonerationParamsAPIVersion) Valid() bool {
 	switch e {
-	case GetExoneration1ParamsAPIVersionV1:
+	case GetClientExonerationParamsAPIVersionV1:
 		return true
 	default:
 		return false
@@ -1337,18 +1337,18 @@ func (e CreateReceiptParamsAPIVersion) Valid() bool {
 	}
 }
 
-// Defines values for CreateReceiverMessageFromXmlParamsAPIVersion.
+// Defines values for CreateReceiverMessageParamsAPIVersion.
 const (
-	CreateReceiverMessageFromXmlParamsAPIVersionN100 CreateReceiverMessageFromXmlParamsAPIVersion = "1.0.0"
-	CreateReceiverMessageFromXmlParamsAPIVersionV1   CreateReceiverMessageFromXmlParamsAPIVersion = "v1"
+	CreateReceiverMessageParamsAPIVersionN100 CreateReceiverMessageParamsAPIVersion = "1.0.0"
+	CreateReceiverMessageParamsAPIVersionV1   CreateReceiverMessageParamsAPIVersion = "v1"
 )
 
-// Valid indicates whether the value is a known member of the CreateReceiverMessageFromXmlParamsAPIVersion enum.
-func (e CreateReceiverMessageFromXmlParamsAPIVersion) Valid() bool {
+// Valid indicates whether the value is a known member of the CreateReceiverMessageParamsAPIVersion enum.
+func (e CreateReceiverMessageParamsAPIVersion) Valid() bool {
 	switch e {
-	case CreateReceiverMessageFromXmlParamsAPIVersionN100:
+	case CreateReceiverMessageParamsAPIVersionN100:
 		return true
-	case CreateReceiverMessageFromXmlParamsAPIVersionV1:
+	case CreateReceiverMessageParamsAPIVersionV1:
 		return true
 	default:
 		return false
@@ -1715,15 +1715,15 @@ func (e GetExchangeRatesParamsAPIVersion) Valid() bool {
 	}
 }
 
-// Defines values for GetExonerationParamsAPIVersion.
+// Defines values for GetTaxAuthorityExonerationParamsAPIVersion.
 const (
-	GetExonerationParamsAPIVersionV1 GetExonerationParamsAPIVersion = "v1"
+	GetTaxAuthorityExonerationParamsAPIVersionV1 GetTaxAuthorityExonerationParamsAPIVersion = "v1"
 )
 
-// Valid indicates whether the value is a known member of the GetExonerationParamsAPIVersion enum.
-func (e GetExonerationParamsAPIVersion) Valid() bool {
+// Valid indicates whether the value is a known member of the GetTaxAuthorityExonerationParamsAPIVersion enum.
+func (e GetTaxAuthorityExonerationParamsAPIVersion) Valid() bool {
 	switch e {
-	case GetExonerationParamsAPIVersionV1:
+	case GetTaxAuthorityExonerationParamsAPIVersionV1:
 		return true
 	default:
 		return false
@@ -3476,13 +3476,13 @@ type UpdateCashRegisterParams struct {
 // UpdateCashRegisterParamsAPIVersion defines parameters for UpdateCashRegister.
 type UpdateCashRegisterParamsAPIVersion string
 
-// UpdateSequence1Params defines parameters for UpdateSequence1.
-type UpdateSequence1Params struct {
-	APIVersion *UpdateSequence1ParamsAPIVersion `json:"API-Version,omitempty"`
+// UpdateCashRegisterSequenceParams defines parameters for UpdateCashRegisterSequence.
+type UpdateCashRegisterSequenceParams struct {
+	APIVersion *UpdateCashRegisterSequenceParamsAPIVersion `json:"API-Version,omitempty"`
 }
 
-// UpdateSequence1ParamsAPIVersion defines parameters for UpdateSequence1.
-type UpdateSequence1ParamsAPIVersion string
+// UpdateCashRegisterSequenceParamsAPIVersion defines parameters for UpdateCashRegisterSequence.
+type UpdateCashRegisterSequenceParamsAPIVersion string
 
 // DeleteBranchParams defines parameters for DeleteBranch.
 type DeleteBranchParams struct {
@@ -3666,13 +3666,13 @@ type DeactivateExonerationParams struct {
 // DeactivateExonerationParamsAPIVersion defines parameters for DeactivateExoneration.
 type DeactivateExonerationParamsAPIVersion string
 
-// GetExoneration1Params defines parameters for GetExoneration1.
-type GetExoneration1Params struct {
-	APIVersion *GetExoneration1ParamsAPIVersion `json:"API-Version,omitempty"`
+// GetClientExonerationParams defines parameters for GetClientExoneration.
+type GetClientExonerationParams struct {
+	APIVersion *GetClientExonerationParamsAPIVersion `json:"API-Version,omitempty"`
 }
 
-// GetExoneration1ParamsAPIVersion defines parameters for GetExoneration1.
-type GetExoneration1ParamsAPIVersion string
+// GetClientExonerationParamsAPIVersion defines parameters for GetClientExoneration.
+type GetClientExonerationParamsAPIVersion string
 
 // RefreshExonerationParams defines parameters for RefreshExoneration.
 type RefreshExonerationParams struct {
@@ -3818,25 +3818,25 @@ type CreateReceiptParams struct {
 // CreateReceiptParamsAPIVersion defines parameters for CreateReceipt.
 type CreateReceiptParamsAPIVersion string
 
-// CreateReceiverMessageFromXmlMultipartBody defines parameters for CreateReceiverMessageFromXml.
-type CreateReceiverMessageFromXmlMultipartBody struct {
+// CreateReceiverMessageMultipartBody defines parameters for CreateReceiverMessage.
+type CreateReceiverMessageMultipartBody struct {
 	XmlFile *openapi_types.File `json:"xmlFile,omitempty"`
 }
 
-// CreateReceiverMessageFromXmlParams defines parameters for CreateReceiverMessageFromXml.
-type CreateReceiverMessageFromXmlParams struct {
-	Xml                     *string                                       `form:"xml,omitempty" json:"xml,omitempty"`
-	MessageState            int32                                         `form:"messageState" json:"messageState"`
-	MessageDetail           *string                                       `form:"messageDetail,omitempty" json:"messageDetail,omitempty"`
-	IssuerActivityCode      *string                                       `form:"issuerActivityCode,omitempty" json:"issuerActivityCode,omitempty"`
-	TaxCondition            *string                                       `form:"taxCondition,omitempty" json:"taxCondition,omitempty"`
-	CreditAmount            *float32                                      `form:"creditAmount,omitempty" json:"creditAmount,omitempty"`
-	ApplicableExpenseAmount *float32                                      `form:"applicableExpenseAmount,omitempty" json:"applicableExpenseAmount,omitempty"`
-	APIVersion              *CreateReceiverMessageFromXmlParamsAPIVersion `json:"API-Version,omitempty"`
+// CreateReceiverMessageParams defines parameters for CreateReceiverMessage.
+type CreateReceiverMessageParams struct {
+	Xml                     *string                                `form:"xml,omitempty" json:"xml,omitempty"`
+	MessageState            int32                                  `form:"messageState" json:"messageState"`
+	MessageDetail           *string                                `form:"messageDetail,omitempty" json:"messageDetail,omitempty"`
+	IssuerActivityCode      *string                                `form:"issuerActivityCode,omitempty" json:"issuerActivityCode,omitempty"`
+	TaxCondition            *string                                `form:"taxCondition,omitempty" json:"taxCondition,omitempty"`
+	CreditAmount            *float32                               `form:"creditAmount,omitempty" json:"creditAmount,omitempty"`
+	ApplicableExpenseAmount *float32                               `form:"applicableExpenseAmount,omitempty" json:"applicableExpenseAmount,omitempty"`
+	APIVersion              *CreateReceiverMessageParamsAPIVersion `json:"API-Version,omitempty"`
 }
 
-// CreateReceiverMessageFromXmlParamsAPIVersion defines parameters for CreateReceiverMessageFromXml.
-type CreateReceiverMessageFromXmlParamsAPIVersion string
+// CreateReceiverMessageParamsAPIVersion defines parameters for CreateReceiverMessage.
+type CreateReceiverMessageParamsAPIVersion string
 
 // GetDocumentByIdParams defines parameters for GetDocumentById.
 type GetDocumentByIdParams struct {
@@ -4035,13 +4035,13 @@ type GetExchangeRatesParams struct {
 // GetExchangeRatesParamsAPIVersion defines parameters for GetExchangeRates.
 type GetExchangeRatesParamsAPIVersion string
 
-// GetExonerationParams defines parameters for GetExoneration.
-type GetExonerationParams struct {
-	APIVersion *GetExonerationParamsAPIVersion `json:"API-Version,omitempty"`
+// GetTaxAuthorityExonerationParams defines parameters for GetTaxAuthorityExoneration.
+type GetTaxAuthorityExonerationParams struct {
+	APIVersion *GetTaxAuthorityExonerationParamsAPIVersion `json:"API-Version,omitempty"`
 }
 
-// GetExonerationParamsAPIVersion defines parameters for GetExoneration.
-type GetExonerationParamsAPIVersion string
+// GetTaxAuthorityExonerationParamsAPIVersion defines parameters for GetTaxAuthorityExoneration.
+type GetTaxAuthorityExonerationParamsAPIVersion string
 
 // GetFishingProducerParams defines parameters for GetFishingProducer.
 type GetFishingProducerParams struct {
@@ -4196,8 +4196,8 @@ type CreateCashRegisterJSONRequestBody = CashRegisterRequest
 // UpdateCashRegisterJSONRequestBody defines body for UpdateCashRegister for application/json ContentType.
 type UpdateCashRegisterJSONRequestBody = CashRegisterRequest
 
-// UpdateSequence1JSONRequestBody defines body for UpdateSequence1 for application/json ContentType.
-type UpdateSequence1JSONRequestBody = CashRegisterSequenceUpdateRequest
+// UpdateCashRegisterSequenceJSONRequestBody defines body for UpdateCashRegisterSequence for application/json ContentType.
+type UpdateCashRegisterSequenceJSONRequestBody = CashRegisterSequenceUpdateRequest
 
 // UpdateBranchJSONRequestBody defines body for UpdateBranch for application/json ContentType.
 type UpdateBranchJSONRequestBody = BranchRequest
@@ -4238,11 +4238,11 @@ type CreatePurchaseInvoiceJSONRequestBody = DocumentRequest
 // CreateReceiptJSONRequestBody defines body for CreateReceipt for application/json ContentType.
 type CreateReceiptJSONRequestBody = DocumentRequest
 
-// CreateReceiverMessageFromXmlJSONRequestBody defines body for CreateReceiverMessageFromXml for application/json ContentType.
-type CreateReceiverMessageFromXmlJSONRequestBody = ReceiverMessageRequest
+// CreateReceiverMessageJSONRequestBody defines body for CreateReceiverMessage for application/json ContentType.
+type CreateReceiverMessageJSONRequestBody = ReceiverMessageRequest
 
-// CreateReceiverMessageFromXmlMultipartRequestBody defines body for CreateReceiverMessageFromXml for multipart/form-data ContentType.
-type CreateReceiverMessageFromXmlMultipartRequestBody CreateReceiverMessageFromXmlMultipartBody
+// CreateReceiverMessageMultipartRequestBody defines body for CreateReceiverMessage for multipart/form-data ContentType.
+type CreateReceiverMessageMultipartRequestBody CreateReceiverMessageMultipartBody
 
 // CreateIssuerJSONRequestBody defines body for CreateIssuer for application/json ContentType.
 type CreateIssuerJSONRequestBody = TenantIssuerRequest
@@ -4397,10 +4397,10 @@ type ClientInterface interface {
 
 	UpdateCashRegister(ctx context.Context, branchId int64, id int64, params *UpdateCashRegisterParams, body UpdateCashRegisterJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	// UpdateSequence1WithBody request with any body
-	UpdateSequence1WithBody(ctx context.Context, branchId int64, id int64, params *UpdateSequence1Params, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+	// UpdateCashRegisterSequenceWithBody request with any body
+	UpdateCashRegisterSequenceWithBody(ctx context.Context, branchId int64, id int64, params *UpdateCashRegisterSequenceParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	UpdateSequence1(ctx context.Context, branchId int64, id int64, params *UpdateSequence1Params, body UpdateSequence1JSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+	UpdateCashRegisterSequence(ctx context.Context, branchId int64, id int64, params *UpdateCashRegisterSequenceParams, body UpdateCashRegisterSequenceJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// DeleteBranch request
 	DeleteBranch(ctx context.Context, id int64, params *DeleteBranchParams, reqEditors ...RequestEditorFn) (*http.Response, error)
@@ -4474,8 +4474,8 @@ type ClientInterface interface {
 	// DeactivateExoneration request
 	DeactivateExoneration(ctx context.Context, clientId int64, id int64, params *DeactivateExonerationParams, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	// GetExoneration1 request
-	GetExoneration1(ctx context.Context, clientId int64, id int64, params *GetExoneration1Params, reqEditors ...RequestEditorFn) (*http.Response, error)
+	// GetClientExoneration request
+	GetClientExoneration(ctx context.Context, clientId int64, id int64, params *GetClientExonerationParams, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// RefreshExoneration request
 	RefreshExoneration(ctx context.Context, clientId int64, id int64, params *RefreshExonerationParams, reqEditors ...RequestEditorFn) (*http.Response, error)
@@ -4548,10 +4548,10 @@ type ClientInterface interface {
 
 	CreateReceipt(ctx context.Context, params *CreateReceiptParams, body CreateReceiptJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	// CreateReceiverMessageFromXmlWithBody request with any body
-	CreateReceiverMessageFromXmlWithBody(ctx context.Context, params *CreateReceiverMessageFromXmlParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+	// CreateReceiverMessageWithBody request with any body
+	CreateReceiverMessageWithBody(ctx context.Context, params *CreateReceiverMessageParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	CreateReceiverMessageFromXml(ctx context.Context, params *CreateReceiverMessageFromXmlParams, body CreateReceiverMessageFromXmlJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+	CreateReceiverMessage(ctx context.Context, params *CreateReceiverMessageParams, body CreateReceiverMessageJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// GetDocumentById request
 	GetDocumentById(ctx context.Context, id int64, params *GetDocumentByIdParams, reqEditors ...RequestEditorFn) (*http.Response, error)
@@ -4639,8 +4639,8 @@ type ClientInterface interface {
 	// GetExchangeRates request
 	GetExchangeRates(ctx context.Context, params *GetExchangeRatesParams, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	// GetExoneration request
-	GetExoneration(ctx context.Context, authorization string, params *GetExonerationParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+	// GetTaxAuthorityExoneration request
+	GetTaxAuthorityExoneration(ctx context.Context, authorization string, params *GetTaxAuthorityExonerationParams, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// GetFishingProducer request
 	GetFishingProducer(ctx context.Context, legalIdentification string, params *GetFishingProducerParams, reqEditors ...RequestEditorFn) (*http.Response, error)
@@ -4892,8 +4892,8 @@ func (c *Client) UpdateCashRegister(ctx context.Context, branchId int64, id int6
 	return c.Client.Do(req)
 }
 
-func (c *Client) UpdateSequence1WithBody(ctx context.Context, branchId int64, id int64, params *UpdateSequence1Params, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewUpdateSequence1RequestWithBody(c.Server, branchId, id, params, contentType, body)
+func (c *Client) UpdateCashRegisterSequenceWithBody(ctx context.Context, branchId int64, id int64, params *UpdateCashRegisterSequenceParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewUpdateCashRegisterSequenceRequestWithBody(c.Server, branchId, id, params, contentType, body)
 	if err != nil {
 		return nil, err
 	}
@@ -4904,8 +4904,8 @@ func (c *Client) UpdateSequence1WithBody(ctx context.Context, branchId int64, id
 	return c.Client.Do(req)
 }
 
-func (c *Client) UpdateSequence1(ctx context.Context, branchId int64, id int64, params *UpdateSequence1Params, body UpdateSequence1JSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewUpdateSequence1Request(c.Server, branchId, id, params, body)
+func (c *Client) UpdateCashRegisterSequence(ctx context.Context, branchId int64, id int64, params *UpdateCashRegisterSequenceParams, body UpdateCashRegisterSequenceJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewUpdateCashRegisterSequenceRequest(c.Server, branchId, id, params, body)
 	if err != nil {
 		return nil, err
 	}
@@ -5216,8 +5216,8 @@ func (c *Client) DeactivateExoneration(ctx context.Context, clientId int64, id i
 	return c.Client.Do(req)
 }
 
-func (c *Client) GetExoneration1(ctx context.Context, clientId int64, id int64, params *GetExoneration1Params, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewGetExoneration1Request(c.Server, clientId, id, params)
+func (c *Client) GetClientExoneration(ctx context.Context, clientId int64, id int64, params *GetClientExonerationParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewGetClientExonerationRequest(c.Server, clientId, id, params)
 	if err != nil {
 		return nil, err
 	}
@@ -5552,8 +5552,8 @@ func (c *Client) CreateReceipt(ctx context.Context, params *CreateReceiptParams,
 	return c.Client.Do(req)
 }
 
-func (c *Client) CreateReceiverMessageFromXmlWithBody(ctx context.Context, params *CreateReceiverMessageFromXmlParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewCreateReceiverMessageFromXmlRequestWithBody(c.Server, params, contentType, body)
+func (c *Client) CreateReceiverMessageWithBody(ctx context.Context, params *CreateReceiverMessageParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCreateReceiverMessageRequestWithBody(c.Server, params, contentType, body)
 	if err != nil {
 		return nil, err
 	}
@@ -5564,8 +5564,8 @@ func (c *Client) CreateReceiverMessageFromXmlWithBody(ctx context.Context, param
 	return c.Client.Do(req)
 }
 
-func (c *Client) CreateReceiverMessageFromXml(ctx context.Context, params *CreateReceiverMessageFromXmlParams, body CreateReceiverMessageFromXmlJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewCreateReceiverMessageFromXmlRequest(c.Server, params, body)
+func (c *Client) CreateReceiverMessage(ctx context.Context, params *CreateReceiverMessageParams, body CreateReceiverMessageJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCreateReceiverMessageRequest(c.Server, params, body)
 	if err != nil {
 		return nil, err
 	}
@@ -5948,8 +5948,8 @@ func (c *Client) GetExchangeRates(ctx context.Context, params *GetExchangeRatesP
 	return c.Client.Do(req)
 }
 
-func (c *Client) GetExoneration(ctx context.Context, authorization string, params *GetExonerationParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewGetExonerationRequest(c.Server, authorization, params)
+func (c *Client) GetTaxAuthorityExoneration(ctx context.Context, authorization string, params *GetTaxAuthorityExonerationParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewGetTaxAuthorityExonerationRequest(c.Server, authorization, params)
 	if err != nil {
 		return nil, err
 	}
@@ -7131,19 +7131,19 @@ func NewUpdateCashRegisterRequestWithBody(server string, branchId int64, id int6
 	return req, nil
 }
 
-// NewUpdateSequence1Request calls the generic UpdateSequence1 builder with application/json body
-func NewUpdateSequence1Request(server string, branchId int64, id int64, params *UpdateSequence1Params, body UpdateSequence1JSONRequestBody) (*http.Request, error) {
+// NewUpdateCashRegisterSequenceRequest calls the generic UpdateCashRegisterSequence builder with application/json body
+func NewUpdateCashRegisterSequenceRequest(server string, branchId int64, id int64, params *UpdateCashRegisterSequenceParams, body UpdateCashRegisterSequenceJSONRequestBody) (*http.Request, error) {
 	var bodyReader io.Reader
 	buf, err := json.Marshal(body)
 	if err != nil {
 		return nil, err
 	}
 	bodyReader = bytes.NewReader(buf)
-	return NewUpdateSequence1RequestWithBody(server, branchId, id, params, "application/json", bodyReader)
+	return NewUpdateCashRegisterSequenceRequestWithBody(server, branchId, id, params, "application/json", bodyReader)
 }
 
-// NewUpdateSequence1RequestWithBody generates requests for UpdateSequence1 with any type of body
-func NewUpdateSequence1RequestWithBody(server string, branchId int64, id int64, params *UpdateSequence1Params, contentType string, body io.Reader) (*http.Request, error) {
+// NewUpdateCashRegisterSequenceRequestWithBody generates requests for UpdateCashRegisterSequence with any type of body
+func NewUpdateCashRegisterSequenceRequestWithBody(server string, branchId int64, id int64, params *UpdateCashRegisterSequenceParams, contentType string, body io.Reader) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -8327,8 +8327,8 @@ func NewDeactivateExonerationRequest(server string, clientId int64, id int64, pa
 	return req, nil
 }
 
-// NewGetExoneration1Request generates requests for GetExoneration1
-func NewGetExoneration1Request(server string, clientId int64, id int64, params *GetExoneration1Params) (*http.Request, error) {
+// NewGetClientExonerationRequest generates requests for GetClientExoneration
+func NewGetClientExonerationRequest(server string, clientId int64, id int64, params *GetClientExonerationParams) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -9393,19 +9393,19 @@ func NewCreateReceiptRequestWithBody(server string, params *CreateReceiptParams,
 	return req, nil
 }
 
-// NewCreateReceiverMessageFromXmlRequest calls the generic CreateReceiverMessageFromXml builder with application/json body
-func NewCreateReceiverMessageFromXmlRequest(server string, params *CreateReceiverMessageFromXmlParams, body CreateReceiverMessageFromXmlJSONRequestBody) (*http.Request, error) {
+// NewCreateReceiverMessageRequest calls the generic CreateReceiverMessage builder with application/json body
+func NewCreateReceiverMessageRequest(server string, params *CreateReceiverMessageParams, body CreateReceiverMessageJSONRequestBody) (*http.Request, error) {
 	var bodyReader io.Reader
 	buf, err := json.Marshal(body)
 	if err != nil {
 		return nil, err
 	}
 	bodyReader = bytes.NewReader(buf)
-	return NewCreateReceiverMessageFromXmlRequestWithBody(server, params, "application/json", bodyReader)
+	return NewCreateReceiverMessageRequestWithBody(server, params, "application/json", bodyReader)
 }
 
-// NewCreateReceiverMessageFromXmlRequestWithBody generates requests for CreateReceiverMessageFromXml with any type of body
-func NewCreateReceiverMessageFromXmlRequestWithBody(server string, params *CreateReceiverMessageFromXmlParams, contentType string, body io.Reader) (*http.Request, error) {
+// NewCreateReceiverMessageRequestWithBody generates requests for CreateReceiverMessage with any type of body
+func NewCreateReceiverMessageRequestWithBody(server string, params *CreateReceiverMessageParams, contentType string, body io.Reader) (*http.Request, error) {
 	var err error
 
 	serverURL, err := url.Parse(server)
@@ -10850,8 +10850,8 @@ func NewGetExchangeRatesRequest(server string, params *GetExchangeRatesParams) (
 	return req, nil
 }
 
-// NewGetExonerationRequest generates requests for GetExoneration
-func NewGetExonerationRequest(server string, authorization string, params *GetExonerationParams) (*http.Request, error) {
+// NewGetTaxAuthorityExonerationRequest generates requests for GetTaxAuthorityExoneration
+func NewGetTaxAuthorityExonerationRequest(server string, authorization string, params *GetTaxAuthorityExonerationParams) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -11799,10 +11799,10 @@ type ClientWithResponsesInterface interface {
 
 	UpdateCashRegisterWithResponse(ctx context.Context, branchId int64, id int64, params *UpdateCashRegisterParams, body UpdateCashRegisterJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateCashRegisterResponse, error)
 
-	// UpdateSequence1WithBodyWithResponse request with any body
-	UpdateSequence1WithBodyWithResponse(ctx context.Context, branchId int64, id int64, params *UpdateSequence1Params, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateSequence1Response, error)
+	// UpdateCashRegisterSequenceWithBodyWithResponse request with any body
+	UpdateCashRegisterSequenceWithBodyWithResponse(ctx context.Context, branchId int64, id int64, params *UpdateCashRegisterSequenceParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateCashRegisterSequenceResponse, error)
 
-	UpdateSequence1WithResponse(ctx context.Context, branchId int64, id int64, params *UpdateSequence1Params, body UpdateSequence1JSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateSequence1Response, error)
+	UpdateCashRegisterSequenceWithResponse(ctx context.Context, branchId int64, id int64, params *UpdateCashRegisterSequenceParams, body UpdateCashRegisterSequenceJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateCashRegisterSequenceResponse, error)
 
 	// DeleteBranchWithResponse request
 	DeleteBranchWithResponse(ctx context.Context, id int64, params *DeleteBranchParams, reqEditors ...RequestEditorFn) (*DeleteBranchResponse, error)
@@ -11876,8 +11876,8 @@ type ClientWithResponsesInterface interface {
 	// DeactivateExonerationWithResponse request
 	DeactivateExonerationWithResponse(ctx context.Context, clientId int64, id int64, params *DeactivateExonerationParams, reqEditors ...RequestEditorFn) (*DeactivateExonerationResponse, error)
 
-	// GetExoneration1WithResponse request
-	GetExoneration1WithResponse(ctx context.Context, clientId int64, id int64, params *GetExoneration1Params, reqEditors ...RequestEditorFn) (*GetExoneration1Response, error)
+	// GetClientExonerationWithResponse request
+	GetClientExonerationWithResponse(ctx context.Context, clientId int64, id int64, params *GetClientExonerationParams, reqEditors ...RequestEditorFn) (*GetClientExonerationResponse, error)
 
 	// RefreshExonerationWithResponse request
 	RefreshExonerationWithResponse(ctx context.Context, clientId int64, id int64, params *RefreshExonerationParams, reqEditors ...RequestEditorFn) (*RefreshExonerationResponse, error)
@@ -11950,10 +11950,10 @@ type ClientWithResponsesInterface interface {
 
 	CreateReceiptWithResponse(ctx context.Context, params *CreateReceiptParams, body CreateReceiptJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateReceiptResponse, error)
 
-	// CreateReceiverMessageFromXmlWithBodyWithResponse request with any body
-	CreateReceiverMessageFromXmlWithBodyWithResponse(ctx context.Context, params *CreateReceiverMessageFromXmlParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateReceiverMessageFromXmlResponse, error)
+	// CreateReceiverMessageWithBodyWithResponse request with any body
+	CreateReceiverMessageWithBodyWithResponse(ctx context.Context, params *CreateReceiverMessageParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateReceiverMessageResponse, error)
 
-	CreateReceiverMessageFromXmlWithResponse(ctx context.Context, params *CreateReceiverMessageFromXmlParams, body CreateReceiverMessageFromXmlJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateReceiverMessageFromXmlResponse, error)
+	CreateReceiverMessageWithResponse(ctx context.Context, params *CreateReceiverMessageParams, body CreateReceiverMessageJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateReceiverMessageResponse, error)
 
 	// GetDocumentByIdWithResponse request
 	GetDocumentByIdWithResponse(ctx context.Context, id int64, params *GetDocumentByIdParams, reqEditors ...RequestEditorFn) (*GetDocumentByIdResponse, error)
@@ -12041,8 +12041,8 @@ type ClientWithResponsesInterface interface {
 	// GetExchangeRatesWithResponse request
 	GetExchangeRatesWithResponse(ctx context.Context, params *GetExchangeRatesParams, reqEditors ...RequestEditorFn) (*GetExchangeRatesResponse, error)
 
-	// GetExonerationWithResponse request
-	GetExonerationWithResponse(ctx context.Context, authorization string, params *GetExonerationParams, reqEditors ...RequestEditorFn) (*GetExonerationResponse, error)
+	// GetTaxAuthorityExonerationWithResponse request
+	GetTaxAuthorityExonerationWithResponse(ctx context.Context, authorization string, params *GetTaxAuthorityExonerationParams, reqEditors ...RequestEditorFn) (*GetTaxAuthorityExonerationResponse, error)
 
 	// GetFishingProducerWithResponse request
 	GetFishingProducerWithResponse(ctx context.Context, legalIdentification string, params *GetFishingProducerParams, reqEditors ...RequestEditorFn) (*GetFishingProducerResponse, error)
@@ -12105,6 +12105,9 @@ type ClientWithResponsesInterface interface {
 type ClassifyDocumentItemResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
+	JSON200      *DocumentItemAccountingClassificationResponse
+	JSON400      *DocumentItemAccountingClassificationResponse
+	JSON404      *DocumentItemAccountingClassificationResponse
 }
 
 // Status returns HTTPResponse.Status
@@ -12134,6 +12137,8 @@ func (r ClassifyDocumentItemResponse) ContentType() string {
 type GetFiscalReportResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
+	JSON200      *FiscalReportResponse
+	JSON400      *FiscalReportResponse
 }
 
 // Status returns HTTPResponse.Status
@@ -12163,6 +12168,8 @@ func (r GetFiscalReportResponse) ContentType() string {
 type ExportFiscalReportResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
+	JSON200      *map[string]interface{}
+	JSON400      *map[string]interface{}
 }
 
 // Status returns HTTPResponse.Status
@@ -12192,6 +12199,8 @@ func (r ExportFiscalReportResponse) ContentType() string {
 type GetTaxRatesSummaryResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
+	JSON200      *FiscalTaxRatesSummaryResponse
+	JSON400      *FiscalTaxRatesSummaryResponse
 }
 
 // Status returns HTTPResponse.Status
@@ -12221,6 +12230,8 @@ func (r GetTaxRatesSummaryResponse) ContentType() string {
 type GetVatSummaryResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
+	JSON200      *FiscalVatSummaryResponse
+	JSON400      *FiscalVatSummaryResponse
 }
 
 // Status returns HTTPResponse.Status
@@ -12250,6 +12261,7 @@ func (r GetVatSummaryResponse) ContentType() string {
 type GetBranchesResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
+	JSON200      *[]BranchResponse
 }
 
 // Status returns HTTPResponse.Status
@@ -12279,6 +12291,7 @@ func (r GetBranchesResponse) ContentType() string {
 type CreateBranchResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
+	JSON200      *BranchResponse
 }
 
 // Status returns HTTPResponse.Status
@@ -12308,6 +12321,7 @@ func (r CreateBranchResponse) ContentType() string {
 type GetCashRegistersResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
+	JSON200      *[]CashRegisterResponse
 }
 
 // Status returns HTTPResponse.Status
@@ -12337,6 +12351,7 @@ func (r GetCashRegistersResponse) ContentType() string {
 type CreateCashRegisterResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
+	JSON200      *CashRegisterResponse
 }
 
 // Status returns HTTPResponse.Status
@@ -12395,6 +12410,7 @@ func (r DeleteCashRegisterResponse) ContentType() string {
 type GetCashRegisterResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
+	JSON200      *CashRegisterResponse
 }
 
 // Status returns HTTPResponse.Status
@@ -12424,6 +12440,7 @@ func (r GetCashRegisterResponse) ContentType() string {
 type UpdateCashRegisterResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
+	JSON200      *CashRegisterResponse
 }
 
 // Status returns HTTPResponse.Status
@@ -12450,13 +12467,14 @@ func (r UpdateCashRegisterResponse) ContentType() string {
 	return ""
 }
 
-type UpdateSequence1Response struct {
+type UpdateCashRegisterSequenceResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
+	JSON200      *CashRegisterSequenceResponse
 }
 
 // Status returns HTTPResponse.Status
-func (r UpdateSequence1Response) Status() string {
+func (r UpdateCashRegisterSequenceResponse) Status() string {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.Status
 	}
@@ -12464,7 +12482,7 @@ func (r UpdateSequence1Response) Status() string {
 }
 
 // StatusCode returns HTTPResponse.StatusCode
-func (r UpdateSequence1Response) StatusCode() int {
+func (r UpdateCashRegisterSequenceResponse) StatusCode() int {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.StatusCode
 	}
@@ -12472,7 +12490,7 @@ func (r UpdateSequence1Response) StatusCode() int {
 }
 
 // ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
-func (r UpdateSequence1Response) ContentType() string {
+func (r UpdateCashRegisterSequenceResponse) ContentType() string {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.Header.Get("Content-Type")
 	}
@@ -12511,6 +12529,7 @@ func (r DeleteBranchResponse) ContentType() string {
 type GetBranchResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
+	JSON200      *BranchResponse
 }
 
 // Status returns HTTPResponse.Status
@@ -12540,6 +12559,7 @@ func (r GetBranchResponse) ContentType() string {
 type UpdateBranchResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
+	JSON200      *BranchResponse
 }
 
 // Status returns HTTPResponse.Status
@@ -12569,6 +12589,7 @@ func (r UpdateBranchResponse) ContentType() string {
 type SetDefaultBranchResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
+	JSON200      *BranchResponse
 }
 
 // Status returns HTTPResponse.Status
@@ -12598,6 +12619,7 @@ func (r SetDefaultBranchResponse) ContentType() string {
 type SetDefaultCashRegisterResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
+	JSON200      *CashRegisterResponse
 }
 
 // Status returns HTTPResponse.Status
@@ -12627,6 +12649,7 @@ func (r SetDefaultCashRegisterResponse) ContentType() string {
 type GetCantonsResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
+	JSON200      *[]CatalogItemResponse
 }
 
 // Status returns HTTPResponse.Status
@@ -12656,6 +12679,7 @@ func (r GetCantonsResponse) ContentType() string {
 type GetCurrenciesResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
+	JSON200      *[]CatalogItemResponse
 }
 
 // Status returns HTTPResponse.Status
@@ -12685,6 +12709,7 @@ func (r GetCurrenciesResponse) ContentType() string {
 type GetDistrictsResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
+	JSON200      *[]CatalogItemResponse
 }
 
 // Status returns HTTPResponse.Status
@@ -12714,6 +12739,7 @@ func (r GetDistrictsResponse) ContentType() string {
 type GetDocumentTypesResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
+	JSON200      *[]CatalogItemResponse
 }
 
 // Status returns HTTPResponse.Status
@@ -12743,6 +12769,7 @@ func (r GetDocumentTypesResponse) ContentType() string {
 type GetLegalIdentificationTypesResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
+	JSON200      *[]CatalogItemResponse
 }
 
 // Status returns HTTPResponse.Status
@@ -12772,6 +12799,7 @@ func (r GetLegalIdentificationTypesResponse) ContentType() string {
 type GetPaymentMethodsResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
+	JSON200      *[]CatalogItemResponse
 }
 
 // Status returns HTTPResponse.Status
@@ -12801,6 +12829,7 @@ func (r GetPaymentMethodsResponse) ContentType() string {
 type GetPharmaceuticalFormsResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
+	JSON200      *[]CatalogItemResponse
 }
 
 // Status returns HTTPResponse.Status
@@ -12830,6 +12859,7 @@ func (r GetPharmaceuticalFormsResponse) ContentType() string {
 type GetProvincesResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
+	JSON200      *[]CatalogItemResponse
 }
 
 // Status returns HTTPResponse.Status
@@ -12859,6 +12889,7 @@ func (r GetProvincesResponse) ContentType() string {
 type GetSaleConditionsResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
+	JSON200      *[]CatalogItemResponse
 }
 
 // Status returns HTTPResponse.Status
@@ -12888,6 +12919,7 @@ func (r GetSaleConditionsResponse) ContentType() string {
 type GetTaxCodesResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
+	JSON200      *[]CatalogItemResponse
 }
 
 // Status returns HTTPResponse.Status
@@ -12917,6 +12949,7 @@ func (r GetTaxCodesResponse) ContentType() string {
 type GetUnitsOfMeasureResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
+	JSON200      *[]CatalogItemResponse
 }
 
 // Status returns HTTPResponse.Status
@@ -12946,6 +12979,7 @@ func (r GetUnitsOfMeasureResponse) ContentType() string {
 type GetVatRateCodesResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
+	JSON200      *[]CatalogItemResponse
 }
 
 // Status returns HTTPResponse.Status
@@ -12975,6 +13009,7 @@ func (r GetVatRateCodesResponse) ContentType() string {
 type GetAllClientsResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
+	JSON200      *PageResponseClientResponse
 }
 
 // Status returns HTTPResponse.Status
@@ -13004,6 +13039,7 @@ func (r GetAllClientsResponse) ContentType() string {
 type CreateClientResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
+	JSON200      *ClientResponse
 }
 
 // Status returns HTTPResponse.Status
@@ -13033,6 +13069,7 @@ func (r CreateClientResponse) ContentType() string {
 type GetExonerationsResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
+	JSON200      *[]ClientExonerationResponse
 }
 
 // Status returns HTTPResponse.Status
@@ -13062,6 +13099,7 @@ func (r GetExonerationsResponse) ContentType() string {
 type RegisterExonerationResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
+	JSON200      *ClientExonerationResponse
 }
 
 // Status returns HTTPResponse.Status
@@ -13117,13 +13155,14 @@ func (r DeactivateExonerationResponse) ContentType() string {
 	return ""
 }
 
-type GetExoneration1Response struct {
+type GetClientExonerationResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
+	JSON200      *ClientExonerationResponse
 }
 
 // Status returns HTTPResponse.Status
-func (r GetExoneration1Response) Status() string {
+func (r GetClientExonerationResponse) Status() string {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.Status
 	}
@@ -13131,7 +13170,7 @@ func (r GetExoneration1Response) Status() string {
 }
 
 // StatusCode returns HTTPResponse.StatusCode
-func (r GetExoneration1Response) StatusCode() int {
+func (r GetClientExonerationResponse) StatusCode() int {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.StatusCode
 	}
@@ -13139,7 +13178,7 @@ func (r GetExoneration1Response) StatusCode() int {
 }
 
 // ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
-func (r GetExoneration1Response) ContentType() string {
+func (r GetClientExonerationResponse) ContentType() string {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.Header.Get("Content-Type")
 	}
@@ -13149,6 +13188,7 @@ func (r GetExoneration1Response) ContentType() string {
 type RefreshExonerationResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
+	JSON200      *ClientExonerationResponse
 }
 
 // Status returns HTTPResponse.Status
@@ -13178,6 +13218,7 @@ func (r RefreshExonerationResponse) ContentType() string {
 type GetClientReceiversResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
+	JSON200      *PageResponseClientReceiverResponse
 }
 
 // Status returns HTTPResponse.Status
@@ -13207,6 +13248,7 @@ func (r GetClientReceiversResponse) ContentType() string {
 type CreateOrUpdateReceiverResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
+	JSON200      *ClientReceiverResponse
 }
 
 // Status returns HTTPResponse.Status
@@ -13236,6 +13278,7 @@ func (r CreateOrUpdateReceiverResponse) ContentType() string {
 type UpdateDefaultReceiverResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
+	JSON200      *ClientReceiverResponse
 }
 
 // Status returns HTTPResponse.Status
@@ -13294,6 +13337,7 @@ func (r DeleteReceiverResponse) ContentType() string {
 type GetReceiverByIdResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
+	JSON200      *ClientReceiverResponse
 }
 
 // Status returns HTTPResponse.Status
@@ -13352,6 +13396,7 @@ func (r DeleteClientResponse) ContentType() string {
 type GetClientByIdResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
+	JSON200      *ClientResponse
 }
 
 // Status returns HTTPResponse.Status
@@ -13381,6 +13426,7 @@ func (r GetClientByIdResponse) ContentType() string {
 type UpdateClientResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
+	JSON200      *ClientResponse
 }
 
 // Status returns HTTPResponse.Status
@@ -13410,6 +13456,7 @@ func (r UpdateClientResponse) ContentType() string {
 type GetAllDocumentsResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
+	JSON200      *PageResponseDocumentResponse
 }
 
 // Status returns HTTPResponse.Status
@@ -13439,6 +13486,7 @@ func (r GetAllDocumentsResponse) ContentType() string {
 type CreateCreditNoteResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
+	JSON200      *DocumentResponse
 }
 
 // Status returns HTTPResponse.Status
@@ -13468,6 +13516,7 @@ func (r CreateCreditNoteResponse) ContentType() string {
 type CreateDebitNoteResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
+	JSON200      *DocumentResponse
 }
 
 // Status returns HTTPResponse.Status
@@ -13497,6 +13546,7 @@ func (r CreateDebitNoteResponse) ContentType() string {
 type CreateElectronicPaymentReceiptResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
+	JSON200      *DocumentResponse
 }
 
 // Status returns HTTPResponse.Status
@@ -13526,6 +13576,7 @@ func (r CreateElectronicPaymentReceiptResponse) ContentType() string {
 type CreateExportInvoiceResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
+	JSON200      *DocumentResponse
 }
 
 // Status returns HTTPResponse.Status
@@ -13555,6 +13606,7 @@ func (r CreateExportInvoiceResponse) ContentType() string {
 type CreateInvoiceResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
+	JSON200      *DocumentResponse
 }
 
 // Status returns HTTPResponse.Status
@@ -13584,6 +13636,7 @@ func (r CreateInvoiceResponse) ContentType() string {
 type CreatePurchaseInvoiceResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
+	JSON200      *DocumentResponse
 }
 
 // Status returns HTTPResponse.Status
@@ -13613,6 +13666,7 @@ func (r CreatePurchaseInvoiceResponse) ContentType() string {
 type CreateReceiptResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
+	JSON200      *DocumentResponse
 }
 
 // Status returns HTTPResponse.Status
@@ -13639,13 +13693,14 @@ func (r CreateReceiptResponse) ContentType() string {
 	return ""
 }
 
-type CreateReceiverMessageFromXmlResponse struct {
+type CreateReceiverMessageResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
+	JSON200      *DocumentResponse
 }
 
 // Status returns HTTPResponse.Status
-func (r CreateReceiverMessageFromXmlResponse) Status() string {
+func (r CreateReceiverMessageResponse) Status() string {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.Status
 	}
@@ -13653,7 +13708,7 @@ func (r CreateReceiverMessageFromXmlResponse) Status() string {
 }
 
 // StatusCode returns HTTPResponse.StatusCode
-func (r CreateReceiverMessageFromXmlResponse) StatusCode() int {
+func (r CreateReceiverMessageResponse) StatusCode() int {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.StatusCode
 	}
@@ -13661,7 +13716,7 @@ func (r CreateReceiverMessageFromXmlResponse) StatusCode() int {
 }
 
 // ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
-func (r CreateReceiverMessageFromXmlResponse) ContentType() string {
+func (r CreateReceiverMessageResponse) ContentType() string {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.Header.Get("Content-Type")
 	}
@@ -13671,6 +13726,7 @@ func (r CreateReceiverMessageFromXmlResponse) ContentType() string {
 type GetDocumentByIdResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
+	JSON200      *DocumentResponse
 }
 
 // Status returns HTTPResponse.Status
@@ -13700,6 +13756,7 @@ func (r GetDocumentByIdResponse) ContentType() string {
 type GetDocumentPdfResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
+	JSON200      *map[string]string
 }
 
 // Status returns HTTPResponse.Status
@@ -13729,6 +13786,7 @@ func (r GetDocumentPdfResponse) ContentType() string {
 type RegenerateDocumentPdfResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
+	JSON200      *map[string]string
 }
 
 // Status returns HTTPResponse.Status
@@ -13758,6 +13816,7 @@ func (r RegenerateDocumentPdfResponse) ContentType() string {
 type SendDocumentEmailResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
+	JSON200      *map[string]interface{}
 }
 
 // Status returns HTTPResponse.Status
@@ -13847,6 +13906,7 @@ func (r GetHaciendaXmlResponse) ContentType() string {
 type GetAllIssuersResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
+	JSON200      *PageResponseTenantIssuerResponse
 }
 
 // Status returns HTTPResponse.Status
@@ -13876,6 +13936,7 @@ func (r GetAllIssuersResponse) ContentType() string {
 type CreateIssuerResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
+	JSON200      *TenantIssuerResponse
 }
 
 // Status returns HTTPResponse.Status
@@ -13905,6 +13966,7 @@ func (r CreateIssuerResponse) ContentType() string {
 type DeleteIssuerResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
+	JSON200      *map[string]string
 }
 
 // Status returns HTTPResponse.Status
@@ -13934,6 +13996,7 @@ func (r DeleteIssuerResponse) ContentType() string {
 type GetIssuerByIdResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
+	JSON200      *TenantIssuerResponse
 }
 
 // Status returns HTTPResponse.Status
@@ -13963,6 +14026,7 @@ func (r GetIssuerByIdResponse) ContentType() string {
 type UpdateIssuerResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
+	JSON200      *TenantIssuerResponse
 }
 
 // Status returns HTTPResponse.Status
@@ -13992,6 +14056,7 @@ func (r UpdateIssuerResponse) ContentType() string {
 type SetDefaultIssuerResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
+	JSON200      *TenantIssuerResponse
 }
 
 // Status returns HTTPResponse.Status
@@ -14021,6 +14086,7 @@ func (r SetDefaultIssuerResponse) ContentType() string {
 type CreatePaymentResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
+	JSON200      *DocumentPaymentResponse
 }
 
 // Status returns HTTPResponse.Status
@@ -14050,6 +14116,7 @@ func (r CreatePaymentResponse) ContentType() string {
 type VoidApplicationResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
+	JSON200      *DocumentPaymentApplicationResponse
 }
 
 // Status returns HTTPResponse.Status
@@ -14079,6 +14146,7 @@ func (r VoidApplicationResponse) ContentType() string {
 type GetClientStatementResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
+	JSON200      *DocumentPaymentStatementResponse
 }
 
 // Status returns HTTPResponse.Status
@@ -14108,6 +14176,7 @@ func (r GetClientStatementResponse) ContentType() string {
 type GetPaymentResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
+	JSON200      *DocumentPaymentResponse
 }
 
 // Status returns HTTPResponse.Status
@@ -14137,6 +14206,7 @@ func (r GetPaymentResponse) ContentType() string {
 type ApplyPaymentResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
+	JSON200      *DocumentPaymentResponse
 }
 
 // Status returns HTTPResponse.Status
@@ -14166,6 +14236,7 @@ func (r ApplyPaymentResponse) ContentType() string {
 type VoidPaymentResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
+	JSON200      *DocumentPaymentResponse
 }
 
 // Status returns HTTPResponse.Status
@@ -14195,6 +14266,7 @@ func (r VoidPaymentResponse) ContentType() string {
 type GetSequencesResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
+	JSON200      *[]SequenceResponse
 }
 
 // Status returns HTTPResponse.Status
@@ -14224,6 +14296,7 @@ func (r GetSequencesResponse) ContentType() string {
 type UpdateSequenceResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
+	JSON200      *SequenceResponse
 }
 
 // Status returns HTTPResponse.Status
@@ -14253,6 +14326,7 @@ func (r UpdateSequenceResponse) ContentType() string {
 type GetAgriculturalProducerResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
+	JSON200      *ProducerRegistryResponse
 }
 
 // Status returns HTTPResponse.Status
@@ -14282,6 +14356,7 @@ func (r GetAgriculturalProducerResponse) ContentType() string {
 type SearchCabysResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
+	JSON200      *CabysQueryResponse
 }
 
 // Status returns HTTPResponse.Status
@@ -14311,6 +14386,7 @@ func (r SearchCabysResponse) ContentType() string {
 type GetCabysByCodeResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
+	JSON200      *CabysQueryResponse
 }
 
 // Status returns HTTPResponse.Status
@@ -14340,6 +14416,7 @@ func (r GetCabysByCodeResponse) ContentType() string {
 type GetExchangeRatesResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
+	JSON200      *ExchangeRateResponse
 }
 
 // Status returns HTTPResponse.Status
@@ -14366,13 +14443,14 @@ func (r GetExchangeRatesResponse) ContentType() string {
 	return ""
 }
 
-type GetExonerationResponse struct {
+type GetTaxAuthorityExonerationResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
+	JSON200      *TaxAuthorityExonerationResponse
 }
 
 // Status returns HTTPResponse.Status
-func (r GetExonerationResponse) Status() string {
+func (r GetTaxAuthorityExonerationResponse) Status() string {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.Status
 	}
@@ -14380,7 +14458,7 @@ func (r GetExonerationResponse) Status() string {
 }
 
 // StatusCode returns HTTPResponse.StatusCode
-func (r GetExonerationResponse) StatusCode() int {
+func (r GetTaxAuthorityExonerationResponse) StatusCode() int {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.StatusCode
 	}
@@ -14388,7 +14466,7 @@ func (r GetExonerationResponse) StatusCode() int {
 }
 
 // ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
-func (r GetExonerationResponse) ContentType() string {
+func (r GetTaxAuthorityExonerationResponse) ContentType() string {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.Header.Get("Content-Type")
 	}
@@ -14398,6 +14476,7 @@ func (r GetExonerationResponse) ContentType() string {
 type GetFishingProducerResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
+	JSON200      *ProducerRegistryResponse
 }
 
 // Status returns HTTPResponse.Status
@@ -14427,6 +14506,7 @@ func (r GetFishingProducerResponse) ContentType() string {
 type GetTaxpayerResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
+	JSON200      *TaxpayerInfoResponse
 }
 
 // Status returns HTTPResponse.Status
@@ -14456,6 +14536,7 @@ func (r GetTaxpayerResponse) ContentType() string {
 type GetTaxpayerInfoResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
+	JSON200      *TaxpayerInfoResponse
 }
 
 // Status returns HTTPResponse.Status
@@ -14485,6 +14566,7 @@ func (r GetTaxpayerInfoResponse) ContentType() string {
 type GetTenantResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
+	JSON200      *TenantResponse
 }
 
 // Status returns HTTPResponse.Status
@@ -14514,6 +14596,7 @@ func (r GetTenantResponse) ContentType() string {
 type UpdateTenantResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
+	JSON200      *TenantResponse
 }
 
 // Status returns HTTPResponse.Status
@@ -14543,6 +14626,7 @@ func (r UpdateTenantResponse) ContentType() string {
 type GetInvoicingStatusResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
+	JSON200      *TenantInvoicingStatusResponse
 }
 
 // Status returns HTTPResponse.Status
@@ -14601,6 +14685,7 @@ func (r DeleteLogoResponse) ContentType() string {
 type GetLogoResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
+	JSON200      *TenantLogoResponse
 }
 
 // Status returns HTTPResponse.Status
@@ -14630,6 +14715,7 @@ func (r GetLogoResponse) ContentType() string {
 type UploadLogoResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
+	JSON200      *TenantLogoResponse
 }
 
 // Status returns HTTPResponse.Status
@@ -14659,6 +14745,7 @@ func (r UploadLogoResponse) ContentType() string {
 type UpdateSecretsResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
+	JSON200      *TenantInvoicingStatusResponse
 }
 
 // Status returns HTTPResponse.Status
@@ -14688,6 +14775,7 @@ func (r UpdateSecretsResponse) ContentType() string {
 type GetWebhooksResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
+	JSON200      *[]WebhookEndpointResponse
 }
 
 // Status returns HTTPResponse.Status
@@ -14717,6 +14805,7 @@ func (r GetWebhooksResponse) ContentType() string {
 type CreateWebhookResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
+	JSON200      *WebhookEndpointResponse
 }
 
 // Status returns HTTPResponse.Status
@@ -14775,6 +14864,7 @@ func (r DeleteWebhookResponse) ContentType() string {
 type GetWebhookResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
+	JSON200      *WebhookEndpointResponse
 }
 
 // Status returns HTTPResponse.Status
@@ -14804,6 +14894,7 @@ func (r GetWebhookResponse) ContentType() string {
 type UpdateWebhookResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
+	JSON200      *WebhookEndpointResponse
 }
 
 // Status returns HTTPResponse.Status
@@ -14833,6 +14924,7 @@ func (r UpdateWebhookResponse) ContentType() string {
 type GetLogsResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
+	JSON200      *[]WebhookDeliveryLogResponse
 }
 
 // Status returns HTTPResponse.Status
@@ -14862,6 +14954,7 @@ func (r GetLogsResponse) ContentType() string {
 type TestWebhookResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
+	JSON200      *WebhookTestResponse
 }
 
 // Status returns HTTPResponse.Status
@@ -15028,21 +15121,21 @@ func (c *ClientWithResponses) UpdateCashRegisterWithResponse(ctx context.Context
 	return ParseUpdateCashRegisterResponse(rsp)
 }
 
-// UpdateSequence1WithBodyWithResponse request with arbitrary body returning *UpdateSequence1Response
-func (c *ClientWithResponses) UpdateSequence1WithBodyWithResponse(ctx context.Context, branchId int64, id int64, params *UpdateSequence1Params, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateSequence1Response, error) {
-	rsp, err := c.UpdateSequence1WithBody(ctx, branchId, id, params, contentType, body, reqEditors...)
+// UpdateCashRegisterSequenceWithBodyWithResponse request with arbitrary body returning *UpdateCashRegisterSequenceResponse
+func (c *ClientWithResponses) UpdateCashRegisterSequenceWithBodyWithResponse(ctx context.Context, branchId int64, id int64, params *UpdateCashRegisterSequenceParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateCashRegisterSequenceResponse, error) {
+	rsp, err := c.UpdateCashRegisterSequenceWithBody(ctx, branchId, id, params, contentType, body, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
-	return ParseUpdateSequence1Response(rsp)
+	return ParseUpdateCashRegisterSequenceResponse(rsp)
 }
 
-func (c *ClientWithResponses) UpdateSequence1WithResponse(ctx context.Context, branchId int64, id int64, params *UpdateSequence1Params, body UpdateSequence1JSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateSequence1Response, error) {
-	rsp, err := c.UpdateSequence1(ctx, branchId, id, params, body, reqEditors...)
+func (c *ClientWithResponses) UpdateCashRegisterSequenceWithResponse(ctx context.Context, branchId int64, id int64, params *UpdateCashRegisterSequenceParams, body UpdateCashRegisterSequenceJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateCashRegisterSequenceResponse, error) {
+	rsp, err := c.UpdateCashRegisterSequence(ctx, branchId, id, params, body, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
-	return ParseUpdateSequence1Response(rsp)
+	return ParseUpdateCashRegisterSequenceResponse(rsp)
 }
 
 // DeleteBranchWithResponse request returning *DeleteBranchResponse
@@ -15267,13 +15360,13 @@ func (c *ClientWithResponses) DeactivateExonerationWithResponse(ctx context.Cont
 	return ParseDeactivateExonerationResponse(rsp)
 }
 
-// GetExoneration1WithResponse request returning *GetExoneration1Response
-func (c *ClientWithResponses) GetExoneration1WithResponse(ctx context.Context, clientId int64, id int64, params *GetExoneration1Params, reqEditors ...RequestEditorFn) (*GetExoneration1Response, error) {
-	rsp, err := c.GetExoneration1(ctx, clientId, id, params, reqEditors...)
+// GetClientExonerationWithResponse request returning *GetClientExonerationResponse
+func (c *ClientWithResponses) GetClientExonerationWithResponse(ctx context.Context, clientId int64, id int64, params *GetClientExonerationParams, reqEditors ...RequestEditorFn) (*GetClientExonerationResponse, error) {
+	rsp, err := c.GetClientExoneration(ctx, clientId, id, params, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
-	return ParseGetExoneration1Response(rsp)
+	return ParseGetClientExonerationResponse(rsp)
 }
 
 // RefreshExonerationWithResponse request returning *RefreshExonerationResponse
@@ -15509,21 +15602,21 @@ func (c *ClientWithResponses) CreateReceiptWithResponse(ctx context.Context, par
 	return ParseCreateReceiptResponse(rsp)
 }
 
-// CreateReceiverMessageFromXmlWithBodyWithResponse request with arbitrary body returning *CreateReceiverMessageFromXmlResponse
-func (c *ClientWithResponses) CreateReceiverMessageFromXmlWithBodyWithResponse(ctx context.Context, params *CreateReceiverMessageFromXmlParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateReceiverMessageFromXmlResponse, error) {
-	rsp, err := c.CreateReceiverMessageFromXmlWithBody(ctx, params, contentType, body, reqEditors...)
+// CreateReceiverMessageWithBodyWithResponse request with arbitrary body returning *CreateReceiverMessageResponse
+func (c *ClientWithResponses) CreateReceiverMessageWithBodyWithResponse(ctx context.Context, params *CreateReceiverMessageParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateReceiverMessageResponse, error) {
+	rsp, err := c.CreateReceiverMessageWithBody(ctx, params, contentType, body, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
-	return ParseCreateReceiverMessageFromXmlResponse(rsp)
+	return ParseCreateReceiverMessageResponse(rsp)
 }
 
-func (c *ClientWithResponses) CreateReceiverMessageFromXmlWithResponse(ctx context.Context, params *CreateReceiverMessageFromXmlParams, body CreateReceiverMessageFromXmlJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateReceiverMessageFromXmlResponse, error) {
-	rsp, err := c.CreateReceiverMessageFromXml(ctx, params, body, reqEditors...)
+func (c *ClientWithResponses) CreateReceiverMessageWithResponse(ctx context.Context, params *CreateReceiverMessageParams, body CreateReceiverMessageJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateReceiverMessageResponse, error) {
+	rsp, err := c.CreateReceiverMessage(ctx, params, body, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
-	return ParseCreateReceiverMessageFromXmlResponse(rsp)
+	return ParseCreateReceiverMessageResponse(rsp)
 }
 
 // GetDocumentByIdWithResponse request returning *GetDocumentByIdResponse
@@ -15798,13 +15891,13 @@ func (c *ClientWithResponses) GetExchangeRatesWithResponse(ctx context.Context, 
 	return ParseGetExchangeRatesResponse(rsp)
 }
 
-// GetExonerationWithResponse request returning *GetExonerationResponse
-func (c *ClientWithResponses) GetExonerationWithResponse(ctx context.Context, authorization string, params *GetExonerationParams, reqEditors ...RequestEditorFn) (*GetExonerationResponse, error) {
-	rsp, err := c.GetExoneration(ctx, authorization, params, reqEditors...)
+// GetTaxAuthorityExonerationWithResponse request returning *GetTaxAuthorityExonerationResponse
+func (c *ClientWithResponses) GetTaxAuthorityExonerationWithResponse(ctx context.Context, authorization string, params *GetTaxAuthorityExonerationParams, reqEditors ...RequestEditorFn) (*GetTaxAuthorityExonerationResponse, error) {
+	rsp, err := c.GetTaxAuthorityExoneration(ctx, authorization, params, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
-	return ParseGetExonerationResponse(rsp)
+	return ParseGetTaxAuthorityExonerationResponse(rsp)
 }
 
 // GetFishingProducerWithResponse request returning *GetFishingProducerResponse
@@ -15997,6 +16090,30 @@ func ParseClassifyDocumentItemResponse(rsp *http.Response) (*ClassifyDocumentIte
 		HTTPResponse: rsp,
 	}
 
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest DocumentItemAccountingClassificationResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest DocumentItemAccountingClassificationResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON400 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 404:
+		var dest DocumentItemAccountingClassificationResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON404 = &dest
+
+	}
+
 	return response, nil
 }
 
@@ -16011,6 +16128,23 @@ func ParseGetFiscalReportResponse(rsp *http.Response) (*GetFiscalReportResponse,
 	response := &GetFiscalReportResponse{
 		Body:         bodyBytes,
 		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest FiscalReportResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest FiscalReportResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON400 = &dest
+
 	}
 
 	return response, nil
@@ -16029,6 +16163,23 @@ func ParseExportFiscalReportResponse(rsp *http.Response) (*ExportFiscalReportRes
 		HTTPResponse: rsp,
 	}
 
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest map[string]interface{}
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest map[string]interface{}
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON400 = &dest
+
+	}
+
 	return response, nil
 }
 
@@ -16043,6 +16194,23 @@ func ParseGetTaxRatesSummaryResponse(rsp *http.Response) (*GetTaxRatesSummaryRes
 	response := &GetTaxRatesSummaryResponse{
 		Body:         bodyBytes,
 		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest FiscalTaxRatesSummaryResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest FiscalTaxRatesSummaryResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON400 = &dest
+
 	}
 
 	return response, nil
@@ -16061,6 +16229,23 @@ func ParseGetVatSummaryResponse(rsp *http.Response) (*GetVatSummaryResponse, err
 		HTTPResponse: rsp,
 	}
 
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest FiscalVatSummaryResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 400:
+		var dest FiscalVatSummaryResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON400 = &dest
+
+	}
+
 	return response, nil
 }
 
@@ -16075,6 +16260,16 @@ func ParseGetBranchesResponse(rsp *http.Response) (*GetBranchesResponse, error) 
 	response := &GetBranchesResponse{
 		Body:         bodyBytes,
 		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest []BranchResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
 	}
 
 	return response, nil
@@ -16093,6 +16288,16 @@ func ParseCreateBranchResponse(rsp *http.Response) (*CreateBranchResponse, error
 		HTTPResponse: rsp,
 	}
 
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest BranchResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	}
+
 	return response, nil
 }
 
@@ -16109,6 +16314,16 @@ func ParseGetCashRegistersResponse(rsp *http.Response) (*GetCashRegistersRespons
 		HTTPResponse: rsp,
 	}
 
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest []CashRegisterResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	}
+
 	return response, nil
 }
 
@@ -16123,6 +16338,16 @@ func ParseCreateCashRegisterResponse(rsp *http.Response) (*CreateCashRegisterRes
 	response := &CreateCashRegisterResponse{
 		Body:         bodyBytes,
 		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest CashRegisterResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
 	}
 
 	return response, nil
@@ -16157,6 +16382,16 @@ func ParseGetCashRegisterResponse(rsp *http.Response) (*GetCashRegisterResponse,
 		HTTPResponse: rsp,
 	}
 
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest CashRegisterResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	}
+
 	return response, nil
 }
 
@@ -16173,20 +16408,40 @@ func ParseUpdateCashRegisterResponse(rsp *http.Response) (*UpdateCashRegisterRes
 		HTTPResponse: rsp,
 	}
 
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest CashRegisterResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	}
+
 	return response, nil
 }
 
-// ParseUpdateSequence1Response parses an HTTP response from a UpdateSequence1WithResponse call
-func ParseUpdateSequence1Response(rsp *http.Response) (*UpdateSequence1Response, error) {
+// ParseUpdateCashRegisterSequenceResponse parses an HTTP response from a UpdateCashRegisterSequenceWithResponse call
+func ParseUpdateCashRegisterSequenceResponse(rsp *http.Response) (*UpdateCashRegisterSequenceResponse, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
 	defer func() { _ = rsp.Body.Close() }()
 	if err != nil {
 		return nil, err
 	}
 
-	response := &UpdateSequence1Response{
+	response := &UpdateCashRegisterSequenceResponse{
 		Body:         bodyBytes,
 		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest CashRegisterSequenceResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
 	}
 
 	return response, nil
@@ -16221,6 +16476,16 @@ func ParseGetBranchResponse(rsp *http.Response) (*GetBranchResponse, error) {
 		HTTPResponse: rsp,
 	}
 
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest BranchResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	}
+
 	return response, nil
 }
 
@@ -16235,6 +16500,16 @@ func ParseUpdateBranchResponse(rsp *http.Response) (*UpdateBranchResponse, error
 	response := &UpdateBranchResponse{
 		Body:         bodyBytes,
 		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest BranchResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
 	}
 
 	return response, nil
@@ -16253,6 +16528,16 @@ func ParseSetDefaultBranchResponse(rsp *http.Response) (*SetDefaultBranchRespons
 		HTTPResponse: rsp,
 	}
 
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest BranchResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	}
+
 	return response, nil
 }
 
@@ -16267,6 +16552,16 @@ func ParseSetDefaultCashRegisterResponse(rsp *http.Response) (*SetDefaultCashReg
 	response := &SetDefaultCashRegisterResponse{
 		Body:         bodyBytes,
 		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest CashRegisterResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
 	}
 
 	return response, nil
@@ -16285,6 +16580,16 @@ func ParseGetCantonsResponse(rsp *http.Response) (*GetCantonsResponse, error) {
 		HTTPResponse: rsp,
 	}
 
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest []CatalogItemResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	}
+
 	return response, nil
 }
 
@@ -16299,6 +16604,16 @@ func ParseGetCurrenciesResponse(rsp *http.Response) (*GetCurrenciesResponse, err
 	response := &GetCurrenciesResponse{
 		Body:         bodyBytes,
 		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest []CatalogItemResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
 	}
 
 	return response, nil
@@ -16317,6 +16632,16 @@ func ParseGetDistrictsResponse(rsp *http.Response) (*GetDistrictsResponse, error
 		HTTPResponse: rsp,
 	}
 
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest []CatalogItemResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	}
+
 	return response, nil
 }
 
@@ -16331,6 +16656,16 @@ func ParseGetDocumentTypesResponse(rsp *http.Response) (*GetDocumentTypesRespons
 	response := &GetDocumentTypesResponse{
 		Body:         bodyBytes,
 		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest []CatalogItemResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
 	}
 
 	return response, nil
@@ -16349,6 +16684,16 @@ func ParseGetLegalIdentificationTypesResponse(rsp *http.Response) (*GetLegalIden
 		HTTPResponse: rsp,
 	}
 
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest []CatalogItemResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	}
+
 	return response, nil
 }
 
@@ -16363,6 +16708,16 @@ func ParseGetPaymentMethodsResponse(rsp *http.Response) (*GetPaymentMethodsRespo
 	response := &GetPaymentMethodsResponse{
 		Body:         bodyBytes,
 		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest []CatalogItemResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
 	}
 
 	return response, nil
@@ -16381,6 +16736,16 @@ func ParseGetPharmaceuticalFormsResponse(rsp *http.Response) (*GetPharmaceutical
 		HTTPResponse: rsp,
 	}
 
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest []CatalogItemResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	}
+
 	return response, nil
 }
 
@@ -16395,6 +16760,16 @@ func ParseGetProvincesResponse(rsp *http.Response) (*GetProvincesResponse, error
 	response := &GetProvincesResponse{
 		Body:         bodyBytes,
 		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest []CatalogItemResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
 	}
 
 	return response, nil
@@ -16413,6 +16788,16 @@ func ParseGetSaleConditionsResponse(rsp *http.Response) (*GetSaleConditionsRespo
 		HTTPResponse: rsp,
 	}
 
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest []CatalogItemResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	}
+
 	return response, nil
 }
 
@@ -16427,6 +16812,16 @@ func ParseGetTaxCodesResponse(rsp *http.Response) (*GetTaxCodesResponse, error) 
 	response := &GetTaxCodesResponse{
 		Body:         bodyBytes,
 		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest []CatalogItemResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
 	}
 
 	return response, nil
@@ -16445,6 +16840,16 @@ func ParseGetUnitsOfMeasureResponse(rsp *http.Response) (*GetUnitsOfMeasureRespo
 		HTTPResponse: rsp,
 	}
 
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest []CatalogItemResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	}
+
 	return response, nil
 }
 
@@ -16459,6 +16864,16 @@ func ParseGetVatRateCodesResponse(rsp *http.Response) (*GetVatRateCodesResponse,
 	response := &GetVatRateCodesResponse{
 		Body:         bodyBytes,
 		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest []CatalogItemResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
 	}
 
 	return response, nil
@@ -16477,6 +16892,16 @@ func ParseGetAllClientsResponse(rsp *http.Response) (*GetAllClientsResponse, err
 		HTTPResponse: rsp,
 	}
 
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest PageResponseClientResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	}
+
 	return response, nil
 }
 
@@ -16491,6 +16916,16 @@ func ParseCreateClientResponse(rsp *http.Response) (*CreateClientResponse, error
 	response := &CreateClientResponse{
 		Body:         bodyBytes,
 		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest ClientResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
 	}
 
 	return response, nil
@@ -16509,6 +16944,16 @@ func ParseGetExonerationsResponse(rsp *http.Response) (*GetExonerationsResponse,
 		HTTPResponse: rsp,
 	}
 
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest []ClientExonerationResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	}
+
 	return response, nil
 }
 
@@ -16523,6 +16968,16 @@ func ParseRegisterExonerationResponse(rsp *http.Response) (*RegisterExonerationR
 	response := &RegisterExonerationResponse{
 		Body:         bodyBytes,
 		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest ClientExonerationResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
 	}
 
 	return response, nil
@@ -16544,17 +16999,27 @@ func ParseDeactivateExonerationResponse(rsp *http.Response) (*DeactivateExonerat
 	return response, nil
 }
 
-// ParseGetExoneration1Response parses an HTTP response from a GetExoneration1WithResponse call
-func ParseGetExoneration1Response(rsp *http.Response) (*GetExoneration1Response, error) {
+// ParseGetClientExonerationResponse parses an HTTP response from a GetClientExonerationWithResponse call
+func ParseGetClientExonerationResponse(rsp *http.Response) (*GetClientExonerationResponse, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
 	defer func() { _ = rsp.Body.Close() }()
 	if err != nil {
 		return nil, err
 	}
 
-	response := &GetExoneration1Response{
+	response := &GetClientExonerationResponse{
 		Body:         bodyBytes,
 		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest ClientExonerationResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
 	}
 
 	return response, nil
@@ -16573,6 +17038,16 @@ func ParseRefreshExonerationResponse(rsp *http.Response) (*RefreshExonerationRes
 		HTTPResponse: rsp,
 	}
 
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest ClientExonerationResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	}
+
 	return response, nil
 }
 
@@ -16587,6 +17062,16 @@ func ParseGetClientReceiversResponse(rsp *http.Response) (*GetClientReceiversRes
 	response := &GetClientReceiversResponse{
 		Body:         bodyBytes,
 		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest PageResponseClientReceiverResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
 	}
 
 	return response, nil
@@ -16605,6 +17090,16 @@ func ParseCreateOrUpdateReceiverResponse(rsp *http.Response) (*CreateOrUpdateRec
 		HTTPResponse: rsp,
 	}
 
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest ClientReceiverResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	}
+
 	return response, nil
 }
 
@@ -16619,6 +17114,16 @@ func ParseUpdateDefaultReceiverResponse(rsp *http.Response) (*UpdateDefaultRecei
 	response := &UpdateDefaultReceiverResponse{
 		Body:         bodyBytes,
 		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest ClientReceiverResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
 	}
 
 	return response, nil
@@ -16653,6 +17158,16 @@ func ParseGetReceiverByIdResponse(rsp *http.Response) (*GetReceiverByIdResponse,
 		HTTPResponse: rsp,
 	}
 
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest ClientReceiverResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	}
+
 	return response, nil
 }
 
@@ -16685,6 +17200,16 @@ func ParseGetClientByIdResponse(rsp *http.Response) (*GetClientByIdResponse, err
 		HTTPResponse: rsp,
 	}
 
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest ClientResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	}
+
 	return response, nil
 }
 
@@ -16699,6 +17224,16 @@ func ParseUpdateClientResponse(rsp *http.Response) (*UpdateClientResponse, error
 	response := &UpdateClientResponse{
 		Body:         bodyBytes,
 		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest ClientResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
 	}
 
 	return response, nil
@@ -16717,6 +17252,16 @@ func ParseGetAllDocumentsResponse(rsp *http.Response) (*GetAllDocumentsResponse,
 		HTTPResponse: rsp,
 	}
 
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest PageResponseDocumentResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	}
+
 	return response, nil
 }
 
@@ -16731,6 +17276,16 @@ func ParseCreateCreditNoteResponse(rsp *http.Response) (*CreateCreditNoteRespons
 	response := &CreateCreditNoteResponse{
 		Body:         bodyBytes,
 		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest DocumentResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
 	}
 
 	return response, nil
@@ -16749,6 +17304,16 @@ func ParseCreateDebitNoteResponse(rsp *http.Response) (*CreateDebitNoteResponse,
 		HTTPResponse: rsp,
 	}
 
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest DocumentResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	}
+
 	return response, nil
 }
 
@@ -16763,6 +17328,16 @@ func ParseCreateElectronicPaymentReceiptResponse(rsp *http.Response) (*CreateEle
 	response := &CreateElectronicPaymentReceiptResponse{
 		Body:         bodyBytes,
 		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest DocumentResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
 	}
 
 	return response, nil
@@ -16781,6 +17356,16 @@ func ParseCreateExportInvoiceResponse(rsp *http.Response) (*CreateExportInvoiceR
 		HTTPResponse: rsp,
 	}
 
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest DocumentResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	}
+
 	return response, nil
 }
 
@@ -16795,6 +17380,16 @@ func ParseCreateInvoiceResponse(rsp *http.Response) (*CreateInvoiceResponse, err
 	response := &CreateInvoiceResponse{
 		Body:         bodyBytes,
 		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest DocumentResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
 	}
 
 	return response, nil
@@ -16813,6 +17408,16 @@ func ParseCreatePurchaseInvoiceResponse(rsp *http.Response) (*CreatePurchaseInvo
 		HTTPResponse: rsp,
 	}
 
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest DocumentResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	}
+
 	return response, nil
 }
 
@@ -16829,20 +17434,40 @@ func ParseCreateReceiptResponse(rsp *http.Response) (*CreateReceiptResponse, err
 		HTTPResponse: rsp,
 	}
 
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest DocumentResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	}
+
 	return response, nil
 }
 
-// ParseCreateReceiverMessageFromXmlResponse parses an HTTP response from a CreateReceiverMessageFromXmlWithResponse call
-func ParseCreateReceiverMessageFromXmlResponse(rsp *http.Response) (*CreateReceiverMessageFromXmlResponse, error) {
+// ParseCreateReceiverMessageResponse parses an HTTP response from a CreateReceiverMessageWithResponse call
+func ParseCreateReceiverMessageResponse(rsp *http.Response) (*CreateReceiverMessageResponse, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
 	defer func() { _ = rsp.Body.Close() }()
 	if err != nil {
 		return nil, err
 	}
 
-	response := &CreateReceiverMessageFromXmlResponse{
+	response := &CreateReceiverMessageResponse{
 		Body:         bodyBytes,
 		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest DocumentResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
 	}
 
 	return response, nil
@@ -16861,6 +17486,16 @@ func ParseGetDocumentByIdResponse(rsp *http.Response) (*GetDocumentByIdResponse,
 		HTTPResponse: rsp,
 	}
 
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest DocumentResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	}
+
 	return response, nil
 }
 
@@ -16875,6 +17510,16 @@ func ParseGetDocumentPdfResponse(rsp *http.Response) (*GetDocumentPdfResponse, e
 	response := &GetDocumentPdfResponse{
 		Body:         bodyBytes,
 		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest map[string]string
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
 	}
 
 	return response, nil
@@ -16893,6 +17538,16 @@ func ParseRegenerateDocumentPdfResponse(rsp *http.Response) (*RegenerateDocument
 		HTTPResponse: rsp,
 	}
 
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest map[string]string
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	}
+
 	return response, nil
 }
 
@@ -16907,6 +17562,16 @@ func ParseSendDocumentEmailResponse(rsp *http.Response) (*SendDocumentEmailRespo
 	response := &SendDocumentEmailResponse{
 		Body:         bodyBytes,
 		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest map[string]interface{}
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
 	}
 
 	return response, nil
@@ -16977,6 +17642,16 @@ func ParseGetAllIssuersResponse(rsp *http.Response) (*GetAllIssuersResponse, err
 		HTTPResponse: rsp,
 	}
 
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest PageResponseTenantIssuerResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	}
+
 	return response, nil
 }
 
@@ -16991,6 +17666,16 @@ func ParseCreateIssuerResponse(rsp *http.Response) (*CreateIssuerResponse, error
 	response := &CreateIssuerResponse{
 		Body:         bodyBytes,
 		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest TenantIssuerResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
 	}
 
 	return response, nil
@@ -17009,6 +17694,16 @@ func ParseDeleteIssuerResponse(rsp *http.Response) (*DeleteIssuerResponse, error
 		HTTPResponse: rsp,
 	}
 
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest map[string]string
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	}
+
 	return response, nil
 }
 
@@ -17023,6 +17718,16 @@ func ParseGetIssuerByIdResponse(rsp *http.Response) (*GetIssuerByIdResponse, err
 	response := &GetIssuerByIdResponse{
 		Body:         bodyBytes,
 		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest TenantIssuerResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
 	}
 
 	return response, nil
@@ -17041,6 +17746,16 @@ func ParseUpdateIssuerResponse(rsp *http.Response) (*UpdateIssuerResponse, error
 		HTTPResponse: rsp,
 	}
 
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest TenantIssuerResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	}
+
 	return response, nil
 }
 
@@ -17055,6 +17770,16 @@ func ParseSetDefaultIssuerResponse(rsp *http.Response) (*SetDefaultIssuerRespons
 	response := &SetDefaultIssuerResponse{
 		Body:         bodyBytes,
 		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest TenantIssuerResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
 	}
 
 	return response, nil
@@ -17073,6 +17798,16 @@ func ParseCreatePaymentResponse(rsp *http.Response) (*CreatePaymentResponse, err
 		HTTPResponse: rsp,
 	}
 
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest DocumentPaymentResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	}
+
 	return response, nil
 }
 
@@ -17087,6 +17822,16 @@ func ParseVoidApplicationResponse(rsp *http.Response) (*VoidApplicationResponse,
 	response := &VoidApplicationResponse{
 		Body:         bodyBytes,
 		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest DocumentPaymentApplicationResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
 	}
 
 	return response, nil
@@ -17105,6 +17850,16 @@ func ParseGetClientStatementResponse(rsp *http.Response) (*GetClientStatementRes
 		HTTPResponse: rsp,
 	}
 
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest DocumentPaymentStatementResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	}
+
 	return response, nil
 }
 
@@ -17119,6 +17874,16 @@ func ParseGetPaymentResponse(rsp *http.Response) (*GetPaymentResponse, error) {
 	response := &GetPaymentResponse{
 		Body:         bodyBytes,
 		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest DocumentPaymentResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
 	}
 
 	return response, nil
@@ -17137,6 +17902,16 @@ func ParseApplyPaymentResponse(rsp *http.Response) (*ApplyPaymentResponse, error
 		HTTPResponse: rsp,
 	}
 
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest DocumentPaymentResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	}
+
 	return response, nil
 }
 
@@ -17151,6 +17926,16 @@ func ParseVoidPaymentResponse(rsp *http.Response) (*VoidPaymentResponse, error) 
 	response := &VoidPaymentResponse{
 		Body:         bodyBytes,
 		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest DocumentPaymentResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
 	}
 
 	return response, nil
@@ -17169,6 +17954,16 @@ func ParseGetSequencesResponse(rsp *http.Response) (*GetSequencesResponse, error
 		HTTPResponse: rsp,
 	}
 
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest []SequenceResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	}
+
 	return response, nil
 }
 
@@ -17183,6 +17978,16 @@ func ParseUpdateSequenceResponse(rsp *http.Response) (*UpdateSequenceResponse, e
 	response := &UpdateSequenceResponse{
 		Body:         bodyBytes,
 		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest SequenceResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
 	}
 
 	return response, nil
@@ -17201,6 +18006,16 @@ func ParseGetAgriculturalProducerResponse(rsp *http.Response) (*GetAgriculturalP
 		HTTPResponse: rsp,
 	}
 
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest ProducerRegistryResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	}
+
 	return response, nil
 }
 
@@ -17215,6 +18030,16 @@ func ParseSearchCabysResponse(rsp *http.Response) (*SearchCabysResponse, error) 
 	response := &SearchCabysResponse{
 		Body:         bodyBytes,
 		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest CabysQueryResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
 	}
 
 	return response, nil
@@ -17233,6 +18058,16 @@ func ParseGetCabysByCodeResponse(rsp *http.Response) (*GetCabysByCodeResponse, e
 		HTTPResponse: rsp,
 	}
 
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest CabysQueryResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	}
+
 	return response, nil
 }
 
@@ -17249,20 +18084,40 @@ func ParseGetExchangeRatesResponse(rsp *http.Response) (*GetExchangeRatesRespons
 		HTTPResponse: rsp,
 	}
 
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest ExchangeRateResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	}
+
 	return response, nil
 }
 
-// ParseGetExonerationResponse parses an HTTP response from a GetExonerationWithResponse call
-func ParseGetExonerationResponse(rsp *http.Response) (*GetExonerationResponse, error) {
+// ParseGetTaxAuthorityExonerationResponse parses an HTTP response from a GetTaxAuthorityExonerationWithResponse call
+func ParseGetTaxAuthorityExonerationResponse(rsp *http.Response) (*GetTaxAuthorityExonerationResponse, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
 	defer func() { _ = rsp.Body.Close() }()
 	if err != nil {
 		return nil, err
 	}
 
-	response := &GetExonerationResponse{
+	response := &GetTaxAuthorityExonerationResponse{
 		Body:         bodyBytes,
 		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest TaxAuthorityExonerationResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
 	}
 
 	return response, nil
@@ -17281,6 +18136,16 @@ func ParseGetFishingProducerResponse(rsp *http.Response) (*GetFishingProducerRes
 		HTTPResponse: rsp,
 	}
 
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest ProducerRegistryResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	}
+
 	return response, nil
 }
 
@@ -17295,6 +18160,16 @@ func ParseGetTaxpayerResponse(rsp *http.Response) (*GetTaxpayerResponse, error) 
 	response := &GetTaxpayerResponse{
 		Body:         bodyBytes,
 		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest TaxpayerInfoResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
 	}
 
 	return response, nil
@@ -17313,6 +18188,16 @@ func ParseGetTaxpayerInfoResponse(rsp *http.Response) (*GetTaxpayerInfoResponse,
 		HTTPResponse: rsp,
 	}
 
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest TaxpayerInfoResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	}
+
 	return response, nil
 }
 
@@ -17327,6 +18212,16 @@ func ParseGetTenantResponse(rsp *http.Response) (*GetTenantResponse, error) {
 	response := &GetTenantResponse{
 		Body:         bodyBytes,
 		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest TenantResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
 	}
 
 	return response, nil
@@ -17345,6 +18240,16 @@ func ParseUpdateTenantResponse(rsp *http.Response) (*UpdateTenantResponse, error
 		HTTPResponse: rsp,
 	}
 
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest TenantResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	}
+
 	return response, nil
 }
 
@@ -17359,6 +18264,16 @@ func ParseGetInvoicingStatusResponse(rsp *http.Response) (*GetInvoicingStatusRes
 	response := &GetInvoicingStatusResponse{
 		Body:         bodyBytes,
 		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest TenantInvoicingStatusResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
 	}
 
 	return response, nil
@@ -17393,6 +18308,16 @@ func ParseGetLogoResponse(rsp *http.Response) (*GetLogoResponse, error) {
 		HTTPResponse: rsp,
 	}
 
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest TenantLogoResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	}
+
 	return response, nil
 }
 
@@ -17407,6 +18332,16 @@ func ParseUploadLogoResponse(rsp *http.Response) (*UploadLogoResponse, error) {
 	response := &UploadLogoResponse{
 		Body:         bodyBytes,
 		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest TenantLogoResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
 	}
 
 	return response, nil
@@ -17425,6 +18360,16 @@ func ParseUpdateSecretsResponse(rsp *http.Response) (*UpdateSecretsResponse, err
 		HTTPResponse: rsp,
 	}
 
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest TenantInvoicingStatusResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	}
+
 	return response, nil
 }
 
@@ -17441,6 +18386,16 @@ func ParseGetWebhooksResponse(rsp *http.Response) (*GetWebhooksResponse, error) 
 		HTTPResponse: rsp,
 	}
 
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest []WebhookEndpointResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	}
+
 	return response, nil
 }
 
@@ -17455,6 +18410,16 @@ func ParseCreateWebhookResponse(rsp *http.Response) (*CreateWebhookResponse, err
 	response := &CreateWebhookResponse{
 		Body:         bodyBytes,
 		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest WebhookEndpointResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
 	}
 
 	return response, nil
@@ -17489,6 +18454,16 @@ func ParseGetWebhookResponse(rsp *http.Response) (*GetWebhookResponse, error) {
 		HTTPResponse: rsp,
 	}
 
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest WebhookEndpointResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	}
+
 	return response, nil
 }
 
@@ -17503,6 +18478,16 @@ func ParseUpdateWebhookResponse(rsp *http.Response) (*UpdateWebhookResponse, err
 	response := &UpdateWebhookResponse{
 		Body:         bodyBytes,
 		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest WebhookEndpointResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
 	}
 
 	return response, nil
@@ -17521,6 +18506,16 @@ func ParseGetLogsResponse(rsp *http.Response) (*GetLogsResponse, error) {
 		HTTPResponse: rsp,
 	}
 
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest []WebhookDeliveryLogResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	}
+
 	return response, nil
 }
 
@@ -17535,6 +18530,16 @@ func ParseTestWebhookResponse(rsp *http.Response) (*TestWebhookResponse, error) 
 	response := &TestWebhookResponse{
 		Body:         bodyBytes,
 		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest WebhookTestResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
 	}
 
 	return response, nil
