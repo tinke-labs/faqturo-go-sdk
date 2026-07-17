@@ -1,4 +1,4 @@
-name: CI
+name: Faqturo GO SDK CI
 
 on:
   pull_request:
@@ -9,7 +9,8 @@ permissions:
   contents: read
 
 jobs:
-  test:
+  verify:
+    name: Generate, test, vet and lint
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
