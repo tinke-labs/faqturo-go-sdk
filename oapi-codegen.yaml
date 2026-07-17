@@ -1,0 +1,8 @@
+package: faqturo
+output: faqturo.gen.go
+generate:
+  models: true
+  client: true
+output-options:
+  nullable-type: true
+  skip-prune: true
