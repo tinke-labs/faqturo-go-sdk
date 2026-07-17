@@ -1,0 +1,3 @@
+Backend SHA: 830815d544ddd03eb9e4bd29129ac24d2a002375
+ openapi/faqturo-sdk.json | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
