@@ -10,6 +10,9 @@ import (
 
 func TestAPIKeyClientAddsAuthenticationAndVersion(t *testing.T) {
 	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		if got := r.URL.Path; got != "/api/catalogs/tax-codes" {
+			t.Errorf("path = %q", got)
+		}
 		if got := r.Header.Get("X-API-KEY"); got != "secret" {
 			t.Errorf("API key = %q", got)
 		}
@@ -33,6 +36,25 @@ func TestAPIKeyClientAddsAuthenticationAndVersion(t *testing.T) {
 	}
 }
 
+func TestAPIKeyClientPreservesExplicitAPIPath(t *testing.T) {
+	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		if got := r.URL.Path; got != "/api/catalogs/tax-codes" {
+			t.Errorf("path = %q", got)
+		}
+		w.Header().Set("Content-Type", "application/json")
+		_, _ = w.Write([]byte(`[]`))
+	}))
+	defer server.Close()
+
+	client, err := NewAPIKeyClient(server.URL+"/api", "secret")
+	if err != nil {
+		t.Fatal(err)
+	}
+	if _, err := client.GetTaxCodesWithResponse(context.Background(), nil); err != nil {
+		t.Fatal(err)
+	}
+}
+
 func TestStableOperationNamesAreGenerated(t *testing.T) {
 	client := &ClientWithResponses{}
 	_ = client.UpdateCashRegisterSequenceWithResponse
@@ -45,5 +67,11 @@ func TestAPIError(t *testing.T) {
 	apiErr, ok := err.(*APIError)
 	if !ok || apiErr.StatusCode != 422 || apiErr.Message != "invalid" {
 		t.Fatalf("unexpected error: %#v", err)
+	}
+}
+
+func TestAPIKeyClientRejectsInvalidServer(t *testing.T) {
+	if _, err := NewAPIKeyClient("not a URL", "secret"); err == nil {
+		t.Fatal("expected invalid server error")
 	}
 }

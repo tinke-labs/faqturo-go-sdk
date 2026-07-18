@@ -4,6 +4,8 @@ import (
 	"context"
 	"errors"
 	"net/http"
+	"net/url"
+	"strings"
 	"time"
 )
 
@@ -55,6 +57,10 @@ func NewAPIKeyClient(server, apiKey string, options ...ClientOption) (*ClientWit
 	if apiKey == "" {
 		return nil, errors.New("faqturo: API key is required")
 	}
+	apiServer, err := normalizeAPIKeyServer(server)
+	if err != nil {
+		return nil, err
+	}
 	auth := func(_ context.Context, req *http.Request) error {
 		req.Header.Set("X-API-KEY", apiKey)
 		req.Header.Set("API-Version", "v1")
@@ -64,5 +70,20 @@ func NewAPIKeyClient(server, apiKey string, options ...ClientOption) (*ClientWit
 		WithHTTPClient(&http.Client{Timeout: 30 * time.Second}),
 		WithRequestEditorFn(auth),
 	}
-	return NewClientWithResponses(server, append(defaults, options...)...)
+	return NewClientWithResponses(apiServer, append(defaults, options...)...)
+}
+
+// normalizeAPIKeyServer accepts Faqturo's public host and resolves the API
+// context path used by the API-key surface. Supplying an explicit path keeps
+// that path unchanged, so reverse proxies and self-hosted deployments remain
+// configurable.
+func normalizeAPIKeyServer(server string) (string, error) {
+	parsed, err := url.Parse(strings.TrimSpace(server))
+	if err != nil || parsed.Scheme == "" || parsed.Host == "" {
+		return "", errors.New("faqturo: API server URL is required")
+	}
+	if parsed.Path == "" || parsed.Path == "/" {
+		parsed.Path = "/api"
+	}
+	return strings.TrimRight(parsed.String(), "/"), nil
 }

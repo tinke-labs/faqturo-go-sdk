@@ -20,6 +20,11 @@ client, err := faqturo.NewAPIKeyClient(
 `WithHTTPClient`, `WithTimeout`, and `WithRequestEditor` to configure TLS certificates,
 timeouts, proxies, tracing, or other transport behavior.
 
+Pass the public Faqturo host (for example `https://api.faqturo.com` or
+`http://localhost:4004`): `NewAPIKeyClient` adds the `/api` context path. If
+your deployment exposes a different explicit path, pass it in the URL and it
+will be preserved.
+
 ## Common workflows
 
 - Invoicing: construct an `InvoiceRequest` and call `CreateInvoiceWithResponse`.
