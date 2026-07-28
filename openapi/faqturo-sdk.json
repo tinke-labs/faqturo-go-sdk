@@ -6604,6 +6604,12 @@
         "type" : "object",
         "description" : "Solicitud base para emitir documentos electronicos. El tipo de documento se define por el endpoint usado.",
         "properties" : {
+          "idempotencyKey" : {
+            "type" : "string",
+            "description" : "Clave estable de la operacion. Repetir la misma solicitud con esta clave devuelve el documento original.",
+            "maxLength" : 128,
+            "pattern" : "^[A-Za-z0-9._:-]+$"
+          },
           "type" : {
             "type" : "string",
             "description" : "Asignado por el endpoint, no enviar en el body.",

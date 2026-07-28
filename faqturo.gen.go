@@ -2602,6 +2602,9 @@ type DocumentRequest struct {
 	// ExchangeRate Opcional cuando currency=CRC, donde se usa 1.00000. Requerido cuando currency no es CRC.
 	ExchangeRate *Decimal `json:"exchangeRate,omitempty"`
 
+	// IdempotencyKey Clave estable de la operacion. Repetir la misma solicitud con esta clave devuelve el documento original.
+	IdempotencyKey *string `json:"idempotencyKey,omitempty"`
+
 	// IssuerActivityCode Codigo CIIU4 del emisor. Requerido para factura electronica, factura de exportacion, factura de compra y tiquete; opcional para notas cuando puede derivarse del tenant.
 	IssuerActivityCode *string `json:"issuerActivityCode,omitempty"`
 

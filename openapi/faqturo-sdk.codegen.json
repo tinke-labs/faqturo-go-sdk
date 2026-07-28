@@ -1983,6 +1983,12 @@
             "type": "number",
             "x-go-type": "Decimal"
           },
+          "idempotencyKey": {
+            "description": "Clave estable de la operacion. Repetir la misma solicitud con esta clave devuelve el documento original.",
+            "maxLength": 128,
+            "pattern": "^[A-Za-z0-9._:-]+$",
+            "type": "string"
+          },
           "issuerActivityCode": {
             "description": "Codigo CIIU4 del emisor. Requerido para factura electronica, factura de exportacion, factura de compra y tiquete; opcional para notas cuando puede derivarse del tenant.",
             "example": "6201.0",
