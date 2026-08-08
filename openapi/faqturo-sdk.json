@@ -1039,8 +1039,8 @@
           "required" : true
         },
         "responses" : {
-          "200" : {
-            "description" : "OK",
+          "201" : {
+            "description" : "Endpoint creado",
             "content" : {
               "application/json" : {
                 "schema" : {
@@ -2036,8 +2036,8 @@
           "required" : true
         },
         "responses" : {
-          "200" : {
-            "description" : "OK",
+          "201" : {
+            "description" : "Cliente creado",
             "content" : {
               "application/json" : {
                 "schema" : {

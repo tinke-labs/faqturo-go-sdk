@@ -6044,7 +6044,7 @@
           "required": true
         },
         "responses": {
-          "200": {
+          "201": {
             "content": {
               "application/json": {
                 "schema": {
@@ -6052,7 +6052,7 @@
                 }
               }
             },
-            "description": "OK"
+            "description": "Cliente creado"
           }
         },
         "security": [
@@ -9164,7 +9164,7 @@
           "required": true
         },
         "responses": {
-          "200": {
+          "201": {
             "content": {
               "application/json": {
                 "schema": {
@@ -9172,7 +9172,7 @@
                 }
               }
             },
-            "description": "OK"
+            "description": "Endpoint creado"
           }
         },
         "security": [

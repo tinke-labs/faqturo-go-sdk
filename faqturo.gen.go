@@ -13256,7 +13256,7 @@ func (r GetAllClientsResponse) ContentType() string {
 type CreateClientResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
-	JSON200      *ClientResponse
+	JSON201      *ClientResponse
 }
 
 // Status returns HTTPResponse.Status
@@ -15052,7 +15052,7 @@ func (r GetWebhooksResponse) ContentType() string {
 type CreateWebhookResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
-	JSON200      *WebhookEndpointResponse
+	JSON201      *WebhookEndpointResponse
 }
 
 // Status returns HTTPResponse.Status
@@ -17183,12 +17183,12 @@ func ParseCreateClientResponse(rsp *http.Response) (*CreateClientResponse, error
 	}
 
 	switch {
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 201:
 		var dest ClientResponse
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
-		response.JSON200 = &dest
+		response.JSON201 = &dest
 
 	}
 
@@ -18703,12 +18703,12 @@ func ParseCreateWebhookResponse(rsp *http.Response) (*CreateWebhookResponse, err
 	}
 
 	switch {
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 201:
 		var dest WebhookEndpointResponse
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
-		response.JSON200 = &dest
+		response.JSON201 = &dest
 
 	}
 
