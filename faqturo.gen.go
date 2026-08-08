@@ -1172,6 +1172,21 @@ func (e GetReceiverByIdParamsAPIVersion) Valid() bool {
 	}
 }
 
+// Defines values for UpdateReceiverParamsAPIVersion.
+const (
+	UpdateReceiverParamsAPIVersionV1 UpdateReceiverParamsAPIVersion = "v1"
+)
+
+// Valid indicates whether the value is a known member of the UpdateReceiverParamsAPIVersion enum.
+func (e UpdateReceiverParamsAPIVersion) Valid() bool {
+	switch e {
+	case UpdateReceiverParamsAPIVersionV1:
+		return true
+	default:
+		return false
+	}
+}
+
 // Defines values for DeleteClientParamsAPIVersion.
 const (
 	DeleteClientParamsAPIVersionV1 DeleteClientParamsAPIVersion = "v1"
@@ -1972,13 +1987,13 @@ func (e GetLogsParamsAPIVersion) Valid() bool {
 
 // Defines values for TestWebhookParamsAPIVersion.
 const (
-	TestWebhookParamsAPIVersionV1 TestWebhookParamsAPIVersion = "v1"
+	V1 TestWebhookParamsAPIVersion = "v1"
 )
 
 // Valid indicates whether the value is a known member of the TestWebhookParamsAPIVersion enum.
 func (e TestWebhookParamsAPIVersion) Valid() bool {
 	switch e {
-	case TestWebhookParamsAPIVersionV1:
+	case V1:
 		return true
 	default:
 		return false
@@ -2127,7 +2142,7 @@ type ClientReceiverRequest struct {
 	Email                *openapi_types.Email `json:"email,omitempty"`
 	Fax                  *PhoneRequest        `json:"fax,omitempty"`
 	Phone                *PhoneRequest        `json:"phone,omitempty"`
-	ReceiverActivityCode string               `json:"receiverActivityCode"`
+	ReceiverActivityCode *string              `json:"receiverActivityCode,omitempty"`
 }
 
 // ClientReceiverResponse defines model for ClientReceiverResponse.
@@ -2159,9 +2174,10 @@ type ClientResponse struct {
 
 // ClientUpdateRequest defines model for ClientUpdateRequest.
 type ClientUpdateRequest struct {
-	CommercialName *string              `json:"commercialName,omitempty"`
-	Email          *openapi_types.Email `json:"email,omitempty"`
-	Name           *string              `json:"name,omitempty"`
+	CommercialName      *string                     `json:"commercialName,omitempty"`
+	Email               *openapi_types.Email        `json:"email,omitempty"`
+	LegalIdentification *LegalIdentificationRequest `json:"legalIdentification,omitempty"`
+	Name                *string                     `json:"name,omitempty"`
 }
 
 // DocumentAdditionalInformationDto defines model for DocumentAdditionalInformationDto.
@@ -2602,7 +2618,7 @@ type DocumentRequest struct {
 	// ExchangeRate Opcional cuando currency=CRC, donde se usa 1.00000. Requerido cuando currency no es CRC.
 	ExchangeRate *Decimal `json:"exchangeRate,omitempty"`
 
-	// IdempotencyKey Clave estable de la operacion. Repetir la misma solicitud con esta clave devuelve el documento original.
+	// IdempotencyKey Clave estable de la operación. Repetir la misma solicitud con esta clave devuelve el documento original.
 	IdempotencyKey *string `json:"idempotencyKey,omitempty"`
 
 	// IssuerActivityCode Codigo CIIU4 del emisor. Requerido para factura electronica, factura de exportacion, factura de compra y tiquete; opcional para notas cuando puede derivarse del tenant.
@@ -3729,6 +3745,14 @@ type GetReceiverByIdParams struct {
 // GetReceiverByIdParamsAPIVersion defines parameters for GetReceiverById.
 type GetReceiverByIdParamsAPIVersion string
 
+// UpdateReceiverParams defines parameters for UpdateReceiver.
+type UpdateReceiverParams struct {
+	APIVersion *UpdateReceiverParamsAPIVersion `json:"API-Version,omitempty"`
+}
+
+// UpdateReceiverParamsAPIVersion defines parameters for UpdateReceiver.
+type UpdateReceiverParamsAPIVersion string
+
 // DeleteClientParams defines parameters for DeleteClient.
 type DeleteClientParams struct {
 	APIVersion *DeleteClientParamsAPIVersion `json:"API-Version,omitempty"`
@@ -3767,7 +3791,8 @@ type GetAllDocumentsParamsAPIVersion string
 
 // CreateCreditNoteParams defines parameters for CreateCreditNote.
 type CreateCreditNoteParams struct {
-	APIVersion *CreateCreditNoteParamsAPIVersion `json:"API-Version,omitempty"`
+	IdempotencyKey *string                           `json:"Idempotency-Key,omitempty"`
+	APIVersion     *CreateCreditNoteParamsAPIVersion `json:"API-Version,omitempty"`
 }
 
 // CreateCreditNoteParamsAPIVersion defines parameters for CreateCreditNote.
@@ -3775,7 +3800,8 @@ type CreateCreditNoteParamsAPIVersion string
 
 // CreateDebitNoteParams defines parameters for CreateDebitNote.
 type CreateDebitNoteParams struct {
-	APIVersion *CreateDebitNoteParamsAPIVersion `json:"API-Version,omitempty"`
+	IdempotencyKey *string                          `json:"Idempotency-Key,omitempty"`
+	APIVersion     *CreateDebitNoteParamsAPIVersion `json:"API-Version,omitempty"`
 }
 
 // CreateDebitNoteParamsAPIVersion defines parameters for CreateDebitNote.
@@ -3783,7 +3809,8 @@ type CreateDebitNoteParamsAPIVersion string
 
 // CreateElectronicPaymentReceiptParams defines parameters for CreateElectronicPaymentReceipt.
 type CreateElectronicPaymentReceiptParams struct {
-	APIVersion *CreateElectronicPaymentReceiptParamsAPIVersion `json:"API-Version,omitempty"`
+	IdempotencyKey *string                                         `json:"Idempotency-Key,omitempty"`
+	APIVersion     *CreateElectronicPaymentReceiptParamsAPIVersion `json:"API-Version,omitempty"`
 }
 
 // CreateElectronicPaymentReceiptParamsAPIVersion defines parameters for CreateElectronicPaymentReceipt.
@@ -3791,7 +3818,8 @@ type CreateElectronicPaymentReceiptParamsAPIVersion string
 
 // CreateExportInvoiceParams defines parameters for CreateExportInvoice.
 type CreateExportInvoiceParams struct {
-	APIVersion *CreateExportInvoiceParamsAPIVersion `json:"API-Version,omitempty"`
+	IdempotencyKey *string                              `json:"Idempotency-Key,omitempty"`
+	APIVersion     *CreateExportInvoiceParamsAPIVersion `json:"API-Version,omitempty"`
 }
 
 // CreateExportInvoiceParamsAPIVersion defines parameters for CreateExportInvoice.
@@ -3799,7 +3827,8 @@ type CreateExportInvoiceParamsAPIVersion string
 
 // CreateInvoiceParams defines parameters for CreateInvoice.
 type CreateInvoiceParams struct {
-	APIVersion *CreateInvoiceParamsAPIVersion `json:"API-Version,omitempty"`
+	IdempotencyKey *string                        `json:"Idempotency-Key,omitempty"`
+	APIVersion     *CreateInvoiceParamsAPIVersion `json:"API-Version,omitempty"`
 }
 
 // CreateInvoiceParamsAPIVersion defines parameters for CreateInvoice.
@@ -3807,7 +3836,8 @@ type CreateInvoiceParamsAPIVersion string
 
 // CreatePurchaseInvoiceParams defines parameters for CreatePurchaseInvoice.
 type CreatePurchaseInvoiceParams struct {
-	APIVersion *CreatePurchaseInvoiceParamsAPIVersion `json:"API-Version,omitempty"`
+	IdempotencyKey *string                                `json:"Idempotency-Key,omitempty"`
+	APIVersion     *CreatePurchaseInvoiceParamsAPIVersion `json:"API-Version,omitempty"`
 }
 
 // CreatePurchaseInvoiceParamsAPIVersion defines parameters for CreatePurchaseInvoice.
@@ -3815,7 +3845,8 @@ type CreatePurchaseInvoiceParamsAPIVersion string
 
 // CreateReceiptParams defines parameters for CreateReceipt.
 type CreateReceiptParams struct {
-	APIVersion *CreateReceiptParamsAPIVersion `json:"API-Version,omitempty"`
+	IdempotencyKey *string                        `json:"Idempotency-Key,omitempty"`
+	APIVersion     *CreateReceiptParamsAPIVersion `json:"API-Version,omitempty"`
 }
 
 // CreateReceiptParamsAPIVersion defines parameters for CreateReceipt.
@@ -4217,6 +4248,9 @@ type CreateOrUpdateReceiverJSONRequestBody = ClientReceiverRequest
 // UpdateDefaultReceiverJSONRequestBody defines body for UpdateDefaultReceiver for application/json ContentType.
 type UpdateDefaultReceiverJSONRequestBody UpdateDefaultReceiverJSONBody
 
+// UpdateReceiverJSONRequestBody defines body for UpdateReceiver for application/json ContentType.
+type UpdateReceiverJSONRequestBody = ClientReceiverRequest
+
 // UpdateClientJSONRequestBody defines body for UpdateClient for application/json ContentType.
 type UpdateClientJSONRequestBody = ClientUpdateRequest
 
@@ -4501,6 +4535,11 @@ type ClientInterface interface {
 
 	// GetReceiverById request
 	GetReceiverById(ctx context.Context, clientId int64, receiverId int64, params *GetReceiverByIdParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// UpdateReceiverWithBody request with any body
+	UpdateReceiverWithBody(ctx context.Context, clientId int64, receiverId int64, params *UpdateReceiverParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	UpdateReceiver(ctx context.Context, clientId int64, receiverId int64, params *UpdateReceiverParams, body UpdateReceiverJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// DeleteClient request
 	DeleteClient(ctx context.Context, id int64, params *DeleteClientParams, reqEditors ...RequestEditorFn) (*http.Response, error)
@@ -5317,6 +5356,30 @@ func (c *Client) DeleteReceiver(ctx context.Context, clientId int64, receiverId 
 
 func (c *Client) GetReceiverById(ctx context.Context, clientId int64, receiverId int64, params *GetReceiverByIdParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewGetReceiverByIdRequest(c.Server, clientId, receiverId, params)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) UpdateReceiverWithBody(ctx context.Context, clientId int64, receiverId int64, params *UpdateReceiverParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewUpdateReceiverRequestWithBody(c.Server, clientId, receiverId, params, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) UpdateReceiver(ctx context.Context, clientId int64, receiverId int64, params *UpdateReceiverParams, body UpdateReceiverJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewUpdateReceiverRequest(c.Server, clientId, receiverId, params, body)
 	if err != nil {
 		return nil, err
 	}
@@ -8750,6 +8813,75 @@ func NewGetReceiverByIdRequest(server string, clientId int64, receiverId int64, 
 	return req, nil
 }
 
+// NewUpdateReceiverRequest calls the generic UpdateReceiver builder with application/json body
+func NewUpdateReceiverRequest(server string, clientId int64, receiverId int64, params *UpdateReceiverParams, body UpdateReceiverJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewUpdateReceiverRequestWithBody(server, clientId, receiverId, params, "application/json", bodyReader)
+}
+
+// NewUpdateReceiverRequestWithBody generates requests for UpdateReceiver with any type of body
+func NewUpdateReceiverRequestWithBody(server string, clientId int64, receiverId int64, params *UpdateReceiverParams, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "clientId", clientId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "integer", Format: "int64"})
+	if err != nil {
+		return nil, err
+	}
+
+	var pathParam1 string
+
+	pathParam1, err = runtime.StyleParamWithOptions("simple", false, "receiverId", receiverId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "integer", Format: "int64"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/clients/%s/receivers/%s", pathParam0, pathParam1)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPatch, queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
+
+	if params != nil {
+
+		if params.APIVersion != nil {
+			var headerParam0 string
+
+			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "API-Version", *params.APIVersion, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: ""})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("API-Version", headerParam0)
+		}
+
+	}
+
+	return req, nil
+}
+
 // NewDeleteClientRequest generates requests for DeleteClient
 func NewDeleteClientRequest(server string, id int64, params *DeleteClientParams) (*http.Request, error) {
 	var err error
@@ -9050,15 +9182,26 @@ func NewCreateCreditNoteRequestWithBody(server string, params *CreateCreditNoteP
 
 	if params != nil {
 
-		if params.APIVersion != nil {
+		if params.IdempotencyKey != nil {
 			var headerParam0 string
 
-			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "API-Version", *params.APIVersion, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: ""})
+			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "Idempotency-Key", *params.IdempotencyKey, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: ""})
 			if err != nil {
 				return nil, err
 			}
 
-			req.Header.Set("API-Version", headerParam0)
+			req.Header.Set("Idempotency-Key", headerParam0)
+		}
+
+		if params.APIVersion != nil {
+			var headerParam1 string
+
+			headerParam1, err = runtime.StyleParamWithOptions("simple", false, "API-Version", *params.APIVersion, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: ""})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("API-Version", headerParam1)
 		}
 
 	}
@@ -9105,15 +9248,26 @@ func NewCreateDebitNoteRequestWithBody(server string, params *CreateDebitNotePar
 
 	if params != nil {
 
-		if params.APIVersion != nil {
+		if params.IdempotencyKey != nil {
 			var headerParam0 string
 
-			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "API-Version", *params.APIVersion, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: ""})
+			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "Idempotency-Key", *params.IdempotencyKey, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: ""})
 			if err != nil {
 				return nil, err
 			}
 
-			req.Header.Set("API-Version", headerParam0)
+			req.Header.Set("Idempotency-Key", headerParam0)
+		}
+
+		if params.APIVersion != nil {
+			var headerParam1 string
+
+			headerParam1, err = runtime.StyleParamWithOptions("simple", false, "API-Version", *params.APIVersion, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: ""})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("API-Version", headerParam1)
 		}
 
 	}
@@ -9160,15 +9314,26 @@ func NewCreateElectronicPaymentReceiptRequestWithBody(server string, params *Cre
 
 	if params != nil {
 
-		if params.APIVersion != nil {
+		if params.IdempotencyKey != nil {
 			var headerParam0 string
 
-			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "API-Version", *params.APIVersion, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: ""})
+			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "Idempotency-Key", *params.IdempotencyKey, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: ""})
 			if err != nil {
 				return nil, err
 			}
 
-			req.Header.Set("API-Version", headerParam0)
+			req.Header.Set("Idempotency-Key", headerParam0)
+		}
+
+		if params.APIVersion != nil {
+			var headerParam1 string
+
+			headerParam1, err = runtime.StyleParamWithOptions("simple", false, "API-Version", *params.APIVersion, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: ""})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("API-Version", headerParam1)
 		}
 
 	}
@@ -9215,15 +9380,26 @@ func NewCreateExportInvoiceRequestWithBody(server string, params *CreateExportIn
 
 	if params != nil {
 
-		if params.APIVersion != nil {
+		if params.IdempotencyKey != nil {
 			var headerParam0 string
 
-			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "API-Version", *params.APIVersion, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: ""})
+			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "Idempotency-Key", *params.IdempotencyKey, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: ""})
 			if err != nil {
 				return nil, err
 			}
 
-			req.Header.Set("API-Version", headerParam0)
+			req.Header.Set("Idempotency-Key", headerParam0)
+		}
+
+		if params.APIVersion != nil {
+			var headerParam1 string
+
+			headerParam1, err = runtime.StyleParamWithOptions("simple", false, "API-Version", *params.APIVersion, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: ""})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("API-Version", headerParam1)
 		}
 
 	}
@@ -9270,15 +9446,26 @@ func NewCreateInvoiceRequestWithBody(server string, params *CreateInvoiceParams,
 
 	if params != nil {
 
-		if params.APIVersion != nil {
+		if params.IdempotencyKey != nil {
 			var headerParam0 string
 
-			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "API-Version", *params.APIVersion, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: ""})
+			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "Idempotency-Key", *params.IdempotencyKey, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: ""})
 			if err != nil {
 				return nil, err
 			}
 
-			req.Header.Set("API-Version", headerParam0)
+			req.Header.Set("Idempotency-Key", headerParam0)
+		}
+
+		if params.APIVersion != nil {
+			var headerParam1 string
+
+			headerParam1, err = runtime.StyleParamWithOptions("simple", false, "API-Version", *params.APIVersion, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: ""})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("API-Version", headerParam1)
 		}
 
 	}
@@ -9325,15 +9512,26 @@ func NewCreatePurchaseInvoiceRequestWithBody(server string, params *CreatePurcha
 
 	if params != nil {
 
-		if params.APIVersion != nil {
+		if params.IdempotencyKey != nil {
 			var headerParam0 string
 
-			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "API-Version", *params.APIVersion, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: ""})
+			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "Idempotency-Key", *params.IdempotencyKey, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: ""})
 			if err != nil {
 				return nil, err
 			}
 
-			req.Header.Set("API-Version", headerParam0)
+			req.Header.Set("Idempotency-Key", headerParam0)
+		}
+
+		if params.APIVersion != nil {
+			var headerParam1 string
+
+			headerParam1, err = runtime.StyleParamWithOptions("simple", false, "API-Version", *params.APIVersion, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: ""})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("API-Version", headerParam1)
 		}
 
 	}
@@ -9380,15 +9578,26 @@ func NewCreateReceiptRequestWithBody(server string, params *CreateReceiptParams,
 
 	if params != nil {
 
-		if params.APIVersion != nil {
+		if params.IdempotencyKey != nil {
 			var headerParam0 string
 
-			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "API-Version", *params.APIVersion, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: ""})
+			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "Idempotency-Key", *params.IdempotencyKey, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: ""})
 			if err != nil {
 				return nil, err
 			}
 
-			req.Header.Set("API-Version", headerParam0)
+			req.Header.Set("Idempotency-Key", headerParam0)
+		}
+
+		if params.APIVersion != nil {
+			var headerParam1 string
+
+			headerParam1, err = runtime.StyleParamWithOptions("simple", false, "API-Version", *params.APIVersion, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: ""})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("API-Version", headerParam1)
 		}
 
 	}
@@ -11904,6 +12113,11 @@ type ClientWithResponsesInterface interface {
 	// GetReceiverByIdWithResponse request
 	GetReceiverByIdWithResponse(ctx context.Context, clientId int64, receiverId int64, params *GetReceiverByIdParams, reqEditors ...RequestEditorFn) (*GetReceiverByIdResponse, error)
 
+	// UpdateReceiverWithBodyWithResponse request with any body
+	UpdateReceiverWithBodyWithResponse(ctx context.Context, clientId int64, receiverId int64, params *UpdateReceiverParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateReceiverResponse, error)
+
+	UpdateReceiverWithResponse(ctx context.Context, clientId int64, receiverId int64, params *UpdateReceiverParams, body UpdateReceiverJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateReceiverResponse, error)
+
 	// DeleteClientWithResponse request
 	DeleteClientWithResponse(ctx context.Context, id int64, params *DeleteClientParams, reqEditors ...RequestEditorFn) (*DeleteClientResponse, error)
 
@@ -13367,6 +13581,36 @@ func (r GetReceiverByIdResponse) ContentType() string {
 	return ""
 }
 
+type UpdateReceiverResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	JSON200      *ClientReceiverResponse
+}
+
+// Status returns HTTPResponse.Status
+func (r UpdateReceiverResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r UpdateReceiverResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r UpdateReceiverResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
 type DeleteClientResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
@@ -14808,7 +15052,7 @@ func (r GetWebhooksResponse) ContentType() string {
 type CreateWebhookResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
-	JSON201      *WebhookEndpointResponse
+	JSON200      *WebhookEndpointResponse
 }
 
 // Status returns HTTPResponse.Status
@@ -15440,6 +15684,23 @@ func (c *ClientWithResponses) GetReceiverByIdWithResponse(ctx context.Context, c
 		return nil, err
 	}
 	return ParseGetReceiverByIdResponse(rsp)
+}
+
+// UpdateReceiverWithBodyWithResponse request with arbitrary body returning *UpdateReceiverResponse
+func (c *ClientWithResponses) UpdateReceiverWithBodyWithResponse(ctx context.Context, clientId int64, receiverId int64, params *UpdateReceiverParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateReceiverResponse, error) {
+	rsp, err := c.UpdateReceiverWithBody(ctx, clientId, receiverId, params, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseUpdateReceiverResponse(rsp)
+}
+
+func (c *ClientWithResponses) UpdateReceiverWithResponse(ctx context.Context, clientId int64, receiverId int64, params *UpdateReceiverParams, body UpdateReceiverJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateReceiverResponse, error) {
+	rsp, err := c.UpdateReceiver(ctx, clientId, receiverId, params, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseUpdateReceiverResponse(rsp)
 }
 
 // DeleteClientWithResponse request returning *DeleteClientResponse
@@ -17174,6 +17435,32 @@ func ParseGetReceiverByIdResponse(rsp *http.Response) (*GetReceiverByIdResponse,
 	return response, nil
 }
 
+// ParseUpdateReceiverResponse parses an HTTP response from a UpdateReceiverWithResponse call
+func ParseUpdateReceiverResponse(rsp *http.Response) (*UpdateReceiverResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &UpdateReceiverResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest ClientReceiverResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	}
+
+	return response, nil
+}
+
 // ParseDeleteClientResponse parses an HTTP response from a DeleteClientWithResponse call
 func ParseDeleteClientResponse(rsp *http.Response) (*DeleteClientResponse, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
@@ -18416,12 +18703,12 @@ func ParseCreateWebhookResponse(rsp *http.Response) (*CreateWebhookResponse, err
 	}
 
 	switch {
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 201:
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
 		var dest WebhookEndpointResponse
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
-		response.JSON201 = &dest
+		response.JSON200 = &dest
 
 	}
 

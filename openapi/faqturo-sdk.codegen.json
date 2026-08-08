@@ -402,13 +402,10 @@
             "$ref": "#/components/schemas/PhoneRequest"
           },
           "receiverActivityCode": {
-            "pattern": "^\\d{4}\\.\\d$",
+            "pattern": "^$|^\\d{4}\\.\\d$",
             "type": "string"
           }
         },
-        "required": [
-          "receiverActivityCode"
-        ],
         "type": "object"
       },
       "ClientReceiverResponse": {
@@ -496,6 +493,9 @@
             "maxLength": 120,
             "minLength": 0,
             "type": "string"
+          },
+          "legalIdentification": {
+            "$ref": "#/components/schemas/LegalIdentificationRequest"
           },
           "name": {
             "maxLength": 120,
@@ -1984,8 +1984,9 @@
             "x-go-type": "Decimal"
           },
           "idempotencyKey": {
-            "description": "Clave estable de la operacion. Repetir la misma solicitud con esta clave devuelve el documento original.",
+            "description": "Clave estable de la operación. Repetir la misma solicitud con esta clave devuelve el documento original.",
             "maxLength": 128,
+            "minLength": 0,
             "pattern": "^[A-Za-z0-9._:-]+$",
             "type": "string"
           },
@@ -6600,6 +6601,70 @@
         "tags": [
           "Clients"
         ]
+      },
+      "patch": {
+        "operationId": "updateReceiver",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "clientId",
+            "required": true,
+            "schema": {
+              "format": "int64",
+              "type": "integer"
+            }
+          },
+          {
+            "in": "path",
+            "name": "receiverId",
+            "required": true,
+            "schema": {
+              "format": "int64",
+              "type": "integer"
+            }
+          },
+          {
+            "in": "header",
+            "name": "API-Version",
+            "schema": {
+              "default": "1.0.0",
+              "enum": [
+                "v1"
+              ],
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ClientReceiverRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ClientReceiverResponse"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ],
+        "tags": [
+          "Clients"
+        ]
       }
     },
     "/clients/{id}": {
@@ -6821,6 +6886,14 @@
         "parameters": [
           {
             "in": "header",
+            "name": "Idempotency-Key",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "header",
             "name": "API-Version",
             "schema": {
               "default": "1.0.0",
@@ -6868,6 +6941,14 @@
       "post": {
         "operationId": "createDebitNote",
         "parameters": [
+          {
+            "in": "header",
+            "name": "Idempotency-Key",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
           {
             "in": "header",
             "name": "API-Version",
@@ -6919,6 +7000,14 @@
         "parameters": [
           {
             "in": "header",
+            "name": "Idempotency-Key",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "header",
             "name": "API-Version",
             "schema": {
               "default": "1.0.0",
@@ -6966,6 +7055,14 @@
       "post": {
         "operationId": "createExportInvoice",
         "parameters": [
+          {
+            "in": "header",
+            "name": "Idempotency-Key",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
           {
             "in": "header",
             "name": "API-Version",
@@ -7017,6 +7114,14 @@
         "parameters": [
           {
             "in": "header",
+            "name": "Idempotency-Key",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "header",
             "name": "API-Version",
             "schema": {
               "default": "1.0.0",
@@ -7066,6 +7171,14 @@
         "parameters": [
           {
             "in": "header",
+            "name": "Idempotency-Key",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "header",
             "name": "API-Version",
             "schema": {
               "default": "1.0.0",
@@ -7113,6 +7226,14 @@
       "post": {
         "operationId": "createReceipt",
         "parameters": [
+          {
+            "in": "header",
+            "name": "Idempotency-Key",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
           {
             "in": "header",
             "name": "API-Version",
@@ -9043,7 +9164,7 @@
           "required": true
         },
         "responses": {
-          "201": {
+          "200": {
             "content": {
               "application/json": {
                 "schema": {
@@ -9051,7 +9172,7 @@
                 }
               }
             },
-            "description": "Endpoint creado"
+            "description": "OK"
           }
         },
         "security": [

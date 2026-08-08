@@ -1039,8 +1039,8 @@
           "required" : true
         },
         "responses" : {
-          "201" : {
-            "description" : "Endpoint creado",
+          "200" : {
+            "description" : "OK",
             "content" : {
               "application/json" : {
                 "schema" : {
@@ -1630,6 +1630,13 @@
         "summary" : "Emitir tiquete electrónico",
         "operationId" : "createReceipt",
         "parameters" : [ {
+          "name" : "Idempotency-Key",
+          "in" : "header",
+          "required" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
           "name" : "API-Version",
           "in" : "header",
           "schema" : {
@@ -1671,6 +1678,13 @@
         "summary" : "Emitir factura electrónica de compra",
         "operationId" : "createPurchaseInvoice",
         "parameters" : [ {
+          "name" : "Idempotency-Key",
+          "in" : "header",
+          "required" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
           "name" : "API-Version",
           "in" : "header",
           "schema" : {
@@ -1712,6 +1726,13 @@
         "summary" : "Emitir factura electrónica",
         "operationId" : "createInvoice",
         "parameters" : [ {
+          "name" : "Idempotency-Key",
+          "in" : "header",
+          "required" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
           "name" : "API-Version",
           "in" : "header",
           "schema" : {
@@ -1753,6 +1774,13 @@
         "summary" : "Emitir factura electrónica de exportación",
         "operationId" : "createExportInvoice",
         "parameters" : [ {
+          "name" : "Idempotency-Key",
+          "in" : "header",
+          "required" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
           "name" : "API-Version",
           "in" : "header",
           "schema" : {
@@ -1794,6 +1822,13 @@
         "summary" : "Emitir recibo electrónico de pago",
         "operationId" : "createElectronicPaymentReceipt",
         "parameters" : [ {
+          "name" : "Idempotency-Key",
+          "in" : "header",
+          "required" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
           "name" : "API-Version",
           "in" : "header",
           "schema" : {
@@ -1835,6 +1870,13 @@
         "summary" : "Emitir nota de débito electrónica",
         "operationId" : "createDebitNote",
         "parameters" : [ {
+          "name" : "Idempotency-Key",
+          "in" : "header",
+          "required" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
           "name" : "API-Version",
           "in" : "header",
           "schema" : {
@@ -1876,6 +1918,13 @@
         "summary" : "Emitir nota de crédito electrónica",
         "operationId" : "createCreditNote",
         "parameters" : [ {
+          "name" : "Idempotency-Key",
+          "in" : "header",
+          "required" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
           "name" : "API-Version",
           "in" : "header",
           "schema" : {
@@ -2520,6 +2569,143 @@
               "application/json" : {
                 "schema" : {
                   "$ref" : "#/components/schemas/ClientResponse"
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "apiKeyAuth" : [ ]
+        } ]
+      }
+    },
+    "/clients/{clientId}/receivers/{receiverId}" : {
+      "get" : {
+        "tags" : [ "Clients" ],
+        "operationId" : "getReceiverById",
+        "parameters" : [ {
+          "name" : "clientId",
+          "in" : "path",
+          "required" : true,
+          "schema" : {
+            "type" : "integer",
+            "format" : "int64"
+          }
+        }, {
+          "name" : "receiverId",
+          "in" : "path",
+          "required" : true,
+          "schema" : {
+            "type" : "integer",
+            "format" : "int64"
+          }
+        }, {
+          "name" : "API-Version",
+          "in" : "header",
+          "schema" : {
+            "type" : "string",
+            "default" : "1.0.0",
+            "enum" : [ "v1" ]
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ClientReceiverResponse"
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "apiKeyAuth" : [ ]
+        } ]
+      },
+      "delete" : {
+        "tags" : [ "Clients" ],
+        "operationId" : "deleteReceiver",
+        "parameters" : [ {
+          "name" : "clientId",
+          "in" : "path",
+          "required" : true,
+          "schema" : {
+            "type" : "integer",
+            "format" : "int64"
+          }
+        }, {
+          "name" : "receiverId",
+          "in" : "path",
+          "required" : true,
+          "schema" : {
+            "type" : "integer",
+            "format" : "int64"
+          }
+        }, {
+          "name" : "API-Version",
+          "in" : "header",
+          "schema" : {
+            "type" : "string",
+            "default" : "1.0.0",
+            "enum" : [ "v1" ]
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK"
+          }
+        },
+        "security" : [ {
+          "apiKeyAuth" : [ ]
+        } ]
+      },
+      "patch" : {
+        "tags" : [ "Clients" ],
+        "operationId" : "updateReceiver",
+        "parameters" : [ {
+          "name" : "clientId",
+          "in" : "path",
+          "required" : true,
+          "schema" : {
+            "type" : "integer",
+            "format" : "int64"
+          }
+        }, {
+          "name" : "receiverId",
+          "in" : "path",
+          "required" : true,
+          "schema" : {
+            "type" : "integer",
+            "format" : "int64"
+          }
+        }, {
+          "name" : "API-Version",
+          "in" : "header",
+          "schema" : {
+            "type" : "string",
+            "default" : "1.0.0",
+            "enum" : [ "v1" ]
+          }
+        } ],
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/ClientReceiverRequest"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ClientReceiverResponse"
                 }
               }
             }
@@ -3243,89 +3429,6 @@
                 }
               }
             }
-          }
-        },
-        "security" : [ {
-          "apiKeyAuth" : [ ]
-        } ]
-      }
-    },
-    "/clients/{clientId}/receivers/{receiverId}" : {
-      "get" : {
-        "tags" : [ "Clients" ],
-        "operationId" : "getReceiverById",
-        "parameters" : [ {
-          "name" : "clientId",
-          "in" : "path",
-          "required" : true,
-          "schema" : {
-            "type" : "integer",
-            "format" : "int64"
-          }
-        }, {
-          "name" : "receiverId",
-          "in" : "path",
-          "required" : true,
-          "schema" : {
-            "type" : "integer",
-            "format" : "int64"
-          }
-        }, {
-          "name" : "API-Version",
-          "in" : "header",
-          "schema" : {
-            "type" : "string",
-            "default" : "1.0.0",
-            "enum" : [ "v1" ]
-          }
-        } ],
-        "responses" : {
-          "200" : {
-            "description" : "OK",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/ClientReceiverResponse"
-                }
-              }
-            }
-          }
-        },
-        "security" : [ {
-          "apiKeyAuth" : [ ]
-        } ]
-      },
-      "delete" : {
-        "tags" : [ "Clients" ],
-        "operationId" : "deleteReceiver",
-        "parameters" : [ {
-          "name" : "clientId",
-          "in" : "path",
-          "required" : true,
-          "schema" : {
-            "type" : "integer",
-            "format" : "int64"
-          }
-        }, {
-          "name" : "receiverId",
-          "in" : "path",
-          "required" : true,
-          "schema" : {
-            "type" : "integer",
-            "format" : "int64"
-          }
-        }, {
-          "name" : "API-Version",
-          "in" : "header",
-          "schema" : {
-            "type" : "string",
-            "default" : "1.0.0",
-            "enum" : [ "v1" ]
-          }
-        } ],
-        "responses" : {
-          "200" : {
-            "description" : "OK"
           }
         },
         "security" : [ {
@@ -4497,7 +4600,7 @@
         "properties" : {
           "receiverActivityCode" : {
             "type" : "string",
-            "pattern" : "^\\d{4}\\.\\d$"
+            "pattern" : "^$|^\\d{4}\\.\\d$"
           },
           "commercialName" : {
             "type" : "string",
@@ -4519,8 +4622,7 @@
           "fax" : {
             "$ref" : "#/components/schemas/PhoneRequest"
           }
-        },
-        "required" : [ "receiverActivityCode" ]
+        }
       },
       "PhoneRequest" : {
         "type" : "object",
@@ -6604,17 +6706,18 @@
         "type" : "object",
         "description" : "Solicitud base para emitir documentos electronicos. El tipo de documento se define por el endpoint usado.",
         "properties" : {
-          "idempotencyKey" : {
-            "type" : "string",
-            "description" : "Clave estable de la operacion. Repetir la misma solicitud con esta clave devuelve el documento original.",
-            "maxLength" : 128,
-            "pattern" : "^[A-Za-z0-9._:-]+$"
-          },
           "type" : {
             "type" : "string",
             "description" : "Asignado por el endpoint, no enviar en el body.",
             "enum" : [ "INVOICE", "CREDIT_NOTE", "DEBIT_NOTE", "RECEIPT", "RECEIVER_MESSAGE", "ELECTRONIC_PAYMENT_RECEIPT", "EXPORT_INVOICE", "PURCHASE_INVOICE" ],
             "readOnly" : true
+          },
+          "idempotencyKey" : {
+            "type" : "string",
+            "description" : "Clave estable de la operación. Repetir la misma solicitud con esta clave devuelve el documento original.",
+            "maxLength" : 128,
+            "minLength" : 0,
+            "pattern" : "^[A-Za-z0-9._:-]+$"
           },
           "receiverId" : {
             "type" : "integer",
@@ -6876,7 +6979,13 @@
           "specificTaxData" : {
             "$ref" : "#/components/schemas/SpecificTaxDataRequest"
           },
+          "taxRatePresentWhenRequiredForCalculation" : {
+            "type" : "boolean"
+          },
           "vatRateCodeValidForVatTax" : {
+            "type" : "boolean"
+          },
+          "otherTaxDataValid" : {
             "type" : "boolean"
           },
           "usedGoodsVatCalculationDataValid" : {
@@ -6886,12 +6995,6 @@
             "type" : "boolean"
           },
           "vatSpecialCalculationDataValid" : {
-            "type" : "boolean"
-          },
-          "otherTaxDataValid" : {
-            "type" : "boolean"
-          },
-          "taxRatePresentWhenRequiredForCalculation" : {
             "type" : "boolean"
           }
         },
@@ -7063,6 +7166,9 @@
       "ClientUpdateRequest" : {
         "type" : "object",
         "properties" : {
+          "legalIdentification" : {
+            "$ref" : "#/components/schemas/LegalIdentificationRequest"
+          },
           "name" : {
             "type" : "string",
             "maxLength" : 120,
