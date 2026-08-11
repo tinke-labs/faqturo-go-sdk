@@ -2669,6 +2669,7 @@ type DocumentResponse struct {
 	AmountPaid                *Decimal                                   `json:"amountPaid,omitempty"`
 	AmountPending             *Decimal                                   `json:"amountPending,omitempty"`
 	BranchCode                *string                                    `json:"branchCode,omitempty"`
+	ClientName                *string                                    `json:"clientName,omitempty"`
 	Consecutive               *string                                    `json:"consecutive,omitempty"`
 	CreatedAt                 *time.Time                                 `json:"createdAt,omitempty"`
 	CreditTerm                *int32                                     `json:"creditTerm,omitempty"`
