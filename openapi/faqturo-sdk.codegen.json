@@ -2103,6 +2103,9 @@
           "branchCode": {
             "type": "string"
           },
+          "clientName": {
+            "type": "string"
+          },
           "consecutive": {
             "type": "string"
           },

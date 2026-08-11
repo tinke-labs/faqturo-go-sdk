@@ -5946,6 +5946,9 @@
           "documentSummary" : {
             "$ref" : "#/components/schemas/DocumentSummaryDto"
           },
+          "clientName" : {
+            "type" : "string"
+          },
           "isPaid" : {
             "type" : "boolean"
           },
@@ -6979,13 +6982,7 @@
           "specificTaxData" : {
             "$ref" : "#/components/schemas/SpecificTaxDataRequest"
           },
-          "taxRatePresentWhenRequiredForCalculation" : {
-            "type" : "boolean"
-          },
           "vatRateCodeValidForVatTax" : {
-            "type" : "boolean"
-          },
-          "otherTaxDataValid" : {
             "type" : "boolean"
           },
           "usedGoodsVatCalculationDataValid" : {
@@ -6995,6 +6992,12 @@
             "type" : "boolean"
           },
           "vatSpecialCalculationDataValid" : {
+            "type" : "boolean"
+          },
+          "otherTaxDataValid" : {
+            "type" : "boolean"
+          },
+          "taxRatePresentWhenRequiredForCalculation" : {
             "type" : "boolean"
           }
         },
