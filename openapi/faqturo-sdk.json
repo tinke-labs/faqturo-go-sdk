@@ -7010,11 +7010,6 @@
             "type" : "string",
             "maxLength" : 120,
             "minLength" : 1
-          },
-          "commercialName" : {
-            "type" : "string",
-            "maxLength" : 80,
-            "minLength" : 0
           }
         },
         "required" : [ "legalIdentification", "name" ]
@@ -7177,11 +7172,6 @@
           "email" : {
             "type" : "string",
             "format" : "email",
-            "maxLength" : 120,
-            "minLength" : 0
-          },
-          "commercialName" : {
-            "type" : "string",
             "maxLength" : 120,
             "minLength" : 0
           }

@@ -440,11 +440,6 @@
       },
       "ClientRequest": {
         "properties": {
-          "commercialName": {
-            "maxLength": 80,
-            "minLength": 0,
-            "type": "string"
-          },
           "legalIdentification": {
             "$ref": "#/components/schemas/LegalIdentificationRequest"
           },
@@ -483,11 +478,6 @@
       },
       "ClientUpdateRequest": {
         "properties": {
-          "commercialName": {
-            "maxLength": 120,
-            "minLength": 0,
-            "type": "string"
-          },
           "email": {
             "format": "email",
             "maxLength": 120,

@@ -2159,7 +2159,6 @@ type ClientReceiverResponse struct {
 
 // ClientRequest defines model for ClientRequest.
 type ClientRequest struct {
-	CommercialName      *string                    `json:"commercialName,omitempty"`
 	LegalIdentification LegalIdentificationRequest `json:"legalIdentification"`
 	Name                string                     `json:"name"`
 }
@@ -2174,7 +2173,6 @@ type ClientResponse struct {
 
 // ClientUpdateRequest defines model for ClientUpdateRequest.
 type ClientUpdateRequest struct {
-	CommercialName      *string                     `json:"commercialName,omitempty"`
 	Email               *openapi_types.Email        `json:"email,omitempty"`
 	LegalIdentification *LegalIdentificationRequest `json:"legalIdentification,omitempty"`
 	Name                *string                     `json:"name,omitempty"`
