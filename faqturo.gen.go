@@ -470,6 +470,33 @@ func (e DocumentResponseType) Valid() bool {
 	}
 }
 
+// Defines values for OtherChargeRequestDocumentType.
+const (
+	N01 OtherChargeRequestDocumentType = "01"
+	N02 OtherChargeRequestDocumentType = "02"
+	N03 OtherChargeRequestDocumentType = "03"
+	N04 OtherChargeRequestDocumentType = "04"
+	N99 OtherChargeRequestDocumentType = "99"
+)
+
+// Valid indicates whether the value is a known member of the OtherChargeRequestDocumentType enum.
+func (e OtherChargeRequestDocumentType) Valid() bool {
+	switch e {
+	case N01:
+		return true
+	case N02:
+		return true
+	case N03:
+		return true
+	case N04:
+		return true
+	case N99:
+		return true
+	default:
+		return false
+	}
+}
+
 // Defines values for SequenceResponseDocumentType.
 const (
 	CREDITNOTE               SequenceResponseDocumentType = "CREDIT_NOTE"
@@ -2173,7 +2200,6 @@ type ClientResponse struct {
 
 // ClientUpdateRequest defines model for ClientUpdateRequest.
 type ClientUpdateRequest struct {
-	Email               *openapi_types.Email        `json:"email,omitempty"`
 	LegalIdentification *LegalIdentificationRequest `json:"legalIdentification,omitempty"`
 	Name                *string                     `json:"name,omitempty"`
 }
@@ -2963,7 +2989,7 @@ type OtherChargeRequest struct {
 	Detail string `json:"detail"`
 
 	// DocumentType Codigo Hacienda del tipo de cargo. Use 99 para otros y envie documentTypeOther.
-	DocumentType string `json:"documentType"`
+	DocumentType OtherChargeRequestDocumentType `json:"documentType"`
 
 	// DocumentTypeOther Opcional por defecto. Requerido cuando documentType=99.
 	DocumentTypeOther *string `json:"documentTypeOther,omitempty"`
@@ -2980,6 +3006,9 @@ type OtherChargeRequest struct {
 	// ThirdPartyName Opcional por defecto. Requerido cuando thirdPartyIdNumber se envia.
 	ThirdPartyName *string `json:"thirdPartyName,omitempty"`
 }
+
+// OtherChargeRequestDocumentType Codigo Hacienda del tipo de cargo. Use 99 para otros y envie documentTypeOther.
+type OtherChargeRequestDocumentType string
 
 // PageResponseClientReceiverResponse defines model for PageResponseClientReceiverResponse.
 type PageResponseClientReceiverResponse struct {
@@ -3222,16 +3251,17 @@ type TenantCreateRequest struct {
 	Certificate openapi_types.File `json:"certificate"`
 
 	// CertificatePin PIN del certificado P12.
-	CertificatePin      string                     `json:"certificatePin"`
-	CommercialName      *string                    `json:"commercialName,omitempty"`
-	CountryCode         *string                    `json:"countryCode,omitempty"`
-	Email               *openapi_types.Email       `json:"email,omitempty"`
-	FaxCountryCode      *string                    `json:"faxCountryCode,omitempty"`
-	FaxNumber           *string                    `json:"faxNumber,omitempty"`
-	IssuerActivityCode  string                     `json:"issuerActivityCode"`
-	LegalIdentification LegalIdentificationRequest `json:"legalIdentification"`
-	Name                string                     `json:"name"`
-	Number              *string                    `json:"number,omitempty"`
+	CertificatePin         string                     `json:"certificatePin"`
+	CommercialName         *string                    `json:"commercialName,omitempty"`
+	CountryCode            *string                    `json:"countryCode,omitempty"`
+	Email                  *openapi_types.Email       `json:"email,omitempty"`
+	FaxCountryCode         *string                    `json:"faxCountryCode,omitempty"`
+	FaxNumber              *string                    `json:"faxNumber,omitempty"`
+	FiscalRegistration8707 *string                    `json:"fiscalRegistration8707,omitempty"`
+	IssuerActivityCode     string                     `json:"issuerActivityCode"`
+	LegalIdentification    LegalIdentificationRequest `json:"legalIdentification"`
+	Name                   string                     `json:"name"`
+	Number                 *string                    `json:"number,omitempty"`
 }
 
 // TenantInvoicingStatusResponse defines model for TenantInvoicingStatusResponse.
@@ -14212,7 +14242,6 @@ func (r CreateIssuerResponse) ContentType() string {
 type DeleteIssuerResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
-	JSON200      *map[string]string
 }
 
 // Status returns HTTPResponse.Status
@@ -17981,16 +18010,6 @@ func ParseDeleteIssuerResponse(rsp *http.Response) (*DeleteIssuerResponse, error
 	response := &DeleteIssuerResponse{
 		Body:         bodyBytes,
 		HTTPResponse: rsp,
-	}
-
-	switch {
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest map[string]string
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.JSON200 = &dest
-
 	}
 
 	return response, nil

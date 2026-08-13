@@ -478,12 +478,6 @@
       },
       "ClientUpdateRequest": {
         "properties": {
-          "email": {
-            "format": "email",
-            "maxLength": 120,
-            "minLength": 0,
-            "type": "string"
-          },
           "legalIdentification": {
             "$ref": "#/components/schemas/LegalIdentificationRequest"
           },
@@ -2103,6 +2097,9 @@
           "branchCode": {
             "type": "string"
           },
+          "clientName": {
+            "type": "string"
+          },
           "consecutive": {
             "type": "string"
           },
@@ -3093,9 +3090,16 @@
           },
           "documentType": {
             "description": "Codigo Hacienda del tipo de cargo. Use 99 para otros y envie documentTypeOther.",
+            "enum": [
+              "01",
+              "02",
+              "03",
+              "04",
+              "99"
+            ],
             "example": "01",
             "minLength": 1,
-            "pattern": "\\d{2}",
+            "pattern": "0[1-4]|99",
             "type": "string"
           },
           "documentTypeOther": {
@@ -3875,6 +3879,11 @@
             "type": "string"
           },
           "faxNumber": {
+            "type": "string"
+          },
+          "fiscalRegistration8707": {
+            "maxLength": 12,
+            "minLength": 0,
             "type": "string"
           },
           "issuerActivityCode": {
@@ -7826,16 +7835,6 @@
         ],
         "responses": {
           "200": {
-            "content": {
-              "application/json": {
-                "schema": {
-                  "additionalProperties": {
-                    "type": "string"
-                  },
-                  "type": "object"
-                }
-              }
-            },
             "description": "OK"
           }
         },

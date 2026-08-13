@@ -2402,17 +2402,7 @@
         } ],
         "responses" : {
           "200" : {
-            "description" : "OK",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "type" : "object",
-                  "additionalProperties" : {
-                    "type" : "string"
-                  }
-                }
-              }
-            }
+            "description" : "OK"
           }
         },
         "security" : [ {
@@ -4949,6 +4939,11 @@
           "commercialName" : {
             "type" : "string"
           },
+          "fiscalRegistration8707" : {
+            "type" : "string",
+            "maxLength" : 12,
+            "minLength" : 0
+          },
           "email" : {
             "type" : "string",
             "format" : "email"
@@ -5946,6 +5941,9 @@
           "documentSummary" : {
             "$ref" : "#/components/schemas/DocumentSummaryDto"
           },
+          "clientName" : {
+            "type" : "string"
+          },
           "isPaid" : {
             "type" : "boolean"
           },
@@ -6850,9 +6848,10 @@
           "documentType" : {
             "type" : "string",
             "description" : "Codigo Hacienda del tipo de cargo. Use 99 para otros y envie documentTypeOther.",
+            "enum" : [ "01", "02", "03", "04", "99" ],
             "example" : "01",
             "minLength" : 1,
-            "pattern" : "\\d{2}"
+            "pattern" : "0[1-4]|99"
           },
           "documentTypeOther" : {
             "type" : "string",
@@ -6979,22 +6978,22 @@
           "specificTaxData" : {
             "$ref" : "#/components/schemas/SpecificTaxDataRequest"
           },
-          "taxRatePresentWhenRequiredForCalculation" : {
-            "type" : "boolean"
-          },
-          "vatRateCodeValidForVatTax" : {
-            "type" : "boolean"
-          },
-          "otherTaxDataValid" : {
-            "type" : "boolean"
-          },
-          "usedGoodsVatCalculationDataValid" : {
+          "vatSpecialCalculationDataValid" : {
             "type" : "boolean"
           },
           "specificTaxTypeValidForCode05" : {
             "type" : "boolean"
           },
-          "vatSpecialCalculationDataValid" : {
+          "usedGoodsVatCalculationDataValid" : {
+            "type" : "boolean"
+          },
+          "vatRateCodeValidForVatTax" : {
+            "type" : "boolean"
+          },
+          "taxRatePresentWhenRequiredForCalculation" : {
+            "type" : "boolean"
+          },
+          "otherTaxDataValid" : {
             "type" : "boolean"
           }
         },
@@ -7166,12 +7165,6 @@
           },
           "name" : {
             "type" : "string",
-            "maxLength" : 120,
-            "minLength" : 0
-          },
-          "email" : {
-            "type" : "string",
-            "format" : "email",
             "maxLength" : 120,
             "minLength" : 0
           }
