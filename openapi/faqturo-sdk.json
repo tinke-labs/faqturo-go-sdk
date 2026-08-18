@@ -3297,11 +3297,11 @@
         } ]
       }
     },
-    "/documents/{id}/xml/hacienda" : {
+    "/documents/{id}/xml/tax-authority-response" : {
       "get" : {
         "tags" : [ "Documents" ],
-        "summary" : "Descargar XML de respuesta de Hacienda",
-        "operationId" : "getHaciendaXml",
+        "summary" : "Descargar XML de respuesta de la autoridad tributaria",
+        "operationId" : "getTaxAuthorityResponseXml",
         "parameters" : [ {
           "name" : "id",
           "in" : "path",
@@ -3340,11 +3340,11 @@
         } ]
       }
     },
-    "/documents/{id}/xml/faqturo" : {
+    "/documents/{id}/xml/issued" : {
       "get" : {
         "tags" : [ "Documents" ],
-        "summary" : "Descargar XML firmado por Faqturo",
-        "operationId" : "getFaqturoXml",
+        "summary" : "Descargar XML emitido y firmado",
+        "operationId" : "getIssuedXml",
         "parameters" : [ {
           "name" : "id",
           "in" : "path",
@@ -4565,13 +4565,19 @@
         "type" : "object",
         "properties" : {
           "provinceCode" : {
-            "type" : "string"
+            "type" : "string",
+            "minLength" : 1,
+            "pattern" : "\\d"
           },
           "cantonCode" : {
-            "type" : "string"
+            "type" : "string",
+            "minLength" : 1,
+            "pattern" : "\\d{2}"
           },
           "districtCode" : {
-            "type" : "string"
+            "type" : "string",
+            "minLength" : 1,
+            "pattern" : "\\d{2}"
           },
           "neighborhood" : {
             "type" : "string",
@@ -4583,7 +4589,8 @@
             "maxLength" : 250,
             "minLength" : 5
           }
-        }
+        },
+        "required" : [ "cantonCode", "districtCode", "provinceCode" ]
       },
       "ClientReceiverRequest" : {
         "type" : "object",
@@ -4618,12 +4625,17 @@
         "type" : "object",
         "properties" : {
           "countryCode" : {
-            "type" : "string"
+            "type" : "string",
+            "minLength" : 1,
+            "pattern" : "\\d+"
           },
           "number" : {
-            "type" : "string"
+            "type" : "string",
+            "minLength" : 1,
+            "pattern" : "\\d+"
           }
-        }
+        },
+        "required" : [ "countryCode", "number" ]
       },
       "ClientReceiverResponse" : {
         "type" : "object",
@@ -5882,12 +5894,6 @@
             "type" : "string",
             "enum" : [ "01", "02", "03", "04" ]
           },
-          "signedXml" : {
-            "type" : "string"
-          },
-          "taxAuthorityResponseXml" : {
-            "type" : "string"
-          },
           "taxAuthorityDocumentState" : {
             "type" : "string",
             "enum" : [ "PENDING", "ACCEPTED", "REJECTED", "CANCELLED", "ERROR" ]
@@ -6160,7 +6166,8 @@
         "type" : "object",
         "properties" : {
           "paymentMethodType" : {
-            "type" : "string"
+            "type" : "string",
+            "enum" : [ "CASH", "CARD", "CHECK", "BANK_TRANSFER", "THIRD_PARTY_COLLECTION", "SINPE_MOBILE", "DIGITAL_PLATFORM", "OTHERS" ]
           },
           "paymentMethodOther" : {
             "type" : "string",
@@ -6626,9 +6633,9 @@
           "paymentType" : {
             "type" : "string",
             "description" : "Codigo Hacienda del medio de pago. Use 99 para otros y envie otherDescription.",
+            "enum" : [ "01", "02", "03", "04", "05", "06", "07", "99" ],
             "example" : "01",
-            "minLength" : 1,
-            "pattern" : "0[1-7]|99"
+            "minLength" : 1
           },
           "amount" : {
             "type" : "number",
@@ -6978,22 +6985,22 @@
           "specificTaxData" : {
             "$ref" : "#/components/schemas/SpecificTaxDataRequest"
           },
-          "vatSpecialCalculationDataValid" : {
-            "type" : "boolean"
-          },
-          "specificTaxTypeValidForCode05" : {
+          "vatRateCodeValidForVatTax" : {
             "type" : "boolean"
           },
           "usedGoodsVatCalculationDataValid" : {
             "type" : "boolean"
           },
-          "vatRateCodeValidForVatTax" : {
+          "otherTaxDataValid" : {
             "type" : "boolean"
           },
           "taxRatePresentWhenRequiredForCalculation" : {
             "type" : "boolean"
           },
-          "otherTaxDataValid" : {
+          "specificTaxTypeValidForCode05" : {
+            "type" : "boolean"
+          },
+          "vatSpecialCalculationDataValid" : {
             "type" : "boolean"
           }
         },
