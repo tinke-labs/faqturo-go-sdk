@@ -229,34 +229,70 @@ func (e DocumentPaymentCreateRequestCurrency) Valid() bool {
 
 // Defines values for DocumentPaymentMethodDtoPaymentType.
 const (
-	BANKTRANSFER         DocumentPaymentMethodDtoPaymentType = "BANK_TRANSFER"
-	CARD                 DocumentPaymentMethodDtoPaymentType = "CARD"
-	CASH                 DocumentPaymentMethodDtoPaymentType = "CASH"
-	CHECK                DocumentPaymentMethodDtoPaymentType = "CHECK"
-	DIGITALPLATFORM      DocumentPaymentMethodDtoPaymentType = "DIGITAL_PLATFORM"
-	OTHERS               DocumentPaymentMethodDtoPaymentType = "OTHERS"
-	SINPEMOBILE          DocumentPaymentMethodDtoPaymentType = "SINPE_MOBILE"
-	THIRDPARTYCOLLECTION DocumentPaymentMethodDtoPaymentType = "THIRD_PARTY_COLLECTION"
+	DocumentPaymentMethodDtoPaymentTypeBANKTRANSFER         DocumentPaymentMethodDtoPaymentType = "BANK_TRANSFER"
+	DocumentPaymentMethodDtoPaymentTypeCARD                 DocumentPaymentMethodDtoPaymentType = "CARD"
+	DocumentPaymentMethodDtoPaymentTypeCASH                 DocumentPaymentMethodDtoPaymentType = "CASH"
+	DocumentPaymentMethodDtoPaymentTypeCHECK                DocumentPaymentMethodDtoPaymentType = "CHECK"
+	DocumentPaymentMethodDtoPaymentTypeDIGITALPLATFORM      DocumentPaymentMethodDtoPaymentType = "DIGITAL_PLATFORM"
+	DocumentPaymentMethodDtoPaymentTypeOTHERS               DocumentPaymentMethodDtoPaymentType = "OTHERS"
+	DocumentPaymentMethodDtoPaymentTypeSINPEMOBILE          DocumentPaymentMethodDtoPaymentType = "SINPE_MOBILE"
+	DocumentPaymentMethodDtoPaymentTypeTHIRDPARTYCOLLECTION DocumentPaymentMethodDtoPaymentType = "THIRD_PARTY_COLLECTION"
 )
 
 // Valid indicates whether the value is a known member of the DocumentPaymentMethodDtoPaymentType enum.
 func (e DocumentPaymentMethodDtoPaymentType) Valid() bool {
 	switch e {
-	case BANKTRANSFER:
+	case DocumentPaymentMethodDtoPaymentTypeBANKTRANSFER:
 		return true
-	case CARD:
+	case DocumentPaymentMethodDtoPaymentTypeCARD:
 		return true
-	case CASH:
+	case DocumentPaymentMethodDtoPaymentTypeCASH:
 		return true
-	case CHECK:
+	case DocumentPaymentMethodDtoPaymentTypeCHECK:
 		return true
-	case DIGITALPLATFORM:
+	case DocumentPaymentMethodDtoPaymentTypeDIGITALPLATFORM:
 		return true
-	case OTHERS:
+	case DocumentPaymentMethodDtoPaymentTypeOTHERS:
 		return true
-	case SINPEMOBILE:
+	case DocumentPaymentMethodDtoPaymentTypeSINPEMOBILE:
 		return true
-	case THIRDPARTYCOLLECTION:
+	case DocumentPaymentMethodDtoPaymentTypeTHIRDPARTYCOLLECTION:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for DocumentPaymentMethodRequestPaymentType.
+const (
+	DocumentPaymentMethodRequestPaymentTypeN01 DocumentPaymentMethodRequestPaymentType = "01"
+	DocumentPaymentMethodRequestPaymentTypeN02 DocumentPaymentMethodRequestPaymentType = "02"
+	DocumentPaymentMethodRequestPaymentTypeN03 DocumentPaymentMethodRequestPaymentType = "03"
+	DocumentPaymentMethodRequestPaymentTypeN04 DocumentPaymentMethodRequestPaymentType = "04"
+	DocumentPaymentMethodRequestPaymentTypeN05 DocumentPaymentMethodRequestPaymentType = "05"
+	DocumentPaymentMethodRequestPaymentTypeN06 DocumentPaymentMethodRequestPaymentType = "06"
+	DocumentPaymentMethodRequestPaymentTypeN07 DocumentPaymentMethodRequestPaymentType = "07"
+	DocumentPaymentMethodRequestPaymentTypeN99 DocumentPaymentMethodRequestPaymentType = "99"
+)
+
+// Valid indicates whether the value is a known member of the DocumentPaymentMethodRequestPaymentType enum.
+func (e DocumentPaymentMethodRequestPaymentType) Valid() bool {
+	switch e {
+	case DocumentPaymentMethodRequestPaymentTypeN01:
+		return true
+	case DocumentPaymentMethodRequestPaymentTypeN02:
+		return true
+	case DocumentPaymentMethodRequestPaymentTypeN03:
+		return true
+	case DocumentPaymentMethodRequestPaymentTypeN04:
+		return true
+	case DocumentPaymentMethodRequestPaymentTypeN05:
+		return true
+	case DocumentPaymentMethodRequestPaymentTypeN06:
+		return true
+	case DocumentPaymentMethodRequestPaymentTypeN07:
+		return true
+	case DocumentPaymentMethodRequestPaymentTypeN99:
 		return true
 	default:
 		return false
@@ -464,6 +500,69 @@ func (e DocumentResponseType) Valid() bool {
 	case DocumentResponseTypeRECEIPT:
 		return true
 	case DocumentResponseTypeRECEIVERMESSAGE:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for DocumentSummaryPaymentMethodDtoPaymentMethodType.
+const (
+	DocumentSummaryPaymentMethodDtoPaymentMethodTypeBANKTRANSFER         DocumentSummaryPaymentMethodDtoPaymentMethodType = "BANK_TRANSFER"
+	DocumentSummaryPaymentMethodDtoPaymentMethodTypeCARD                 DocumentSummaryPaymentMethodDtoPaymentMethodType = "CARD"
+	DocumentSummaryPaymentMethodDtoPaymentMethodTypeCASH                 DocumentSummaryPaymentMethodDtoPaymentMethodType = "CASH"
+	DocumentSummaryPaymentMethodDtoPaymentMethodTypeCHECK                DocumentSummaryPaymentMethodDtoPaymentMethodType = "CHECK"
+	DocumentSummaryPaymentMethodDtoPaymentMethodTypeDIGITALPLATFORM      DocumentSummaryPaymentMethodDtoPaymentMethodType = "DIGITAL_PLATFORM"
+	DocumentSummaryPaymentMethodDtoPaymentMethodTypeOTHERS               DocumentSummaryPaymentMethodDtoPaymentMethodType = "OTHERS"
+	DocumentSummaryPaymentMethodDtoPaymentMethodTypeSINPEMOBILE          DocumentSummaryPaymentMethodDtoPaymentMethodType = "SINPE_MOBILE"
+	DocumentSummaryPaymentMethodDtoPaymentMethodTypeTHIRDPARTYCOLLECTION DocumentSummaryPaymentMethodDtoPaymentMethodType = "THIRD_PARTY_COLLECTION"
+)
+
+// Valid indicates whether the value is a known member of the DocumentSummaryPaymentMethodDtoPaymentMethodType enum.
+func (e DocumentSummaryPaymentMethodDtoPaymentMethodType) Valid() bool {
+	switch e {
+	case DocumentSummaryPaymentMethodDtoPaymentMethodTypeBANKTRANSFER:
+		return true
+	case DocumentSummaryPaymentMethodDtoPaymentMethodTypeCARD:
+		return true
+	case DocumentSummaryPaymentMethodDtoPaymentMethodTypeCASH:
+		return true
+	case DocumentSummaryPaymentMethodDtoPaymentMethodTypeCHECK:
+		return true
+	case DocumentSummaryPaymentMethodDtoPaymentMethodTypeDIGITALPLATFORM:
+		return true
+	case DocumentSummaryPaymentMethodDtoPaymentMethodTypeOTHERS:
+		return true
+	case DocumentSummaryPaymentMethodDtoPaymentMethodTypeSINPEMOBILE:
+		return true
+	case DocumentSummaryPaymentMethodDtoPaymentMethodTypeTHIRDPARTYCOLLECTION:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for OtherChargeRequestDocumentType.
+const (
+	OtherChargeRequestDocumentTypeN01 OtherChargeRequestDocumentType = "01"
+	OtherChargeRequestDocumentTypeN02 OtherChargeRequestDocumentType = "02"
+	OtherChargeRequestDocumentTypeN03 OtherChargeRequestDocumentType = "03"
+	OtherChargeRequestDocumentTypeN04 OtherChargeRequestDocumentType = "04"
+	OtherChargeRequestDocumentTypeN99 OtherChargeRequestDocumentType = "99"
+)
+
+// Valid indicates whether the value is a known member of the OtherChargeRequestDocumentType enum.
+func (e OtherChargeRequestDocumentType) Valid() bool {
+	switch e {
+	case OtherChargeRequestDocumentTypeN01:
+		return true
+	case OtherChargeRequestDocumentTypeN02:
+		return true
+	case OtherChargeRequestDocumentTypeN03:
+		return true
+	case OtherChargeRequestDocumentTypeN04:
+		return true
+	case OtherChargeRequestDocumentTypeN99:
 		return true
 	default:
 		return false
@@ -1430,30 +1529,30 @@ func (e SendDocumentEmailParamsAPIVersion) Valid() bool {
 	}
 }
 
-// Defines values for GetFaqturoXmlParamsAPIVersion.
+// Defines values for GetIssuedXmlParamsAPIVersion.
 const (
-	GetFaqturoXmlParamsAPIVersionV1 GetFaqturoXmlParamsAPIVersion = "v1"
+	GetIssuedXmlParamsAPIVersionV1 GetIssuedXmlParamsAPIVersion = "v1"
 )
 
-// Valid indicates whether the value is a known member of the GetFaqturoXmlParamsAPIVersion enum.
-func (e GetFaqturoXmlParamsAPIVersion) Valid() bool {
+// Valid indicates whether the value is a known member of the GetIssuedXmlParamsAPIVersion enum.
+func (e GetIssuedXmlParamsAPIVersion) Valid() bool {
 	switch e {
-	case GetFaqturoXmlParamsAPIVersionV1:
+	case GetIssuedXmlParamsAPIVersionV1:
 		return true
 	default:
 		return false
 	}
 }
 
-// Defines values for GetHaciendaXmlParamsAPIVersion.
+// Defines values for GetTaxAuthorityResponseXmlParamsAPIVersion.
 const (
-	GetHaciendaXmlParamsAPIVersionV1 GetHaciendaXmlParamsAPIVersion = "v1"
+	GetTaxAuthorityResponseXmlParamsAPIVersionV1 GetTaxAuthorityResponseXmlParamsAPIVersion = "v1"
 )
 
-// Valid indicates whether the value is a known member of the GetHaciendaXmlParamsAPIVersion enum.
-func (e GetHaciendaXmlParamsAPIVersion) Valid() bool {
+// Valid indicates whether the value is a known member of the GetTaxAuthorityResponseXmlParamsAPIVersion enum.
+func (e GetTaxAuthorityResponseXmlParamsAPIVersion) Valid() bool {
 	switch e {
-	case GetHaciendaXmlParamsAPIVersionV1:
+	case GetTaxAuthorityResponseXmlParamsAPIVersionV1:
 		return true
 	default:
 		return false
@@ -2014,11 +2113,11 @@ type AdditionalInformationEntryRequest struct {
 
 // AddressRequest defines model for AddressRequest.
 type AddressRequest struct {
-	CantonCode   *string `json:"cantonCode,omitempty"`
-	DistrictCode *string `json:"districtCode,omitempty"`
+	CantonCode   string  `json:"cantonCode"`
+	DistrictCode string  `json:"districtCode"`
 	Neighborhood *string `json:"neighborhood,omitempty"`
 	OtherSigns   *string `json:"otherSigns,omitempty"`
-	ProvinceCode *string `json:"provinceCode,omitempty"`
+	ProvinceCode string  `json:"provinceCode"`
 }
 
 // AddressResponse defines model for AddressResponse.
@@ -2173,7 +2272,6 @@ type ClientResponse struct {
 
 // ClientUpdateRequest defines model for ClientUpdateRequest.
 type ClientUpdateRequest struct {
-	Email               *openapi_types.Email        `json:"email,omitempty"`
 	LegalIdentification *LegalIdentificationRequest `json:"legalIdentification,omitempty"`
 	Name                *string                     `json:"name,omitempty"`
 }
@@ -2496,8 +2594,11 @@ type DocumentPaymentMethodRequest struct {
 	OtherDescription *string `json:"otherDescription,omitempty"`
 
 	// PaymentType Codigo Hacienda del medio de pago. Use 99 para otros y envie otherDescription.
-	PaymentType string `json:"paymentType"`
+	PaymentType DocumentPaymentMethodRequestPaymentType `json:"paymentType"`
 }
+
+// DocumentPaymentMethodRequestPaymentType Codigo Hacienda del medio de pago. Use 99 para otros y envie otherDescription.
+type DocumentPaymentMethodRequestPaymentType string
 
 // DocumentPaymentResponse defines model for DocumentPaymentResponse.
 type DocumentPaymentResponse struct {
@@ -2699,10 +2800,8 @@ type DocumentResponse struct {
 	RetryCount                *int32                                     `json:"retryCount,omitempty"`
 	SaleCondition             *string                                    `json:"saleCondition,omitempty"`
 	SentToHaciendaAt          *time.Time                                 `json:"sentToHaciendaAt,omitempty"`
-	SignedXml                 *string                                    `json:"signedXml,omitempty"`
 	Situation                 *string                                    `json:"situation,omitempty"`
 	TaxAuthorityDocumentState *DocumentResponseTaxAuthorityDocumentState `json:"taxAuthorityDocumentState,omitempty"`
-	TaxAuthorityResponseXml   *string                                    `json:"taxAuthorityResponseXml,omitempty"`
 	TaxCondition              *DocumentResponseTaxCondition              `json:"taxCondition,omitempty"`
 	TerminalCode              *string                                    `json:"terminalCode,omitempty"`
 	TotalExempt               *Decimal                                   `json:"totalExempt,omitempty"`
@@ -2754,10 +2853,13 @@ type DocumentSummaryDto struct {
 
 // DocumentSummaryPaymentMethodDto defines model for DocumentSummaryPaymentMethodDto.
 type DocumentSummaryPaymentMethodDto struct {
-	PaymentMethodOther *string  `json:"paymentMethodOther,omitempty"`
-	PaymentMethodTotal *Decimal `json:"paymentMethodTotal,omitempty"`
-	PaymentMethodType  *string  `json:"paymentMethodType,omitempty"`
+	PaymentMethodOther *string                                           `json:"paymentMethodOther,omitempty"`
+	PaymentMethodTotal *Decimal                                          `json:"paymentMethodTotal,omitempty"`
+	PaymentMethodType  *DocumentSummaryPaymentMethodDtoPaymentMethodType `json:"paymentMethodType,omitempty"`
 }
+
+// DocumentSummaryPaymentMethodDtoPaymentMethodType defines model for DocumentSummaryPaymentMethodDto.PaymentMethodType.
+type DocumentSummaryPaymentMethodDtoPaymentMethodType string
 
 // DocumentSummaryTaxBreakdownDto defines model for DocumentSummaryTaxBreakdownDto.
 type DocumentSummaryTaxBreakdownDto struct {
@@ -2963,7 +3065,7 @@ type OtherChargeRequest struct {
 	Detail string `json:"detail"`
 
 	// DocumentType Codigo Hacienda del tipo de cargo. Use 99 para otros y envie documentTypeOther.
-	DocumentType string `json:"documentType"`
+	DocumentType OtherChargeRequestDocumentType `json:"documentType"`
 
 	// DocumentTypeOther Opcional por defecto. Requerido cuando documentType=99.
 	DocumentTypeOther *string `json:"documentTypeOther,omitempty"`
@@ -2980,6 +3082,9 @@ type OtherChargeRequest struct {
 	// ThirdPartyName Opcional por defecto. Requerido cuando thirdPartyIdNumber se envia.
 	ThirdPartyName *string `json:"thirdPartyName,omitempty"`
 }
+
+// OtherChargeRequestDocumentType Codigo Hacienda del tipo de cargo. Use 99 para otros y envie documentTypeOther.
+type OtherChargeRequestDocumentType string
 
 // PageResponseClientReceiverResponse defines model for PageResponseClientReceiverResponse.
 type PageResponseClientReceiverResponse struct {
@@ -3060,8 +3165,8 @@ type PageableResponse struct {
 
 // PhoneRequest defines model for PhoneRequest.
 type PhoneRequest struct {
-	CountryCode *string `json:"countryCode,omitempty"`
-	Number      *string `json:"number,omitempty"`
+	CountryCode string `json:"countryCode"`
+	Number      string `json:"number"`
 }
 
 // PhoneResponse defines model for PhoneResponse.
@@ -3222,16 +3327,17 @@ type TenantCreateRequest struct {
 	Certificate openapi_types.File `json:"certificate"`
 
 	// CertificatePin PIN del certificado P12.
-	CertificatePin      string                     `json:"certificatePin"`
-	CommercialName      *string                    `json:"commercialName,omitempty"`
-	CountryCode         *string                    `json:"countryCode,omitempty"`
-	Email               *openapi_types.Email       `json:"email,omitempty"`
-	FaxCountryCode      *string                    `json:"faxCountryCode,omitempty"`
-	FaxNumber           *string                    `json:"faxNumber,omitempty"`
-	IssuerActivityCode  string                     `json:"issuerActivityCode"`
-	LegalIdentification LegalIdentificationRequest `json:"legalIdentification"`
-	Name                string                     `json:"name"`
-	Number              *string                    `json:"number,omitempty"`
+	CertificatePin         string                     `json:"certificatePin"`
+	CommercialName         *string                    `json:"commercialName,omitempty"`
+	CountryCode            *string                    `json:"countryCode,omitempty"`
+	Email                  *openapi_types.Email       `json:"email,omitempty"`
+	FaxCountryCode         *string                    `json:"faxCountryCode,omitempty"`
+	FaxNumber              *string                    `json:"faxNumber,omitempty"`
+	FiscalRegistration8707 *string                    `json:"fiscalRegistration8707,omitempty"`
+	IssuerActivityCode     string                     `json:"issuerActivityCode"`
+	LegalIdentification    LegalIdentificationRequest `json:"legalIdentification"`
+	Name                   string                     `json:"name"`
+	Number                 *string                    `json:"number,omitempty"`
 }
 
 // TenantInvoicingStatusResponse defines model for TenantInvoicingStatusResponse.
@@ -3903,21 +4009,21 @@ type SendDocumentEmailParams struct {
 // SendDocumentEmailParamsAPIVersion defines parameters for SendDocumentEmail.
 type SendDocumentEmailParamsAPIVersion string
 
-// GetFaqturoXmlParams defines parameters for GetFaqturoXml.
-type GetFaqturoXmlParams struct {
-	APIVersion *GetFaqturoXmlParamsAPIVersion `json:"API-Version,omitempty"`
+// GetIssuedXmlParams defines parameters for GetIssuedXml.
+type GetIssuedXmlParams struct {
+	APIVersion *GetIssuedXmlParamsAPIVersion `json:"API-Version,omitempty"`
 }
 
-// GetFaqturoXmlParamsAPIVersion defines parameters for GetFaqturoXml.
-type GetFaqturoXmlParamsAPIVersion string
+// GetIssuedXmlParamsAPIVersion defines parameters for GetIssuedXml.
+type GetIssuedXmlParamsAPIVersion string
 
-// GetHaciendaXmlParams defines parameters for GetHaciendaXml.
-type GetHaciendaXmlParams struct {
-	APIVersion *GetHaciendaXmlParamsAPIVersion `json:"API-Version,omitempty"`
+// GetTaxAuthorityResponseXmlParams defines parameters for GetTaxAuthorityResponseXml.
+type GetTaxAuthorityResponseXmlParams struct {
+	APIVersion *GetTaxAuthorityResponseXmlParamsAPIVersion `json:"API-Version,omitempty"`
 }
 
-// GetHaciendaXmlParamsAPIVersion defines parameters for GetHaciendaXml.
-type GetHaciendaXmlParamsAPIVersion string
+// GetTaxAuthorityResponseXmlParamsAPIVersion defines parameters for GetTaxAuthorityResponseXml.
+type GetTaxAuthorityResponseXmlParamsAPIVersion string
 
 // GetAllIssuersParams defines parameters for GetAllIssuers.
 type GetAllIssuersParams struct {
@@ -4606,11 +4712,11 @@ type ClientInterface interface {
 	// SendDocumentEmail request
 	SendDocumentEmail(ctx context.Context, id int64, params *SendDocumentEmailParams, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	// GetFaqturoXml request
-	GetFaqturoXml(ctx context.Context, id int64, params *GetFaqturoXmlParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+	// GetIssuedXml request
+	GetIssuedXml(ctx context.Context, id int64, params *GetIssuedXmlParams, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	// GetHaciendaXml request
-	GetHaciendaXml(ctx context.Context, id int64, params *GetHaciendaXmlParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+	// GetTaxAuthorityResponseXml request
+	GetTaxAuthorityResponseXml(ctx context.Context, id int64, params *GetTaxAuthorityResponseXmlParams, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// GetAllIssuers request
 	GetAllIssuers(ctx context.Context, params *GetAllIssuersParams, reqEditors ...RequestEditorFn) (*http.Response, error)
@@ -5689,8 +5795,8 @@ func (c *Client) SendDocumentEmail(ctx context.Context, id int64, params *SendDo
 	return c.Client.Do(req)
 }
 
-func (c *Client) GetFaqturoXml(ctx context.Context, id int64, params *GetFaqturoXmlParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewGetFaqturoXmlRequest(c.Server, id, params)
+func (c *Client) GetIssuedXml(ctx context.Context, id int64, params *GetIssuedXmlParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewGetIssuedXmlRequest(c.Server, id, params)
 	if err != nil {
 		return nil, err
 	}
@@ -5701,8 +5807,8 @@ func (c *Client) GetFaqturoXml(ctx context.Context, id int64, params *GetFaqturo
 	return c.Client.Do(req)
 }
 
-func (c *Client) GetHaciendaXml(ctx context.Context, id int64, params *GetHaciendaXmlParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewGetHaciendaXmlRequest(c.Server, id, params)
+func (c *Client) GetTaxAuthorityResponseXml(ctx context.Context, id int64, params *GetTaxAuthorityResponseXmlParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewGetTaxAuthorityResponseXmlRequest(c.Server, id, params)
 	if err != nil {
 		return nil, err
 	}
@@ -9950,8 +10056,8 @@ func NewSendDocumentEmailRequest(server string, id int64, params *SendDocumentEm
 	return req, nil
 }
 
-// NewGetFaqturoXmlRequest generates requests for GetFaqturoXml
-func NewGetFaqturoXmlRequest(server string, id int64, params *GetFaqturoXmlParams) (*http.Request, error) {
+// NewGetIssuedXmlRequest generates requests for GetIssuedXml
+func NewGetIssuedXmlRequest(server string, id int64, params *GetIssuedXmlParams) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -9966,7 +10072,7 @@ func NewGetFaqturoXmlRequest(server string, id int64, params *GetFaqturoXmlParam
 		return nil, err
 	}
 
-	operationPath := fmt.Sprintf("/documents/%s/xml/faqturo", pathParam0)
+	operationPath := fmt.Sprintf("/documents/%s/xml/issued", pathParam0)
 	if operationPath[0] == '/' {
 		operationPath = "." + operationPath
 	}
@@ -9999,8 +10105,8 @@ func NewGetFaqturoXmlRequest(server string, id int64, params *GetFaqturoXmlParam
 	return req, nil
 }
 
-// NewGetHaciendaXmlRequest generates requests for GetHaciendaXml
-func NewGetHaciendaXmlRequest(server string, id int64, params *GetHaciendaXmlParams) (*http.Request, error) {
+// NewGetTaxAuthorityResponseXmlRequest generates requests for GetTaxAuthorityResponseXml
+func NewGetTaxAuthorityResponseXmlRequest(server string, id int64, params *GetTaxAuthorityResponseXmlParams) (*http.Request, error) {
 	var err error
 
 	var pathParam0 string
@@ -10015,7 +10121,7 @@ func NewGetHaciendaXmlRequest(server string, id int64, params *GetHaciendaXmlPar
 		return nil, err
 	}
 
-	operationPath := fmt.Sprintf("/documents/%s/xml/hacienda", pathParam0)
+	operationPath := fmt.Sprintf("/documents/%s/xml/tax-authority-response", pathParam0)
 	if operationPath[0] == '/' {
 		operationPath = "." + operationPath
 	}
@@ -12183,11 +12289,11 @@ type ClientWithResponsesInterface interface {
 	// SendDocumentEmailWithResponse request
 	SendDocumentEmailWithResponse(ctx context.Context, id int64, params *SendDocumentEmailParams, reqEditors ...RequestEditorFn) (*SendDocumentEmailResponse, error)
 
-	// GetFaqturoXmlWithResponse request
-	GetFaqturoXmlWithResponse(ctx context.Context, id int64, params *GetFaqturoXmlParams, reqEditors ...RequestEditorFn) (*GetFaqturoXmlResponse, error)
+	// GetIssuedXmlWithResponse request
+	GetIssuedXmlWithResponse(ctx context.Context, id int64, params *GetIssuedXmlParams, reqEditors ...RequestEditorFn) (*GetIssuedXmlResponse, error)
 
-	// GetHaciendaXmlWithResponse request
-	GetHaciendaXmlWithResponse(ctx context.Context, id int64, params *GetHaciendaXmlParams, reqEditors ...RequestEditorFn) (*GetHaciendaXmlResponse, error)
+	// GetTaxAuthorityResponseXmlWithResponse request
+	GetTaxAuthorityResponseXmlWithResponse(ctx context.Context, id int64, params *GetTaxAuthorityResponseXmlParams, reqEditors ...RequestEditorFn) (*GetTaxAuthorityResponseXmlResponse, error)
 
 	// GetAllIssuersWithResponse request
 	GetAllIssuersWithResponse(ctx context.Context, params *GetAllIssuersParams, reqEditors ...RequestEditorFn) (*GetAllIssuersResponse, error)
@@ -14089,14 +14195,14 @@ func (r SendDocumentEmailResponse) ContentType() string {
 	return ""
 }
 
-type GetFaqturoXmlResponse struct {
+type GetIssuedXmlResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
 	XML200       *openapi_types.File
 }
 
 // Status returns HTTPResponse.Status
-func (r GetFaqturoXmlResponse) Status() string {
+func (r GetIssuedXmlResponse) Status() string {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.Status
 	}
@@ -14104,7 +14210,7 @@ func (r GetFaqturoXmlResponse) Status() string {
 }
 
 // StatusCode returns HTTPResponse.StatusCode
-func (r GetFaqturoXmlResponse) StatusCode() int {
+func (r GetIssuedXmlResponse) StatusCode() int {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.StatusCode
 	}
@@ -14112,21 +14218,21 @@ func (r GetFaqturoXmlResponse) StatusCode() int {
 }
 
 // ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
-func (r GetFaqturoXmlResponse) ContentType() string {
+func (r GetIssuedXmlResponse) ContentType() string {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.Header.Get("Content-Type")
 	}
 	return ""
 }
 
-type GetHaciendaXmlResponse struct {
+type GetTaxAuthorityResponseXmlResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
 	XML200       *openapi_types.File
 }
 
 // Status returns HTTPResponse.Status
-func (r GetHaciendaXmlResponse) Status() string {
+func (r GetTaxAuthorityResponseXmlResponse) Status() string {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.Status
 	}
@@ -14134,7 +14240,7 @@ func (r GetHaciendaXmlResponse) Status() string {
 }
 
 // StatusCode returns HTTPResponse.StatusCode
-func (r GetHaciendaXmlResponse) StatusCode() int {
+func (r GetTaxAuthorityResponseXmlResponse) StatusCode() int {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.StatusCode
 	}
@@ -14142,7 +14248,7 @@ func (r GetHaciendaXmlResponse) StatusCode() int {
 }
 
 // ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
-func (r GetHaciendaXmlResponse) ContentType() string {
+func (r GetTaxAuthorityResponseXmlResponse) ContentType() string {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.Header.Get("Content-Type")
 	}
@@ -14212,7 +14318,6 @@ func (r CreateIssuerResponse) ContentType() string {
 type DeleteIssuerResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
-	JSON200      *map[string]string
 }
 
 // Status returns HTTPResponse.Status
@@ -15918,22 +16023,22 @@ func (c *ClientWithResponses) SendDocumentEmailWithResponse(ctx context.Context,
 	return ParseSendDocumentEmailResponse(rsp)
 }
 
-// GetFaqturoXmlWithResponse request returning *GetFaqturoXmlResponse
-func (c *ClientWithResponses) GetFaqturoXmlWithResponse(ctx context.Context, id int64, params *GetFaqturoXmlParams, reqEditors ...RequestEditorFn) (*GetFaqturoXmlResponse, error) {
-	rsp, err := c.GetFaqturoXml(ctx, id, params, reqEditors...)
+// GetIssuedXmlWithResponse request returning *GetIssuedXmlResponse
+func (c *ClientWithResponses) GetIssuedXmlWithResponse(ctx context.Context, id int64, params *GetIssuedXmlParams, reqEditors ...RequestEditorFn) (*GetIssuedXmlResponse, error) {
+	rsp, err := c.GetIssuedXml(ctx, id, params, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
-	return ParseGetFaqturoXmlResponse(rsp)
+	return ParseGetIssuedXmlResponse(rsp)
 }
 
-// GetHaciendaXmlWithResponse request returning *GetHaciendaXmlResponse
-func (c *ClientWithResponses) GetHaciendaXmlWithResponse(ctx context.Context, id int64, params *GetHaciendaXmlParams, reqEditors ...RequestEditorFn) (*GetHaciendaXmlResponse, error) {
-	rsp, err := c.GetHaciendaXml(ctx, id, params, reqEditors...)
+// GetTaxAuthorityResponseXmlWithResponse request returning *GetTaxAuthorityResponseXmlResponse
+func (c *ClientWithResponses) GetTaxAuthorityResponseXmlWithResponse(ctx context.Context, id int64, params *GetTaxAuthorityResponseXmlParams, reqEditors ...RequestEditorFn) (*GetTaxAuthorityResponseXmlResponse, error) {
+	rsp, err := c.GetTaxAuthorityResponseXml(ctx, id, params, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
-	return ParseGetHaciendaXmlResponse(rsp)
+	return ParseGetTaxAuthorityResponseXmlResponse(rsp)
 }
 
 // GetAllIssuersWithResponse request returning *GetAllIssuersResponse
@@ -17866,15 +17971,15 @@ func ParseSendDocumentEmailResponse(rsp *http.Response) (*SendDocumentEmailRespo
 	return response, nil
 }
 
-// ParseGetFaqturoXmlResponse parses an HTTP response from a GetFaqturoXmlWithResponse call
-func ParseGetFaqturoXmlResponse(rsp *http.Response) (*GetFaqturoXmlResponse, error) {
+// ParseGetIssuedXmlResponse parses an HTTP response from a GetIssuedXmlWithResponse call
+func ParseGetIssuedXmlResponse(rsp *http.Response) (*GetIssuedXmlResponse, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
 	defer func() { _ = rsp.Body.Close() }()
 	if err != nil {
 		return nil, err
 	}
 
-	response := &GetFaqturoXmlResponse{
+	response := &GetIssuedXmlResponse{
 		Body:         bodyBytes,
 		HTTPResponse: rsp,
 	}
@@ -17892,15 +17997,15 @@ func ParseGetFaqturoXmlResponse(rsp *http.Response) (*GetFaqturoXmlResponse, err
 	return response, nil
 }
 
-// ParseGetHaciendaXmlResponse parses an HTTP response from a GetHaciendaXmlWithResponse call
-func ParseGetHaciendaXmlResponse(rsp *http.Response) (*GetHaciendaXmlResponse, error) {
+// ParseGetTaxAuthorityResponseXmlResponse parses an HTTP response from a GetTaxAuthorityResponseXmlWithResponse call
+func ParseGetTaxAuthorityResponseXmlResponse(rsp *http.Response) (*GetTaxAuthorityResponseXmlResponse, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
 	defer func() { _ = rsp.Body.Close() }()
 	if err != nil {
 		return nil, err
 	}
 
-	response := &GetHaciendaXmlResponse{
+	response := &GetTaxAuthorityResponseXmlResponse{
 		Body:         bodyBytes,
 		HTTPResponse: rsp,
 	}
@@ -17981,16 +18086,6 @@ func ParseDeleteIssuerResponse(rsp *http.Response) (*DeleteIssuerResponse, error
 	response := &DeleteIssuerResponse{
 		Body:         bodyBytes,
 		HTTPResponse: rsp,
-	}
-
-	switch {
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest map[string]string
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.JSON200 = &dest
-
 	}
 
 	return response, nil
