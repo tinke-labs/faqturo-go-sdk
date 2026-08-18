@@ -40,9 +40,13 @@
       "AddressRequest": {
         "properties": {
           "cantonCode": {
+            "minLength": 1,
+            "pattern": "\\d{2}",
             "type": "string"
           },
           "districtCode": {
+            "minLength": 1,
+            "pattern": "\\d{2}",
             "type": "string"
           },
           "neighborhood": {
@@ -56,9 +60,16 @@
             "type": "string"
           },
           "provinceCode": {
+            "minLength": 1,
+            "pattern": "\\d",
             "type": "string"
           }
         },
+        "required": [
+          "cantonCode",
+          "districtCode",
+          "provinceCode"
+        ],
         "type": "object"
       },
       "AddressResponse": {
@@ -478,12 +489,6 @@
       },
       "ClientUpdateRequest": {
         "properties": {
-          "email": {
-            "format": "email",
-            "maxLength": 120,
-            "minLength": 0,
-            "type": "string"
-          },
           "legalIdentification": {
             "$ref": "#/components/schemas/LegalIdentificationRequest"
           },
@@ -1620,9 +1625,18 @@
           },
           "paymentType": {
             "description": "Codigo Hacienda del medio de pago. Use 99 para otros y envie otherDescription.",
+            "enum": [
+              "01",
+              "02",
+              "03",
+              "04",
+              "05",
+              "06",
+              "07",
+              "99"
+            ],
             "example": "01",
             "minLength": 1,
-            "pattern": "0[1-7]|99",
             "type": "string"
           }
         },
@@ -2229,9 +2243,6 @@
             "format": "date-time",
             "type": "string"
           },
-          "signedXml": {
-            "type": "string"
-          },
           "situation": {
             "type": "string"
           },
@@ -2243,9 +2254,6 @@
               "CANCELLED",
               "ERROR"
             ],
-            "type": "string"
-          },
-          "taxAuthorityResponseXml": {
             "type": "string"
           },
           "taxCondition": {
@@ -2483,6 +2491,16 @@
             "x-go-type": "Decimal"
           },
           "paymentMethodType": {
+            "enum": [
+              "CASH",
+              "CARD",
+              "CHECK",
+              "BANK_TRANSFER",
+              "THIRD_PARTY_COLLECTION",
+              "SINPE_MOBILE",
+              "DIGITAL_PLATFORM",
+              "OTHERS"
+            ],
             "type": "string"
           }
         },
@@ -3096,9 +3114,16 @@
           },
           "documentType": {
             "description": "Codigo Hacienda del tipo de cargo. Use 99 para otros y envie documentTypeOther.",
+            "enum": [
+              "01",
+              "02",
+              "03",
+              "04",
+              "99"
+            ],
             "example": "01",
             "minLength": 1,
-            "pattern": "\\d{2}",
+            "pattern": "0[1-4]|99",
             "type": "string"
           },
           "documentTypeOther": {
@@ -3376,12 +3401,20 @@
       "PhoneRequest": {
         "properties": {
           "countryCode": {
+            "minLength": 1,
+            "pattern": "\\d+",
             "type": "string"
           },
           "number": {
+            "minLength": 1,
+            "pattern": "\\d+",
             "type": "string"
           }
         },
+        "required": [
+          "countryCode",
+          "number"
+        ],
         "type": "object"
       },
       "PhoneResponse": {
@@ -3878,6 +3911,11 @@
             "type": "string"
           },
           "faxNumber": {
+            "type": "string"
+          },
+          "fiscalRegistration8707": {
+            "maxLength": 12,
+            "minLength": 0,
             "type": "string"
           },
           "issuerActivityCode": {
@@ -7587,9 +7625,9 @@
         ]
       }
     },
-    "/documents/{id}/xml/faqturo": {
+    "/documents/{id}/xml/issued": {
       "get": {
-        "operationId": "getFaqturoXml",
+        "operationId": "getIssuedXml",
         "parameters": [
           {
             "in": "path",
@@ -7633,15 +7671,15 @@
             "apiKeyAuth": []
           }
         ],
-        "summary": "Descargar XML firmado por Faqturo",
+        "summary": "Descargar XML emitido y firmado",
         "tags": [
           "Documents"
         ]
       }
     },
-    "/documents/{id}/xml/hacienda": {
+    "/documents/{id}/xml/tax-authority-response": {
       "get": {
-        "operationId": "getHaciendaXml",
+        "operationId": "getTaxAuthorityResponseXml",
         "parameters": [
           {
             "in": "path",
@@ -7685,7 +7723,7 @@
             "apiKeyAuth": []
           }
         ],
-        "summary": "Descargar XML de respuesta de Hacienda",
+        "summary": "Descargar XML de respuesta de la autoridad tributaria",
         "tags": [
           "Documents"
         ]
@@ -7829,16 +7867,6 @@
         ],
         "responses": {
           "200": {
-            "content": {
-              "application/json": {
-                "schema": {
-                  "additionalProperties": {
-                    "type": "string"
-                  },
-                  "type": "object"
-                }
-              }
-            },
             "description": "OK"
           }
         },
