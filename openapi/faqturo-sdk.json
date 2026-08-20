@@ -6762,7 +6762,7 @@
           "creditTerm" : {
             "type" : "integer",
             "format" : "int32",
-            "description" : "Opcional por defecto. Requerido cuando saleCondition=02; representa dias de credito.",
+            "description" : "Requerido cuando saleCondition=02 o 10. Para 10 representa de 1 a 90 dias.",
             "example" : 30,
             "maximum" : 99999,
             "minimum" : 1
@@ -6995,16 +6995,16 @@
           "usedGoodsVatCalculationDataValid" : {
             "type" : "boolean"
           },
-          "otherTaxDataValid" : {
-            "type" : "boolean"
-          },
-          "taxRatePresentWhenRequiredForCalculation" : {
-            "type" : "boolean"
-          },
           "specificTaxTypeValidForCode05" : {
             "type" : "boolean"
           },
           "vatSpecialCalculationDataValid" : {
+            "type" : "boolean"
+          },
+          "otherTaxDataValid" : {
+            "type" : "boolean"
+          },
+          "taxRatePresentWhenRequiredForCalculation" : {
             "type" : "boolean"
           }
         },

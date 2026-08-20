@@ -2709,7 +2709,7 @@ type DocumentRequest struct {
 	// CashRegisterId Opcional. Si se envia, la sucursal se deriva de la caja y se guardan los codigos historicos.
 	CashRegisterId *int64 `json:"cashRegisterId,omitempty"`
 
-	// CreditTerm Opcional por defecto. Requerido cuando saleCondition=02; representa dias de credito.
+	// CreditTerm Requerido cuando saleCondition=02 o 10. Para 10 representa de 1 a 90 dias.
 	CreditTerm *int32 `json:"creditTerm,omitempty"`
 
 	// Currency Moneda ISO 4217. Opcional por defecto: CRC.
