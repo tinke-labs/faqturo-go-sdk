@@ -5159,6 +5159,10 @@
           },
           "notes" : {
             "type" : "string"
+          },
+          "electronicPaymentReceiptId" : {
+            "type" : "integer",
+            "format" : "int64"
           }
         }
       },

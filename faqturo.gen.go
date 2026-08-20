@@ -2533,19 +2533,20 @@ type DocumentPaymentApplicationRequest struct {
 
 // DocumentPaymentApplicationResponse defines model for DocumentPaymentApplicationResponse.
 type DocumentPaymentApplicationResponse struct {
-	Amount      *Decimal   `json:"amount,omitempty"`
-	AppliedAt   *time.Time `json:"appliedAt,omitempty"`
-	AppliedBy   *string    `json:"appliedBy,omitempty"`
-	Consecutive *string    `json:"consecutive,omitempty"`
-	DocumentId  *int64     `json:"documentId,omitempty"`
-	DocumentKey *string    `json:"documentKey,omitempty"`
-	Id          *int64     `json:"id,omitempty"`
-	IsVoided    *bool      `json:"isVoided,omitempty"`
-	Notes       *string    `json:"notes,omitempty"`
-	PaymentId   *int64     `json:"paymentId,omitempty"`
-	VoidReason  *string    `json:"voidReason,omitempty"`
-	VoidedAt    *time.Time `json:"voidedAt,omitempty"`
-	VoidedBy    *string    `json:"voidedBy,omitempty"`
+	Amount                     *Decimal   `json:"amount,omitempty"`
+	AppliedAt                  *time.Time `json:"appliedAt,omitempty"`
+	AppliedBy                  *string    `json:"appliedBy,omitempty"`
+	Consecutive                *string    `json:"consecutive,omitempty"`
+	DocumentId                 *int64     `json:"documentId,omitempty"`
+	DocumentKey                *string    `json:"documentKey,omitempty"`
+	ElectronicPaymentReceiptId *int64     `json:"electronicPaymentReceiptId,omitempty"`
+	Id                         *int64     `json:"id,omitempty"`
+	IsVoided                   *bool      `json:"isVoided,omitempty"`
+	Notes                      *string    `json:"notes,omitempty"`
+	PaymentId                  *int64     `json:"paymentId,omitempty"`
+	VoidReason                 *string    `json:"voidReason,omitempty"`
+	VoidedAt                   *time.Time `json:"voidedAt,omitempty"`
+	VoidedBy                   *string    `json:"voidedBy,omitempty"`
 }
 
 // DocumentPaymentApplyRequest defines model for DocumentPaymentApplyRequest.
