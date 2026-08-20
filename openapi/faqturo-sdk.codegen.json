@@ -1454,6 +1454,10 @@
           "documentKey": {
             "type": "string"
           },
+          "electronicPaymentReceiptId": {
+            "format": "int64",
+            "type": "integer"
+          },
           "id": {
             "format": "int64",
             "type": "integer"
@@ -1963,7 +1967,7 @@
             "type": "integer"
           },
           "creditTerm": {
-            "description": "Opcional por defecto. Requerido cuando saleCondition=02; representa dias de credito.",
+            "description": "Requerido cuando saleCondition=02 o 10. Para 10 representa de 1 a 90 dias.",
             "example": 30,
             "format": "int32",
             "maximum": 99999,
