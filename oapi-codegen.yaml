@@ -6,3 +6,5 @@ generate:
 output-options:
   nullable-type: true
   skip-prune: true
+  user-templates:
+    client-with-responses.tmpl: ./internal/templates/client-with-responses.tmpl

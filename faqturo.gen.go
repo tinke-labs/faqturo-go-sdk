@@ -641,6 +641,27 @@ func (e SpecificTaxDataRequestSpecificTaxType) Valid() bool {
 	}
 }
 
+// Defines values for XMLValidationIssueSeverity.
+const (
+	BLOCKING    XMLValidationIssueSeverity = "BLOCKING"
+	OVERRIDABLE XMLValidationIssueSeverity = "OVERRIDABLE"
+	WARNING     XMLValidationIssueSeverity = "WARNING"
+)
+
+// Valid indicates whether the value is a known member of the XMLValidationIssueSeverity enum.
+func (e XMLValidationIssueSeverity) Valid() bool {
+	switch e {
+	case BLOCKING:
+		return true
+	case OVERRIDABLE:
+		return true
+	case WARNING:
+		return true
+	default:
+		return false
+	}
+}
+
 // Defines values for ClassifyDocumentItemParamsAPIVersion.
 const (
 	ClassifyDocumentItemParamsAPIVersionV1 ClassifyDocumentItemParamsAPIVersion = "v1"
@@ -1469,6 +1490,24 @@ func (e CreateReceiverMessageParamsAPIVersion) Valid() bool {
 	}
 }
 
+// Defines values for ValidateXmlParamsAPIVersion.
+const (
+	ValidateXmlParamsAPIVersionN100 ValidateXmlParamsAPIVersion = "1.0.0"
+	ValidateXmlParamsAPIVersionV1   ValidateXmlParamsAPIVersion = "v1"
+)
+
+// Valid indicates whether the value is a known member of the ValidateXmlParamsAPIVersion enum.
+func (e ValidateXmlParamsAPIVersion) Valid() bool {
+	switch e {
+	case ValidateXmlParamsAPIVersionN100:
+		return true
+	case ValidateXmlParamsAPIVersionV1:
+		return true
+	default:
+		return false
+	}
+}
+
 // Defines values for GetDocumentByIdParamsAPIVersion.
 const (
 	GetDocumentByIdParamsAPIVersionV1 GetDocumentByIdParamsAPIVersion = "v1"
@@ -2086,13 +2125,13 @@ func (e GetLogsParamsAPIVersion) Valid() bool {
 
 // Defines values for TestWebhookParamsAPIVersion.
 const (
-	V1 TestWebhookParamsAPIVersion = "v1"
+	TestWebhookParamsAPIVersionV1 TestWebhookParamsAPIVersion = "v1"
 )
 
 // Valid indicates whether the value is a known member of the TestWebhookParamsAPIVersion enum.
 func (e TestWebhookParamsAPIVersion) Valid() bool {
 	switch e {
-	case V1:
+	case TestWebhookParamsAPIVersionV1:
 		return true
 	default:
 		return false
@@ -3481,6 +3520,39 @@ type WebhookTestResponse struct {
 	WebhookEndpointId *int64  `json:"webhookEndpointId,omitempty"`
 }
 
+// XMLValidationIssue defines model for XMLValidationIssue.
+type XMLValidationIssue struct {
+	Code          string                     `json:"code"`
+	DeclaredValue *Decimal                   `json:"declaredValue,omitempty"`
+	Difference    *Decimal                   `json:"difference,omitempty"`
+	ExpectedValue *Decimal                   `json:"expectedValue,omitempty"`
+	Field         string                     `json:"field"`
+	Message       string                     `json:"message"`
+	Overridable   bool                       `json:"overridable"`
+	Rule          *string                    `json:"rule,omitempty"`
+	Severity      XMLValidationIssueSeverity `json:"severity"`
+}
+
+// XMLValidationIssueSeverity defines model for XMLValidationIssueSeverity.
+type XMLValidationIssueSeverity string
+
+// XMLValidationRequest defines model for XMLValidationRequest.
+type XMLValidationRequest struct {
+	Xml string `json:"xml"`
+}
+
+// XMLValidationResponse defines model for XMLValidationResponse.
+type XMLValidationResponse struct {
+	DocumentKey            *string              `json:"documentKey,omitempty"`
+	DocumentType           *string              `json:"documentType,omitempty"`
+	IssuerIdentification   *string              `json:"issuerIdentification,omitempty"`
+	Issues                 []XMLValidationIssue `json:"issues"`
+	ReceiverIdentification *string              `json:"receiverIdentification,omitempty"`
+	RootName               *string              `json:"rootName,omitempty"`
+	SchemaVersion          *string              `json:"schemaVersion,omitempty"`
+	Valid                  bool                 `json:"valid"`
+}
+
 // apiKeyAuthContextKey is the context key for apiKeyAuth security scheme
 type apiKeyAuthContextKey string
 
@@ -3978,6 +4050,14 @@ type CreateReceiverMessageParams struct {
 // CreateReceiverMessageParamsAPIVersion defines parameters for CreateReceiverMessage.
 type CreateReceiverMessageParamsAPIVersion string
 
+// ValidateXmlParams defines parameters for ValidateXml.
+type ValidateXmlParams struct {
+	APIVersion *ValidateXmlParamsAPIVersion `json:"API-Version,omitempty"`
+}
+
+// ValidateXmlParamsAPIVersion defines parameters for ValidateXml.
+type ValidateXmlParamsAPIVersion string
+
 // GetDocumentByIdParams defines parameters for GetDocumentById.
 type GetDocumentByIdParams struct {
 	APIVersion *GetDocumentByIdParamsAPIVersion `json:"API-Version,omitempty"`
@@ -4387,6 +4467,9 @@ type CreateReceiverMessageJSONRequestBody = ReceiverMessageRequest
 // CreateReceiverMessageMultipartRequestBody defines body for CreateReceiverMessage for multipart/form-data ContentType.
 type CreateReceiverMessageMultipartRequestBody CreateReceiverMessageMultipartBody
 
+// ValidateXmlJSONRequestBody defines body for ValidateXml for application/json ContentType.
+type ValidateXmlJSONRequestBody = XMLValidationRequest
+
 // CreateIssuerJSONRequestBody defines body for CreateIssuer for application/json ContentType.
 type CreateIssuerJSONRequestBody = TenantIssuerRequest
 
@@ -4700,6 +4783,11 @@ type ClientInterface interface {
 	CreateReceiverMessageWithBody(ctx context.Context, params *CreateReceiverMessageParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	CreateReceiverMessage(ctx context.Context, params *CreateReceiverMessageParams, body CreateReceiverMessageJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// ValidateXmlWithBody request with any body
+	ValidateXmlWithBody(ctx context.Context, params *ValidateXmlParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	ValidateXml(ctx context.Context, params *ValidateXmlParams, body ValidateXmlJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// GetDocumentById request
 	GetDocumentById(ctx context.Context, id int64, params *GetDocumentByIdParams, reqEditors ...RequestEditorFn) (*http.Response, error)
@@ -5738,6 +5826,30 @@ func (c *Client) CreateReceiverMessageWithBody(ctx context.Context, params *Crea
 
 func (c *Client) CreateReceiverMessage(ctx context.Context, params *CreateReceiverMessageParams, body CreateReceiverMessageJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewCreateReceiverMessageRequest(c.Server, params, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) ValidateXmlWithBody(ctx context.Context, params *ValidateXmlParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewValidateXmlRequestWithBody(c.Server, params, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) ValidateXml(ctx context.Context, params *ValidateXmlParams, body ValidateXmlJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewValidateXmlRequest(c.Server, params, body)
 	if err != nil {
 		return nil, err
 	}
@@ -9861,6 +9973,61 @@ func NewCreateReceiverMessageRequestWithBody(server string, params *CreateReceiv
 	return req, nil
 }
 
+// NewValidateXmlRequest calls the generic ValidateXml builder with application/json body
+func NewValidateXmlRequest(server string, params *ValidateXmlParams, body ValidateXmlJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewValidateXmlRequestWithBody(server, params, "application/json", bodyReader)
+}
+
+// NewValidateXmlRequestWithBody generates requests for ValidateXml with any type of body
+func NewValidateXmlRequestWithBody(server string, params *ValidateXmlParams, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/documents/validate-xml")
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPost, queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
+
+	if params != nil {
+
+		if params.APIVersion != nil {
+			var headerParam0 string
+
+			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "API-Version", *params.APIVersion, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: ""})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("API-Version", headerParam0)
+		}
+
+	}
+
+	return req, nil
+}
+
 // NewGetDocumentByIdRequest generates requests for GetDocumentById
 func NewGetDocumentByIdRequest(server string, id int64, params *GetDocumentByIdParams) (*http.Request, error) {
 	var err error
@@ -12046,7 +12213,17 @@ func (c *Client) applyEditors(ctx context.Context, req *http.Request, additional
 
 // ClientWithResponses builds on ClientInterface to offer response payloads
 type ClientWithResponses struct {
-	ClientInterface
+	client ClientInterface
+}
+
+// RawClient exposes the low-level HTTP operations for advanced callers.
+type RawClient struct {
+	client ClientInterface
+}
+
+// Raw returns the low-level client for callers that need the raw HTTP response.
+func (c *ClientWithResponses) Raw() *RawClient {
+	return &RawClient{client: c.client}
 }
 
 // NewClientWithResponses creates a new ClientWithResponses, which wraps
@@ -12056,7 +12233,7 @@ func NewClientWithResponses(server string, opts ...ClientOption) (*ClientWithRes
 	if err != nil {
 		return nil, err
 	}
-	return &ClientWithResponses{client}, nil
+	return &ClientWithResponses{client: client}, nil
 }
 
 // WithBaseURL overrides the baseURL.
@@ -12071,358 +12248,363 @@ func WithBaseURL(baseURL string) ClientOption {
 	}
 }
 
-// ClientWithResponsesInterface is the interface specification for the client with responses above.
+// ClientWithResponsesInterface is the typed client interface exposed by the SDK.
 type ClientWithResponsesInterface interface {
-	// ClassifyDocumentItemWithBodyWithResponse request with any body
-	ClassifyDocumentItemWithBodyWithResponse(ctx context.Context, itemId int64, params *ClassifyDocumentItemParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*ClassifyDocumentItemResponse, error)
+	// ClassifyDocumentItemWithBody request with any body
+	ClassifyDocumentItemWithBody(ctx context.Context, itemId int64, params *ClassifyDocumentItemParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*ClassifyDocumentItemResponse, error)
 
-	ClassifyDocumentItemWithResponse(ctx context.Context, itemId int64, params *ClassifyDocumentItemParams, body ClassifyDocumentItemJSONRequestBody, reqEditors ...RequestEditorFn) (*ClassifyDocumentItemResponse, error)
+	ClassifyDocumentItem(ctx context.Context, itemId int64, params *ClassifyDocumentItemParams, body ClassifyDocumentItemJSONRequestBody, reqEditors ...RequestEditorFn) (*ClassifyDocumentItemResponse, error)
 
-	// GetFiscalReportWithResponse request
-	GetFiscalReportWithResponse(ctx context.Context, params *GetFiscalReportParams, reqEditors ...RequestEditorFn) (*GetFiscalReportResponse, error)
+	// GetFiscalReport request
+	GetFiscalReport(ctx context.Context, params *GetFiscalReportParams, reqEditors ...RequestEditorFn) (*GetFiscalReportResponse, error)
 
-	// ExportFiscalReportWithResponse request
-	ExportFiscalReportWithResponse(ctx context.Context, params *ExportFiscalReportParams, reqEditors ...RequestEditorFn) (*ExportFiscalReportResponse, error)
+	// ExportFiscalReport request
+	ExportFiscalReport(ctx context.Context, params *ExportFiscalReportParams, reqEditors ...RequestEditorFn) (*ExportFiscalReportResponse, error)
 
-	// GetTaxRatesSummaryWithResponse request
-	GetTaxRatesSummaryWithResponse(ctx context.Context, params *GetTaxRatesSummaryParams, reqEditors ...RequestEditorFn) (*GetTaxRatesSummaryResponse, error)
+	// GetTaxRatesSummary request
+	GetTaxRatesSummary(ctx context.Context, params *GetTaxRatesSummaryParams, reqEditors ...RequestEditorFn) (*GetTaxRatesSummaryResponse, error)
 
-	// GetVatSummaryWithResponse request
-	GetVatSummaryWithResponse(ctx context.Context, params *GetVatSummaryParams, reqEditors ...RequestEditorFn) (*GetVatSummaryResponse, error)
+	// GetVatSummary request
+	GetVatSummary(ctx context.Context, params *GetVatSummaryParams, reqEditors ...RequestEditorFn) (*GetVatSummaryResponse, error)
 
-	// GetBranchesWithResponse request
-	GetBranchesWithResponse(ctx context.Context, params *GetBranchesParams, reqEditors ...RequestEditorFn) (*GetBranchesResponse, error)
+	// GetBranches request
+	GetBranches(ctx context.Context, params *GetBranchesParams, reqEditors ...RequestEditorFn) (*GetBranchesResponse, error)
 
-	// CreateBranchWithBodyWithResponse request with any body
-	CreateBranchWithBodyWithResponse(ctx context.Context, params *CreateBranchParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateBranchResponse, error)
+	// CreateBranchWithBody request with any body
+	CreateBranchWithBody(ctx context.Context, params *CreateBranchParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateBranchResponse, error)
 
-	CreateBranchWithResponse(ctx context.Context, params *CreateBranchParams, body CreateBranchJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateBranchResponse, error)
+	CreateBranch(ctx context.Context, params *CreateBranchParams, body CreateBranchJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateBranchResponse, error)
 
-	// GetCashRegistersWithResponse request
-	GetCashRegistersWithResponse(ctx context.Context, branchId int64, params *GetCashRegistersParams, reqEditors ...RequestEditorFn) (*GetCashRegistersResponse, error)
+	// GetCashRegisters request
+	GetCashRegisters(ctx context.Context, branchId int64, params *GetCashRegistersParams, reqEditors ...RequestEditorFn) (*GetCashRegistersResponse, error)
 
-	// CreateCashRegisterWithBodyWithResponse request with any body
-	CreateCashRegisterWithBodyWithResponse(ctx context.Context, branchId int64, params *CreateCashRegisterParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateCashRegisterResponse, error)
+	// CreateCashRegisterWithBody request with any body
+	CreateCashRegisterWithBody(ctx context.Context, branchId int64, params *CreateCashRegisterParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateCashRegisterResponse, error)
 
-	CreateCashRegisterWithResponse(ctx context.Context, branchId int64, params *CreateCashRegisterParams, body CreateCashRegisterJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateCashRegisterResponse, error)
+	CreateCashRegister(ctx context.Context, branchId int64, params *CreateCashRegisterParams, body CreateCashRegisterJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateCashRegisterResponse, error)
 
-	// DeleteCashRegisterWithResponse request
-	DeleteCashRegisterWithResponse(ctx context.Context, branchId int64, id int64, params *DeleteCashRegisterParams, reqEditors ...RequestEditorFn) (*DeleteCashRegisterResponse, error)
+	// DeleteCashRegister request
+	DeleteCashRegister(ctx context.Context, branchId int64, id int64, params *DeleteCashRegisterParams, reqEditors ...RequestEditorFn) (*DeleteCashRegisterResponse, error)
 
-	// GetCashRegisterWithResponse request
-	GetCashRegisterWithResponse(ctx context.Context, branchId int64, id int64, params *GetCashRegisterParams, reqEditors ...RequestEditorFn) (*GetCashRegisterResponse, error)
+	// GetCashRegister request
+	GetCashRegister(ctx context.Context, branchId int64, id int64, params *GetCashRegisterParams, reqEditors ...RequestEditorFn) (*GetCashRegisterResponse, error)
 
-	// UpdateCashRegisterWithBodyWithResponse request with any body
-	UpdateCashRegisterWithBodyWithResponse(ctx context.Context, branchId int64, id int64, params *UpdateCashRegisterParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateCashRegisterResponse, error)
+	// UpdateCashRegisterWithBody request with any body
+	UpdateCashRegisterWithBody(ctx context.Context, branchId int64, id int64, params *UpdateCashRegisterParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateCashRegisterResponse, error)
 
-	UpdateCashRegisterWithResponse(ctx context.Context, branchId int64, id int64, params *UpdateCashRegisterParams, body UpdateCashRegisterJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateCashRegisterResponse, error)
+	UpdateCashRegister(ctx context.Context, branchId int64, id int64, params *UpdateCashRegisterParams, body UpdateCashRegisterJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateCashRegisterResponse, error)
 
-	// UpdateCashRegisterSequenceWithBodyWithResponse request with any body
-	UpdateCashRegisterSequenceWithBodyWithResponse(ctx context.Context, branchId int64, id int64, params *UpdateCashRegisterSequenceParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateCashRegisterSequenceResponse, error)
+	// UpdateCashRegisterSequenceWithBody request with any body
+	UpdateCashRegisterSequenceWithBody(ctx context.Context, branchId int64, id int64, params *UpdateCashRegisterSequenceParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateCashRegisterSequenceResponse, error)
 
-	UpdateCashRegisterSequenceWithResponse(ctx context.Context, branchId int64, id int64, params *UpdateCashRegisterSequenceParams, body UpdateCashRegisterSequenceJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateCashRegisterSequenceResponse, error)
+	UpdateCashRegisterSequence(ctx context.Context, branchId int64, id int64, params *UpdateCashRegisterSequenceParams, body UpdateCashRegisterSequenceJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateCashRegisterSequenceResponse, error)
 
-	// DeleteBranchWithResponse request
-	DeleteBranchWithResponse(ctx context.Context, id int64, params *DeleteBranchParams, reqEditors ...RequestEditorFn) (*DeleteBranchResponse, error)
+	// DeleteBranch request
+	DeleteBranch(ctx context.Context, id int64, params *DeleteBranchParams, reqEditors ...RequestEditorFn) (*DeleteBranchResponse, error)
 
-	// GetBranchWithResponse request
-	GetBranchWithResponse(ctx context.Context, id int64, params *GetBranchParams, reqEditors ...RequestEditorFn) (*GetBranchResponse, error)
+	// GetBranch request
+	GetBranch(ctx context.Context, id int64, params *GetBranchParams, reqEditors ...RequestEditorFn) (*GetBranchResponse, error)
 
-	// UpdateBranchWithBodyWithResponse request with any body
-	UpdateBranchWithBodyWithResponse(ctx context.Context, id int64, params *UpdateBranchParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateBranchResponse, error)
+	// UpdateBranchWithBody request with any body
+	UpdateBranchWithBody(ctx context.Context, id int64, params *UpdateBranchParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateBranchResponse, error)
 
-	UpdateBranchWithResponse(ctx context.Context, id int64, params *UpdateBranchParams, body UpdateBranchJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateBranchResponse, error)
+	UpdateBranch(ctx context.Context, id int64, params *UpdateBranchParams, body UpdateBranchJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateBranchResponse, error)
 
-	// SetDefaultBranchWithResponse request
-	SetDefaultBranchWithResponse(ctx context.Context, id int64, params *SetDefaultBranchParams, reqEditors ...RequestEditorFn) (*SetDefaultBranchResponse, error)
+	// SetDefaultBranch request
+	SetDefaultBranch(ctx context.Context, id int64, params *SetDefaultBranchParams, reqEditors ...RequestEditorFn) (*SetDefaultBranchResponse, error)
 
-	// SetDefaultCashRegisterWithResponse request
-	SetDefaultCashRegisterWithResponse(ctx context.Context, id int64, params *SetDefaultCashRegisterParams, reqEditors ...RequestEditorFn) (*SetDefaultCashRegisterResponse, error)
+	// SetDefaultCashRegister request
+	SetDefaultCashRegister(ctx context.Context, id int64, params *SetDefaultCashRegisterParams, reqEditors ...RequestEditorFn) (*SetDefaultCashRegisterResponse, error)
 
-	// GetCantonsWithResponse request
-	GetCantonsWithResponse(ctx context.Context, params *GetCantonsParams, reqEditors ...RequestEditorFn) (*GetCantonsResponse, error)
+	// GetCantons request
+	GetCantons(ctx context.Context, params *GetCantonsParams, reqEditors ...RequestEditorFn) (*GetCantonsResponse, error)
 
-	// GetCurrenciesWithResponse request
-	GetCurrenciesWithResponse(ctx context.Context, params *GetCurrenciesParams, reqEditors ...RequestEditorFn) (*GetCurrenciesResponse, error)
+	// GetCurrencies request
+	GetCurrencies(ctx context.Context, params *GetCurrenciesParams, reqEditors ...RequestEditorFn) (*GetCurrenciesResponse, error)
 
-	// GetDistrictsWithResponse request
-	GetDistrictsWithResponse(ctx context.Context, params *GetDistrictsParams, reqEditors ...RequestEditorFn) (*GetDistrictsResponse, error)
+	// GetDistricts request
+	GetDistricts(ctx context.Context, params *GetDistrictsParams, reqEditors ...RequestEditorFn) (*GetDistrictsResponse, error)
 
-	// GetDocumentTypesWithResponse request
-	GetDocumentTypesWithResponse(ctx context.Context, params *GetDocumentTypesParams, reqEditors ...RequestEditorFn) (*GetDocumentTypesResponse, error)
+	// GetDocumentTypes request
+	GetDocumentTypes(ctx context.Context, params *GetDocumentTypesParams, reqEditors ...RequestEditorFn) (*GetDocumentTypesResponse, error)
 
-	// GetLegalIdentificationTypesWithResponse request
-	GetLegalIdentificationTypesWithResponse(ctx context.Context, params *GetLegalIdentificationTypesParams, reqEditors ...RequestEditorFn) (*GetLegalIdentificationTypesResponse, error)
+	// GetLegalIdentificationTypes request
+	GetLegalIdentificationTypes(ctx context.Context, params *GetLegalIdentificationTypesParams, reqEditors ...RequestEditorFn) (*GetLegalIdentificationTypesResponse, error)
 
-	// GetPaymentMethodsWithResponse request
-	GetPaymentMethodsWithResponse(ctx context.Context, params *GetPaymentMethodsParams, reqEditors ...RequestEditorFn) (*GetPaymentMethodsResponse, error)
+	// GetPaymentMethods request
+	GetPaymentMethods(ctx context.Context, params *GetPaymentMethodsParams, reqEditors ...RequestEditorFn) (*GetPaymentMethodsResponse, error)
 
-	// GetPharmaceuticalFormsWithResponse request
-	GetPharmaceuticalFormsWithResponse(ctx context.Context, params *GetPharmaceuticalFormsParams, reqEditors ...RequestEditorFn) (*GetPharmaceuticalFormsResponse, error)
+	// GetPharmaceuticalForms request
+	GetPharmaceuticalForms(ctx context.Context, params *GetPharmaceuticalFormsParams, reqEditors ...RequestEditorFn) (*GetPharmaceuticalFormsResponse, error)
 
-	// GetProvincesWithResponse request
-	GetProvincesWithResponse(ctx context.Context, params *GetProvincesParams, reqEditors ...RequestEditorFn) (*GetProvincesResponse, error)
+	// GetProvinces request
+	GetProvinces(ctx context.Context, params *GetProvincesParams, reqEditors ...RequestEditorFn) (*GetProvincesResponse, error)
 
-	// GetSaleConditionsWithResponse request
-	GetSaleConditionsWithResponse(ctx context.Context, params *GetSaleConditionsParams, reqEditors ...RequestEditorFn) (*GetSaleConditionsResponse, error)
+	// GetSaleConditions request
+	GetSaleConditions(ctx context.Context, params *GetSaleConditionsParams, reqEditors ...RequestEditorFn) (*GetSaleConditionsResponse, error)
 
-	// GetTaxCodesWithResponse request
-	GetTaxCodesWithResponse(ctx context.Context, params *GetTaxCodesParams, reqEditors ...RequestEditorFn) (*GetTaxCodesResponse, error)
+	// GetTaxCodes request
+	GetTaxCodes(ctx context.Context, params *GetTaxCodesParams, reqEditors ...RequestEditorFn) (*GetTaxCodesResponse, error)
 
-	// GetUnitsOfMeasureWithResponse request
-	GetUnitsOfMeasureWithResponse(ctx context.Context, params *GetUnitsOfMeasureParams, reqEditors ...RequestEditorFn) (*GetUnitsOfMeasureResponse, error)
+	// GetUnitsOfMeasure request
+	GetUnitsOfMeasure(ctx context.Context, params *GetUnitsOfMeasureParams, reqEditors ...RequestEditorFn) (*GetUnitsOfMeasureResponse, error)
 
-	// GetVatRateCodesWithResponse request
-	GetVatRateCodesWithResponse(ctx context.Context, params *GetVatRateCodesParams, reqEditors ...RequestEditorFn) (*GetVatRateCodesResponse, error)
+	// GetVatRateCodes request
+	GetVatRateCodes(ctx context.Context, params *GetVatRateCodesParams, reqEditors ...RequestEditorFn) (*GetVatRateCodesResponse, error)
 
-	// GetAllClientsWithResponse request
-	GetAllClientsWithResponse(ctx context.Context, params *GetAllClientsParams, reqEditors ...RequestEditorFn) (*GetAllClientsResponse, error)
+	// GetAllClients request
+	GetAllClients(ctx context.Context, params *GetAllClientsParams, reqEditors ...RequestEditorFn) (*GetAllClientsResponse, error)
 
-	// CreateClientWithBodyWithResponse request with any body
-	CreateClientWithBodyWithResponse(ctx context.Context, params *CreateClientParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateClientResponse, error)
+	// CreateClientWithBody request with any body
+	CreateClientWithBody(ctx context.Context, params *CreateClientParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateClientResponse, error)
 
-	CreateClientWithResponse(ctx context.Context, params *CreateClientParams, body CreateClientJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateClientResponse, error)
+	CreateClient(ctx context.Context, params *CreateClientParams, body CreateClientJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateClientResponse, error)
 
-	// GetExonerationsWithResponse request
-	GetExonerationsWithResponse(ctx context.Context, clientId int64, params *GetExonerationsParams, reqEditors ...RequestEditorFn) (*GetExonerationsResponse, error)
+	// GetExonerations request
+	GetExonerations(ctx context.Context, clientId int64, params *GetExonerationsParams, reqEditors ...RequestEditorFn) (*GetExonerationsResponse, error)
 
-	// RegisterExonerationWithBodyWithResponse request with any body
-	RegisterExonerationWithBodyWithResponse(ctx context.Context, clientId int64, params *RegisterExonerationParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*RegisterExonerationResponse, error)
+	// RegisterExonerationWithBody request with any body
+	RegisterExonerationWithBody(ctx context.Context, clientId int64, params *RegisterExonerationParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*RegisterExonerationResponse, error)
 
-	RegisterExonerationWithResponse(ctx context.Context, clientId int64, params *RegisterExonerationParams, body RegisterExonerationJSONRequestBody, reqEditors ...RequestEditorFn) (*RegisterExonerationResponse, error)
+	RegisterExoneration(ctx context.Context, clientId int64, params *RegisterExonerationParams, body RegisterExonerationJSONRequestBody, reqEditors ...RequestEditorFn) (*RegisterExonerationResponse, error)
 
-	// DeactivateExonerationWithResponse request
-	DeactivateExonerationWithResponse(ctx context.Context, clientId int64, id int64, params *DeactivateExonerationParams, reqEditors ...RequestEditorFn) (*DeactivateExonerationResponse, error)
+	// DeactivateExoneration request
+	DeactivateExoneration(ctx context.Context, clientId int64, id int64, params *DeactivateExonerationParams, reqEditors ...RequestEditorFn) (*DeactivateExonerationResponse, error)
 
-	// GetClientExonerationWithResponse request
-	GetClientExonerationWithResponse(ctx context.Context, clientId int64, id int64, params *GetClientExonerationParams, reqEditors ...RequestEditorFn) (*GetClientExonerationResponse, error)
+	// GetClientExoneration request
+	GetClientExoneration(ctx context.Context, clientId int64, id int64, params *GetClientExonerationParams, reqEditors ...RequestEditorFn) (*GetClientExonerationResponse, error)
 
-	// RefreshExonerationWithResponse request
-	RefreshExonerationWithResponse(ctx context.Context, clientId int64, id int64, params *RefreshExonerationParams, reqEditors ...RequestEditorFn) (*RefreshExonerationResponse, error)
+	// RefreshExoneration request
+	RefreshExoneration(ctx context.Context, clientId int64, id int64, params *RefreshExonerationParams, reqEditors ...RequestEditorFn) (*RefreshExonerationResponse, error)
 
-	// GetClientReceiversWithResponse request
-	GetClientReceiversWithResponse(ctx context.Context, clientId int64, params *GetClientReceiversParams, reqEditors ...RequestEditorFn) (*GetClientReceiversResponse, error)
+	// GetClientReceivers request
+	GetClientReceivers(ctx context.Context, clientId int64, params *GetClientReceiversParams, reqEditors ...RequestEditorFn) (*GetClientReceiversResponse, error)
 
-	// CreateOrUpdateReceiverWithBodyWithResponse request with any body
-	CreateOrUpdateReceiverWithBodyWithResponse(ctx context.Context, clientId int64, params *CreateOrUpdateReceiverParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateOrUpdateReceiverResponse, error)
+	// CreateOrUpdateReceiverWithBody request with any body
+	CreateOrUpdateReceiverWithBody(ctx context.Context, clientId int64, params *CreateOrUpdateReceiverParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateOrUpdateReceiverResponse, error)
 
-	CreateOrUpdateReceiverWithResponse(ctx context.Context, clientId int64, params *CreateOrUpdateReceiverParams, body CreateOrUpdateReceiverJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateOrUpdateReceiverResponse, error)
+	CreateOrUpdateReceiver(ctx context.Context, clientId int64, params *CreateOrUpdateReceiverParams, body CreateOrUpdateReceiverJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateOrUpdateReceiverResponse, error)
 
-	// UpdateDefaultReceiverWithBodyWithResponse request with any body
-	UpdateDefaultReceiverWithBodyWithResponse(ctx context.Context, clientId int64, params *UpdateDefaultReceiverParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateDefaultReceiverResponse, error)
+	// UpdateDefaultReceiverWithBody request with any body
+	UpdateDefaultReceiverWithBody(ctx context.Context, clientId int64, params *UpdateDefaultReceiverParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateDefaultReceiverResponse, error)
 
-	UpdateDefaultReceiverWithResponse(ctx context.Context, clientId int64, params *UpdateDefaultReceiverParams, body UpdateDefaultReceiverJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateDefaultReceiverResponse, error)
+	UpdateDefaultReceiver(ctx context.Context, clientId int64, params *UpdateDefaultReceiverParams, body UpdateDefaultReceiverJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateDefaultReceiverResponse, error)
 
-	// DeleteReceiverWithResponse request
-	DeleteReceiverWithResponse(ctx context.Context, clientId int64, receiverId int64, params *DeleteReceiverParams, reqEditors ...RequestEditorFn) (*DeleteReceiverResponse, error)
+	// DeleteReceiver request
+	DeleteReceiver(ctx context.Context, clientId int64, receiverId int64, params *DeleteReceiverParams, reqEditors ...RequestEditorFn) (*DeleteReceiverResponse, error)
 
-	// GetReceiverByIdWithResponse request
-	GetReceiverByIdWithResponse(ctx context.Context, clientId int64, receiverId int64, params *GetReceiverByIdParams, reqEditors ...RequestEditorFn) (*GetReceiverByIdResponse, error)
+	// GetReceiverById request
+	GetReceiverById(ctx context.Context, clientId int64, receiverId int64, params *GetReceiverByIdParams, reqEditors ...RequestEditorFn) (*GetReceiverByIdResponse, error)
 
-	// UpdateReceiverWithBodyWithResponse request with any body
-	UpdateReceiverWithBodyWithResponse(ctx context.Context, clientId int64, receiverId int64, params *UpdateReceiverParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateReceiverResponse, error)
+	// UpdateReceiverWithBody request with any body
+	UpdateReceiverWithBody(ctx context.Context, clientId int64, receiverId int64, params *UpdateReceiverParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateReceiverResponse, error)
 
-	UpdateReceiverWithResponse(ctx context.Context, clientId int64, receiverId int64, params *UpdateReceiverParams, body UpdateReceiverJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateReceiverResponse, error)
+	UpdateReceiver(ctx context.Context, clientId int64, receiverId int64, params *UpdateReceiverParams, body UpdateReceiverJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateReceiverResponse, error)
 
-	// DeleteClientWithResponse request
-	DeleteClientWithResponse(ctx context.Context, id int64, params *DeleteClientParams, reqEditors ...RequestEditorFn) (*DeleteClientResponse, error)
+	// DeleteClient request
+	DeleteClient(ctx context.Context, id int64, params *DeleteClientParams, reqEditors ...RequestEditorFn) (*DeleteClientResponse, error)
 
-	// GetClientByIdWithResponse request
-	GetClientByIdWithResponse(ctx context.Context, id int64, params *GetClientByIdParams, reqEditors ...RequestEditorFn) (*GetClientByIdResponse, error)
+	// GetClientById request
+	GetClientById(ctx context.Context, id int64, params *GetClientByIdParams, reqEditors ...RequestEditorFn) (*GetClientByIdResponse, error)
 
-	// UpdateClientWithBodyWithResponse request with any body
-	UpdateClientWithBodyWithResponse(ctx context.Context, id int64, params *UpdateClientParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateClientResponse, error)
+	// UpdateClientWithBody request with any body
+	UpdateClientWithBody(ctx context.Context, id int64, params *UpdateClientParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateClientResponse, error)
 
-	UpdateClientWithResponse(ctx context.Context, id int64, params *UpdateClientParams, body UpdateClientJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateClientResponse, error)
+	UpdateClient(ctx context.Context, id int64, params *UpdateClientParams, body UpdateClientJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateClientResponse, error)
 
-	// GetAllDocumentsWithResponse request
-	GetAllDocumentsWithResponse(ctx context.Context, params *GetAllDocumentsParams, reqEditors ...RequestEditorFn) (*GetAllDocumentsResponse, error)
+	// GetAllDocuments request
+	GetAllDocuments(ctx context.Context, params *GetAllDocumentsParams, reqEditors ...RequestEditorFn) (*GetAllDocumentsResponse, error)
 
-	// CreateCreditNoteWithBodyWithResponse request with any body
-	CreateCreditNoteWithBodyWithResponse(ctx context.Context, params *CreateCreditNoteParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateCreditNoteResponse, error)
+	// CreateCreditNoteWithBody request with any body
+	CreateCreditNoteWithBody(ctx context.Context, params *CreateCreditNoteParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateCreditNoteResponse, error)
 
-	CreateCreditNoteWithResponse(ctx context.Context, params *CreateCreditNoteParams, body CreateCreditNoteJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateCreditNoteResponse, error)
+	CreateCreditNote(ctx context.Context, params *CreateCreditNoteParams, body CreateCreditNoteJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateCreditNoteResponse, error)
 
-	// CreateDebitNoteWithBodyWithResponse request with any body
-	CreateDebitNoteWithBodyWithResponse(ctx context.Context, params *CreateDebitNoteParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateDebitNoteResponse, error)
+	// CreateDebitNoteWithBody request with any body
+	CreateDebitNoteWithBody(ctx context.Context, params *CreateDebitNoteParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateDebitNoteResponse, error)
 
-	CreateDebitNoteWithResponse(ctx context.Context, params *CreateDebitNoteParams, body CreateDebitNoteJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateDebitNoteResponse, error)
+	CreateDebitNote(ctx context.Context, params *CreateDebitNoteParams, body CreateDebitNoteJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateDebitNoteResponse, error)
 
-	// CreateElectronicPaymentReceiptWithBodyWithResponse request with any body
-	CreateElectronicPaymentReceiptWithBodyWithResponse(ctx context.Context, params *CreateElectronicPaymentReceiptParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateElectronicPaymentReceiptResponse, error)
+	// CreateElectronicPaymentReceiptWithBody request with any body
+	CreateElectronicPaymentReceiptWithBody(ctx context.Context, params *CreateElectronicPaymentReceiptParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateElectronicPaymentReceiptResponse, error)
 
-	CreateElectronicPaymentReceiptWithResponse(ctx context.Context, params *CreateElectronicPaymentReceiptParams, body CreateElectronicPaymentReceiptJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateElectronicPaymentReceiptResponse, error)
+	CreateElectronicPaymentReceipt(ctx context.Context, params *CreateElectronicPaymentReceiptParams, body CreateElectronicPaymentReceiptJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateElectronicPaymentReceiptResponse, error)
 
-	// CreateExportInvoiceWithBodyWithResponse request with any body
-	CreateExportInvoiceWithBodyWithResponse(ctx context.Context, params *CreateExportInvoiceParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateExportInvoiceResponse, error)
+	// CreateExportInvoiceWithBody request with any body
+	CreateExportInvoiceWithBody(ctx context.Context, params *CreateExportInvoiceParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateExportInvoiceResponse, error)
 
-	CreateExportInvoiceWithResponse(ctx context.Context, params *CreateExportInvoiceParams, body CreateExportInvoiceJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateExportInvoiceResponse, error)
+	CreateExportInvoice(ctx context.Context, params *CreateExportInvoiceParams, body CreateExportInvoiceJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateExportInvoiceResponse, error)
 
-	// CreateInvoiceWithBodyWithResponse request with any body
-	CreateInvoiceWithBodyWithResponse(ctx context.Context, params *CreateInvoiceParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateInvoiceResponse, error)
+	// CreateInvoiceWithBody request with any body
+	CreateInvoiceWithBody(ctx context.Context, params *CreateInvoiceParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateInvoiceResponse, error)
 
-	CreateInvoiceWithResponse(ctx context.Context, params *CreateInvoiceParams, body CreateInvoiceJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateInvoiceResponse, error)
+	CreateInvoice(ctx context.Context, params *CreateInvoiceParams, body CreateInvoiceJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateInvoiceResponse, error)
 
-	// CreatePurchaseInvoiceWithBodyWithResponse request with any body
-	CreatePurchaseInvoiceWithBodyWithResponse(ctx context.Context, params *CreatePurchaseInvoiceParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreatePurchaseInvoiceResponse, error)
+	// CreatePurchaseInvoiceWithBody request with any body
+	CreatePurchaseInvoiceWithBody(ctx context.Context, params *CreatePurchaseInvoiceParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreatePurchaseInvoiceResponse, error)
 
-	CreatePurchaseInvoiceWithResponse(ctx context.Context, params *CreatePurchaseInvoiceParams, body CreatePurchaseInvoiceJSONRequestBody, reqEditors ...RequestEditorFn) (*CreatePurchaseInvoiceResponse, error)
+	CreatePurchaseInvoice(ctx context.Context, params *CreatePurchaseInvoiceParams, body CreatePurchaseInvoiceJSONRequestBody, reqEditors ...RequestEditorFn) (*CreatePurchaseInvoiceResponse, error)
 
-	// CreateReceiptWithBodyWithResponse request with any body
-	CreateReceiptWithBodyWithResponse(ctx context.Context, params *CreateReceiptParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateReceiptResponse, error)
+	// CreateReceiptWithBody request with any body
+	CreateReceiptWithBody(ctx context.Context, params *CreateReceiptParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateReceiptResponse, error)
 
-	CreateReceiptWithResponse(ctx context.Context, params *CreateReceiptParams, body CreateReceiptJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateReceiptResponse, error)
+	CreateReceipt(ctx context.Context, params *CreateReceiptParams, body CreateReceiptJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateReceiptResponse, error)
 
-	// CreateReceiverMessageWithBodyWithResponse request with any body
-	CreateReceiverMessageWithBodyWithResponse(ctx context.Context, params *CreateReceiverMessageParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateReceiverMessageResponse, error)
+	// CreateReceiverMessageWithBody request with any body
+	CreateReceiverMessageWithBody(ctx context.Context, params *CreateReceiverMessageParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateReceiverMessageResponse, error)
 
-	CreateReceiverMessageWithResponse(ctx context.Context, params *CreateReceiverMessageParams, body CreateReceiverMessageJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateReceiverMessageResponse, error)
+	CreateReceiverMessage(ctx context.Context, params *CreateReceiverMessageParams, body CreateReceiverMessageJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateReceiverMessageResponse, error)
 
-	// GetDocumentByIdWithResponse request
-	GetDocumentByIdWithResponse(ctx context.Context, id int64, params *GetDocumentByIdParams, reqEditors ...RequestEditorFn) (*GetDocumentByIdResponse, error)
+	// ValidateXmlWithBody request with any body
+	ValidateXmlWithBody(ctx context.Context, params *ValidateXmlParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*ValidateXmlResponse, error)
 
-	// GetDocumentPdfWithResponse request
-	GetDocumentPdfWithResponse(ctx context.Context, id int64, params *GetDocumentPdfParams, reqEditors ...RequestEditorFn) (*GetDocumentPdfResponse, error)
+	ValidateXml(ctx context.Context, params *ValidateXmlParams, body ValidateXmlJSONRequestBody, reqEditors ...RequestEditorFn) (*ValidateXmlResponse, error)
 
-	// RegenerateDocumentPdfWithResponse request
-	RegenerateDocumentPdfWithResponse(ctx context.Context, id int64, params *RegenerateDocumentPdfParams, reqEditors ...RequestEditorFn) (*RegenerateDocumentPdfResponse, error)
+	// GetDocumentById request
+	GetDocumentById(ctx context.Context, id int64, params *GetDocumentByIdParams, reqEditors ...RequestEditorFn) (*GetDocumentByIdResponse, error)
 
-	// SendDocumentEmailWithResponse request
-	SendDocumentEmailWithResponse(ctx context.Context, id int64, params *SendDocumentEmailParams, reqEditors ...RequestEditorFn) (*SendDocumentEmailResponse, error)
+	// GetDocumentPdf request
+	GetDocumentPdf(ctx context.Context, id int64, params *GetDocumentPdfParams, reqEditors ...RequestEditorFn) (*GetDocumentPdfResponse, error)
 
-	// GetIssuedXmlWithResponse request
-	GetIssuedXmlWithResponse(ctx context.Context, id int64, params *GetIssuedXmlParams, reqEditors ...RequestEditorFn) (*GetIssuedXmlResponse, error)
+	// RegenerateDocumentPdf request
+	RegenerateDocumentPdf(ctx context.Context, id int64, params *RegenerateDocumentPdfParams, reqEditors ...RequestEditorFn) (*RegenerateDocumentPdfResponse, error)
 
-	// GetTaxAuthorityResponseXmlWithResponse request
-	GetTaxAuthorityResponseXmlWithResponse(ctx context.Context, id int64, params *GetTaxAuthorityResponseXmlParams, reqEditors ...RequestEditorFn) (*GetTaxAuthorityResponseXmlResponse, error)
+	// SendDocumentEmail request
+	SendDocumentEmail(ctx context.Context, id int64, params *SendDocumentEmailParams, reqEditors ...RequestEditorFn) (*SendDocumentEmailResponse, error)
 
-	// GetAllIssuersWithResponse request
-	GetAllIssuersWithResponse(ctx context.Context, params *GetAllIssuersParams, reqEditors ...RequestEditorFn) (*GetAllIssuersResponse, error)
+	// GetIssuedXml request
+	GetIssuedXml(ctx context.Context, id int64, params *GetIssuedXmlParams, reqEditors ...RequestEditorFn) (*GetIssuedXmlResponse, error)
 
-	// CreateIssuerWithBodyWithResponse request with any body
-	CreateIssuerWithBodyWithResponse(ctx context.Context, params *CreateIssuerParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateIssuerResponse, error)
+	// GetTaxAuthorityResponseXml request
+	GetTaxAuthorityResponseXml(ctx context.Context, id int64, params *GetTaxAuthorityResponseXmlParams, reqEditors ...RequestEditorFn) (*GetTaxAuthorityResponseXmlResponse, error)
 
-	CreateIssuerWithResponse(ctx context.Context, params *CreateIssuerParams, body CreateIssuerJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateIssuerResponse, error)
+	// GetAllIssuers request
+	GetAllIssuers(ctx context.Context, params *GetAllIssuersParams, reqEditors ...RequestEditorFn) (*GetAllIssuersResponse, error)
 
-	// DeleteIssuerWithResponse request
-	DeleteIssuerWithResponse(ctx context.Context, id int64, params *DeleteIssuerParams, reqEditors ...RequestEditorFn) (*DeleteIssuerResponse, error)
+	// CreateIssuerWithBody request with any body
+	CreateIssuerWithBody(ctx context.Context, params *CreateIssuerParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateIssuerResponse, error)
 
-	// GetIssuerByIdWithResponse request
-	GetIssuerByIdWithResponse(ctx context.Context, id int64, params *GetIssuerByIdParams, reqEditors ...RequestEditorFn) (*GetIssuerByIdResponse, error)
+	CreateIssuer(ctx context.Context, params *CreateIssuerParams, body CreateIssuerJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateIssuerResponse, error)
 
-	// UpdateIssuerWithBodyWithResponse request with any body
-	UpdateIssuerWithBodyWithResponse(ctx context.Context, id int64, params *UpdateIssuerParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateIssuerResponse, error)
+	// DeleteIssuer request
+	DeleteIssuer(ctx context.Context, id int64, params *DeleteIssuerParams, reqEditors ...RequestEditorFn) (*DeleteIssuerResponse, error)
 
-	UpdateIssuerWithResponse(ctx context.Context, id int64, params *UpdateIssuerParams, body UpdateIssuerJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateIssuerResponse, error)
+	// GetIssuerById request
+	GetIssuerById(ctx context.Context, id int64, params *GetIssuerByIdParams, reqEditors ...RequestEditorFn) (*GetIssuerByIdResponse, error)
 
-	// SetDefaultIssuerWithResponse request
-	SetDefaultIssuerWithResponse(ctx context.Context, id int64, params *SetDefaultIssuerParams, reqEditors ...RequestEditorFn) (*SetDefaultIssuerResponse, error)
+	// UpdateIssuerWithBody request with any body
+	UpdateIssuerWithBody(ctx context.Context, id int64, params *UpdateIssuerParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateIssuerResponse, error)
 
-	// CreatePaymentWithBodyWithResponse request with any body
-	CreatePaymentWithBodyWithResponse(ctx context.Context, params *CreatePaymentParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreatePaymentResponse, error)
+	UpdateIssuer(ctx context.Context, id int64, params *UpdateIssuerParams, body UpdateIssuerJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateIssuerResponse, error)
 
-	CreatePaymentWithResponse(ctx context.Context, params *CreatePaymentParams, body CreatePaymentJSONRequestBody, reqEditors ...RequestEditorFn) (*CreatePaymentResponse, error)
+	// SetDefaultIssuer request
+	SetDefaultIssuer(ctx context.Context, id int64, params *SetDefaultIssuerParams, reqEditors ...RequestEditorFn) (*SetDefaultIssuerResponse, error)
 
-	// VoidApplicationWithBodyWithResponse request with any body
-	VoidApplicationWithBodyWithResponse(ctx context.Context, applicationId int64, params *VoidApplicationParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*VoidApplicationResponse, error)
+	// CreatePaymentWithBody request with any body
+	CreatePaymentWithBody(ctx context.Context, params *CreatePaymentParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreatePaymentResponse, error)
 
-	VoidApplicationWithResponse(ctx context.Context, applicationId int64, params *VoidApplicationParams, body VoidApplicationJSONRequestBody, reqEditors ...RequestEditorFn) (*VoidApplicationResponse, error)
+	CreatePayment(ctx context.Context, params *CreatePaymentParams, body CreatePaymentJSONRequestBody, reqEditors ...RequestEditorFn) (*CreatePaymentResponse, error)
 
-	// GetClientStatementWithResponse request
-	GetClientStatementWithResponse(ctx context.Context, clientId int64, params *GetClientStatementParams, reqEditors ...RequestEditorFn) (*GetClientStatementResponse, error)
+	// VoidApplicationWithBody request with any body
+	VoidApplicationWithBody(ctx context.Context, applicationId int64, params *VoidApplicationParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*VoidApplicationResponse, error)
 
-	// GetPaymentWithResponse request
-	GetPaymentWithResponse(ctx context.Context, paymentId int64, params *GetPaymentParams, reqEditors ...RequestEditorFn) (*GetPaymentResponse, error)
+	VoidApplication(ctx context.Context, applicationId int64, params *VoidApplicationParams, body VoidApplicationJSONRequestBody, reqEditors ...RequestEditorFn) (*VoidApplicationResponse, error)
 
-	// ApplyPaymentWithBodyWithResponse request with any body
-	ApplyPaymentWithBodyWithResponse(ctx context.Context, paymentId int64, params *ApplyPaymentParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*ApplyPaymentResponse, error)
+	// GetClientStatement request
+	GetClientStatement(ctx context.Context, clientId int64, params *GetClientStatementParams, reqEditors ...RequestEditorFn) (*GetClientStatementResponse, error)
 
-	ApplyPaymentWithResponse(ctx context.Context, paymentId int64, params *ApplyPaymentParams, body ApplyPaymentJSONRequestBody, reqEditors ...RequestEditorFn) (*ApplyPaymentResponse, error)
+	// GetPayment request
+	GetPayment(ctx context.Context, paymentId int64, params *GetPaymentParams, reqEditors ...RequestEditorFn) (*GetPaymentResponse, error)
 
-	// VoidPaymentWithBodyWithResponse request with any body
-	VoidPaymentWithBodyWithResponse(ctx context.Context, paymentId int64, params *VoidPaymentParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*VoidPaymentResponse, error)
+	// ApplyPaymentWithBody request with any body
+	ApplyPaymentWithBody(ctx context.Context, paymentId int64, params *ApplyPaymentParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*ApplyPaymentResponse, error)
 
-	VoidPaymentWithResponse(ctx context.Context, paymentId int64, params *VoidPaymentParams, body VoidPaymentJSONRequestBody, reqEditors ...RequestEditorFn) (*VoidPaymentResponse, error)
+	ApplyPayment(ctx context.Context, paymentId int64, params *ApplyPaymentParams, body ApplyPaymentJSONRequestBody, reqEditors ...RequestEditorFn) (*ApplyPaymentResponse, error)
 
-	// GetSequencesWithResponse request
-	GetSequencesWithResponse(ctx context.Context, params *GetSequencesParams, reqEditors ...RequestEditorFn) (*GetSequencesResponse, error)
+	// VoidPaymentWithBody request with any body
+	VoidPaymentWithBody(ctx context.Context, paymentId int64, params *VoidPaymentParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*VoidPaymentResponse, error)
 
-	// UpdateSequenceWithBodyWithResponse request with any body
-	UpdateSequenceWithBodyWithResponse(ctx context.Context, id int64, params *UpdateSequenceParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateSequenceResponse, error)
+	VoidPayment(ctx context.Context, paymentId int64, params *VoidPaymentParams, body VoidPaymentJSONRequestBody, reqEditors ...RequestEditorFn) (*VoidPaymentResponse, error)
 
-	UpdateSequenceWithResponse(ctx context.Context, id int64, params *UpdateSequenceParams, body UpdateSequenceJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateSequenceResponse, error)
+	// GetSequences request
+	GetSequences(ctx context.Context, params *GetSequencesParams, reqEditors ...RequestEditorFn) (*GetSequencesResponse, error)
 
-	// GetAgriculturalProducerWithResponse request
-	GetAgriculturalProducerWithResponse(ctx context.Context, legalIdentification string, params *GetAgriculturalProducerParams, reqEditors ...RequestEditorFn) (*GetAgriculturalProducerResponse, error)
+	// UpdateSequenceWithBody request with any body
+	UpdateSequenceWithBody(ctx context.Context, id int64, params *UpdateSequenceParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateSequenceResponse, error)
 
-	// SearchCabysWithResponse request
-	SearchCabysWithResponse(ctx context.Context, params *SearchCabysParams, reqEditors ...RequestEditorFn) (*SearchCabysResponse, error)
+	UpdateSequence(ctx context.Context, id int64, params *UpdateSequenceParams, body UpdateSequenceJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateSequenceResponse, error)
 
-	// GetCabysByCodeWithResponse request
-	GetCabysByCodeWithResponse(ctx context.Context, code string, params *GetCabysByCodeParams, reqEditors ...RequestEditorFn) (*GetCabysByCodeResponse, error)
+	// GetAgriculturalProducer request
+	GetAgriculturalProducer(ctx context.Context, legalIdentification string, params *GetAgriculturalProducerParams, reqEditors ...RequestEditorFn) (*GetAgriculturalProducerResponse, error)
 
-	// GetExchangeRatesWithResponse request
-	GetExchangeRatesWithResponse(ctx context.Context, params *GetExchangeRatesParams, reqEditors ...RequestEditorFn) (*GetExchangeRatesResponse, error)
+	// SearchCabys request
+	SearchCabys(ctx context.Context, params *SearchCabysParams, reqEditors ...RequestEditorFn) (*SearchCabysResponse, error)
 
-	// GetTaxAuthorityExonerationWithResponse request
-	GetTaxAuthorityExonerationWithResponse(ctx context.Context, authorization string, params *GetTaxAuthorityExonerationParams, reqEditors ...RequestEditorFn) (*GetTaxAuthorityExonerationResponse, error)
+	// GetCabysByCode request
+	GetCabysByCode(ctx context.Context, code string, params *GetCabysByCodeParams, reqEditors ...RequestEditorFn) (*GetCabysByCodeResponse, error)
 
-	// GetFishingProducerWithResponse request
-	GetFishingProducerWithResponse(ctx context.Context, legalIdentification string, params *GetFishingProducerParams, reqEditors ...RequestEditorFn) (*GetFishingProducerResponse, error)
+	// GetExchangeRates request
+	GetExchangeRates(ctx context.Context, params *GetExchangeRatesParams, reqEditors ...RequestEditorFn) (*GetExchangeRatesResponse, error)
 
-	// GetTaxpayerWithResponse request
-	GetTaxpayerWithResponse(ctx context.Context, legalIdentification string, params *GetTaxpayerParams, reqEditors ...RequestEditorFn) (*GetTaxpayerResponse, error)
+	// GetTaxAuthorityExoneration request
+	GetTaxAuthorityExoneration(ctx context.Context, authorization string, params *GetTaxAuthorityExonerationParams, reqEditors ...RequestEditorFn) (*GetTaxAuthorityExonerationResponse, error)
 
-	// GetTaxpayerInfoWithResponse request
-	GetTaxpayerInfoWithResponse(ctx context.Context, legalIdentification string, params *GetTaxpayerInfoParams, reqEditors ...RequestEditorFn) (*GetTaxpayerInfoResponse, error)
+	// GetFishingProducer request
+	GetFishingProducer(ctx context.Context, legalIdentification string, params *GetFishingProducerParams, reqEditors ...RequestEditorFn) (*GetFishingProducerResponse, error)
 
-	// GetTenantWithResponse request
-	GetTenantWithResponse(ctx context.Context, params *GetTenantParams, reqEditors ...RequestEditorFn) (*GetTenantResponse, error)
+	// GetTaxpayer request
+	GetTaxpayer(ctx context.Context, legalIdentification string, params *GetTaxpayerParams, reqEditors ...RequestEditorFn) (*GetTaxpayerResponse, error)
 
-	// UpdateTenantWithBodyWithResponse request with any body
-	UpdateTenantWithBodyWithResponse(ctx context.Context, params *UpdateTenantParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateTenantResponse, error)
+	// GetTaxpayerInfo request
+	GetTaxpayerInfo(ctx context.Context, legalIdentification string, params *GetTaxpayerInfoParams, reqEditors ...RequestEditorFn) (*GetTaxpayerInfoResponse, error)
 
-	UpdateTenantWithResponse(ctx context.Context, params *UpdateTenantParams, body UpdateTenantJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateTenantResponse, error)
+	// GetTenant request
+	GetTenant(ctx context.Context, params *GetTenantParams, reqEditors ...RequestEditorFn) (*GetTenantResponse, error)
 
-	// GetInvoicingStatusWithResponse request
-	GetInvoicingStatusWithResponse(ctx context.Context, params *GetInvoicingStatusParams, reqEditors ...RequestEditorFn) (*GetInvoicingStatusResponse, error)
+	// UpdateTenantWithBody request with any body
+	UpdateTenantWithBody(ctx context.Context, params *UpdateTenantParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateTenantResponse, error)
 
-	// DeleteLogoWithResponse request
-	DeleteLogoWithResponse(ctx context.Context, params *DeleteLogoParams, reqEditors ...RequestEditorFn) (*DeleteLogoResponse, error)
+	UpdateTenant(ctx context.Context, params *UpdateTenantParams, body UpdateTenantJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateTenantResponse, error)
 
-	// GetLogoWithResponse request
-	GetLogoWithResponse(ctx context.Context, params *GetLogoParams, reqEditors ...RequestEditorFn) (*GetLogoResponse, error)
+	// GetInvoicingStatus request
+	GetInvoicingStatus(ctx context.Context, params *GetInvoicingStatusParams, reqEditors ...RequestEditorFn) (*GetInvoicingStatusResponse, error)
 
-	// UploadLogoWithBodyWithResponse request with any body
-	UploadLogoWithBodyWithResponse(ctx context.Context, params *UploadLogoParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UploadLogoResponse, error)
+	// DeleteLogo request
+	DeleteLogo(ctx context.Context, params *DeleteLogoParams, reqEditors ...RequestEditorFn) (*DeleteLogoResponse, error)
 
-	// UpdateSecretsWithBodyWithResponse request with any body
-	UpdateSecretsWithBodyWithResponse(ctx context.Context, params *UpdateSecretsParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateSecretsResponse, error)
+	// GetLogo request
+	GetLogo(ctx context.Context, params *GetLogoParams, reqEditors ...RequestEditorFn) (*GetLogoResponse, error)
 
-	// GetWebhooksWithResponse request
-	GetWebhooksWithResponse(ctx context.Context, params *GetWebhooksParams, reqEditors ...RequestEditorFn) (*GetWebhooksResponse, error)
+	// UploadLogoWithBody request with any body
+	UploadLogoWithBody(ctx context.Context, params *UploadLogoParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UploadLogoResponse, error)
 
-	// CreateWebhookWithBodyWithResponse request with any body
-	CreateWebhookWithBodyWithResponse(ctx context.Context, params *CreateWebhookParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateWebhookResponse, error)
+	// UpdateSecretsWithBody request with any body
+	UpdateSecretsWithBody(ctx context.Context, params *UpdateSecretsParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateSecretsResponse, error)
 
-	CreateWebhookWithResponse(ctx context.Context, params *CreateWebhookParams, body CreateWebhookJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateWebhookResponse, error)
+	// GetWebhooks request
+	GetWebhooks(ctx context.Context, params *GetWebhooksParams, reqEditors ...RequestEditorFn) (*GetWebhooksResponse, error)
 
-	// DeleteWebhookWithResponse request
-	DeleteWebhookWithResponse(ctx context.Context, id int64, params *DeleteWebhookParams, reqEditors ...RequestEditorFn) (*DeleteWebhookResponse, error)
+	// CreateWebhookWithBody request with any body
+	CreateWebhookWithBody(ctx context.Context, params *CreateWebhookParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateWebhookResponse, error)
 
-	// GetWebhookWithResponse request
-	GetWebhookWithResponse(ctx context.Context, id int64, params *GetWebhookParams, reqEditors ...RequestEditorFn) (*GetWebhookResponse, error)
+	CreateWebhook(ctx context.Context, params *CreateWebhookParams, body CreateWebhookJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateWebhookResponse, error)
 
-	// UpdateWebhookWithBodyWithResponse request with any body
-	UpdateWebhookWithBodyWithResponse(ctx context.Context, id int64, params *UpdateWebhookParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateWebhookResponse, error)
+	// DeleteWebhook request
+	DeleteWebhook(ctx context.Context, id int64, params *DeleteWebhookParams, reqEditors ...RequestEditorFn) (*DeleteWebhookResponse, error)
 
-	UpdateWebhookWithResponse(ctx context.Context, id int64, params *UpdateWebhookParams, body UpdateWebhookJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateWebhookResponse, error)
+	// GetWebhook request
+	GetWebhook(ctx context.Context, id int64, params *GetWebhookParams, reqEditors ...RequestEditorFn) (*GetWebhookResponse, error)
 
-	// GetLogsWithResponse request
-	GetLogsWithResponse(ctx context.Context, id int64, params *GetLogsParams, reqEditors ...RequestEditorFn) (*GetLogsResponse, error)
+	// UpdateWebhookWithBody request with any body
+	UpdateWebhookWithBody(ctx context.Context, id int64, params *UpdateWebhookParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateWebhookResponse, error)
 
-	// TestWebhookWithResponse request
-	TestWebhookWithResponse(ctx context.Context, id int64, params *TestWebhookParams, reqEditors ...RequestEditorFn) (*TestWebhookResponse, error)
+	UpdateWebhook(ctx context.Context, id int64, params *UpdateWebhookParams, body UpdateWebhookJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateWebhookResponse, error)
+
+	// GetLogs request
+	GetLogs(ctx context.Context, id int64, params *GetLogsParams, reqEditors ...RequestEditorFn) (*GetLogsResponse, error)
+
+	// TestWebhook request
+	TestWebhook(ctx context.Context, id int64, params *TestWebhookParams, reqEditors ...RequestEditorFn) (*TestWebhookResponse, error)
 }
 
 type ClassifyDocumentItemResponse struct {
@@ -14076,6 +14258,36 @@ func (r CreateReceiverMessageResponse) ContentType() string {
 	return ""
 }
 
+type ValidateXmlResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	JSON200      *XMLValidationResponse
+}
+
+// Status returns HTTPResponse.Status
+func (r ValidateXmlResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r ValidateXmlResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r ValidateXmlResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
 type GetDocumentByIdResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
@@ -15333,1120 +15545,1751 @@ func (r TestWebhookResponse) ContentType() string {
 	return ""
 }
 
-// ClassifyDocumentItemWithBodyWithResponse request with arbitrary body returning *ClassifyDocumentItemResponse
-func (c *ClientWithResponses) ClassifyDocumentItemWithBodyWithResponse(ctx context.Context, itemId int64, params *ClassifyDocumentItemParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*ClassifyDocumentItemResponse, error) {
-	rsp, err := c.ClassifyDocumentItemWithBody(ctx, itemId, params, contentType, body, reqEditors...)
+// ClassifyDocumentItemWithBodyRaw performs the request and returns the raw HTTP response.
+func (c *RawClient) ClassifyDocumentItemWithBodyRaw(ctx context.Context, itemId int64, params *ClassifyDocumentItemParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	return c.client.ClassifyDocumentItemWithBody(ctx, itemId, params, contentType, body, reqEditors...)
+}
+
+// ClassifyDocumentItemWithBody request with arbitrary body returning *ClassifyDocumentItemResponse
+func (c *ClientWithResponses) ClassifyDocumentItemWithBody(ctx context.Context, itemId int64, params *ClassifyDocumentItemParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*ClassifyDocumentItemResponse, error) {
+	rsp, err := c.client.ClassifyDocumentItemWithBody(ctx, itemId, params, contentType, body, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
 	return ParseClassifyDocumentItemResponse(rsp)
 }
 
-func (c *ClientWithResponses) ClassifyDocumentItemWithResponse(ctx context.Context, itemId int64, params *ClassifyDocumentItemParams, body ClassifyDocumentItemJSONRequestBody, reqEditors ...RequestEditorFn) (*ClassifyDocumentItemResponse, error) {
-	rsp, err := c.ClassifyDocumentItem(ctx, itemId, params, body, reqEditors...)
+func (c *RawClient) ClassifyDocumentItemRaw(ctx context.Context, itemId int64, params *ClassifyDocumentItemParams, body ClassifyDocumentItemJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	return c.client.ClassifyDocumentItem(ctx, itemId, params, body, reqEditors...)
+}
+
+func (c *ClientWithResponses) ClassifyDocumentItem(ctx context.Context, itemId int64, params *ClassifyDocumentItemParams, body ClassifyDocumentItemJSONRequestBody, reqEditors ...RequestEditorFn) (*ClassifyDocumentItemResponse, error) {
+	rsp, err := c.client.ClassifyDocumentItem(ctx, itemId, params, body, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
 	return ParseClassifyDocumentItemResponse(rsp)
 }
 
-// GetFiscalReportWithResponse request returning *GetFiscalReportResponse
-func (c *ClientWithResponses) GetFiscalReportWithResponse(ctx context.Context, params *GetFiscalReportParams, reqEditors ...RequestEditorFn) (*GetFiscalReportResponse, error) {
-	rsp, err := c.GetFiscalReport(ctx, params, reqEditors...)
+// GetFiscalReportRaw performs the request and returns the raw HTTP response.
+func (c *RawClient) GetFiscalReportRaw(ctx context.Context, params *GetFiscalReportParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	return c.client.GetFiscalReport(ctx, params, reqEditors...)
+}
+
+// GetFiscalReport request returning *GetFiscalReportResponse
+func (c *ClientWithResponses) GetFiscalReport(ctx context.Context, params *GetFiscalReportParams, reqEditors ...RequestEditorFn) (*GetFiscalReportResponse, error) {
+	rsp, err := c.client.GetFiscalReport(ctx, params, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
 	return ParseGetFiscalReportResponse(rsp)
 }
 
-// ExportFiscalReportWithResponse request returning *ExportFiscalReportResponse
-func (c *ClientWithResponses) ExportFiscalReportWithResponse(ctx context.Context, params *ExportFiscalReportParams, reqEditors ...RequestEditorFn) (*ExportFiscalReportResponse, error) {
-	rsp, err := c.ExportFiscalReport(ctx, params, reqEditors...)
+// ExportFiscalReportRaw performs the request and returns the raw HTTP response.
+func (c *RawClient) ExportFiscalReportRaw(ctx context.Context, params *ExportFiscalReportParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	return c.client.ExportFiscalReport(ctx, params, reqEditors...)
+}
+
+// ExportFiscalReport request returning *ExportFiscalReportResponse
+func (c *ClientWithResponses) ExportFiscalReport(ctx context.Context, params *ExportFiscalReportParams, reqEditors ...RequestEditorFn) (*ExportFiscalReportResponse, error) {
+	rsp, err := c.client.ExportFiscalReport(ctx, params, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
 	return ParseExportFiscalReportResponse(rsp)
 }
 
-// GetTaxRatesSummaryWithResponse request returning *GetTaxRatesSummaryResponse
-func (c *ClientWithResponses) GetTaxRatesSummaryWithResponse(ctx context.Context, params *GetTaxRatesSummaryParams, reqEditors ...RequestEditorFn) (*GetTaxRatesSummaryResponse, error) {
-	rsp, err := c.GetTaxRatesSummary(ctx, params, reqEditors...)
+// GetTaxRatesSummaryRaw performs the request and returns the raw HTTP response.
+func (c *RawClient) GetTaxRatesSummaryRaw(ctx context.Context, params *GetTaxRatesSummaryParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	return c.client.GetTaxRatesSummary(ctx, params, reqEditors...)
+}
+
+// GetTaxRatesSummary request returning *GetTaxRatesSummaryResponse
+func (c *ClientWithResponses) GetTaxRatesSummary(ctx context.Context, params *GetTaxRatesSummaryParams, reqEditors ...RequestEditorFn) (*GetTaxRatesSummaryResponse, error) {
+	rsp, err := c.client.GetTaxRatesSummary(ctx, params, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
 	return ParseGetTaxRatesSummaryResponse(rsp)
 }
 
-// GetVatSummaryWithResponse request returning *GetVatSummaryResponse
-func (c *ClientWithResponses) GetVatSummaryWithResponse(ctx context.Context, params *GetVatSummaryParams, reqEditors ...RequestEditorFn) (*GetVatSummaryResponse, error) {
-	rsp, err := c.GetVatSummary(ctx, params, reqEditors...)
+// GetVatSummaryRaw performs the request and returns the raw HTTP response.
+func (c *RawClient) GetVatSummaryRaw(ctx context.Context, params *GetVatSummaryParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	return c.client.GetVatSummary(ctx, params, reqEditors...)
+}
+
+// GetVatSummary request returning *GetVatSummaryResponse
+func (c *ClientWithResponses) GetVatSummary(ctx context.Context, params *GetVatSummaryParams, reqEditors ...RequestEditorFn) (*GetVatSummaryResponse, error) {
+	rsp, err := c.client.GetVatSummary(ctx, params, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
 	return ParseGetVatSummaryResponse(rsp)
 }
 
-// GetBranchesWithResponse request returning *GetBranchesResponse
-func (c *ClientWithResponses) GetBranchesWithResponse(ctx context.Context, params *GetBranchesParams, reqEditors ...RequestEditorFn) (*GetBranchesResponse, error) {
-	rsp, err := c.GetBranches(ctx, params, reqEditors...)
+// GetBranchesRaw performs the request and returns the raw HTTP response.
+func (c *RawClient) GetBranchesRaw(ctx context.Context, params *GetBranchesParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	return c.client.GetBranches(ctx, params, reqEditors...)
+}
+
+// GetBranches request returning *GetBranchesResponse
+func (c *ClientWithResponses) GetBranches(ctx context.Context, params *GetBranchesParams, reqEditors ...RequestEditorFn) (*GetBranchesResponse, error) {
+	rsp, err := c.client.GetBranches(ctx, params, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
 	return ParseGetBranchesResponse(rsp)
 }
 
-// CreateBranchWithBodyWithResponse request with arbitrary body returning *CreateBranchResponse
-func (c *ClientWithResponses) CreateBranchWithBodyWithResponse(ctx context.Context, params *CreateBranchParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateBranchResponse, error) {
-	rsp, err := c.CreateBranchWithBody(ctx, params, contentType, body, reqEditors...)
+// CreateBranchWithBodyRaw performs the request and returns the raw HTTP response.
+func (c *RawClient) CreateBranchWithBodyRaw(ctx context.Context, params *CreateBranchParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	return c.client.CreateBranchWithBody(ctx, params, contentType, body, reqEditors...)
+}
+
+// CreateBranchWithBody request with arbitrary body returning *CreateBranchResponse
+func (c *ClientWithResponses) CreateBranchWithBody(ctx context.Context, params *CreateBranchParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateBranchResponse, error) {
+	rsp, err := c.client.CreateBranchWithBody(ctx, params, contentType, body, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
 	return ParseCreateBranchResponse(rsp)
 }
 
-func (c *ClientWithResponses) CreateBranchWithResponse(ctx context.Context, params *CreateBranchParams, body CreateBranchJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateBranchResponse, error) {
-	rsp, err := c.CreateBranch(ctx, params, body, reqEditors...)
+func (c *RawClient) CreateBranchRaw(ctx context.Context, params *CreateBranchParams, body CreateBranchJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	return c.client.CreateBranch(ctx, params, body, reqEditors...)
+}
+
+func (c *ClientWithResponses) CreateBranch(ctx context.Context, params *CreateBranchParams, body CreateBranchJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateBranchResponse, error) {
+	rsp, err := c.client.CreateBranch(ctx, params, body, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
 	return ParseCreateBranchResponse(rsp)
 }
 
-// GetCashRegistersWithResponse request returning *GetCashRegistersResponse
-func (c *ClientWithResponses) GetCashRegistersWithResponse(ctx context.Context, branchId int64, params *GetCashRegistersParams, reqEditors ...RequestEditorFn) (*GetCashRegistersResponse, error) {
-	rsp, err := c.GetCashRegisters(ctx, branchId, params, reqEditors...)
+// GetCashRegistersRaw performs the request and returns the raw HTTP response.
+func (c *RawClient) GetCashRegistersRaw(ctx context.Context, branchId int64, params *GetCashRegistersParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	return c.client.GetCashRegisters(ctx, branchId, params, reqEditors...)
+}
+
+// GetCashRegisters request returning *GetCashRegistersResponse
+func (c *ClientWithResponses) GetCashRegisters(ctx context.Context, branchId int64, params *GetCashRegistersParams, reqEditors ...RequestEditorFn) (*GetCashRegistersResponse, error) {
+	rsp, err := c.client.GetCashRegisters(ctx, branchId, params, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
 	return ParseGetCashRegistersResponse(rsp)
 }
 
-// CreateCashRegisterWithBodyWithResponse request with arbitrary body returning *CreateCashRegisterResponse
-func (c *ClientWithResponses) CreateCashRegisterWithBodyWithResponse(ctx context.Context, branchId int64, params *CreateCashRegisterParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateCashRegisterResponse, error) {
-	rsp, err := c.CreateCashRegisterWithBody(ctx, branchId, params, contentType, body, reqEditors...)
+// CreateCashRegisterWithBodyRaw performs the request and returns the raw HTTP response.
+func (c *RawClient) CreateCashRegisterWithBodyRaw(ctx context.Context, branchId int64, params *CreateCashRegisterParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	return c.client.CreateCashRegisterWithBody(ctx, branchId, params, contentType, body, reqEditors...)
+}
+
+// CreateCashRegisterWithBody request with arbitrary body returning *CreateCashRegisterResponse
+func (c *ClientWithResponses) CreateCashRegisterWithBody(ctx context.Context, branchId int64, params *CreateCashRegisterParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateCashRegisterResponse, error) {
+	rsp, err := c.client.CreateCashRegisterWithBody(ctx, branchId, params, contentType, body, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
 	return ParseCreateCashRegisterResponse(rsp)
 }
 
-func (c *ClientWithResponses) CreateCashRegisterWithResponse(ctx context.Context, branchId int64, params *CreateCashRegisterParams, body CreateCashRegisterJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateCashRegisterResponse, error) {
-	rsp, err := c.CreateCashRegister(ctx, branchId, params, body, reqEditors...)
+func (c *RawClient) CreateCashRegisterRaw(ctx context.Context, branchId int64, params *CreateCashRegisterParams, body CreateCashRegisterJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	return c.client.CreateCashRegister(ctx, branchId, params, body, reqEditors...)
+}
+
+func (c *ClientWithResponses) CreateCashRegister(ctx context.Context, branchId int64, params *CreateCashRegisterParams, body CreateCashRegisterJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateCashRegisterResponse, error) {
+	rsp, err := c.client.CreateCashRegister(ctx, branchId, params, body, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
 	return ParseCreateCashRegisterResponse(rsp)
 }
 
-// DeleteCashRegisterWithResponse request returning *DeleteCashRegisterResponse
-func (c *ClientWithResponses) DeleteCashRegisterWithResponse(ctx context.Context, branchId int64, id int64, params *DeleteCashRegisterParams, reqEditors ...RequestEditorFn) (*DeleteCashRegisterResponse, error) {
-	rsp, err := c.DeleteCashRegister(ctx, branchId, id, params, reqEditors...)
+// DeleteCashRegisterRaw performs the request and returns the raw HTTP response.
+func (c *RawClient) DeleteCashRegisterRaw(ctx context.Context, branchId int64, id int64, params *DeleteCashRegisterParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	return c.client.DeleteCashRegister(ctx, branchId, id, params, reqEditors...)
+}
+
+// DeleteCashRegister request returning *DeleteCashRegisterResponse
+func (c *ClientWithResponses) DeleteCashRegister(ctx context.Context, branchId int64, id int64, params *DeleteCashRegisterParams, reqEditors ...RequestEditorFn) (*DeleteCashRegisterResponse, error) {
+	rsp, err := c.client.DeleteCashRegister(ctx, branchId, id, params, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
 	return ParseDeleteCashRegisterResponse(rsp)
 }
 
-// GetCashRegisterWithResponse request returning *GetCashRegisterResponse
-func (c *ClientWithResponses) GetCashRegisterWithResponse(ctx context.Context, branchId int64, id int64, params *GetCashRegisterParams, reqEditors ...RequestEditorFn) (*GetCashRegisterResponse, error) {
-	rsp, err := c.GetCashRegister(ctx, branchId, id, params, reqEditors...)
+// GetCashRegisterRaw performs the request and returns the raw HTTP response.
+func (c *RawClient) GetCashRegisterRaw(ctx context.Context, branchId int64, id int64, params *GetCashRegisterParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	return c.client.GetCashRegister(ctx, branchId, id, params, reqEditors...)
+}
+
+// GetCashRegister request returning *GetCashRegisterResponse
+func (c *ClientWithResponses) GetCashRegister(ctx context.Context, branchId int64, id int64, params *GetCashRegisterParams, reqEditors ...RequestEditorFn) (*GetCashRegisterResponse, error) {
+	rsp, err := c.client.GetCashRegister(ctx, branchId, id, params, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
 	return ParseGetCashRegisterResponse(rsp)
 }
 
-// UpdateCashRegisterWithBodyWithResponse request with arbitrary body returning *UpdateCashRegisterResponse
-func (c *ClientWithResponses) UpdateCashRegisterWithBodyWithResponse(ctx context.Context, branchId int64, id int64, params *UpdateCashRegisterParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateCashRegisterResponse, error) {
-	rsp, err := c.UpdateCashRegisterWithBody(ctx, branchId, id, params, contentType, body, reqEditors...)
+// UpdateCashRegisterWithBodyRaw performs the request and returns the raw HTTP response.
+func (c *RawClient) UpdateCashRegisterWithBodyRaw(ctx context.Context, branchId int64, id int64, params *UpdateCashRegisterParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	return c.client.UpdateCashRegisterWithBody(ctx, branchId, id, params, contentType, body, reqEditors...)
+}
+
+// UpdateCashRegisterWithBody request with arbitrary body returning *UpdateCashRegisterResponse
+func (c *ClientWithResponses) UpdateCashRegisterWithBody(ctx context.Context, branchId int64, id int64, params *UpdateCashRegisterParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateCashRegisterResponse, error) {
+	rsp, err := c.client.UpdateCashRegisterWithBody(ctx, branchId, id, params, contentType, body, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
 	return ParseUpdateCashRegisterResponse(rsp)
 }
 
-func (c *ClientWithResponses) UpdateCashRegisterWithResponse(ctx context.Context, branchId int64, id int64, params *UpdateCashRegisterParams, body UpdateCashRegisterJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateCashRegisterResponse, error) {
-	rsp, err := c.UpdateCashRegister(ctx, branchId, id, params, body, reqEditors...)
+func (c *RawClient) UpdateCashRegisterRaw(ctx context.Context, branchId int64, id int64, params *UpdateCashRegisterParams, body UpdateCashRegisterJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	return c.client.UpdateCashRegister(ctx, branchId, id, params, body, reqEditors...)
+}
+
+func (c *ClientWithResponses) UpdateCashRegister(ctx context.Context, branchId int64, id int64, params *UpdateCashRegisterParams, body UpdateCashRegisterJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateCashRegisterResponse, error) {
+	rsp, err := c.client.UpdateCashRegister(ctx, branchId, id, params, body, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
 	return ParseUpdateCashRegisterResponse(rsp)
 }
 
-// UpdateCashRegisterSequenceWithBodyWithResponse request with arbitrary body returning *UpdateCashRegisterSequenceResponse
-func (c *ClientWithResponses) UpdateCashRegisterSequenceWithBodyWithResponse(ctx context.Context, branchId int64, id int64, params *UpdateCashRegisterSequenceParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateCashRegisterSequenceResponse, error) {
-	rsp, err := c.UpdateCashRegisterSequenceWithBody(ctx, branchId, id, params, contentType, body, reqEditors...)
+// UpdateCashRegisterSequenceWithBodyRaw performs the request and returns the raw HTTP response.
+func (c *RawClient) UpdateCashRegisterSequenceWithBodyRaw(ctx context.Context, branchId int64, id int64, params *UpdateCashRegisterSequenceParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	return c.client.UpdateCashRegisterSequenceWithBody(ctx, branchId, id, params, contentType, body, reqEditors...)
+}
+
+// UpdateCashRegisterSequenceWithBody request with arbitrary body returning *UpdateCashRegisterSequenceResponse
+func (c *ClientWithResponses) UpdateCashRegisterSequenceWithBody(ctx context.Context, branchId int64, id int64, params *UpdateCashRegisterSequenceParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateCashRegisterSequenceResponse, error) {
+	rsp, err := c.client.UpdateCashRegisterSequenceWithBody(ctx, branchId, id, params, contentType, body, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
 	return ParseUpdateCashRegisterSequenceResponse(rsp)
 }
 
-func (c *ClientWithResponses) UpdateCashRegisterSequenceWithResponse(ctx context.Context, branchId int64, id int64, params *UpdateCashRegisterSequenceParams, body UpdateCashRegisterSequenceJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateCashRegisterSequenceResponse, error) {
-	rsp, err := c.UpdateCashRegisterSequence(ctx, branchId, id, params, body, reqEditors...)
+func (c *RawClient) UpdateCashRegisterSequenceRaw(ctx context.Context, branchId int64, id int64, params *UpdateCashRegisterSequenceParams, body UpdateCashRegisterSequenceJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	return c.client.UpdateCashRegisterSequence(ctx, branchId, id, params, body, reqEditors...)
+}
+
+func (c *ClientWithResponses) UpdateCashRegisterSequence(ctx context.Context, branchId int64, id int64, params *UpdateCashRegisterSequenceParams, body UpdateCashRegisterSequenceJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateCashRegisterSequenceResponse, error) {
+	rsp, err := c.client.UpdateCashRegisterSequence(ctx, branchId, id, params, body, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
 	return ParseUpdateCashRegisterSequenceResponse(rsp)
 }
 
-// DeleteBranchWithResponse request returning *DeleteBranchResponse
-func (c *ClientWithResponses) DeleteBranchWithResponse(ctx context.Context, id int64, params *DeleteBranchParams, reqEditors ...RequestEditorFn) (*DeleteBranchResponse, error) {
-	rsp, err := c.DeleteBranch(ctx, id, params, reqEditors...)
+// DeleteBranchRaw performs the request and returns the raw HTTP response.
+func (c *RawClient) DeleteBranchRaw(ctx context.Context, id int64, params *DeleteBranchParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	return c.client.DeleteBranch(ctx, id, params, reqEditors...)
+}
+
+// DeleteBranch request returning *DeleteBranchResponse
+func (c *ClientWithResponses) DeleteBranch(ctx context.Context, id int64, params *DeleteBranchParams, reqEditors ...RequestEditorFn) (*DeleteBranchResponse, error) {
+	rsp, err := c.client.DeleteBranch(ctx, id, params, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
 	return ParseDeleteBranchResponse(rsp)
 }
 
-// GetBranchWithResponse request returning *GetBranchResponse
-func (c *ClientWithResponses) GetBranchWithResponse(ctx context.Context, id int64, params *GetBranchParams, reqEditors ...RequestEditorFn) (*GetBranchResponse, error) {
-	rsp, err := c.GetBranch(ctx, id, params, reqEditors...)
+// GetBranchRaw performs the request and returns the raw HTTP response.
+func (c *RawClient) GetBranchRaw(ctx context.Context, id int64, params *GetBranchParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	return c.client.GetBranch(ctx, id, params, reqEditors...)
+}
+
+// GetBranch request returning *GetBranchResponse
+func (c *ClientWithResponses) GetBranch(ctx context.Context, id int64, params *GetBranchParams, reqEditors ...RequestEditorFn) (*GetBranchResponse, error) {
+	rsp, err := c.client.GetBranch(ctx, id, params, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
 	return ParseGetBranchResponse(rsp)
 }
 
-// UpdateBranchWithBodyWithResponse request with arbitrary body returning *UpdateBranchResponse
-func (c *ClientWithResponses) UpdateBranchWithBodyWithResponse(ctx context.Context, id int64, params *UpdateBranchParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateBranchResponse, error) {
-	rsp, err := c.UpdateBranchWithBody(ctx, id, params, contentType, body, reqEditors...)
+// UpdateBranchWithBodyRaw performs the request and returns the raw HTTP response.
+func (c *RawClient) UpdateBranchWithBodyRaw(ctx context.Context, id int64, params *UpdateBranchParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	return c.client.UpdateBranchWithBody(ctx, id, params, contentType, body, reqEditors...)
+}
+
+// UpdateBranchWithBody request with arbitrary body returning *UpdateBranchResponse
+func (c *ClientWithResponses) UpdateBranchWithBody(ctx context.Context, id int64, params *UpdateBranchParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateBranchResponse, error) {
+	rsp, err := c.client.UpdateBranchWithBody(ctx, id, params, contentType, body, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
 	return ParseUpdateBranchResponse(rsp)
 }
 
-func (c *ClientWithResponses) UpdateBranchWithResponse(ctx context.Context, id int64, params *UpdateBranchParams, body UpdateBranchJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateBranchResponse, error) {
-	rsp, err := c.UpdateBranch(ctx, id, params, body, reqEditors...)
+func (c *RawClient) UpdateBranchRaw(ctx context.Context, id int64, params *UpdateBranchParams, body UpdateBranchJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	return c.client.UpdateBranch(ctx, id, params, body, reqEditors...)
+}
+
+func (c *ClientWithResponses) UpdateBranch(ctx context.Context, id int64, params *UpdateBranchParams, body UpdateBranchJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateBranchResponse, error) {
+	rsp, err := c.client.UpdateBranch(ctx, id, params, body, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
 	return ParseUpdateBranchResponse(rsp)
 }
 
-// SetDefaultBranchWithResponse request returning *SetDefaultBranchResponse
-func (c *ClientWithResponses) SetDefaultBranchWithResponse(ctx context.Context, id int64, params *SetDefaultBranchParams, reqEditors ...RequestEditorFn) (*SetDefaultBranchResponse, error) {
-	rsp, err := c.SetDefaultBranch(ctx, id, params, reqEditors...)
+// SetDefaultBranchRaw performs the request and returns the raw HTTP response.
+func (c *RawClient) SetDefaultBranchRaw(ctx context.Context, id int64, params *SetDefaultBranchParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	return c.client.SetDefaultBranch(ctx, id, params, reqEditors...)
+}
+
+// SetDefaultBranch request returning *SetDefaultBranchResponse
+func (c *ClientWithResponses) SetDefaultBranch(ctx context.Context, id int64, params *SetDefaultBranchParams, reqEditors ...RequestEditorFn) (*SetDefaultBranchResponse, error) {
+	rsp, err := c.client.SetDefaultBranch(ctx, id, params, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
 	return ParseSetDefaultBranchResponse(rsp)
 }
 
-// SetDefaultCashRegisterWithResponse request returning *SetDefaultCashRegisterResponse
-func (c *ClientWithResponses) SetDefaultCashRegisterWithResponse(ctx context.Context, id int64, params *SetDefaultCashRegisterParams, reqEditors ...RequestEditorFn) (*SetDefaultCashRegisterResponse, error) {
-	rsp, err := c.SetDefaultCashRegister(ctx, id, params, reqEditors...)
+// SetDefaultCashRegisterRaw performs the request and returns the raw HTTP response.
+func (c *RawClient) SetDefaultCashRegisterRaw(ctx context.Context, id int64, params *SetDefaultCashRegisterParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	return c.client.SetDefaultCashRegister(ctx, id, params, reqEditors...)
+}
+
+// SetDefaultCashRegister request returning *SetDefaultCashRegisterResponse
+func (c *ClientWithResponses) SetDefaultCashRegister(ctx context.Context, id int64, params *SetDefaultCashRegisterParams, reqEditors ...RequestEditorFn) (*SetDefaultCashRegisterResponse, error) {
+	rsp, err := c.client.SetDefaultCashRegister(ctx, id, params, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
 	return ParseSetDefaultCashRegisterResponse(rsp)
 }
 
-// GetCantonsWithResponse request returning *GetCantonsResponse
-func (c *ClientWithResponses) GetCantonsWithResponse(ctx context.Context, params *GetCantonsParams, reqEditors ...RequestEditorFn) (*GetCantonsResponse, error) {
-	rsp, err := c.GetCantons(ctx, params, reqEditors...)
+// GetCantonsRaw performs the request and returns the raw HTTP response.
+func (c *RawClient) GetCantonsRaw(ctx context.Context, params *GetCantonsParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	return c.client.GetCantons(ctx, params, reqEditors...)
+}
+
+// GetCantons request returning *GetCantonsResponse
+func (c *ClientWithResponses) GetCantons(ctx context.Context, params *GetCantonsParams, reqEditors ...RequestEditorFn) (*GetCantonsResponse, error) {
+	rsp, err := c.client.GetCantons(ctx, params, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
 	return ParseGetCantonsResponse(rsp)
 }
 
-// GetCurrenciesWithResponse request returning *GetCurrenciesResponse
-func (c *ClientWithResponses) GetCurrenciesWithResponse(ctx context.Context, params *GetCurrenciesParams, reqEditors ...RequestEditorFn) (*GetCurrenciesResponse, error) {
-	rsp, err := c.GetCurrencies(ctx, params, reqEditors...)
+// GetCurrenciesRaw performs the request and returns the raw HTTP response.
+func (c *RawClient) GetCurrenciesRaw(ctx context.Context, params *GetCurrenciesParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	return c.client.GetCurrencies(ctx, params, reqEditors...)
+}
+
+// GetCurrencies request returning *GetCurrenciesResponse
+func (c *ClientWithResponses) GetCurrencies(ctx context.Context, params *GetCurrenciesParams, reqEditors ...RequestEditorFn) (*GetCurrenciesResponse, error) {
+	rsp, err := c.client.GetCurrencies(ctx, params, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
 	return ParseGetCurrenciesResponse(rsp)
 }
 
-// GetDistrictsWithResponse request returning *GetDistrictsResponse
-func (c *ClientWithResponses) GetDistrictsWithResponse(ctx context.Context, params *GetDistrictsParams, reqEditors ...RequestEditorFn) (*GetDistrictsResponse, error) {
-	rsp, err := c.GetDistricts(ctx, params, reqEditors...)
+// GetDistrictsRaw performs the request and returns the raw HTTP response.
+func (c *RawClient) GetDistrictsRaw(ctx context.Context, params *GetDistrictsParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	return c.client.GetDistricts(ctx, params, reqEditors...)
+}
+
+// GetDistricts request returning *GetDistrictsResponse
+func (c *ClientWithResponses) GetDistricts(ctx context.Context, params *GetDistrictsParams, reqEditors ...RequestEditorFn) (*GetDistrictsResponse, error) {
+	rsp, err := c.client.GetDistricts(ctx, params, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
 	return ParseGetDistrictsResponse(rsp)
 }
 
-// GetDocumentTypesWithResponse request returning *GetDocumentTypesResponse
-func (c *ClientWithResponses) GetDocumentTypesWithResponse(ctx context.Context, params *GetDocumentTypesParams, reqEditors ...RequestEditorFn) (*GetDocumentTypesResponse, error) {
-	rsp, err := c.GetDocumentTypes(ctx, params, reqEditors...)
+// GetDocumentTypesRaw performs the request and returns the raw HTTP response.
+func (c *RawClient) GetDocumentTypesRaw(ctx context.Context, params *GetDocumentTypesParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	return c.client.GetDocumentTypes(ctx, params, reqEditors...)
+}
+
+// GetDocumentTypes request returning *GetDocumentTypesResponse
+func (c *ClientWithResponses) GetDocumentTypes(ctx context.Context, params *GetDocumentTypesParams, reqEditors ...RequestEditorFn) (*GetDocumentTypesResponse, error) {
+	rsp, err := c.client.GetDocumentTypes(ctx, params, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
 	return ParseGetDocumentTypesResponse(rsp)
 }
 
-// GetLegalIdentificationTypesWithResponse request returning *GetLegalIdentificationTypesResponse
-func (c *ClientWithResponses) GetLegalIdentificationTypesWithResponse(ctx context.Context, params *GetLegalIdentificationTypesParams, reqEditors ...RequestEditorFn) (*GetLegalIdentificationTypesResponse, error) {
-	rsp, err := c.GetLegalIdentificationTypes(ctx, params, reqEditors...)
+// GetLegalIdentificationTypesRaw performs the request and returns the raw HTTP response.
+func (c *RawClient) GetLegalIdentificationTypesRaw(ctx context.Context, params *GetLegalIdentificationTypesParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	return c.client.GetLegalIdentificationTypes(ctx, params, reqEditors...)
+}
+
+// GetLegalIdentificationTypes request returning *GetLegalIdentificationTypesResponse
+func (c *ClientWithResponses) GetLegalIdentificationTypes(ctx context.Context, params *GetLegalIdentificationTypesParams, reqEditors ...RequestEditorFn) (*GetLegalIdentificationTypesResponse, error) {
+	rsp, err := c.client.GetLegalIdentificationTypes(ctx, params, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
 	return ParseGetLegalIdentificationTypesResponse(rsp)
 }
 
-// GetPaymentMethodsWithResponse request returning *GetPaymentMethodsResponse
-func (c *ClientWithResponses) GetPaymentMethodsWithResponse(ctx context.Context, params *GetPaymentMethodsParams, reqEditors ...RequestEditorFn) (*GetPaymentMethodsResponse, error) {
-	rsp, err := c.GetPaymentMethods(ctx, params, reqEditors...)
+// GetPaymentMethodsRaw performs the request and returns the raw HTTP response.
+func (c *RawClient) GetPaymentMethodsRaw(ctx context.Context, params *GetPaymentMethodsParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	return c.client.GetPaymentMethods(ctx, params, reqEditors...)
+}
+
+// GetPaymentMethods request returning *GetPaymentMethodsResponse
+func (c *ClientWithResponses) GetPaymentMethods(ctx context.Context, params *GetPaymentMethodsParams, reqEditors ...RequestEditorFn) (*GetPaymentMethodsResponse, error) {
+	rsp, err := c.client.GetPaymentMethods(ctx, params, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
 	return ParseGetPaymentMethodsResponse(rsp)
 }
 
-// GetPharmaceuticalFormsWithResponse request returning *GetPharmaceuticalFormsResponse
-func (c *ClientWithResponses) GetPharmaceuticalFormsWithResponse(ctx context.Context, params *GetPharmaceuticalFormsParams, reqEditors ...RequestEditorFn) (*GetPharmaceuticalFormsResponse, error) {
-	rsp, err := c.GetPharmaceuticalForms(ctx, params, reqEditors...)
+// GetPharmaceuticalFormsRaw performs the request and returns the raw HTTP response.
+func (c *RawClient) GetPharmaceuticalFormsRaw(ctx context.Context, params *GetPharmaceuticalFormsParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	return c.client.GetPharmaceuticalForms(ctx, params, reqEditors...)
+}
+
+// GetPharmaceuticalForms request returning *GetPharmaceuticalFormsResponse
+func (c *ClientWithResponses) GetPharmaceuticalForms(ctx context.Context, params *GetPharmaceuticalFormsParams, reqEditors ...RequestEditorFn) (*GetPharmaceuticalFormsResponse, error) {
+	rsp, err := c.client.GetPharmaceuticalForms(ctx, params, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
 	return ParseGetPharmaceuticalFormsResponse(rsp)
 }
 
-// GetProvincesWithResponse request returning *GetProvincesResponse
-func (c *ClientWithResponses) GetProvincesWithResponse(ctx context.Context, params *GetProvincesParams, reqEditors ...RequestEditorFn) (*GetProvincesResponse, error) {
-	rsp, err := c.GetProvinces(ctx, params, reqEditors...)
+// GetProvincesRaw performs the request and returns the raw HTTP response.
+func (c *RawClient) GetProvincesRaw(ctx context.Context, params *GetProvincesParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	return c.client.GetProvinces(ctx, params, reqEditors...)
+}
+
+// GetProvinces request returning *GetProvincesResponse
+func (c *ClientWithResponses) GetProvinces(ctx context.Context, params *GetProvincesParams, reqEditors ...RequestEditorFn) (*GetProvincesResponse, error) {
+	rsp, err := c.client.GetProvinces(ctx, params, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
 	return ParseGetProvincesResponse(rsp)
 }
 
-// GetSaleConditionsWithResponse request returning *GetSaleConditionsResponse
-func (c *ClientWithResponses) GetSaleConditionsWithResponse(ctx context.Context, params *GetSaleConditionsParams, reqEditors ...RequestEditorFn) (*GetSaleConditionsResponse, error) {
-	rsp, err := c.GetSaleConditions(ctx, params, reqEditors...)
+// GetSaleConditionsRaw performs the request and returns the raw HTTP response.
+func (c *RawClient) GetSaleConditionsRaw(ctx context.Context, params *GetSaleConditionsParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	return c.client.GetSaleConditions(ctx, params, reqEditors...)
+}
+
+// GetSaleConditions request returning *GetSaleConditionsResponse
+func (c *ClientWithResponses) GetSaleConditions(ctx context.Context, params *GetSaleConditionsParams, reqEditors ...RequestEditorFn) (*GetSaleConditionsResponse, error) {
+	rsp, err := c.client.GetSaleConditions(ctx, params, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
 	return ParseGetSaleConditionsResponse(rsp)
 }
 
-// GetTaxCodesWithResponse request returning *GetTaxCodesResponse
-func (c *ClientWithResponses) GetTaxCodesWithResponse(ctx context.Context, params *GetTaxCodesParams, reqEditors ...RequestEditorFn) (*GetTaxCodesResponse, error) {
-	rsp, err := c.GetTaxCodes(ctx, params, reqEditors...)
+// GetTaxCodesRaw performs the request and returns the raw HTTP response.
+func (c *RawClient) GetTaxCodesRaw(ctx context.Context, params *GetTaxCodesParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	return c.client.GetTaxCodes(ctx, params, reqEditors...)
+}
+
+// GetTaxCodes request returning *GetTaxCodesResponse
+func (c *ClientWithResponses) GetTaxCodes(ctx context.Context, params *GetTaxCodesParams, reqEditors ...RequestEditorFn) (*GetTaxCodesResponse, error) {
+	rsp, err := c.client.GetTaxCodes(ctx, params, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
 	return ParseGetTaxCodesResponse(rsp)
 }
 
-// GetUnitsOfMeasureWithResponse request returning *GetUnitsOfMeasureResponse
-func (c *ClientWithResponses) GetUnitsOfMeasureWithResponse(ctx context.Context, params *GetUnitsOfMeasureParams, reqEditors ...RequestEditorFn) (*GetUnitsOfMeasureResponse, error) {
-	rsp, err := c.GetUnitsOfMeasure(ctx, params, reqEditors...)
+// GetUnitsOfMeasureRaw performs the request and returns the raw HTTP response.
+func (c *RawClient) GetUnitsOfMeasureRaw(ctx context.Context, params *GetUnitsOfMeasureParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	return c.client.GetUnitsOfMeasure(ctx, params, reqEditors...)
+}
+
+// GetUnitsOfMeasure request returning *GetUnitsOfMeasureResponse
+func (c *ClientWithResponses) GetUnitsOfMeasure(ctx context.Context, params *GetUnitsOfMeasureParams, reqEditors ...RequestEditorFn) (*GetUnitsOfMeasureResponse, error) {
+	rsp, err := c.client.GetUnitsOfMeasure(ctx, params, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
 	return ParseGetUnitsOfMeasureResponse(rsp)
 }
 
-// GetVatRateCodesWithResponse request returning *GetVatRateCodesResponse
-func (c *ClientWithResponses) GetVatRateCodesWithResponse(ctx context.Context, params *GetVatRateCodesParams, reqEditors ...RequestEditorFn) (*GetVatRateCodesResponse, error) {
-	rsp, err := c.GetVatRateCodes(ctx, params, reqEditors...)
+// GetVatRateCodesRaw performs the request and returns the raw HTTP response.
+func (c *RawClient) GetVatRateCodesRaw(ctx context.Context, params *GetVatRateCodesParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	return c.client.GetVatRateCodes(ctx, params, reqEditors...)
+}
+
+// GetVatRateCodes request returning *GetVatRateCodesResponse
+func (c *ClientWithResponses) GetVatRateCodes(ctx context.Context, params *GetVatRateCodesParams, reqEditors ...RequestEditorFn) (*GetVatRateCodesResponse, error) {
+	rsp, err := c.client.GetVatRateCodes(ctx, params, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
 	return ParseGetVatRateCodesResponse(rsp)
 }
 
-// GetAllClientsWithResponse request returning *GetAllClientsResponse
-func (c *ClientWithResponses) GetAllClientsWithResponse(ctx context.Context, params *GetAllClientsParams, reqEditors ...RequestEditorFn) (*GetAllClientsResponse, error) {
-	rsp, err := c.GetAllClients(ctx, params, reqEditors...)
+// GetAllClientsRaw performs the request and returns the raw HTTP response.
+func (c *RawClient) GetAllClientsRaw(ctx context.Context, params *GetAllClientsParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	return c.client.GetAllClients(ctx, params, reqEditors...)
+}
+
+// GetAllClients request returning *GetAllClientsResponse
+func (c *ClientWithResponses) GetAllClients(ctx context.Context, params *GetAllClientsParams, reqEditors ...RequestEditorFn) (*GetAllClientsResponse, error) {
+	rsp, err := c.client.GetAllClients(ctx, params, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
 	return ParseGetAllClientsResponse(rsp)
 }
 
-// CreateClientWithBodyWithResponse request with arbitrary body returning *CreateClientResponse
-func (c *ClientWithResponses) CreateClientWithBodyWithResponse(ctx context.Context, params *CreateClientParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateClientResponse, error) {
-	rsp, err := c.CreateClientWithBody(ctx, params, contentType, body, reqEditors...)
+// CreateClientWithBodyRaw performs the request and returns the raw HTTP response.
+func (c *RawClient) CreateClientWithBodyRaw(ctx context.Context, params *CreateClientParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	return c.client.CreateClientWithBody(ctx, params, contentType, body, reqEditors...)
+}
+
+// CreateClientWithBody request with arbitrary body returning *CreateClientResponse
+func (c *ClientWithResponses) CreateClientWithBody(ctx context.Context, params *CreateClientParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateClientResponse, error) {
+	rsp, err := c.client.CreateClientWithBody(ctx, params, contentType, body, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
 	return ParseCreateClientResponse(rsp)
 }
 
-func (c *ClientWithResponses) CreateClientWithResponse(ctx context.Context, params *CreateClientParams, body CreateClientJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateClientResponse, error) {
-	rsp, err := c.CreateClient(ctx, params, body, reqEditors...)
+func (c *RawClient) CreateClientRaw(ctx context.Context, params *CreateClientParams, body CreateClientJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	return c.client.CreateClient(ctx, params, body, reqEditors...)
+}
+
+func (c *ClientWithResponses) CreateClient(ctx context.Context, params *CreateClientParams, body CreateClientJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateClientResponse, error) {
+	rsp, err := c.client.CreateClient(ctx, params, body, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
 	return ParseCreateClientResponse(rsp)
 }
 
-// GetExonerationsWithResponse request returning *GetExonerationsResponse
-func (c *ClientWithResponses) GetExonerationsWithResponse(ctx context.Context, clientId int64, params *GetExonerationsParams, reqEditors ...RequestEditorFn) (*GetExonerationsResponse, error) {
-	rsp, err := c.GetExonerations(ctx, clientId, params, reqEditors...)
+// GetExonerationsRaw performs the request and returns the raw HTTP response.
+func (c *RawClient) GetExonerationsRaw(ctx context.Context, clientId int64, params *GetExonerationsParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	return c.client.GetExonerations(ctx, clientId, params, reqEditors...)
+}
+
+// GetExonerations request returning *GetExonerationsResponse
+func (c *ClientWithResponses) GetExonerations(ctx context.Context, clientId int64, params *GetExonerationsParams, reqEditors ...RequestEditorFn) (*GetExonerationsResponse, error) {
+	rsp, err := c.client.GetExonerations(ctx, clientId, params, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
 	return ParseGetExonerationsResponse(rsp)
 }
 
-// RegisterExonerationWithBodyWithResponse request with arbitrary body returning *RegisterExonerationResponse
-func (c *ClientWithResponses) RegisterExonerationWithBodyWithResponse(ctx context.Context, clientId int64, params *RegisterExonerationParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*RegisterExonerationResponse, error) {
-	rsp, err := c.RegisterExonerationWithBody(ctx, clientId, params, contentType, body, reqEditors...)
+// RegisterExonerationWithBodyRaw performs the request and returns the raw HTTP response.
+func (c *RawClient) RegisterExonerationWithBodyRaw(ctx context.Context, clientId int64, params *RegisterExonerationParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	return c.client.RegisterExonerationWithBody(ctx, clientId, params, contentType, body, reqEditors...)
+}
+
+// RegisterExonerationWithBody request with arbitrary body returning *RegisterExonerationResponse
+func (c *ClientWithResponses) RegisterExonerationWithBody(ctx context.Context, clientId int64, params *RegisterExonerationParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*RegisterExonerationResponse, error) {
+	rsp, err := c.client.RegisterExonerationWithBody(ctx, clientId, params, contentType, body, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
 	return ParseRegisterExonerationResponse(rsp)
 }
 
-func (c *ClientWithResponses) RegisterExonerationWithResponse(ctx context.Context, clientId int64, params *RegisterExonerationParams, body RegisterExonerationJSONRequestBody, reqEditors ...RequestEditorFn) (*RegisterExonerationResponse, error) {
-	rsp, err := c.RegisterExoneration(ctx, clientId, params, body, reqEditors...)
+func (c *RawClient) RegisterExonerationRaw(ctx context.Context, clientId int64, params *RegisterExonerationParams, body RegisterExonerationJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	return c.client.RegisterExoneration(ctx, clientId, params, body, reqEditors...)
+}
+
+func (c *ClientWithResponses) RegisterExoneration(ctx context.Context, clientId int64, params *RegisterExonerationParams, body RegisterExonerationJSONRequestBody, reqEditors ...RequestEditorFn) (*RegisterExonerationResponse, error) {
+	rsp, err := c.client.RegisterExoneration(ctx, clientId, params, body, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
 	return ParseRegisterExonerationResponse(rsp)
 }
 
-// DeactivateExonerationWithResponse request returning *DeactivateExonerationResponse
-func (c *ClientWithResponses) DeactivateExonerationWithResponse(ctx context.Context, clientId int64, id int64, params *DeactivateExonerationParams, reqEditors ...RequestEditorFn) (*DeactivateExonerationResponse, error) {
-	rsp, err := c.DeactivateExoneration(ctx, clientId, id, params, reqEditors...)
+// DeactivateExonerationRaw performs the request and returns the raw HTTP response.
+func (c *RawClient) DeactivateExonerationRaw(ctx context.Context, clientId int64, id int64, params *DeactivateExonerationParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	return c.client.DeactivateExoneration(ctx, clientId, id, params, reqEditors...)
+}
+
+// DeactivateExoneration request returning *DeactivateExonerationResponse
+func (c *ClientWithResponses) DeactivateExoneration(ctx context.Context, clientId int64, id int64, params *DeactivateExonerationParams, reqEditors ...RequestEditorFn) (*DeactivateExonerationResponse, error) {
+	rsp, err := c.client.DeactivateExoneration(ctx, clientId, id, params, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
 	return ParseDeactivateExonerationResponse(rsp)
 }
 
-// GetClientExonerationWithResponse request returning *GetClientExonerationResponse
-func (c *ClientWithResponses) GetClientExonerationWithResponse(ctx context.Context, clientId int64, id int64, params *GetClientExonerationParams, reqEditors ...RequestEditorFn) (*GetClientExonerationResponse, error) {
-	rsp, err := c.GetClientExoneration(ctx, clientId, id, params, reqEditors...)
+// GetClientExonerationRaw performs the request and returns the raw HTTP response.
+func (c *RawClient) GetClientExonerationRaw(ctx context.Context, clientId int64, id int64, params *GetClientExonerationParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	return c.client.GetClientExoneration(ctx, clientId, id, params, reqEditors...)
+}
+
+// GetClientExoneration request returning *GetClientExonerationResponse
+func (c *ClientWithResponses) GetClientExoneration(ctx context.Context, clientId int64, id int64, params *GetClientExonerationParams, reqEditors ...RequestEditorFn) (*GetClientExonerationResponse, error) {
+	rsp, err := c.client.GetClientExoneration(ctx, clientId, id, params, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
 	return ParseGetClientExonerationResponse(rsp)
 }
 
-// RefreshExonerationWithResponse request returning *RefreshExonerationResponse
-func (c *ClientWithResponses) RefreshExonerationWithResponse(ctx context.Context, clientId int64, id int64, params *RefreshExonerationParams, reqEditors ...RequestEditorFn) (*RefreshExonerationResponse, error) {
-	rsp, err := c.RefreshExoneration(ctx, clientId, id, params, reqEditors...)
+// RefreshExonerationRaw performs the request and returns the raw HTTP response.
+func (c *RawClient) RefreshExonerationRaw(ctx context.Context, clientId int64, id int64, params *RefreshExonerationParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	return c.client.RefreshExoneration(ctx, clientId, id, params, reqEditors...)
+}
+
+// RefreshExoneration request returning *RefreshExonerationResponse
+func (c *ClientWithResponses) RefreshExoneration(ctx context.Context, clientId int64, id int64, params *RefreshExonerationParams, reqEditors ...RequestEditorFn) (*RefreshExonerationResponse, error) {
+	rsp, err := c.client.RefreshExoneration(ctx, clientId, id, params, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
 	return ParseRefreshExonerationResponse(rsp)
 }
 
-// GetClientReceiversWithResponse request returning *GetClientReceiversResponse
-func (c *ClientWithResponses) GetClientReceiversWithResponse(ctx context.Context, clientId int64, params *GetClientReceiversParams, reqEditors ...RequestEditorFn) (*GetClientReceiversResponse, error) {
-	rsp, err := c.GetClientReceivers(ctx, clientId, params, reqEditors...)
+// GetClientReceiversRaw performs the request and returns the raw HTTP response.
+func (c *RawClient) GetClientReceiversRaw(ctx context.Context, clientId int64, params *GetClientReceiversParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	return c.client.GetClientReceivers(ctx, clientId, params, reqEditors...)
+}
+
+// GetClientReceivers request returning *GetClientReceiversResponse
+func (c *ClientWithResponses) GetClientReceivers(ctx context.Context, clientId int64, params *GetClientReceiversParams, reqEditors ...RequestEditorFn) (*GetClientReceiversResponse, error) {
+	rsp, err := c.client.GetClientReceivers(ctx, clientId, params, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
 	return ParseGetClientReceiversResponse(rsp)
 }
 
-// CreateOrUpdateReceiverWithBodyWithResponse request with arbitrary body returning *CreateOrUpdateReceiverResponse
-func (c *ClientWithResponses) CreateOrUpdateReceiverWithBodyWithResponse(ctx context.Context, clientId int64, params *CreateOrUpdateReceiverParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateOrUpdateReceiverResponse, error) {
-	rsp, err := c.CreateOrUpdateReceiverWithBody(ctx, clientId, params, contentType, body, reqEditors...)
+// CreateOrUpdateReceiverWithBodyRaw performs the request and returns the raw HTTP response.
+func (c *RawClient) CreateOrUpdateReceiverWithBodyRaw(ctx context.Context, clientId int64, params *CreateOrUpdateReceiverParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	return c.client.CreateOrUpdateReceiverWithBody(ctx, clientId, params, contentType, body, reqEditors...)
+}
+
+// CreateOrUpdateReceiverWithBody request with arbitrary body returning *CreateOrUpdateReceiverResponse
+func (c *ClientWithResponses) CreateOrUpdateReceiverWithBody(ctx context.Context, clientId int64, params *CreateOrUpdateReceiverParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateOrUpdateReceiverResponse, error) {
+	rsp, err := c.client.CreateOrUpdateReceiverWithBody(ctx, clientId, params, contentType, body, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
 	return ParseCreateOrUpdateReceiverResponse(rsp)
 }
 
-func (c *ClientWithResponses) CreateOrUpdateReceiverWithResponse(ctx context.Context, clientId int64, params *CreateOrUpdateReceiverParams, body CreateOrUpdateReceiverJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateOrUpdateReceiverResponse, error) {
-	rsp, err := c.CreateOrUpdateReceiver(ctx, clientId, params, body, reqEditors...)
+func (c *RawClient) CreateOrUpdateReceiverRaw(ctx context.Context, clientId int64, params *CreateOrUpdateReceiverParams, body CreateOrUpdateReceiverJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	return c.client.CreateOrUpdateReceiver(ctx, clientId, params, body, reqEditors...)
+}
+
+func (c *ClientWithResponses) CreateOrUpdateReceiver(ctx context.Context, clientId int64, params *CreateOrUpdateReceiverParams, body CreateOrUpdateReceiverJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateOrUpdateReceiverResponse, error) {
+	rsp, err := c.client.CreateOrUpdateReceiver(ctx, clientId, params, body, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
 	return ParseCreateOrUpdateReceiverResponse(rsp)
 }
 
-// UpdateDefaultReceiverWithBodyWithResponse request with arbitrary body returning *UpdateDefaultReceiverResponse
-func (c *ClientWithResponses) UpdateDefaultReceiverWithBodyWithResponse(ctx context.Context, clientId int64, params *UpdateDefaultReceiverParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateDefaultReceiverResponse, error) {
-	rsp, err := c.UpdateDefaultReceiverWithBody(ctx, clientId, params, contentType, body, reqEditors...)
+// UpdateDefaultReceiverWithBodyRaw performs the request and returns the raw HTTP response.
+func (c *RawClient) UpdateDefaultReceiverWithBodyRaw(ctx context.Context, clientId int64, params *UpdateDefaultReceiverParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	return c.client.UpdateDefaultReceiverWithBody(ctx, clientId, params, contentType, body, reqEditors...)
+}
+
+// UpdateDefaultReceiverWithBody request with arbitrary body returning *UpdateDefaultReceiverResponse
+func (c *ClientWithResponses) UpdateDefaultReceiverWithBody(ctx context.Context, clientId int64, params *UpdateDefaultReceiverParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateDefaultReceiverResponse, error) {
+	rsp, err := c.client.UpdateDefaultReceiverWithBody(ctx, clientId, params, contentType, body, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
 	return ParseUpdateDefaultReceiverResponse(rsp)
 }
 
-func (c *ClientWithResponses) UpdateDefaultReceiverWithResponse(ctx context.Context, clientId int64, params *UpdateDefaultReceiverParams, body UpdateDefaultReceiverJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateDefaultReceiverResponse, error) {
-	rsp, err := c.UpdateDefaultReceiver(ctx, clientId, params, body, reqEditors...)
+func (c *RawClient) UpdateDefaultReceiverRaw(ctx context.Context, clientId int64, params *UpdateDefaultReceiverParams, body UpdateDefaultReceiverJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	return c.client.UpdateDefaultReceiver(ctx, clientId, params, body, reqEditors...)
+}
+
+func (c *ClientWithResponses) UpdateDefaultReceiver(ctx context.Context, clientId int64, params *UpdateDefaultReceiverParams, body UpdateDefaultReceiverJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateDefaultReceiverResponse, error) {
+	rsp, err := c.client.UpdateDefaultReceiver(ctx, clientId, params, body, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
 	return ParseUpdateDefaultReceiverResponse(rsp)
 }
 
-// DeleteReceiverWithResponse request returning *DeleteReceiverResponse
-func (c *ClientWithResponses) DeleteReceiverWithResponse(ctx context.Context, clientId int64, receiverId int64, params *DeleteReceiverParams, reqEditors ...RequestEditorFn) (*DeleteReceiverResponse, error) {
-	rsp, err := c.DeleteReceiver(ctx, clientId, receiverId, params, reqEditors...)
+// DeleteReceiverRaw performs the request and returns the raw HTTP response.
+func (c *RawClient) DeleteReceiverRaw(ctx context.Context, clientId int64, receiverId int64, params *DeleteReceiverParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	return c.client.DeleteReceiver(ctx, clientId, receiverId, params, reqEditors...)
+}
+
+// DeleteReceiver request returning *DeleteReceiverResponse
+func (c *ClientWithResponses) DeleteReceiver(ctx context.Context, clientId int64, receiverId int64, params *DeleteReceiverParams, reqEditors ...RequestEditorFn) (*DeleteReceiverResponse, error) {
+	rsp, err := c.client.DeleteReceiver(ctx, clientId, receiverId, params, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
 	return ParseDeleteReceiverResponse(rsp)
 }
 
-// GetReceiverByIdWithResponse request returning *GetReceiverByIdResponse
-func (c *ClientWithResponses) GetReceiverByIdWithResponse(ctx context.Context, clientId int64, receiverId int64, params *GetReceiverByIdParams, reqEditors ...RequestEditorFn) (*GetReceiverByIdResponse, error) {
-	rsp, err := c.GetReceiverById(ctx, clientId, receiverId, params, reqEditors...)
+// GetReceiverByIdRaw performs the request and returns the raw HTTP response.
+func (c *RawClient) GetReceiverByIdRaw(ctx context.Context, clientId int64, receiverId int64, params *GetReceiverByIdParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	return c.client.GetReceiverById(ctx, clientId, receiverId, params, reqEditors...)
+}
+
+// GetReceiverById request returning *GetReceiverByIdResponse
+func (c *ClientWithResponses) GetReceiverById(ctx context.Context, clientId int64, receiverId int64, params *GetReceiverByIdParams, reqEditors ...RequestEditorFn) (*GetReceiverByIdResponse, error) {
+	rsp, err := c.client.GetReceiverById(ctx, clientId, receiverId, params, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
 	return ParseGetReceiverByIdResponse(rsp)
 }
 
-// UpdateReceiverWithBodyWithResponse request with arbitrary body returning *UpdateReceiverResponse
-func (c *ClientWithResponses) UpdateReceiverWithBodyWithResponse(ctx context.Context, clientId int64, receiverId int64, params *UpdateReceiverParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateReceiverResponse, error) {
-	rsp, err := c.UpdateReceiverWithBody(ctx, clientId, receiverId, params, contentType, body, reqEditors...)
+// UpdateReceiverWithBodyRaw performs the request and returns the raw HTTP response.
+func (c *RawClient) UpdateReceiverWithBodyRaw(ctx context.Context, clientId int64, receiverId int64, params *UpdateReceiverParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	return c.client.UpdateReceiverWithBody(ctx, clientId, receiverId, params, contentType, body, reqEditors...)
+}
+
+// UpdateReceiverWithBody request with arbitrary body returning *UpdateReceiverResponse
+func (c *ClientWithResponses) UpdateReceiverWithBody(ctx context.Context, clientId int64, receiverId int64, params *UpdateReceiverParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateReceiverResponse, error) {
+	rsp, err := c.client.UpdateReceiverWithBody(ctx, clientId, receiverId, params, contentType, body, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
 	return ParseUpdateReceiverResponse(rsp)
 }
 
-func (c *ClientWithResponses) UpdateReceiverWithResponse(ctx context.Context, clientId int64, receiverId int64, params *UpdateReceiverParams, body UpdateReceiverJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateReceiverResponse, error) {
-	rsp, err := c.UpdateReceiver(ctx, clientId, receiverId, params, body, reqEditors...)
+func (c *RawClient) UpdateReceiverRaw(ctx context.Context, clientId int64, receiverId int64, params *UpdateReceiverParams, body UpdateReceiverJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	return c.client.UpdateReceiver(ctx, clientId, receiverId, params, body, reqEditors...)
+}
+
+func (c *ClientWithResponses) UpdateReceiver(ctx context.Context, clientId int64, receiverId int64, params *UpdateReceiverParams, body UpdateReceiverJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateReceiverResponse, error) {
+	rsp, err := c.client.UpdateReceiver(ctx, clientId, receiverId, params, body, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
 	return ParseUpdateReceiverResponse(rsp)
 }
 
-// DeleteClientWithResponse request returning *DeleteClientResponse
-func (c *ClientWithResponses) DeleteClientWithResponse(ctx context.Context, id int64, params *DeleteClientParams, reqEditors ...RequestEditorFn) (*DeleteClientResponse, error) {
-	rsp, err := c.DeleteClient(ctx, id, params, reqEditors...)
+// DeleteClientRaw performs the request and returns the raw HTTP response.
+func (c *RawClient) DeleteClientRaw(ctx context.Context, id int64, params *DeleteClientParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	return c.client.DeleteClient(ctx, id, params, reqEditors...)
+}
+
+// DeleteClient request returning *DeleteClientResponse
+func (c *ClientWithResponses) DeleteClient(ctx context.Context, id int64, params *DeleteClientParams, reqEditors ...RequestEditorFn) (*DeleteClientResponse, error) {
+	rsp, err := c.client.DeleteClient(ctx, id, params, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
 	return ParseDeleteClientResponse(rsp)
 }
 
-// GetClientByIdWithResponse request returning *GetClientByIdResponse
-func (c *ClientWithResponses) GetClientByIdWithResponse(ctx context.Context, id int64, params *GetClientByIdParams, reqEditors ...RequestEditorFn) (*GetClientByIdResponse, error) {
-	rsp, err := c.GetClientById(ctx, id, params, reqEditors...)
+// GetClientByIdRaw performs the request and returns the raw HTTP response.
+func (c *RawClient) GetClientByIdRaw(ctx context.Context, id int64, params *GetClientByIdParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	return c.client.GetClientById(ctx, id, params, reqEditors...)
+}
+
+// GetClientById request returning *GetClientByIdResponse
+func (c *ClientWithResponses) GetClientById(ctx context.Context, id int64, params *GetClientByIdParams, reqEditors ...RequestEditorFn) (*GetClientByIdResponse, error) {
+	rsp, err := c.client.GetClientById(ctx, id, params, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
 	return ParseGetClientByIdResponse(rsp)
 }
 
-// UpdateClientWithBodyWithResponse request with arbitrary body returning *UpdateClientResponse
-func (c *ClientWithResponses) UpdateClientWithBodyWithResponse(ctx context.Context, id int64, params *UpdateClientParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateClientResponse, error) {
-	rsp, err := c.UpdateClientWithBody(ctx, id, params, contentType, body, reqEditors...)
+// UpdateClientWithBodyRaw performs the request and returns the raw HTTP response.
+func (c *RawClient) UpdateClientWithBodyRaw(ctx context.Context, id int64, params *UpdateClientParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	return c.client.UpdateClientWithBody(ctx, id, params, contentType, body, reqEditors...)
+}
+
+// UpdateClientWithBody request with arbitrary body returning *UpdateClientResponse
+func (c *ClientWithResponses) UpdateClientWithBody(ctx context.Context, id int64, params *UpdateClientParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateClientResponse, error) {
+	rsp, err := c.client.UpdateClientWithBody(ctx, id, params, contentType, body, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
 	return ParseUpdateClientResponse(rsp)
 }
 
-func (c *ClientWithResponses) UpdateClientWithResponse(ctx context.Context, id int64, params *UpdateClientParams, body UpdateClientJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateClientResponse, error) {
-	rsp, err := c.UpdateClient(ctx, id, params, body, reqEditors...)
+func (c *RawClient) UpdateClientRaw(ctx context.Context, id int64, params *UpdateClientParams, body UpdateClientJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	return c.client.UpdateClient(ctx, id, params, body, reqEditors...)
+}
+
+func (c *ClientWithResponses) UpdateClient(ctx context.Context, id int64, params *UpdateClientParams, body UpdateClientJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateClientResponse, error) {
+	rsp, err := c.client.UpdateClient(ctx, id, params, body, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
 	return ParseUpdateClientResponse(rsp)
 }
 
-// GetAllDocumentsWithResponse request returning *GetAllDocumentsResponse
-func (c *ClientWithResponses) GetAllDocumentsWithResponse(ctx context.Context, params *GetAllDocumentsParams, reqEditors ...RequestEditorFn) (*GetAllDocumentsResponse, error) {
-	rsp, err := c.GetAllDocuments(ctx, params, reqEditors...)
+// GetAllDocumentsRaw performs the request and returns the raw HTTP response.
+func (c *RawClient) GetAllDocumentsRaw(ctx context.Context, params *GetAllDocumentsParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	return c.client.GetAllDocuments(ctx, params, reqEditors...)
+}
+
+// GetAllDocuments request returning *GetAllDocumentsResponse
+func (c *ClientWithResponses) GetAllDocuments(ctx context.Context, params *GetAllDocumentsParams, reqEditors ...RequestEditorFn) (*GetAllDocumentsResponse, error) {
+	rsp, err := c.client.GetAllDocuments(ctx, params, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
 	return ParseGetAllDocumentsResponse(rsp)
 }
 
-// CreateCreditNoteWithBodyWithResponse request with arbitrary body returning *CreateCreditNoteResponse
-func (c *ClientWithResponses) CreateCreditNoteWithBodyWithResponse(ctx context.Context, params *CreateCreditNoteParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateCreditNoteResponse, error) {
-	rsp, err := c.CreateCreditNoteWithBody(ctx, params, contentType, body, reqEditors...)
+// CreateCreditNoteWithBodyRaw performs the request and returns the raw HTTP response.
+func (c *RawClient) CreateCreditNoteWithBodyRaw(ctx context.Context, params *CreateCreditNoteParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	return c.client.CreateCreditNoteWithBody(ctx, params, contentType, body, reqEditors...)
+}
+
+// CreateCreditNoteWithBody request with arbitrary body returning *CreateCreditNoteResponse
+func (c *ClientWithResponses) CreateCreditNoteWithBody(ctx context.Context, params *CreateCreditNoteParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateCreditNoteResponse, error) {
+	rsp, err := c.client.CreateCreditNoteWithBody(ctx, params, contentType, body, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
 	return ParseCreateCreditNoteResponse(rsp)
 }
 
-func (c *ClientWithResponses) CreateCreditNoteWithResponse(ctx context.Context, params *CreateCreditNoteParams, body CreateCreditNoteJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateCreditNoteResponse, error) {
-	rsp, err := c.CreateCreditNote(ctx, params, body, reqEditors...)
+func (c *RawClient) CreateCreditNoteRaw(ctx context.Context, params *CreateCreditNoteParams, body CreateCreditNoteJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	return c.client.CreateCreditNote(ctx, params, body, reqEditors...)
+}
+
+func (c *ClientWithResponses) CreateCreditNote(ctx context.Context, params *CreateCreditNoteParams, body CreateCreditNoteJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateCreditNoteResponse, error) {
+	rsp, err := c.client.CreateCreditNote(ctx, params, body, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
 	return ParseCreateCreditNoteResponse(rsp)
 }
 
-// CreateDebitNoteWithBodyWithResponse request with arbitrary body returning *CreateDebitNoteResponse
-func (c *ClientWithResponses) CreateDebitNoteWithBodyWithResponse(ctx context.Context, params *CreateDebitNoteParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateDebitNoteResponse, error) {
-	rsp, err := c.CreateDebitNoteWithBody(ctx, params, contentType, body, reqEditors...)
+// CreateDebitNoteWithBodyRaw performs the request and returns the raw HTTP response.
+func (c *RawClient) CreateDebitNoteWithBodyRaw(ctx context.Context, params *CreateDebitNoteParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	return c.client.CreateDebitNoteWithBody(ctx, params, contentType, body, reqEditors...)
+}
+
+// CreateDebitNoteWithBody request with arbitrary body returning *CreateDebitNoteResponse
+func (c *ClientWithResponses) CreateDebitNoteWithBody(ctx context.Context, params *CreateDebitNoteParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateDebitNoteResponse, error) {
+	rsp, err := c.client.CreateDebitNoteWithBody(ctx, params, contentType, body, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
 	return ParseCreateDebitNoteResponse(rsp)
 }
 
-func (c *ClientWithResponses) CreateDebitNoteWithResponse(ctx context.Context, params *CreateDebitNoteParams, body CreateDebitNoteJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateDebitNoteResponse, error) {
-	rsp, err := c.CreateDebitNote(ctx, params, body, reqEditors...)
+func (c *RawClient) CreateDebitNoteRaw(ctx context.Context, params *CreateDebitNoteParams, body CreateDebitNoteJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	return c.client.CreateDebitNote(ctx, params, body, reqEditors...)
+}
+
+func (c *ClientWithResponses) CreateDebitNote(ctx context.Context, params *CreateDebitNoteParams, body CreateDebitNoteJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateDebitNoteResponse, error) {
+	rsp, err := c.client.CreateDebitNote(ctx, params, body, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
 	return ParseCreateDebitNoteResponse(rsp)
 }
 
-// CreateElectronicPaymentReceiptWithBodyWithResponse request with arbitrary body returning *CreateElectronicPaymentReceiptResponse
-func (c *ClientWithResponses) CreateElectronicPaymentReceiptWithBodyWithResponse(ctx context.Context, params *CreateElectronicPaymentReceiptParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateElectronicPaymentReceiptResponse, error) {
-	rsp, err := c.CreateElectronicPaymentReceiptWithBody(ctx, params, contentType, body, reqEditors...)
+// CreateElectronicPaymentReceiptWithBodyRaw performs the request and returns the raw HTTP response.
+func (c *RawClient) CreateElectronicPaymentReceiptWithBodyRaw(ctx context.Context, params *CreateElectronicPaymentReceiptParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	return c.client.CreateElectronicPaymentReceiptWithBody(ctx, params, contentType, body, reqEditors...)
+}
+
+// CreateElectronicPaymentReceiptWithBody request with arbitrary body returning *CreateElectronicPaymentReceiptResponse
+func (c *ClientWithResponses) CreateElectronicPaymentReceiptWithBody(ctx context.Context, params *CreateElectronicPaymentReceiptParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateElectronicPaymentReceiptResponse, error) {
+	rsp, err := c.client.CreateElectronicPaymentReceiptWithBody(ctx, params, contentType, body, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
 	return ParseCreateElectronicPaymentReceiptResponse(rsp)
 }
 
-func (c *ClientWithResponses) CreateElectronicPaymentReceiptWithResponse(ctx context.Context, params *CreateElectronicPaymentReceiptParams, body CreateElectronicPaymentReceiptJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateElectronicPaymentReceiptResponse, error) {
-	rsp, err := c.CreateElectronicPaymentReceipt(ctx, params, body, reqEditors...)
+func (c *RawClient) CreateElectronicPaymentReceiptRaw(ctx context.Context, params *CreateElectronicPaymentReceiptParams, body CreateElectronicPaymentReceiptJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	return c.client.CreateElectronicPaymentReceipt(ctx, params, body, reqEditors...)
+}
+
+func (c *ClientWithResponses) CreateElectronicPaymentReceipt(ctx context.Context, params *CreateElectronicPaymentReceiptParams, body CreateElectronicPaymentReceiptJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateElectronicPaymentReceiptResponse, error) {
+	rsp, err := c.client.CreateElectronicPaymentReceipt(ctx, params, body, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
 	return ParseCreateElectronicPaymentReceiptResponse(rsp)
 }
 
-// CreateExportInvoiceWithBodyWithResponse request with arbitrary body returning *CreateExportInvoiceResponse
-func (c *ClientWithResponses) CreateExportInvoiceWithBodyWithResponse(ctx context.Context, params *CreateExportInvoiceParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateExportInvoiceResponse, error) {
-	rsp, err := c.CreateExportInvoiceWithBody(ctx, params, contentType, body, reqEditors...)
+// CreateExportInvoiceWithBodyRaw performs the request and returns the raw HTTP response.
+func (c *RawClient) CreateExportInvoiceWithBodyRaw(ctx context.Context, params *CreateExportInvoiceParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	return c.client.CreateExportInvoiceWithBody(ctx, params, contentType, body, reqEditors...)
+}
+
+// CreateExportInvoiceWithBody request with arbitrary body returning *CreateExportInvoiceResponse
+func (c *ClientWithResponses) CreateExportInvoiceWithBody(ctx context.Context, params *CreateExportInvoiceParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateExportInvoiceResponse, error) {
+	rsp, err := c.client.CreateExportInvoiceWithBody(ctx, params, contentType, body, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
 	return ParseCreateExportInvoiceResponse(rsp)
 }
 
-func (c *ClientWithResponses) CreateExportInvoiceWithResponse(ctx context.Context, params *CreateExportInvoiceParams, body CreateExportInvoiceJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateExportInvoiceResponse, error) {
-	rsp, err := c.CreateExportInvoice(ctx, params, body, reqEditors...)
+func (c *RawClient) CreateExportInvoiceRaw(ctx context.Context, params *CreateExportInvoiceParams, body CreateExportInvoiceJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	return c.client.CreateExportInvoice(ctx, params, body, reqEditors...)
+}
+
+func (c *ClientWithResponses) CreateExportInvoice(ctx context.Context, params *CreateExportInvoiceParams, body CreateExportInvoiceJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateExportInvoiceResponse, error) {
+	rsp, err := c.client.CreateExportInvoice(ctx, params, body, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
 	return ParseCreateExportInvoiceResponse(rsp)
 }
 
-// CreateInvoiceWithBodyWithResponse request with arbitrary body returning *CreateInvoiceResponse
-func (c *ClientWithResponses) CreateInvoiceWithBodyWithResponse(ctx context.Context, params *CreateInvoiceParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateInvoiceResponse, error) {
-	rsp, err := c.CreateInvoiceWithBody(ctx, params, contentType, body, reqEditors...)
+// CreateInvoiceWithBodyRaw performs the request and returns the raw HTTP response.
+func (c *RawClient) CreateInvoiceWithBodyRaw(ctx context.Context, params *CreateInvoiceParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	return c.client.CreateInvoiceWithBody(ctx, params, contentType, body, reqEditors...)
+}
+
+// CreateInvoiceWithBody request with arbitrary body returning *CreateInvoiceResponse
+func (c *ClientWithResponses) CreateInvoiceWithBody(ctx context.Context, params *CreateInvoiceParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateInvoiceResponse, error) {
+	rsp, err := c.client.CreateInvoiceWithBody(ctx, params, contentType, body, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
 	return ParseCreateInvoiceResponse(rsp)
 }
 
-func (c *ClientWithResponses) CreateInvoiceWithResponse(ctx context.Context, params *CreateInvoiceParams, body CreateInvoiceJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateInvoiceResponse, error) {
-	rsp, err := c.CreateInvoice(ctx, params, body, reqEditors...)
+func (c *RawClient) CreateInvoiceRaw(ctx context.Context, params *CreateInvoiceParams, body CreateInvoiceJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	return c.client.CreateInvoice(ctx, params, body, reqEditors...)
+}
+
+func (c *ClientWithResponses) CreateInvoice(ctx context.Context, params *CreateInvoiceParams, body CreateInvoiceJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateInvoiceResponse, error) {
+	rsp, err := c.client.CreateInvoice(ctx, params, body, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
 	return ParseCreateInvoiceResponse(rsp)
 }
 
-// CreatePurchaseInvoiceWithBodyWithResponse request with arbitrary body returning *CreatePurchaseInvoiceResponse
-func (c *ClientWithResponses) CreatePurchaseInvoiceWithBodyWithResponse(ctx context.Context, params *CreatePurchaseInvoiceParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreatePurchaseInvoiceResponse, error) {
-	rsp, err := c.CreatePurchaseInvoiceWithBody(ctx, params, contentType, body, reqEditors...)
+// CreatePurchaseInvoiceWithBodyRaw performs the request and returns the raw HTTP response.
+func (c *RawClient) CreatePurchaseInvoiceWithBodyRaw(ctx context.Context, params *CreatePurchaseInvoiceParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	return c.client.CreatePurchaseInvoiceWithBody(ctx, params, contentType, body, reqEditors...)
+}
+
+// CreatePurchaseInvoiceWithBody request with arbitrary body returning *CreatePurchaseInvoiceResponse
+func (c *ClientWithResponses) CreatePurchaseInvoiceWithBody(ctx context.Context, params *CreatePurchaseInvoiceParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreatePurchaseInvoiceResponse, error) {
+	rsp, err := c.client.CreatePurchaseInvoiceWithBody(ctx, params, contentType, body, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
 	return ParseCreatePurchaseInvoiceResponse(rsp)
 }
 
-func (c *ClientWithResponses) CreatePurchaseInvoiceWithResponse(ctx context.Context, params *CreatePurchaseInvoiceParams, body CreatePurchaseInvoiceJSONRequestBody, reqEditors ...RequestEditorFn) (*CreatePurchaseInvoiceResponse, error) {
-	rsp, err := c.CreatePurchaseInvoice(ctx, params, body, reqEditors...)
+func (c *RawClient) CreatePurchaseInvoiceRaw(ctx context.Context, params *CreatePurchaseInvoiceParams, body CreatePurchaseInvoiceJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	return c.client.CreatePurchaseInvoice(ctx, params, body, reqEditors...)
+}
+
+func (c *ClientWithResponses) CreatePurchaseInvoice(ctx context.Context, params *CreatePurchaseInvoiceParams, body CreatePurchaseInvoiceJSONRequestBody, reqEditors ...RequestEditorFn) (*CreatePurchaseInvoiceResponse, error) {
+	rsp, err := c.client.CreatePurchaseInvoice(ctx, params, body, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
 	return ParseCreatePurchaseInvoiceResponse(rsp)
 }
 
-// CreateReceiptWithBodyWithResponse request with arbitrary body returning *CreateReceiptResponse
-func (c *ClientWithResponses) CreateReceiptWithBodyWithResponse(ctx context.Context, params *CreateReceiptParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateReceiptResponse, error) {
-	rsp, err := c.CreateReceiptWithBody(ctx, params, contentType, body, reqEditors...)
+// CreateReceiptWithBodyRaw performs the request and returns the raw HTTP response.
+func (c *RawClient) CreateReceiptWithBodyRaw(ctx context.Context, params *CreateReceiptParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	return c.client.CreateReceiptWithBody(ctx, params, contentType, body, reqEditors...)
+}
+
+// CreateReceiptWithBody request with arbitrary body returning *CreateReceiptResponse
+func (c *ClientWithResponses) CreateReceiptWithBody(ctx context.Context, params *CreateReceiptParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateReceiptResponse, error) {
+	rsp, err := c.client.CreateReceiptWithBody(ctx, params, contentType, body, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
 	return ParseCreateReceiptResponse(rsp)
 }
 
-func (c *ClientWithResponses) CreateReceiptWithResponse(ctx context.Context, params *CreateReceiptParams, body CreateReceiptJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateReceiptResponse, error) {
-	rsp, err := c.CreateReceipt(ctx, params, body, reqEditors...)
+func (c *RawClient) CreateReceiptRaw(ctx context.Context, params *CreateReceiptParams, body CreateReceiptJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	return c.client.CreateReceipt(ctx, params, body, reqEditors...)
+}
+
+func (c *ClientWithResponses) CreateReceipt(ctx context.Context, params *CreateReceiptParams, body CreateReceiptJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateReceiptResponse, error) {
+	rsp, err := c.client.CreateReceipt(ctx, params, body, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
 	return ParseCreateReceiptResponse(rsp)
 }
 
-// CreateReceiverMessageWithBodyWithResponse request with arbitrary body returning *CreateReceiverMessageResponse
-func (c *ClientWithResponses) CreateReceiverMessageWithBodyWithResponse(ctx context.Context, params *CreateReceiverMessageParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateReceiverMessageResponse, error) {
-	rsp, err := c.CreateReceiverMessageWithBody(ctx, params, contentType, body, reqEditors...)
+// CreateReceiverMessageWithBodyRaw performs the request and returns the raw HTTP response.
+func (c *RawClient) CreateReceiverMessageWithBodyRaw(ctx context.Context, params *CreateReceiverMessageParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	return c.client.CreateReceiverMessageWithBody(ctx, params, contentType, body, reqEditors...)
+}
+
+// CreateReceiverMessageWithBody request with arbitrary body returning *CreateReceiverMessageResponse
+func (c *ClientWithResponses) CreateReceiverMessageWithBody(ctx context.Context, params *CreateReceiverMessageParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateReceiverMessageResponse, error) {
+	rsp, err := c.client.CreateReceiverMessageWithBody(ctx, params, contentType, body, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
 	return ParseCreateReceiverMessageResponse(rsp)
 }
 
-func (c *ClientWithResponses) CreateReceiverMessageWithResponse(ctx context.Context, params *CreateReceiverMessageParams, body CreateReceiverMessageJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateReceiverMessageResponse, error) {
-	rsp, err := c.CreateReceiverMessage(ctx, params, body, reqEditors...)
+func (c *RawClient) CreateReceiverMessageRaw(ctx context.Context, params *CreateReceiverMessageParams, body CreateReceiverMessageJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	return c.client.CreateReceiverMessage(ctx, params, body, reqEditors...)
+}
+
+func (c *ClientWithResponses) CreateReceiverMessage(ctx context.Context, params *CreateReceiverMessageParams, body CreateReceiverMessageJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateReceiverMessageResponse, error) {
+	rsp, err := c.client.CreateReceiverMessage(ctx, params, body, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
 	return ParseCreateReceiverMessageResponse(rsp)
 }
 
-// GetDocumentByIdWithResponse request returning *GetDocumentByIdResponse
-func (c *ClientWithResponses) GetDocumentByIdWithResponse(ctx context.Context, id int64, params *GetDocumentByIdParams, reqEditors ...RequestEditorFn) (*GetDocumentByIdResponse, error) {
-	rsp, err := c.GetDocumentById(ctx, id, params, reqEditors...)
+// ValidateXmlWithBodyRaw performs the request and returns the raw HTTP response.
+func (c *RawClient) ValidateXmlWithBodyRaw(ctx context.Context, params *ValidateXmlParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	return c.client.ValidateXmlWithBody(ctx, params, contentType, body, reqEditors...)
+}
+
+// ValidateXmlWithBody request with arbitrary body returning *ValidateXmlResponse
+func (c *ClientWithResponses) ValidateXmlWithBody(ctx context.Context, params *ValidateXmlParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*ValidateXmlResponse, error) {
+	rsp, err := c.client.ValidateXmlWithBody(ctx, params, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseValidateXmlResponse(rsp)
+}
+
+func (c *RawClient) ValidateXmlRaw(ctx context.Context, params *ValidateXmlParams, body ValidateXmlJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	return c.client.ValidateXml(ctx, params, body, reqEditors...)
+}
+
+func (c *ClientWithResponses) ValidateXml(ctx context.Context, params *ValidateXmlParams, body ValidateXmlJSONRequestBody, reqEditors ...RequestEditorFn) (*ValidateXmlResponse, error) {
+	rsp, err := c.client.ValidateXml(ctx, params, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseValidateXmlResponse(rsp)
+}
+
+// GetDocumentByIdRaw performs the request and returns the raw HTTP response.
+func (c *RawClient) GetDocumentByIdRaw(ctx context.Context, id int64, params *GetDocumentByIdParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	return c.client.GetDocumentById(ctx, id, params, reqEditors...)
+}
+
+// GetDocumentById request returning *GetDocumentByIdResponse
+func (c *ClientWithResponses) GetDocumentById(ctx context.Context, id int64, params *GetDocumentByIdParams, reqEditors ...RequestEditorFn) (*GetDocumentByIdResponse, error) {
+	rsp, err := c.client.GetDocumentById(ctx, id, params, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
 	return ParseGetDocumentByIdResponse(rsp)
 }
 
-// GetDocumentPdfWithResponse request returning *GetDocumentPdfResponse
-func (c *ClientWithResponses) GetDocumentPdfWithResponse(ctx context.Context, id int64, params *GetDocumentPdfParams, reqEditors ...RequestEditorFn) (*GetDocumentPdfResponse, error) {
-	rsp, err := c.GetDocumentPdf(ctx, id, params, reqEditors...)
+// GetDocumentPdfRaw performs the request and returns the raw HTTP response.
+func (c *RawClient) GetDocumentPdfRaw(ctx context.Context, id int64, params *GetDocumentPdfParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	return c.client.GetDocumentPdf(ctx, id, params, reqEditors...)
+}
+
+// GetDocumentPdf request returning *GetDocumentPdfResponse
+func (c *ClientWithResponses) GetDocumentPdf(ctx context.Context, id int64, params *GetDocumentPdfParams, reqEditors ...RequestEditorFn) (*GetDocumentPdfResponse, error) {
+	rsp, err := c.client.GetDocumentPdf(ctx, id, params, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
 	return ParseGetDocumentPdfResponse(rsp)
 }
 
-// RegenerateDocumentPdfWithResponse request returning *RegenerateDocumentPdfResponse
-func (c *ClientWithResponses) RegenerateDocumentPdfWithResponse(ctx context.Context, id int64, params *RegenerateDocumentPdfParams, reqEditors ...RequestEditorFn) (*RegenerateDocumentPdfResponse, error) {
-	rsp, err := c.RegenerateDocumentPdf(ctx, id, params, reqEditors...)
+// RegenerateDocumentPdfRaw performs the request and returns the raw HTTP response.
+func (c *RawClient) RegenerateDocumentPdfRaw(ctx context.Context, id int64, params *RegenerateDocumentPdfParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	return c.client.RegenerateDocumentPdf(ctx, id, params, reqEditors...)
+}
+
+// RegenerateDocumentPdf request returning *RegenerateDocumentPdfResponse
+func (c *ClientWithResponses) RegenerateDocumentPdf(ctx context.Context, id int64, params *RegenerateDocumentPdfParams, reqEditors ...RequestEditorFn) (*RegenerateDocumentPdfResponse, error) {
+	rsp, err := c.client.RegenerateDocumentPdf(ctx, id, params, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
 	return ParseRegenerateDocumentPdfResponse(rsp)
 }
 
-// SendDocumentEmailWithResponse request returning *SendDocumentEmailResponse
-func (c *ClientWithResponses) SendDocumentEmailWithResponse(ctx context.Context, id int64, params *SendDocumentEmailParams, reqEditors ...RequestEditorFn) (*SendDocumentEmailResponse, error) {
-	rsp, err := c.SendDocumentEmail(ctx, id, params, reqEditors...)
+// SendDocumentEmailRaw performs the request and returns the raw HTTP response.
+func (c *RawClient) SendDocumentEmailRaw(ctx context.Context, id int64, params *SendDocumentEmailParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	return c.client.SendDocumentEmail(ctx, id, params, reqEditors...)
+}
+
+// SendDocumentEmail request returning *SendDocumentEmailResponse
+func (c *ClientWithResponses) SendDocumentEmail(ctx context.Context, id int64, params *SendDocumentEmailParams, reqEditors ...RequestEditorFn) (*SendDocumentEmailResponse, error) {
+	rsp, err := c.client.SendDocumentEmail(ctx, id, params, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
 	return ParseSendDocumentEmailResponse(rsp)
 }
 
-// GetIssuedXmlWithResponse request returning *GetIssuedXmlResponse
-func (c *ClientWithResponses) GetIssuedXmlWithResponse(ctx context.Context, id int64, params *GetIssuedXmlParams, reqEditors ...RequestEditorFn) (*GetIssuedXmlResponse, error) {
-	rsp, err := c.GetIssuedXml(ctx, id, params, reqEditors...)
+// GetIssuedXmlRaw performs the request and returns the raw HTTP response.
+func (c *RawClient) GetIssuedXmlRaw(ctx context.Context, id int64, params *GetIssuedXmlParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	return c.client.GetIssuedXml(ctx, id, params, reqEditors...)
+}
+
+// GetIssuedXml request returning *GetIssuedXmlResponse
+func (c *ClientWithResponses) GetIssuedXml(ctx context.Context, id int64, params *GetIssuedXmlParams, reqEditors ...RequestEditorFn) (*GetIssuedXmlResponse, error) {
+	rsp, err := c.client.GetIssuedXml(ctx, id, params, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
 	return ParseGetIssuedXmlResponse(rsp)
 }
 
-// GetTaxAuthorityResponseXmlWithResponse request returning *GetTaxAuthorityResponseXmlResponse
-func (c *ClientWithResponses) GetTaxAuthorityResponseXmlWithResponse(ctx context.Context, id int64, params *GetTaxAuthorityResponseXmlParams, reqEditors ...RequestEditorFn) (*GetTaxAuthorityResponseXmlResponse, error) {
-	rsp, err := c.GetTaxAuthorityResponseXml(ctx, id, params, reqEditors...)
+// GetTaxAuthorityResponseXmlRaw performs the request and returns the raw HTTP response.
+func (c *RawClient) GetTaxAuthorityResponseXmlRaw(ctx context.Context, id int64, params *GetTaxAuthorityResponseXmlParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	return c.client.GetTaxAuthorityResponseXml(ctx, id, params, reqEditors...)
+}
+
+// GetTaxAuthorityResponseXml request returning *GetTaxAuthorityResponseXmlResponse
+func (c *ClientWithResponses) GetTaxAuthorityResponseXml(ctx context.Context, id int64, params *GetTaxAuthorityResponseXmlParams, reqEditors ...RequestEditorFn) (*GetTaxAuthorityResponseXmlResponse, error) {
+	rsp, err := c.client.GetTaxAuthorityResponseXml(ctx, id, params, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
 	return ParseGetTaxAuthorityResponseXmlResponse(rsp)
 }
 
-// GetAllIssuersWithResponse request returning *GetAllIssuersResponse
-func (c *ClientWithResponses) GetAllIssuersWithResponse(ctx context.Context, params *GetAllIssuersParams, reqEditors ...RequestEditorFn) (*GetAllIssuersResponse, error) {
-	rsp, err := c.GetAllIssuers(ctx, params, reqEditors...)
+// GetAllIssuersRaw performs the request and returns the raw HTTP response.
+func (c *RawClient) GetAllIssuersRaw(ctx context.Context, params *GetAllIssuersParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	return c.client.GetAllIssuers(ctx, params, reqEditors...)
+}
+
+// GetAllIssuers request returning *GetAllIssuersResponse
+func (c *ClientWithResponses) GetAllIssuers(ctx context.Context, params *GetAllIssuersParams, reqEditors ...RequestEditorFn) (*GetAllIssuersResponse, error) {
+	rsp, err := c.client.GetAllIssuers(ctx, params, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
 	return ParseGetAllIssuersResponse(rsp)
 }
 
-// CreateIssuerWithBodyWithResponse request with arbitrary body returning *CreateIssuerResponse
-func (c *ClientWithResponses) CreateIssuerWithBodyWithResponse(ctx context.Context, params *CreateIssuerParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateIssuerResponse, error) {
-	rsp, err := c.CreateIssuerWithBody(ctx, params, contentType, body, reqEditors...)
+// CreateIssuerWithBodyRaw performs the request and returns the raw HTTP response.
+func (c *RawClient) CreateIssuerWithBodyRaw(ctx context.Context, params *CreateIssuerParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	return c.client.CreateIssuerWithBody(ctx, params, contentType, body, reqEditors...)
+}
+
+// CreateIssuerWithBody request with arbitrary body returning *CreateIssuerResponse
+func (c *ClientWithResponses) CreateIssuerWithBody(ctx context.Context, params *CreateIssuerParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateIssuerResponse, error) {
+	rsp, err := c.client.CreateIssuerWithBody(ctx, params, contentType, body, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
 	return ParseCreateIssuerResponse(rsp)
 }
 
-func (c *ClientWithResponses) CreateIssuerWithResponse(ctx context.Context, params *CreateIssuerParams, body CreateIssuerJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateIssuerResponse, error) {
-	rsp, err := c.CreateIssuer(ctx, params, body, reqEditors...)
+func (c *RawClient) CreateIssuerRaw(ctx context.Context, params *CreateIssuerParams, body CreateIssuerJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	return c.client.CreateIssuer(ctx, params, body, reqEditors...)
+}
+
+func (c *ClientWithResponses) CreateIssuer(ctx context.Context, params *CreateIssuerParams, body CreateIssuerJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateIssuerResponse, error) {
+	rsp, err := c.client.CreateIssuer(ctx, params, body, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
 	return ParseCreateIssuerResponse(rsp)
 }
 
-// DeleteIssuerWithResponse request returning *DeleteIssuerResponse
-func (c *ClientWithResponses) DeleteIssuerWithResponse(ctx context.Context, id int64, params *DeleteIssuerParams, reqEditors ...RequestEditorFn) (*DeleteIssuerResponse, error) {
-	rsp, err := c.DeleteIssuer(ctx, id, params, reqEditors...)
+// DeleteIssuerRaw performs the request and returns the raw HTTP response.
+func (c *RawClient) DeleteIssuerRaw(ctx context.Context, id int64, params *DeleteIssuerParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	return c.client.DeleteIssuer(ctx, id, params, reqEditors...)
+}
+
+// DeleteIssuer request returning *DeleteIssuerResponse
+func (c *ClientWithResponses) DeleteIssuer(ctx context.Context, id int64, params *DeleteIssuerParams, reqEditors ...RequestEditorFn) (*DeleteIssuerResponse, error) {
+	rsp, err := c.client.DeleteIssuer(ctx, id, params, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
 	return ParseDeleteIssuerResponse(rsp)
 }
 
-// GetIssuerByIdWithResponse request returning *GetIssuerByIdResponse
-func (c *ClientWithResponses) GetIssuerByIdWithResponse(ctx context.Context, id int64, params *GetIssuerByIdParams, reqEditors ...RequestEditorFn) (*GetIssuerByIdResponse, error) {
-	rsp, err := c.GetIssuerById(ctx, id, params, reqEditors...)
+// GetIssuerByIdRaw performs the request and returns the raw HTTP response.
+func (c *RawClient) GetIssuerByIdRaw(ctx context.Context, id int64, params *GetIssuerByIdParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	return c.client.GetIssuerById(ctx, id, params, reqEditors...)
+}
+
+// GetIssuerById request returning *GetIssuerByIdResponse
+func (c *ClientWithResponses) GetIssuerById(ctx context.Context, id int64, params *GetIssuerByIdParams, reqEditors ...RequestEditorFn) (*GetIssuerByIdResponse, error) {
+	rsp, err := c.client.GetIssuerById(ctx, id, params, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
 	return ParseGetIssuerByIdResponse(rsp)
 }
 
-// UpdateIssuerWithBodyWithResponse request with arbitrary body returning *UpdateIssuerResponse
-func (c *ClientWithResponses) UpdateIssuerWithBodyWithResponse(ctx context.Context, id int64, params *UpdateIssuerParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateIssuerResponse, error) {
-	rsp, err := c.UpdateIssuerWithBody(ctx, id, params, contentType, body, reqEditors...)
+// UpdateIssuerWithBodyRaw performs the request and returns the raw HTTP response.
+func (c *RawClient) UpdateIssuerWithBodyRaw(ctx context.Context, id int64, params *UpdateIssuerParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	return c.client.UpdateIssuerWithBody(ctx, id, params, contentType, body, reqEditors...)
+}
+
+// UpdateIssuerWithBody request with arbitrary body returning *UpdateIssuerResponse
+func (c *ClientWithResponses) UpdateIssuerWithBody(ctx context.Context, id int64, params *UpdateIssuerParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateIssuerResponse, error) {
+	rsp, err := c.client.UpdateIssuerWithBody(ctx, id, params, contentType, body, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
 	return ParseUpdateIssuerResponse(rsp)
 }
 
-func (c *ClientWithResponses) UpdateIssuerWithResponse(ctx context.Context, id int64, params *UpdateIssuerParams, body UpdateIssuerJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateIssuerResponse, error) {
-	rsp, err := c.UpdateIssuer(ctx, id, params, body, reqEditors...)
+func (c *RawClient) UpdateIssuerRaw(ctx context.Context, id int64, params *UpdateIssuerParams, body UpdateIssuerJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	return c.client.UpdateIssuer(ctx, id, params, body, reqEditors...)
+}
+
+func (c *ClientWithResponses) UpdateIssuer(ctx context.Context, id int64, params *UpdateIssuerParams, body UpdateIssuerJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateIssuerResponse, error) {
+	rsp, err := c.client.UpdateIssuer(ctx, id, params, body, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
 	return ParseUpdateIssuerResponse(rsp)
 }
 
-// SetDefaultIssuerWithResponse request returning *SetDefaultIssuerResponse
-func (c *ClientWithResponses) SetDefaultIssuerWithResponse(ctx context.Context, id int64, params *SetDefaultIssuerParams, reqEditors ...RequestEditorFn) (*SetDefaultIssuerResponse, error) {
-	rsp, err := c.SetDefaultIssuer(ctx, id, params, reqEditors...)
+// SetDefaultIssuerRaw performs the request and returns the raw HTTP response.
+func (c *RawClient) SetDefaultIssuerRaw(ctx context.Context, id int64, params *SetDefaultIssuerParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	return c.client.SetDefaultIssuer(ctx, id, params, reqEditors...)
+}
+
+// SetDefaultIssuer request returning *SetDefaultIssuerResponse
+func (c *ClientWithResponses) SetDefaultIssuer(ctx context.Context, id int64, params *SetDefaultIssuerParams, reqEditors ...RequestEditorFn) (*SetDefaultIssuerResponse, error) {
+	rsp, err := c.client.SetDefaultIssuer(ctx, id, params, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
 	return ParseSetDefaultIssuerResponse(rsp)
 }
 
-// CreatePaymentWithBodyWithResponse request with arbitrary body returning *CreatePaymentResponse
-func (c *ClientWithResponses) CreatePaymentWithBodyWithResponse(ctx context.Context, params *CreatePaymentParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreatePaymentResponse, error) {
-	rsp, err := c.CreatePaymentWithBody(ctx, params, contentType, body, reqEditors...)
+// CreatePaymentWithBodyRaw performs the request and returns the raw HTTP response.
+func (c *RawClient) CreatePaymentWithBodyRaw(ctx context.Context, params *CreatePaymentParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	return c.client.CreatePaymentWithBody(ctx, params, contentType, body, reqEditors...)
+}
+
+// CreatePaymentWithBody request with arbitrary body returning *CreatePaymentResponse
+func (c *ClientWithResponses) CreatePaymentWithBody(ctx context.Context, params *CreatePaymentParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreatePaymentResponse, error) {
+	rsp, err := c.client.CreatePaymentWithBody(ctx, params, contentType, body, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
 	return ParseCreatePaymentResponse(rsp)
 }
 
-func (c *ClientWithResponses) CreatePaymentWithResponse(ctx context.Context, params *CreatePaymentParams, body CreatePaymentJSONRequestBody, reqEditors ...RequestEditorFn) (*CreatePaymentResponse, error) {
-	rsp, err := c.CreatePayment(ctx, params, body, reqEditors...)
+func (c *RawClient) CreatePaymentRaw(ctx context.Context, params *CreatePaymentParams, body CreatePaymentJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	return c.client.CreatePayment(ctx, params, body, reqEditors...)
+}
+
+func (c *ClientWithResponses) CreatePayment(ctx context.Context, params *CreatePaymentParams, body CreatePaymentJSONRequestBody, reqEditors ...RequestEditorFn) (*CreatePaymentResponse, error) {
+	rsp, err := c.client.CreatePayment(ctx, params, body, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
 	return ParseCreatePaymentResponse(rsp)
 }
 
-// VoidApplicationWithBodyWithResponse request with arbitrary body returning *VoidApplicationResponse
-func (c *ClientWithResponses) VoidApplicationWithBodyWithResponse(ctx context.Context, applicationId int64, params *VoidApplicationParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*VoidApplicationResponse, error) {
-	rsp, err := c.VoidApplicationWithBody(ctx, applicationId, params, contentType, body, reqEditors...)
+// VoidApplicationWithBodyRaw performs the request and returns the raw HTTP response.
+func (c *RawClient) VoidApplicationWithBodyRaw(ctx context.Context, applicationId int64, params *VoidApplicationParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	return c.client.VoidApplicationWithBody(ctx, applicationId, params, contentType, body, reqEditors...)
+}
+
+// VoidApplicationWithBody request with arbitrary body returning *VoidApplicationResponse
+func (c *ClientWithResponses) VoidApplicationWithBody(ctx context.Context, applicationId int64, params *VoidApplicationParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*VoidApplicationResponse, error) {
+	rsp, err := c.client.VoidApplicationWithBody(ctx, applicationId, params, contentType, body, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
 	return ParseVoidApplicationResponse(rsp)
 }
 
-func (c *ClientWithResponses) VoidApplicationWithResponse(ctx context.Context, applicationId int64, params *VoidApplicationParams, body VoidApplicationJSONRequestBody, reqEditors ...RequestEditorFn) (*VoidApplicationResponse, error) {
-	rsp, err := c.VoidApplication(ctx, applicationId, params, body, reqEditors...)
+func (c *RawClient) VoidApplicationRaw(ctx context.Context, applicationId int64, params *VoidApplicationParams, body VoidApplicationJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	return c.client.VoidApplication(ctx, applicationId, params, body, reqEditors...)
+}
+
+func (c *ClientWithResponses) VoidApplication(ctx context.Context, applicationId int64, params *VoidApplicationParams, body VoidApplicationJSONRequestBody, reqEditors ...RequestEditorFn) (*VoidApplicationResponse, error) {
+	rsp, err := c.client.VoidApplication(ctx, applicationId, params, body, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
 	return ParseVoidApplicationResponse(rsp)
 }
 
-// GetClientStatementWithResponse request returning *GetClientStatementResponse
-func (c *ClientWithResponses) GetClientStatementWithResponse(ctx context.Context, clientId int64, params *GetClientStatementParams, reqEditors ...RequestEditorFn) (*GetClientStatementResponse, error) {
-	rsp, err := c.GetClientStatement(ctx, clientId, params, reqEditors...)
+// GetClientStatementRaw performs the request and returns the raw HTTP response.
+func (c *RawClient) GetClientStatementRaw(ctx context.Context, clientId int64, params *GetClientStatementParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	return c.client.GetClientStatement(ctx, clientId, params, reqEditors...)
+}
+
+// GetClientStatement request returning *GetClientStatementResponse
+func (c *ClientWithResponses) GetClientStatement(ctx context.Context, clientId int64, params *GetClientStatementParams, reqEditors ...RequestEditorFn) (*GetClientStatementResponse, error) {
+	rsp, err := c.client.GetClientStatement(ctx, clientId, params, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
 	return ParseGetClientStatementResponse(rsp)
 }
 
-// GetPaymentWithResponse request returning *GetPaymentResponse
-func (c *ClientWithResponses) GetPaymentWithResponse(ctx context.Context, paymentId int64, params *GetPaymentParams, reqEditors ...RequestEditorFn) (*GetPaymentResponse, error) {
-	rsp, err := c.GetPayment(ctx, paymentId, params, reqEditors...)
+// GetPaymentRaw performs the request and returns the raw HTTP response.
+func (c *RawClient) GetPaymentRaw(ctx context.Context, paymentId int64, params *GetPaymentParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	return c.client.GetPayment(ctx, paymentId, params, reqEditors...)
+}
+
+// GetPayment request returning *GetPaymentResponse
+func (c *ClientWithResponses) GetPayment(ctx context.Context, paymentId int64, params *GetPaymentParams, reqEditors ...RequestEditorFn) (*GetPaymentResponse, error) {
+	rsp, err := c.client.GetPayment(ctx, paymentId, params, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
 	return ParseGetPaymentResponse(rsp)
 }
 
-// ApplyPaymentWithBodyWithResponse request with arbitrary body returning *ApplyPaymentResponse
-func (c *ClientWithResponses) ApplyPaymentWithBodyWithResponse(ctx context.Context, paymentId int64, params *ApplyPaymentParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*ApplyPaymentResponse, error) {
-	rsp, err := c.ApplyPaymentWithBody(ctx, paymentId, params, contentType, body, reqEditors...)
+// ApplyPaymentWithBodyRaw performs the request and returns the raw HTTP response.
+func (c *RawClient) ApplyPaymentWithBodyRaw(ctx context.Context, paymentId int64, params *ApplyPaymentParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	return c.client.ApplyPaymentWithBody(ctx, paymentId, params, contentType, body, reqEditors...)
+}
+
+// ApplyPaymentWithBody request with arbitrary body returning *ApplyPaymentResponse
+func (c *ClientWithResponses) ApplyPaymentWithBody(ctx context.Context, paymentId int64, params *ApplyPaymentParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*ApplyPaymentResponse, error) {
+	rsp, err := c.client.ApplyPaymentWithBody(ctx, paymentId, params, contentType, body, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
 	return ParseApplyPaymentResponse(rsp)
 }
 
-func (c *ClientWithResponses) ApplyPaymentWithResponse(ctx context.Context, paymentId int64, params *ApplyPaymentParams, body ApplyPaymentJSONRequestBody, reqEditors ...RequestEditorFn) (*ApplyPaymentResponse, error) {
-	rsp, err := c.ApplyPayment(ctx, paymentId, params, body, reqEditors...)
+func (c *RawClient) ApplyPaymentRaw(ctx context.Context, paymentId int64, params *ApplyPaymentParams, body ApplyPaymentJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	return c.client.ApplyPayment(ctx, paymentId, params, body, reqEditors...)
+}
+
+func (c *ClientWithResponses) ApplyPayment(ctx context.Context, paymentId int64, params *ApplyPaymentParams, body ApplyPaymentJSONRequestBody, reqEditors ...RequestEditorFn) (*ApplyPaymentResponse, error) {
+	rsp, err := c.client.ApplyPayment(ctx, paymentId, params, body, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
 	return ParseApplyPaymentResponse(rsp)
 }
 
-// VoidPaymentWithBodyWithResponse request with arbitrary body returning *VoidPaymentResponse
-func (c *ClientWithResponses) VoidPaymentWithBodyWithResponse(ctx context.Context, paymentId int64, params *VoidPaymentParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*VoidPaymentResponse, error) {
-	rsp, err := c.VoidPaymentWithBody(ctx, paymentId, params, contentType, body, reqEditors...)
+// VoidPaymentWithBodyRaw performs the request and returns the raw HTTP response.
+func (c *RawClient) VoidPaymentWithBodyRaw(ctx context.Context, paymentId int64, params *VoidPaymentParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	return c.client.VoidPaymentWithBody(ctx, paymentId, params, contentType, body, reqEditors...)
+}
+
+// VoidPaymentWithBody request with arbitrary body returning *VoidPaymentResponse
+func (c *ClientWithResponses) VoidPaymentWithBody(ctx context.Context, paymentId int64, params *VoidPaymentParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*VoidPaymentResponse, error) {
+	rsp, err := c.client.VoidPaymentWithBody(ctx, paymentId, params, contentType, body, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
 	return ParseVoidPaymentResponse(rsp)
 }
 
-func (c *ClientWithResponses) VoidPaymentWithResponse(ctx context.Context, paymentId int64, params *VoidPaymentParams, body VoidPaymentJSONRequestBody, reqEditors ...RequestEditorFn) (*VoidPaymentResponse, error) {
-	rsp, err := c.VoidPayment(ctx, paymentId, params, body, reqEditors...)
+func (c *RawClient) VoidPaymentRaw(ctx context.Context, paymentId int64, params *VoidPaymentParams, body VoidPaymentJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	return c.client.VoidPayment(ctx, paymentId, params, body, reqEditors...)
+}
+
+func (c *ClientWithResponses) VoidPayment(ctx context.Context, paymentId int64, params *VoidPaymentParams, body VoidPaymentJSONRequestBody, reqEditors ...RequestEditorFn) (*VoidPaymentResponse, error) {
+	rsp, err := c.client.VoidPayment(ctx, paymentId, params, body, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
 	return ParseVoidPaymentResponse(rsp)
 }
 
-// GetSequencesWithResponse request returning *GetSequencesResponse
-func (c *ClientWithResponses) GetSequencesWithResponse(ctx context.Context, params *GetSequencesParams, reqEditors ...RequestEditorFn) (*GetSequencesResponse, error) {
-	rsp, err := c.GetSequences(ctx, params, reqEditors...)
+// GetSequencesRaw performs the request and returns the raw HTTP response.
+func (c *RawClient) GetSequencesRaw(ctx context.Context, params *GetSequencesParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	return c.client.GetSequences(ctx, params, reqEditors...)
+}
+
+// GetSequences request returning *GetSequencesResponse
+func (c *ClientWithResponses) GetSequences(ctx context.Context, params *GetSequencesParams, reqEditors ...RequestEditorFn) (*GetSequencesResponse, error) {
+	rsp, err := c.client.GetSequences(ctx, params, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
 	return ParseGetSequencesResponse(rsp)
 }
 
-// UpdateSequenceWithBodyWithResponse request with arbitrary body returning *UpdateSequenceResponse
-func (c *ClientWithResponses) UpdateSequenceWithBodyWithResponse(ctx context.Context, id int64, params *UpdateSequenceParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateSequenceResponse, error) {
-	rsp, err := c.UpdateSequenceWithBody(ctx, id, params, contentType, body, reqEditors...)
+// UpdateSequenceWithBodyRaw performs the request and returns the raw HTTP response.
+func (c *RawClient) UpdateSequenceWithBodyRaw(ctx context.Context, id int64, params *UpdateSequenceParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	return c.client.UpdateSequenceWithBody(ctx, id, params, contentType, body, reqEditors...)
+}
+
+// UpdateSequenceWithBody request with arbitrary body returning *UpdateSequenceResponse
+func (c *ClientWithResponses) UpdateSequenceWithBody(ctx context.Context, id int64, params *UpdateSequenceParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateSequenceResponse, error) {
+	rsp, err := c.client.UpdateSequenceWithBody(ctx, id, params, contentType, body, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
 	return ParseUpdateSequenceResponse(rsp)
 }
 
-func (c *ClientWithResponses) UpdateSequenceWithResponse(ctx context.Context, id int64, params *UpdateSequenceParams, body UpdateSequenceJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateSequenceResponse, error) {
-	rsp, err := c.UpdateSequence(ctx, id, params, body, reqEditors...)
+func (c *RawClient) UpdateSequenceRaw(ctx context.Context, id int64, params *UpdateSequenceParams, body UpdateSequenceJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	return c.client.UpdateSequence(ctx, id, params, body, reqEditors...)
+}
+
+func (c *ClientWithResponses) UpdateSequence(ctx context.Context, id int64, params *UpdateSequenceParams, body UpdateSequenceJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateSequenceResponse, error) {
+	rsp, err := c.client.UpdateSequence(ctx, id, params, body, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
 	return ParseUpdateSequenceResponse(rsp)
 }
 
-// GetAgriculturalProducerWithResponse request returning *GetAgriculturalProducerResponse
-func (c *ClientWithResponses) GetAgriculturalProducerWithResponse(ctx context.Context, legalIdentification string, params *GetAgriculturalProducerParams, reqEditors ...RequestEditorFn) (*GetAgriculturalProducerResponse, error) {
-	rsp, err := c.GetAgriculturalProducer(ctx, legalIdentification, params, reqEditors...)
+// GetAgriculturalProducerRaw performs the request and returns the raw HTTP response.
+func (c *RawClient) GetAgriculturalProducerRaw(ctx context.Context, legalIdentification string, params *GetAgriculturalProducerParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	return c.client.GetAgriculturalProducer(ctx, legalIdentification, params, reqEditors...)
+}
+
+// GetAgriculturalProducer request returning *GetAgriculturalProducerResponse
+func (c *ClientWithResponses) GetAgriculturalProducer(ctx context.Context, legalIdentification string, params *GetAgriculturalProducerParams, reqEditors ...RequestEditorFn) (*GetAgriculturalProducerResponse, error) {
+	rsp, err := c.client.GetAgriculturalProducer(ctx, legalIdentification, params, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
 	return ParseGetAgriculturalProducerResponse(rsp)
 }
 
-// SearchCabysWithResponse request returning *SearchCabysResponse
-func (c *ClientWithResponses) SearchCabysWithResponse(ctx context.Context, params *SearchCabysParams, reqEditors ...RequestEditorFn) (*SearchCabysResponse, error) {
-	rsp, err := c.SearchCabys(ctx, params, reqEditors...)
+// SearchCabysRaw performs the request and returns the raw HTTP response.
+func (c *RawClient) SearchCabysRaw(ctx context.Context, params *SearchCabysParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	return c.client.SearchCabys(ctx, params, reqEditors...)
+}
+
+// SearchCabys request returning *SearchCabysResponse
+func (c *ClientWithResponses) SearchCabys(ctx context.Context, params *SearchCabysParams, reqEditors ...RequestEditorFn) (*SearchCabysResponse, error) {
+	rsp, err := c.client.SearchCabys(ctx, params, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
 	return ParseSearchCabysResponse(rsp)
 }
 
-// GetCabysByCodeWithResponse request returning *GetCabysByCodeResponse
-func (c *ClientWithResponses) GetCabysByCodeWithResponse(ctx context.Context, code string, params *GetCabysByCodeParams, reqEditors ...RequestEditorFn) (*GetCabysByCodeResponse, error) {
-	rsp, err := c.GetCabysByCode(ctx, code, params, reqEditors...)
+// GetCabysByCodeRaw performs the request and returns the raw HTTP response.
+func (c *RawClient) GetCabysByCodeRaw(ctx context.Context, code string, params *GetCabysByCodeParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	return c.client.GetCabysByCode(ctx, code, params, reqEditors...)
+}
+
+// GetCabysByCode request returning *GetCabysByCodeResponse
+func (c *ClientWithResponses) GetCabysByCode(ctx context.Context, code string, params *GetCabysByCodeParams, reqEditors ...RequestEditorFn) (*GetCabysByCodeResponse, error) {
+	rsp, err := c.client.GetCabysByCode(ctx, code, params, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
 	return ParseGetCabysByCodeResponse(rsp)
 }
 
-// GetExchangeRatesWithResponse request returning *GetExchangeRatesResponse
-func (c *ClientWithResponses) GetExchangeRatesWithResponse(ctx context.Context, params *GetExchangeRatesParams, reqEditors ...RequestEditorFn) (*GetExchangeRatesResponse, error) {
-	rsp, err := c.GetExchangeRates(ctx, params, reqEditors...)
+// GetExchangeRatesRaw performs the request and returns the raw HTTP response.
+func (c *RawClient) GetExchangeRatesRaw(ctx context.Context, params *GetExchangeRatesParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	return c.client.GetExchangeRates(ctx, params, reqEditors...)
+}
+
+// GetExchangeRates request returning *GetExchangeRatesResponse
+func (c *ClientWithResponses) GetExchangeRates(ctx context.Context, params *GetExchangeRatesParams, reqEditors ...RequestEditorFn) (*GetExchangeRatesResponse, error) {
+	rsp, err := c.client.GetExchangeRates(ctx, params, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
 	return ParseGetExchangeRatesResponse(rsp)
 }
 
-// GetTaxAuthorityExonerationWithResponse request returning *GetTaxAuthorityExonerationResponse
-func (c *ClientWithResponses) GetTaxAuthorityExonerationWithResponse(ctx context.Context, authorization string, params *GetTaxAuthorityExonerationParams, reqEditors ...RequestEditorFn) (*GetTaxAuthorityExonerationResponse, error) {
-	rsp, err := c.GetTaxAuthorityExoneration(ctx, authorization, params, reqEditors...)
+// GetTaxAuthorityExonerationRaw performs the request and returns the raw HTTP response.
+func (c *RawClient) GetTaxAuthorityExonerationRaw(ctx context.Context, authorization string, params *GetTaxAuthorityExonerationParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	return c.client.GetTaxAuthorityExoneration(ctx, authorization, params, reqEditors...)
+}
+
+// GetTaxAuthorityExoneration request returning *GetTaxAuthorityExonerationResponse
+func (c *ClientWithResponses) GetTaxAuthorityExoneration(ctx context.Context, authorization string, params *GetTaxAuthorityExonerationParams, reqEditors ...RequestEditorFn) (*GetTaxAuthorityExonerationResponse, error) {
+	rsp, err := c.client.GetTaxAuthorityExoneration(ctx, authorization, params, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
 	return ParseGetTaxAuthorityExonerationResponse(rsp)
 }
 
-// GetFishingProducerWithResponse request returning *GetFishingProducerResponse
-func (c *ClientWithResponses) GetFishingProducerWithResponse(ctx context.Context, legalIdentification string, params *GetFishingProducerParams, reqEditors ...RequestEditorFn) (*GetFishingProducerResponse, error) {
-	rsp, err := c.GetFishingProducer(ctx, legalIdentification, params, reqEditors...)
+// GetFishingProducerRaw performs the request and returns the raw HTTP response.
+func (c *RawClient) GetFishingProducerRaw(ctx context.Context, legalIdentification string, params *GetFishingProducerParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	return c.client.GetFishingProducer(ctx, legalIdentification, params, reqEditors...)
+}
+
+// GetFishingProducer request returning *GetFishingProducerResponse
+func (c *ClientWithResponses) GetFishingProducer(ctx context.Context, legalIdentification string, params *GetFishingProducerParams, reqEditors ...RequestEditorFn) (*GetFishingProducerResponse, error) {
+	rsp, err := c.client.GetFishingProducer(ctx, legalIdentification, params, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
 	return ParseGetFishingProducerResponse(rsp)
 }
 
-// GetTaxpayerWithResponse request returning *GetTaxpayerResponse
-func (c *ClientWithResponses) GetTaxpayerWithResponse(ctx context.Context, legalIdentification string, params *GetTaxpayerParams, reqEditors ...RequestEditorFn) (*GetTaxpayerResponse, error) {
-	rsp, err := c.GetTaxpayer(ctx, legalIdentification, params, reqEditors...)
+// GetTaxpayerRaw performs the request and returns the raw HTTP response.
+func (c *RawClient) GetTaxpayerRaw(ctx context.Context, legalIdentification string, params *GetTaxpayerParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	return c.client.GetTaxpayer(ctx, legalIdentification, params, reqEditors...)
+}
+
+// GetTaxpayer request returning *GetTaxpayerResponse
+func (c *ClientWithResponses) GetTaxpayer(ctx context.Context, legalIdentification string, params *GetTaxpayerParams, reqEditors ...RequestEditorFn) (*GetTaxpayerResponse, error) {
+	rsp, err := c.client.GetTaxpayer(ctx, legalIdentification, params, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
 	return ParseGetTaxpayerResponse(rsp)
 }
 
-// GetTaxpayerInfoWithResponse request returning *GetTaxpayerInfoResponse
-func (c *ClientWithResponses) GetTaxpayerInfoWithResponse(ctx context.Context, legalIdentification string, params *GetTaxpayerInfoParams, reqEditors ...RequestEditorFn) (*GetTaxpayerInfoResponse, error) {
-	rsp, err := c.GetTaxpayerInfo(ctx, legalIdentification, params, reqEditors...)
+// GetTaxpayerInfoRaw performs the request and returns the raw HTTP response.
+func (c *RawClient) GetTaxpayerInfoRaw(ctx context.Context, legalIdentification string, params *GetTaxpayerInfoParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	return c.client.GetTaxpayerInfo(ctx, legalIdentification, params, reqEditors...)
+}
+
+// GetTaxpayerInfo request returning *GetTaxpayerInfoResponse
+func (c *ClientWithResponses) GetTaxpayerInfo(ctx context.Context, legalIdentification string, params *GetTaxpayerInfoParams, reqEditors ...RequestEditorFn) (*GetTaxpayerInfoResponse, error) {
+	rsp, err := c.client.GetTaxpayerInfo(ctx, legalIdentification, params, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
 	return ParseGetTaxpayerInfoResponse(rsp)
 }
 
-// GetTenantWithResponse request returning *GetTenantResponse
-func (c *ClientWithResponses) GetTenantWithResponse(ctx context.Context, params *GetTenantParams, reqEditors ...RequestEditorFn) (*GetTenantResponse, error) {
-	rsp, err := c.GetTenant(ctx, params, reqEditors...)
+// GetTenantRaw performs the request and returns the raw HTTP response.
+func (c *RawClient) GetTenantRaw(ctx context.Context, params *GetTenantParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	return c.client.GetTenant(ctx, params, reqEditors...)
+}
+
+// GetTenant request returning *GetTenantResponse
+func (c *ClientWithResponses) GetTenant(ctx context.Context, params *GetTenantParams, reqEditors ...RequestEditorFn) (*GetTenantResponse, error) {
+	rsp, err := c.client.GetTenant(ctx, params, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
 	return ParseGetTenantResponse(rsp)
 }
 
-// UpdateTenantWithBodyWithResponse request with arbitrary body returning *UpdateTenantResponse
-func (c *ClientWithResponses) UpdateTenantWithBodyWithResponse(ctx context.Context, params *UpdateTenantParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateTenantResponse, error) {
-	rsp, err := c.UpdateTenantWithBody(ctx, params, contentType, body, reqEditors...)
+// UpdateTenantWithBodyRaw performs the request and returns the raw HTTP response.
+func (c *RawClient) UpdateTenantWithBodyRaw(ctx context.Context, params *UpdateTenantParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	return c.client.UpdateTenantWithBody(ctx, params, contentType, body, reqEditors...)
+}
+
+// UpdateTenantWithBody request with arbitrary body returning *UpdateTenantResponse
+func (c *ClientWithResponses) UpdateTenantWithBody(ctx context.Context, params *UpdateTenantParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateTenantResponse, error) {
+	rsp, err := c.client.UpdateTenantWithBody(ctx, params, contentType, body, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
 	return ParseUpdateTenantResponse(rsp)
 }
 
-func (c *ClientWithResponses) UpdateTenantWithResponse(ctx context.Context, params *UpdateTenantParams, body UpdateTenantJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateTenantResponse, error) {
-	rsp, err := c.UpdateTenant(ctx, params, body, reqEditors...)
+func (c *RawClient) UpdateTenantRaw(ctx context.Context, params *UpdateTenantParams, body UpdateTenantJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	return c.client.UpdateTenant(ctx, params, body, reqEditors...)
+}
+
+func (c *ClientWithResponses) UpdateTenant(ctx context.Context, params *UpdateTenantParams, body UpdateTenantJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateTenantResponse, error) {
+	rsp, err := c.client.UpdateTenant(ctx, params, body, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
 	return ParseUpdateTenantResponse(rsp)
 }
 
-// GetInvoicingStatusWithResponse request returning *GetInvoicingStatusResponse
-func (c *ClientWithResponses) GetInvoicingStatusWithResponse(ctx context.Context, params *GetInvoicingStatusParams, reqEditors ...RequestEditorFn) (*GetInvoicingStatusResponse, error) {
-	rsp, err := c.GetInvoicingStatus(ctx, params, reqEditors...)
+// GetInvoicingStatusRaw performs the request and returns the raw HTTP response.
+func (c *RawClient) GetInvoicingStatusRaw(ctx context.Context, params *GetInvoicingStatusParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	return c.client.GetInvoicingStatus(ctx, params, reqEditors...)
+}
+
+// GetInvoicingStatus request returning *GetInvoicingStatusResponse
+func (c *ClientWithResponses) GetInvoicingStatus(ctx context.Context, params *GetInvoicingStatusParams, reqEditors ...RequestEditorFn) (*GetInvoicingStatusResponse, error) {
+	rsp, err := c.client.GetInvoicingStatus(ctx, params, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
 	return ParseGetInvoicingStatusResponse(rsp)
 }
 
-// DeleteLogoWithResponse request returning *DeleteLogoResponse
-func (c *ClientWithResponses) DeleteLogoWithResponse(ctx context.Context, params *DeleteLogoParams, reqEditors ...RequestEditorFn) (*DeleteLogoResponse, error) {
-	rsp, err := c.DeleteLogo(ctx, params, reqEditors...)
+// DeleteLogoRaw performs the request and returns the raw HTTP response.
+func (c *RawClient) DeleteLogoRaw(ctx context.Context, params *DeleteLogoParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	return c.client.DeleteLogo(ctx, params, reqEditors...)
+}
+
+// DeleteLogo request returning *DeleteLogoResponse
+func (c *ClientWithResponses) DeleteLogo(ctx context.Context, params *DeleteLogoParams, reqEditors ...RequestEditorFn) (*DeleteLogoResponse, error) {
+	rsp, err := c.client.DeleteLogo(ctx, params, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
 	return ParseDeleteLogoResponse(rsp)
 }
 
-// GetLogoWithResponse request returning *GetLogoResponse
-func (c *ClientWithResponses) GetLogoWithResponse(ctx context.Context, params *GetLogoParams, reqEditors ...RequestEditorFn) (*GetLogoResponse, error) {
-	rsp, err := c.GetLogo(ctx, params, reqEditors...)
+// GetLogoRaw performs the request and returns the raw HTTP response.
+func (c *RawClient) GetLogoRaw(ctx context.Context, params *GetLogoParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	return c.client.GetLogo(ctx, params, reqEditors...)
+}
+
+// GetLogo request returning *GetLogoResponse
+func (c *ClientWithResponses) GetLogo(ctx context.Context, params *GetLogoParams, reqEditors ...RequestEditorFn) (*GetLogoResponse, error) {
+	rsp, err := c.client.GetLogo(ctx, params, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
 	return ParseGetLogoResponse(rsp)
 }
 
-// UploadLogoWithBodyWithResponse request with arbitrary body returning *UploadLogoResponse
-func (c *ClientWithResponses) UploadLogoWithBodyWithResponse(ctx context.Context, params *UploadLogoParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UploadLogoResponse, error) {
-	rsp, err := c.UploadLogoWithBody(ctx, params, contentType, body, reqEditors...)
+// UploadLogoWithBodyRaw performs the request and returns the raw HTTP response.
+func (c *RawClient) UploadLogoWithBodyRaw(ctx context.Context, params *UploadLogoParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	return c.client.UploadLogoWithBody(ctx, params, contentType, body, reqEditors...)
+}
+
+// UploadLogoWithBody request with arbitrary body returning *UploadLogoResponse
+func (c *ClientWithResponses) UploadLogoWithBody(ctx context.Context, params *UploadLogoParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UploadLogoResponse, error) {
+	rsp, err := c.client.UploadLogoWithBody(ctx, params, contentType, body, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
 	return ParseUploadLogoResponse(rsp)
 }
 
-// UpdateSecretsWithBodyWithResponse request with arbitrary body returning *UpdateSecretsResponse
-func (c *ClientWithResponses) UpdateSecretsWithBodyWithResponse(ctx context.Context, params *UpdateSecretsParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateSecretsResponse, error) {
-	rsp, err := c.UpdateSecretsWithBody(ctx, params, contentType, body, reqEditors...)
+// UpdateSecretsWithBodyRaw performs the request and returns the raw HTTP response.
+func (c *RawClient) UpdateSecretsWithBodyRaw(ctx context.Context, params *UpdateSecretsParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	return c.client.UpdateSecretsWithBody(ctx, params, contentType, body, reqEditors...)
+}
+
+// UpdateSecretsWithBody request with arbitrary body returning *UpdateSecretsResponse
+func (c *ClientWithResponses) UpdateSecretsWithBody(ctx context.Context, params *UpdateSecretsParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateSecretsResponse, error) {
+	rsp, err := c.client.UpdateSecretsWithBody(ctx, params, contentType, body, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
 	return ParseUpdateSecretsResponse(rsp)
 }
 
-// GetWebhooksWithResponse request returning *GetWebhooksResponse
-func (c *ClientWithResponses) GetWebhooksWithResponse(ctx context.Context, params *GetWebhooksParams, reqEditors ...RequestEditorFn) (*GetWebhooksResponse, error) {
-	rsp, err := c.GetWebhooks(ctx, params, reqEditors...)
+// GetWebhooksRaw performs the request and returns the raw HTTP response.
+func (c *RawClient) GetWebhooksRaw(ctx context.Context, params *GetWebhooksParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	return c.client.GetWebhooks(ctx, params, reqEditors...)
+}
+
+// GetWebhooks request returning *GetWebhooksResponse
+func (c *ClientWithResponses) GetWebhooks(ctx context.Context, params *GetWebhooksParams, reqEditors ...RequestEditorFn) (*GetWebhooksResponse, error) {
+	rsp, err := c.client.GetWebhooks(ctx, params, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
 	return ParseGetWebhooksResponse(rsp)
 }
 
-// CreateWebhookWithBodyWithResponse request with arbitrary body returning *CreateWebhookResponse
-func (c *ClientWithResponses) CreateWebhookWithBodyWithResponse(ctx context.Context, params *CreateWebhookParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateWebhookResponse, error) {
-	rsp, err := c.CreateWebhookWithBody(ctx, params, contentType, body, reqEditors...)
+// CreateWebhookWithBodyRaw performs the request and returns the raw HTTP response.
+func (c *RawClient) CreateWebhookWithBodyRaw(ctx context.Context, params *CreateWebhookParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	return c.client.CreateWebhookWithBody(ctx, params, contentType, body, reqEditors...)
+}
+
+// CreateWebhookWithBody request with arbitrary body returning *CreateWebhookResponse
+func (c *ClientWithResponses) CreateWebhookWithBody(ctx context.Context, params *CreateWebhookParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreateWebhookResponse, error) {
+	rsp, err := c.client.CreateWebhookWithBody(ctx, params, contentType, body, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
 	return ParseCreateWebhookResponse(rsp)
 }
 
-func (c *ClientWithResponses) CreateWebhookWithResponse(ctx context.Context, params *CreateWebhookParams, body CreateWebhookJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateWebhookResponse, error) {
-	rsp, err := c.CreateWebhook(ctx, params, body, reqEditors...)
+func (c *RawClient) CreateWebhookRaw(ctx context.Context, params *CreateWebhookParams, body CreateWebhookJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	return c.client.CreateWebhook(ctx, params, body, reqEditors...)
+}
+
+func (c *ClientWithResponses) CreateWebhook(ctx context.Context, params *CreateWebhookParams, body CreateWebhookJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateWebhookResponse, error) {
+	rsp, err := c.client.CreateWebhook(ctx, params, body, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
 	return ParseCreateWebhookResponse(rsp)
 }
 
-// DeleteWebhookWithResponse request returning *DeleteWebhookResponse
-func (c *ClientWithResponses) DeleteWebhookWithResponse(ctx context.Context, id int64, params *DeleteWebhookParams, reqEditors ...RequestEditorFn) (*DeleteWebhookResponse, error) {
-	rsp, err := c.DeleteWebhook(ctx, id, params, reqEditors...)
+// DeleteWebhookRaw performs the request and returns the raw HTTP response.
+func (c *RawClient) DeleteWebhookRaw(ctx context.Context, id int64, params *DeleteWebhookParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	return c.client.DeleteWebhook(ctx, id, params, reqEditors...)
+}
+
+// DeleteWebhook request returning *DeleteWebhookResponse
+func (c *ClientWithResponses) DeleteWebhook(ctx context.Context, id int64, params *DeleteWebhookParams, reqEditors ...RequestEditorFn) (*DeleteWebhookResponse, error) {
+	rsp, err := c.client.DeleteWebhook(ctx, id, params, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
 	return ParseDeleteWebhookResponse(rsp)
 }
 
-// GetWebhookWithResponse request returning *GetWebhookResponse
-func (c *ClientWithResponses) GetWebhookWithResponse(ctx context.Context, id int64, params *GetWebhookParams, reqEditors ...RequestEditorFn) (*GetWebhookResponse, error) {
-	rsp, err := c.GetWebhook(ctx, id, params, reqEditors...)
+// GetWebhookRaw performs the request and returns the raw HTTP response.
+func (c *RawClient) GetWebhookRaw(ctx context.Context, id int64, params *GetWebhookParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	return c.client.GetWebhook(ctx, id, params, reqEditors...)
+}
+
+// GetWebhook request returning *GetWebhookResponse
+func (c *ClientWithResponses) GetWebhook(ctx context.Context, id int64, params *GetWebhookParams, reqEditors ...RequestEditorFn) (*GetWebhookResponse, error) {
+	rsp, err := c.client.GetWebhook(ctx, id, params, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
 	return ParseGetWebhookResponse(rsp)
 }
 
-// UpdateWebhookWithBodyWithResponse request with arbitrary body returning *UpdateWebhookResponse
-func (c *ClientWithResponses) UpdateWebhookWithBodyWithResponse(ctx context.Context, id int64, params *UpdateWebhookParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateWebhookResponse, error) {
-	rsp, err := c.UpdateWebhookWithBody(ctx, id, params, contentType, body, reqEditors...)
+// UpdateWebhookWithBodyRaw performs the request and returns the raw HTTP response.
+func (c *RawClient) UpdateWebhookWithBodyRaw(ctx context.Context, id int64, params *UpdateWebhookParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	return c.client.UpdateWebhookWithBody(ctx, id, params, contentType, body, reqEditors...)
+}
+
+// UpdateWebhookWithBody request with arbitrary body returning *UpdateWebhookResponse
+func (c *ClientWithResponses) UpdateWebhookWithBody(ctx context.Context, id int64, params *UpdateWebhookParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateWebhookResponse, error) {
+	rsp, err := c.client.UpdateWebhookWithBody(ctx, id, params, contentType, body, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
 	return ParseUpdateWebhookResponse(rsp)
 }
 
-func (c *ClientWithResponses) UpdateWebhookWithResponse(ctx context.Context, id int64, params *UpdateWebhookParams, body UpdateWebhookJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateWebhookResponse, error) {
-	rsp, err := c.UpdateWebhook(ctx, id, params, body, reqEditors...)
+func (c *RawClient) UpdateWebhookRaw(ctx context.Context, id int64, params *UpdateWebhookParams, body UpdateWebhookJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	return c.client.UpdateWebhook(ctx, id, params, body, reqEditors...)
+}
+
+func (c *ClientWithResponses) UpdateWebhook(ctx context.Context, id int64, params *UpdateWebhookParams, body UpdateWebhookJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateWebhookResponse, error) {
+	rsp, err := c.client.UpdateWebhook(ctx, id, params, body, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
 	return ParseUpdateWebhookResponse(rsp)
 }
 
-// GetLogsWithResponse request returning *GetLogsResponse
-func (c *ClientWithResponses) GetLogsWithResponse(ctx context.Context, id int64, params *GetLogsParams, reqEditors ...RequestEditorFn) (*GetLogsResponse, error) {
-	rsp, err := c.GetLogs(ctx, id, params, reqEditors...)
+// GetLogsRaw performs the request and returns the raw HTTP response.
+func (c *RawClient) GetLogsRaw(ctx context.Context, id int64, params *GetLogsParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	return c.client.GetLogs(ctx, id, params, reqEditors...)
+}
+
+// GetLogs request returning *GetLogsResponse
+func (c *ClientWithResponses) GetLogs(ctx context.Context, id int64, params *GetLogsParams, reqEditors ...RequestEditorFn) (*GetLogsResponse, error) {
+	rsp, err := c.client.GetLogs(ctx, id, params, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
 	return ParseGetLogsResponse(rsp)
 }
 
-// TestWebhookWithResponse request returning *TestWebhookResponse
-func (c *ClientWithResponses) TestWebhookWithResponse(ctx context.Context, id int64, params *TestWebhookParams, reqEditors ...RequestEditorFn) (*TestWebhookResponse, error) {
-	rsp, err := c.TestWebhook(ctx, id, params, reqEditors...)
+// TestWebhookRaw performs the request and returns the raw HTTP response.
+func (c *RawClient) TestWebhookRaw(ctx context.Context, id int64, params *TestWebhookParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	return c.client.TestWebhook(ctx, id, params, reqEditors...)
+}
+
+// TestWebhook request returning *TestWebhookResponse
+func (c *ClientWithResponses) TestWebhook(ctx context.Context, id int64, params *TestWebhookParams, reqEditors ...RequestEditorFn) (*TestWebhookResponse, error) {
+	rsp, err := c.client.TestWebhook(ctx, id, params, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
 	return ParseTestWebhookResponse(rsp)
 }
 
-// ParseClassifyDocumentItemResponse parses an HTTP response from a ClassifyDocumentItemWithResponse call
+// ParseClassifyDocumentItemResponse parses an HTTP response from a ClassifyDocumentItem call
 func ParseClassifyDocumentItemResponse(rsp *http.Response) (*ClassifyDocumentItemResponse, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
 	defer func() { _ = rsp.Body.Close() }()
@@ -16486,7 +17329,7 @@ func ParseClassifyDocumentItemResponse(rsp *http.Response) (*ClassifyDocumentIte
 	return response, nil
 }
 
-// ParseGetFiscalReportResponse parses an HTTP response from a GetFiscalReportWithResponse call
+// ParseGetFiscalReportResponse parses an HTTP response from a GetFiscalReport call
 func ParseGetFiscalReportResponse(rsp *http.Response) (*GetFiscalReportResponse, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
 	defer func() { _ = rsp.Body.Close() }()
@@ -16519,7 +17362,7 @@ func ParseGetFiscalReportResponse(rsp *http.Response) (*GetFiscalReportResponse,
 	return response, nil
 }
 
-// ParseExportFiscalReportResponse parses an HTTP response from a ExportFiscalReportWithResponse call
+// ParseExportFiscalReportResponse parses an HTTP response from a ExportFiscalReport call
 func ParseExportFiscalReportResponse(rsp *http.Response) (*ExportFiscalReportResponse, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
 	defer func() { _ = rsp.Body.Close() }()
@@ -16552,7 +17395,7 @@ func ParseExportFiscalReportResponse(rsp *http.Response) (*ExportFiscalReportRes
 	return response, nil
 }
 
-// ParseGetTaxRatesSummaryResponse parses an HTTP response from a GetTaxRatesSummaryWithResponse call
+// ParseGetTaxRatesSummaryResponse parses an HTTP response from a GetTaxRatesSummary call
 func ParseGetTaxRatesSummaryResponse(rsp *http.Response) (*GetTaxRatesSummaryResponse, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
 	defer func() { _ = rsp.Body.Close() }()
@@ -16585,7 +17428,7 @@ func ParseGetTaxRatesSummaryResponse(rsp *http.Response) (*GetTaxRatesSummaryRes
 	return response, nil
 }
 
-// ParseGetVatSummaryResponse parses an HTTP response from a GetVatSummaryWithResponse call
+// ParseGetVatSummaryResponse parses an HTTP response from a GetVatSummary call
 func ParseGetVatSummaryResponse(rsp *http.Response) (*GetVatSummaryResponse, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
 	defer func() { _ = rsp.Body.Close() }()
@@ -16618,7 +17461,7 @@ func ParseGetVatSummaryResponse(rsp *http.Response) (*GetVatSummaryResponse, err
 	return response, nil
 }
 
-// ParseGetBranchesResponse parses an HTTP response from a GetBranchesWithResponse call
+// ParseGetBranchesResponse parses an HTTP response from a GetBranches call
 func ParseGetBranchesResponse(rsp *http.Response) (*GetBranchesResponse, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
 	defer func() { _ = rsp.Body.Close() }()
@@ -16644,7 +17487,7 @@ func ParseGetBranchesResponse(rsp *http.Response) (*GetBranchesResponse, error) 
 	return response, nil
 }
 
-// ParseCreateBranchResponse parses an HTTP response from a CreateBranchWithResponse call
+// ParseCreateBranchResponse parses an HTTP response from a CreateBranch call
 func ParseCreateBranchResponse(rsp *http.Response) (*CreateBranchResponse, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
 	defer func() { _ = rsp.Body.Close() }()
@@ -16670,7 +17513,7 @@ func ParseCreateBranchResponse(rsp *http.Response) (*CreateBranchResponse, error
 	return response, nil
 }
 
-// ParseGetCashRegistersResponse parses an HTTP response from a GetCashRegistersWithResponse call
+// ParseGetCashRegistersResponse parses an HTTP response from a GetCashRegisters call
 func ParseGetCashRegistersResponse(rsp *http.Response) (*GetCashRegistersResponse, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
 	defer func() { _ = rsp.Body.Close() }()
@@ -16696,7 +17539,7 @@ func ParseGetCashRegistersResponse(rsp *http.Response) (*GetCashRegistersRespons
 	return response, nil
 }
 
-// ParseCreateCashRegisterResponse parses an HTTP response from a CreateCashRegisterWithResponse call
+// ParseCreateCashRegisterResponse parses an HTTP response from a CreateCashRegister call
 func ParseCreateCashRegisterResponse(rsp *http.Response) (*CreateCashRegisterResponse, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
 	defer func() { _ = rsp.Body.Close() }()
@@ -16722,7 +17565,7 @@ func ParseCreateCashRegisterResponse(rsp *http.Response) (*CreateCashRegisterRes
 	return response, nil
 }
 
-// ParseDeleteCashRegisterResponse parses an HTTP response from a DeleteCashRegisterWithResponse call
+// ParseDeleteCashRegisterResponse parses an HTTP response from a DeleteCashRegister call
 func ParseDeleteCashRegisterResponse(rsp *http.Response) (*DeleteCashRegisterResponse, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
 	defer func() { _ = rsp.Body.Close() }()
@@ -16738,7 +17581,7 @@ func ParseDeleteCashRegisterResponse(rsp *http.Response) (*DeleteCashRegisterRes
 	return response, nil
 }
 
-// ParseGetCashRegisterResponse parses an HTTP response from a GetCashRegisterWithResponse call
+// ParseGetCashRegisterResponse parses an HTTP response from a GetCashRegister call
 func ParseGetCashRegisterResponse(rsp *http.Response) (*GetCashRegisterResponse, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
 	defer func() { _ = rsp.Body.Close() }()
@@ -16764,7 +17607,7 @@ func ParseGetCashRegisterResponse(rsp *http.Response) (*GetCashRegisterResponse,
 	return response, nil
 }
 
-// ParseUpdateCashRegisterResponse parses an HTTP response from a UpdateCashRegisterWithResponse call
+// ParseUpdateCashRegisterResponse parses an HTTP response from a UpdateCashRegister call
 func ParseUpdateCashRegisterResponse(rsp *http.Response) (*UpdateCashRegisterResponse, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
 	defer func() { _ = rsp.Body.Close() }()
@@ -16790,7 +17633,7 @@ func ParseUpdateCashRegisterResponse(rsp *http.Response) (*UpdateCashRegisterRes
 	return response, nil
 }
 
-// ParseUpdateCashRegisterSequenceResponse parses an HTTP response from a UpdateCashRegisterSequenceWithResponse call
+// ParseUpdateCashRegisterSequenceResponse parses an HTTP response from a UpdateCashRegisterSequence call
 func ParseUpdateCashRegisterSequenceResponse(rsp *http.Response) (*UpdateCashRegisterSequenceResponse, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
 	defer func() { _ = rsp.Body.Close() }()
@@ -16816,7 +17659,7 @@ func ParseUpdateCashRegisterSequenceResponse(rsp *http.Response) (*UpdateCashReg
 	return response, nil
 }
 
-// ParseDeleteBranchResponse parses an HTTP response from a DeleteBranchWithResponse call
+// ParseDeleteBranchResponse parses an HTTP response from a DeleteBranch call
 func ParseDeleteBranchResponse(rsp *http.Response) (*DeleteBranchResponse, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
 	defer func() { _ = rsp.Body.Close() }()
@@ -16832,7 +17675,7 @@ func ParseDeleteBranchResponse(rsp *http.Response) (*DeleteBranchResponse, error
 	return response, nil
 }
 
-// ParseGetBranchResponse parses an HTTP response from a GetBranchWithResponse call
+// ParseGetBranchResponse parses an HTTP response from a GetBranch call
 func ParseGetBranchResponse(rsp *http.Response) (*GetBranchResponse, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
 	defer func() { _ = rsp.Body.Close() }()
@@ -16858,7 +17701,7 @@ func ParseGetBranchResponse(rsp *http.Response) (*GetBranchResponse, error) {
 	return response, nil
 }
 
-// ParseUpdateBranchResponse parses an HTTP response from a UpdateBranchWithResponse call
+// ParseUpdateBranchResponse parses an HTTP response from a UpdateBranch call
 func ParseUpdateBranchResponse(rsp *http.Response) (*UpdateBranchResponse, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
 	defer func() { _ = rsp.Body.Close() }()
@@ -16884,7 +17727,7 @@ func ParseUpdateBranchResponse(rsp *http.Response) (*UpdateBranchResponse, error
 	return response, nil
 }
 
-// ParseSetDefaultBranchResponse parses an HTTP response from a SetDefaultBranchWithResponse call
+// ParseSetDefaultBranchResponse parses an HTTP response from a SetDefaultBranch call
 func ParseSetDefaultBranchResponse(rsp *http.Response) (*SetDefaultBranchResponse, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
 	defer func() { _ = rsp.Body.Close() }()
@@ -16910,7 +17753,7 @@ func ParseSetDefaultBranchResponse(rsp *http.Response) (*SetDefaultBranchRespons
 	return response, nil
 }
 
-// ParseSetDefaultCashRegisterResponse parses an HTTP response from a SetDefaultCashRegisterWithResponse call
+// ParseSetDefaultCashRegisterResponse parses an HTTP response from a SetDefaultCashRegister call
 func ParseSetDefaultCashRegisterResponse(rsp *http.Response) (*SetDefaultCashRegisterResponse, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
 	defer func() { _ = rsp.Body.Close() }()
@@ -16936,7 +17779,7 @@ func ParseSetDefaultCashRegisterResponse(rsp *http.Response) (*SetDefaultCashReg
 	return response, nil
 }
 
-// ParseGetCantonsResponse parses an HTTP response from a GetCantonsWithResponse call
+// ParseGetCantonsResponse parses an HTTP response from a GetCantons call
 func ParseGetCantonsResponse(rsp *http.Response) (*GetCantonsResponse, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
 	defer func() { _ = rsp.Body.Close() }()
@@ -16962,7 +17805,7 @@ func ParseGetCantonsResponse(rsp *http.Response) (*GetCantonsResponse, error) {
 	return response, nil
 }
 
-// ParseGetCurrenciesResponse parses an HTTP response from a GetCurrenciesWithResponse call
+// ParseGetCurrenciesResponse parses an HTTP response from a GetCurrencies call
 func ParseGetCurrenciesResponse(rsp *http.Response) (*GetCurrenciesResponse, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
 	defer func() { _ = rsp.Body.Close() }()
@@ -16988,7 +17831,7 @@ func ParseGetCurrenciesResponse(rsp *http.Response) (*GetCurrenciesResponse, err
 	return response, nil
 }
 
-// ParseGetDistrictsResponse parses an HTTP response from a GetDistrictsWithResponse call
+// ParseGetDistrictsResponse parses an HTTP response from a GetDistricts call
 func ParseGetDistrictsResponse(rsp *http.Response) (*GetDistrictsResponse, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
 	defer func() { _ = rsp.Body.Close() }()
@@ -17014,7 +17857,7 @@ func ParseGetDistrictsResponse(rsp *http.Response) (*GetDistrictsResponse, error
 	return response, nil
 }
 
-// ParseGetDocumentTypesResponse parses an HTTP response from a GetDocumentTypesWithResponse call
+// ParseGetDocumentTypesResponse parses an HTTP response from a GetDocumentTypes call
 func ParseGetDocumentTypesResponse(rsp *http.Response) (*GetDocumentTypesResponse, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
 	defer func() { _ = rsp.Body.Close() }()
@@ -17040,7 +17883,7 @@ func ParseGetDocumentTypesResponse(rsp *http.Response) (*GetDocumentTypesRespons
 	return response, nil
 }
 
-// ParseGetLegalIdentificationTypesResponse parses an HTTP response from a GetLegalIdentificationTypesWithResponse call
+// ParseGetLegalIdentificationTypesResponse parses an HTTP response from a GetLegalIdentificationTypes call
 func ParseGetLegalIdentificationTypesResponse(rsp *http.Response) (*GetLegalIdentificationTypesResponse, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
 	defer func() { _ = rsp.Body.Close() }()
@@ -17066,7 +17909,7 @@ func ParseGetLegalIdentificationTypesResponse(rsp *http.Response) (*GetLegalIden
 	return response, nil
 }
 
-// ParseGetPaymentMethodsResponse parses an HTTP response from a GetPaymentMethodsWithResponse call
+// ParseGetPaymentMethodsResponse parses an HTTP response from a GetPaymentMethods call
 func ParseGetPaymentMethodsResponse(rsp *http.Response) (*GetPaymentMethodsResponse, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
 	defer func() { _ = rsp.Body.Close() }()
@@ -17092,7 +17935,7 @@ func ParseGetPaymentMethodsResponse(rsp *http.Response) (*GetPaymentMethodsRespo
 	return response, nil
 }
 
-// ParseGetPharmaceuticalFormsResponse parses an HTTP response from a GetPharmaceuticalFormsWithResponse call
+// ParseGetPharmaceuticalFormsResponse parses an HTTP response from a GetPharmaceuticalForms call
 func ParseGetPharmaceuticalFormsResponse(rsp *http.Response) (*GetPharmaceuticalFormsResponse, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
 	defer func() { _ = rsp.Body.Close() }()
@@ -17118,7 +17961,7 @@ func ParseGetPharmaceuticalFormsResponse(rsp *http.Response) (*GetPharmaceutical
 	return response, nil
 }
 
-// ParseGetProvincesResponse parses an HTTP response from a GetProvincesWithResponse call
+// ParseGetProvincesResponse parses an HTTP response from a GetProvinces call
 func ParseGetProvincesResponse(rsp *http.Response) (*GetProvincesResponse, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
 	defer func() { _ = rsp.Body.Close() }()
@@ -17144,7 +17987,7 @@ func ParseGetProvincesResponse(rsp *http.Response) (*GetProvincesResponse, error
 	return response, nil
 }
 
-// ParseGetSaleConditionsResponse parses an HTTP response from a GetSaleConditionsWithResponse call
+// ParseGetSaleConditionsResponse parses an HTTP response from a GetSaleConditions call
 func ParseGetSaleConditionsResponse(rsp *http.Response) (*GetSaleConditionsResponse, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
 	defer func() { _ = rsp.Body.Close() }()
@@ -17170,7 +18013,7 @@ func ParseGetSaleConditionsResponse(rsp *http.Response) (*GetSaleConditionsRespo
 	return response, nil
 }
 
-// ParseGetTaxCodesResponse parses an HTTP response from a GetTaxCodesWithResponse call
+// ParseGetTaxCodesResponse parses an HTTP response from a GetTaxCodes call
 func ParseGetTaxCodesResponse(rsp *http.Response) (*GetTaxCodesResponse, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
 	defer func() { _ = rsp.Body.Close() }()
@@ -17196,7 +18039,7 @@ func ParseGetTaxCodesResponse(rsp *http.Response) (*GetTaxCodesResponse, error) 
 	return response, nil
 }
 
-// ParseGetUnitsOfMeasureResponse parses an HTTP response from a GetUnitsOfMeasureWithResponse call
+// ParseGetUnitsOfMeasureResponse parses an HTTP response from a GetUnitsOfMeasure call
 func ParseGetUnitsOfMeasureResponse(rsp *http.Response) (*GetUnitsOfMeasureResponse, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
 	defer func() { _ = rsp.Body.Close() }()
@@ -17222,7 +18065,7 @@ func ParseGetUnitsOfMeasureResponse(rsp *http.Response) (*GetUnitsOfMeasureRespo
 	return response, nil
 }
 
-// ParseGetVatRateCodesResponse parses an HTTP response from a GetVatRateCodesWithResponse call
+// ParseGetVatRateCodesResponse parses an HTTP response from a GetVatRateCodes call
 func ParseGetVatRateCodesResponse(rsp *http.Response) (*GetVatRateCodesResponse, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
 	defer func() { _ = rsp.Body.Close() }()
@@ -17248,7 +18091,7 @@ func ParseGetVatRateCodesResponse(rsp *http.Response) (*GetVatRateCodesResponse,
 	return response, nil
 }
 
-// ParseGetAllClientsResponse parses an HTTP response from a GetAllClientsWithResponse call
+// ParseGetAllClientsResponse parses an HTTP response from a GetAllClients call
 func ParseGetAllClientsResponse(rsp *http.Response) (*GetAllClientsResponse, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
 	defer func() { _ = rsp.Body.Close() }()
@@ -17274,7 +18117,7 @@ func ParseGetAllClientsResponse(rsp *http.Response) (*GetAllClientsResponse, err
 	return response, nil
 }
 
-// ParseCreateClientResponse parses an HTTP response from a CreateClientWithResponse call
+// ParseCreateClientResponse parses an HTTP response from a CreateClient call
 func ParseCreateClientResponse(rsp *http.Response) (*CreateClientResponse, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
 	defer func() { _ = rsp.Body.Close() }()
@@ -17300,7 +18143,7 @@ func ParseCreateClientResponse(rsp *http.Response) (*CreateClientResponse, error
 	return response, nil
 }
 
-// ParseGetExonerationsResponse parses an HTTP response from a GetExonerationsWithResponse call
+// ParseGetExonerationsResponse parses an HTTP response from a GetExonerations call
 func ParseGetExonerationsResponse(rsp *http.Response) (*GetExonerationsResponse, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
 	defer func() { _ = rsp.Body.Close() }()
@@ -17326,7 +18169,7 @@ func ParseGetExonerationsResponse(rsp *http.Response) (*GetExonerationsResponse,
 	return response, nil
 }
 
-// ParseRegisterExonerationResponse parses an HTTP response from a RegisterExonerationWithResponse call
+// ParseRegisterExonerationResponse parses an HTTP response from a RegisterExoneration call
 func ParseRegisterExonerationResponse(rsp *http.Response) (*RegisterExonerationResponse, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
 	defer func() { _ = rsp.Body.Close() }()
@@ -17352,7 +18195,7 @@ func ParseRegisterExonerationResponse(rsp *http.Response) (*RegisterExonerationR
 	return response, nil
 }
 
-// ParseDeactivateExonerationResponse parses an HTTP response from a DeactivateExonerationWithResponse call
+// ParseDeactivateExonerationResponse parses an HTTP response from a DeactivateExoneration call
 func ParseDeactivateExonerationResponse(rsp *http.Response) (*DeactivateExonerationResponse, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
 	defer func() { _ = rsp.Body.Close() }()
@@ -17368,7 +18211,7 @@ func ParseDeactivateExonerationResponse(rsp *http.Response) (*DeactivateExonerat
 	return response, nil
 }
 
-// ParseGetClientExonerationResponse parses an HTTP response from a GetClientExonerationWithResponse call
+// ParseGetClientExonerationResponse parses an HTTP response from a GetClientExoneration call
 func ParseGetClientExonerationResponse(rsp *http.Response) (*GetClientExonerationResponse, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
 	defer func() { _ = rsp.Body.Close() }()
@@ -17394,7 +18237,7 @@ func ParseGetClientExonerationResponse(rsp *http.Response) (*GetClientExoneratio
 	return response, nil
 }
 
-// ParseRefreshExonerationResponse parses an HTTP response from a RefreshExonerationWithResponse call
+// ParseRefreshExonerationResponse parses an HTTP response from a RefreshExoneration call
 func ParseRefreshExonerationResponse(rsp *http.Response) (*RefreshExonerationResponse, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
 	defer func() { _ = rsp.Body.Close() }()
@@ -17420,7 +18263,7 @@ func ParseRefreshExonerationResponse(rsp *http.Response) (*RefreshExonerationRes
 	return response, nil
 }
 
-// ParseGetClientReceiversResponse parses an HTTP response from a GetClientReceiversWithResponse call
+// ParseGetClientReceiversResponse parses an HTTP response from a GetClientReceivers call
 func ParseGetClientReceiversResponse(rsp *http.Response) (*GetClientReceiversResponse, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
 	defer func() { _ = rsp.Body.Close() }()
@@ -17446,7 +18289,7 @@ func ParseGetClientReceiversResponse(rsp *http.Response) (*GetClientReceiversRes
 	return response, nil
 }
 
-// ParseCreateOrUpdateReceiverResponse parses an HTTP response from a CreateOrUpdateReceiverWithResponse call
+// ParseCreateOrUpdateReceiverResponse parses an HTTP response from a CreateOrUpdateReceiver call
 func ParseCreateOrUpdateReceiverResponse(rsp *http.Response) (*CreateOrUpdateReceiverResponse, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
 	defer func() { _ = rsp.Body.Close() }()
@@ -17472,7 +18315,7 @@ func ParseCreateOrUpdateReceiverResponse(rsp *http.Response) (*CreateOrUpdateRec
 	return response, nil
 }
 
-// ParseUpdateDefaultReceiverResponse parses an HTTP response from a UpdateDefaultReceiverWithResponse call
+// ParseUpdateDefaultReceiverResponse parses an HTTP response from a UpdateDefaultReceiver call
 func ParseUpdateDefaultReceiverResponse(rsp *http.Response) (*UpdateDefaultReceiverResponse, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
 	defer func() { _ = rsp.Body.Close() }()
@@ -17498,7 +18341,7 @@ func ParseUpdateDefaultReceiverResponse(rsp *http.Response) (*UpdateDefaultRecei
 	return response, nil
 }
 
-// ParseDeleteReceiverResponse parses an HTTP response from a DeleteReceiverWithResponse call
+// ParseDeleteReceiverResponse parses an HTTP response from a DeleteReceiver call
 func ParseDeleteReceiverResponse(rsp *http.Response) (*DeleteReceiverResponse, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
 	defer func() { _ = rsp.Body.Close() }()
@@ -17514,7 +18357,7 @@ func ParseDeleteReceiverResponse(rsp *http.Response) (*DeleteReceiverResponse, e
 	return response, nil
 }
 
-// ParseGetReceiverByIdResponse parses an HTTP response from a GetReceiverByIdWithResponse call
+// ParseGetReceiverByIdResponse parses an HTTP response from a GetReceiverById call
 func ParseGetReceiverByIdResponse(rsp *http.Response) (*GetReceiverByIdResponse, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
 	defer func() { _ = rsp.Body.Close() }()
@@ -17540,7 +18383,7 @@ func ParseGetReceiverByIdResponse(rsp *http.Response) (*GetReceiverByIdResponse,
 	return response, nil
 }
 
-// ParseUpdateReceiverResponse parses an HTTP response from a UpdateReceiverWithResponse call
+// ParseUpdateReceiverResponse parses an HTTP response from a UpdateReceiver call
 func ParseUpdateReceiverResponse(rsp *http.Response) (*UpdateReceiverResponse, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
 	defer func() { _ = rsp.Body.Close() }()
@@ -17566,7 +18409,7 @@ func ParseUpdateReceiverResponse(rsp *http.Response) (*UpdateReceiverResponse, e
 	return response, nil
 }
 
-// ParseDeleteClientResponse parses an HTTP response from a DeleteClientWithResponse call
+// ParseDeleteClientResponse parses an HTTP response from a DeleteClient call
 func ParseDeleteClientResponse(rsp *http.Response) (*DeleteClientResponse, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
 	defer func() { _ = rsp.Body.Close() }()
@@ -17582,7 +18425,7 @@ func ParseDeleteClientResponse(rsp *http.Response) (*DeleteClientResponse, error
 	return response, nil
 }
 
-// ParseGetClientByIdResponse parses an HTTP response from a GetClientByIdWithResponse call
+// ParseGetClientByIdResponse parses an HTTP response from a GetClientById call
 func ParseGetClientByIdResponse(rsp *http.Response) (*GetClientByIdResponse, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
 	defer func() { _ = rsp.Body.Close() }()
@@ -17608,7 +18451,7 @@ func ParseGetClientByIdResponse(rsp *http.Response) (*GetClientByIdResponse, err
 	return response, nil
 }
 
-// ParseUpdateClientResponse parses an HTTP response from a UpdateClientWithResponse call
+// ParseUpdateClientResponse parses an HTTP response from a UpdateClient call
 func ParseUpdateClientResponse(rsp *http.Response) (*UpdateClientResponse, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
 	defer func() { _ = rsp.Body.Close() }()
@@ -17634,7 +18477,7 @@ func ParseUpdateClientResponse(rsp *http.Response) (*UpdateClientResponse, error
 	return response, nil
 }
 
-// ParseGetAllDocumentsResponse parses an HTTP response from a GetAllDocumentsWithResponse call
+// ParseGetAllDocumentsResponse parses an HTTP response from a GetAllDocuments call
 func ParseGetAllDocumentsResponse(rsp *http.Response) (*GetAllDocumentsResponse, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
 	defer func() { _ = rsp.Body.Close() }()
@@ -17660,7 +18503,7 @@ func ParseGetAllDocumentsResponse(rsp *http.Response) (*GetAllDocumentsResponse,
 	return response, nil
 }
 
-// ParseCreateCreditNoteResponse parses an HTTP response from a CreateCreditNoteWithResponse call
+// ParseCreateCreditNoteResponse parses an HTTP response from a CreateCreditNote call
 func ParseCreateCreditNoteResponse(rsp *http.Response) (*CreateCreditNoteResponse, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
 	defer func() { _ = rsp.Body.Close() }()
@@ -17686,7 +18529,7 @@ func ParseCreateCreditNoteResponse(rsp *http.Response) (*CreateCreditNoteRespons
 	return response, nil
 }
 
-// ParseCreateDebitNoteResponse parses an HTTP response from a CreateDebitNoteWithResponse call
+// ParseCreateDebitNoteResponse parses an HTTP response from a CreateDebitNote call
 func ParseCreateDebitNoteResponse(rsp *http.Response) (*CreateDebitNoteResponse, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
 	defer func() { _ = rsp.Body.Close() }()
@@ -17712,7 +18555,7 @@ func ParseCreateDebitNoteResponse(rsp *http.Response) (*CreateDebitNoteResponse,
 	return response, nil
 }
 
-// ParseCreateElectronicPaymentReceiptResponse parses an HTTP response from a CreateElectronicPaymentReceiptWithResponse call
+// ParseCreateElectronicPaymentReceiptResponse parses an HTTP response from a CreateElectronicPaymentReceipt call
 func ParseCreateElectronicPaymentReceiptResponse(rsp *http.Response) (*CreateElectronicPaymentReceiptResponse, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
 	defer func() { _ = rsp.Body.Close() }()
@@ -17738,7 +18581,7 @@ func ParseCreateElectronicPaymentReceiptResponse(rsp *http.Response) (*CreateEle
 	return response, nil
 }
 
-// ParseCreateExportInvoiceResponse parses an HTTP response from a CreateExportInvoiceWithResponse call
+// ParseCreateExportInvoiceResponse parses an HTTP response from a CreateExportInvoice call
 func ParseCreateExportInvoiceResponse(rsp *http.Response) (*CreateExportInvoiceResponse, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
 	defer func() { _ = rsp.Body.Close() }()
@@ -17764,7 +18607,7 @@ func ParseCreateExportInvoiceResponse(rsp *http.Response) (*CreateExportInvoiceR
 	return response, nil
 }
 
-// ParseCreateInvoiceResponse parses an HTTP response from a CreateInvoiceWithResponse call
+// ParseCreateInvoiceResponse parses an HTTP response from a CreateInvoice call
 func ParseCreateInvoiceResponse(rsp *http.Response) (*CreateInvoiceResponse, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
 	defer func() { _ = rsp.Body.Close() }()
@@ -17790,7 +18633,7 @@ func ParseCreateInvoiceResponse(rsp *http.Response) (*CreateInvoiceResponse, err
 	return response, nil
 }
 
-// ParseCreatePurchaseInvoiceResponse parses an HTTP response from a CreatePurchaseInvoiceWithResponse call
+// ParseCreatePurchaseInvoiceResponse parses an HTTP response from a CreatePurchaseInvoice call
 func ParseCreatePurchaseInvoiceResponse(rsp *http.Response) (*CreatePurchaseInvoiceResponse, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
 	defer func() { _ = rsp.Body.Close() }()
@@ -17816,7 +18659,7 @@ func ParseCreatePurchaseInvoiceResponse(rsp *http.Response) (*CreatePurchaseInvo
 	return response, nil
 }
 
-// ParseCreateReceiptResponse parses an HTTP response from a CreateReceiptWithResponse call
+// ParseCreateReceiptResponse parses an HTTP response from a CreateReceipt call
 func ParseCreateReceiptResponse(rsp *http.Response) (*CreateReceiptResponse, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
 	defer func() { _ = rsp.Body.Close() }()
@@ -17842,7 +18685,7 @@ func ParseCreateReceiptResponse(rsp *http.Response) (*CreateReceiptResponse, err
 	return response, nil
 }
 
-// ParseCreateReceiverMessageResponse parses an HTTP response from a CreateReceiverMessageWithResponse call
+// ParseCreateReceiverMessageResponse parses an HTTP response from a CreateReceiverMessage call
 func ParseCreateReceiverMessageResponse(rsp *http.Response) (*CreateReceiverMessageResponse, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
 	defer func() { _ = rsp.Body.Close() }()
@@ -17868,7 +18711,33 @@ func ParseCreateReceiverMessageResponse(rsp *http.Response) (*CreateReceiverMess
 	return response, nil
 }
 
-// ParseGetDocumentByIdResponse parses an HTTP response from a GetDocumentByIdWithResponse call
+// ParseValidateXmlResponse parses an HTTP response from a ValidateXml call
+func ParseValidateXmlResponse(rsp *http.Response) (*ValidateXmlResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &ValidateXmlResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest XMLValidationResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseGetDocumentByIdResponse parses an HTTP response from a GetDocumentById call
 func ParseGetDocumentByIdResponse(rsp *http.Response) (*GetDocumentByIdResponse, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
 	defer func() { _ = rsp.Body.Close() }()
@@ -17894,7 +18763,7 @@ func ParseGetDocumentByIdResponse(rsp *http.Response) (*GetDocumentByIdResponse,
 	return response, nil
 }
 
-// ParseGetDocumentPdfResponse parses an HTTP response from a GetDocumentPdfWithResponse call
+// ParseGetDocumentPdfResponse parses an HTTP response from a GetDocumentPdf call
 func ParseGetDocumentPdfResponse(rsp *http.Response) (*GetDocumentPdfResponse, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
 	defer func() { _ = rsp.Body.Close() }()
@@ -17920,7 +18789,7 @@ func ParseGetDocumentPdfResponse(rsp *http.Response) (*GetDocumentPdfResponse, e
 	return response, nil
 }
 
-// ParseRegenerateDocumentPdfResponse parses an HTTP response from a RegenerateDocumentPdfWithResponse call
+// ParseRegenerateDocumentPdfResponse parses an HTTP response from a RegenerateDocumentPdf call
 func ParseRegenerateDocumentPdfResponse(rsp *http.Response) (*RegenerateDocumentPdfResponse, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
 	defer func() { _ = rsp.Body.Close() }()
@@ -17946,7 +18815,7 @@ func ParseRegenerateDocumentPdfResponse(rsp *http.Response) (*RegenerateDocument
 	return response, nil
 }
 
-// ParseSendDocumentEmailResponse parses an HTTP response from a SendDocumentEmailWithResponse call
+// ParseSendDocumentEmailResponse parses an HTTP response from a SendDocumentEmail call
 func ParseSendDocumentEmailResponse(rsp *http.Response) (*SendDocumentEmailResponse, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
 	defer func() { _ = rsp.Body.Close() }()
@@ -17972,7 +18841,7 @@ func ParseSendDocumentEmailResponse(rsp *http.Response) (*SendDocumentEmailRespo
 	return response, nil
 }
 
-// ParseGetIssuedXmlResponse parses an HTTP response from a GetIssuedXmlWithResponse call
+// ParseGetIssuedXmlResponse parses an HTTP response from a GetIssuedXml call
 func ParseGetIssuedXmlResponse(rsp *http.Response) (*GetIssuedXmlResponse, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
 	defer func() { _ = rsp.Body.Close() }()
@@ -17998,7 +18867,7 @@ func ParseGetIssuedXmlResponse(rsp *http.Response) (*GetIssuedXmlResponse, error
 	return response, nil
 }
 
-// ParseGetTaxAuthorityResponseXmlResponse parses an HTTP response from a GetTaxAuthorityResponseXmlWithResponse call
+// ParseGetTaxAuthorityResponseXmlResponse parses an HTTP response from a GetTaxAuthorityResponseXml call
 func ParseGetTaxAuthorityResponseXmlResponse(rsp *http.Response) (*GetTaxAuthorityResponseXmlResponse, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
 	defer func() { _ = rsp.Body.Close() }()
@@ -18024,7 +18893,7 @@ func ParseGetTaxAuthorityResponseXmlResponse(rsp *http.Response) (*GetTaxAuthori
 	return response, nil
 }
 
-// ParseGetAllIssuersResponse parses an HTTP response from a GetAllIssuersWithResponse call
+// ParseGetAllIssuersResponse parses an HTTP response from a GetAllIssuers call
 func ParseGetAllIssuersResponse(rsp *http.Response) (*GetAllIssuersResponse, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
 	defer func() { _ = rsp.Body.Close() }()
@@ -18050,7 +18919,7 @@ func ParseGetAllIssuersResponse(rsp *http.Response) (*GetAllIssuersResponse, err
 	return response, nil
 }
 
-// ParseCreateIssuerResponse parses an HTTP response from a CreateIssuerWithResponse call
+// ParseCreateIssuerResponse parses an HTTP response from a CreateIssuer call
 func ParseCreateIssuerResponse(rsp *http.Response) (*CreateIssuerResponse, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
 	defer func() { _ = rsp.Body.Close() }()
@@ -18076,7 +18945,7 @@ func ParseCreateIssuerResponse(rsp *http.Response) (*CreateIssuerResponse, error
 	return response, nil
 }
 
-// ParseDeleteIssuerResponse parses an HTTP response from a DeleteIssuerWithResponse call
+// ParseDeleteIssuerResponse parses an HTTP response from a DeleteIssuer call
 func ParseDeleteIssuerResponse(rsp *http.Response) (*DeleteIssuerResponse, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
 	defer func() { _ = rsp.Body.Close() }()
@@ -18092,7 +18961,7 @@ func ParseDeleteIssuerResponse(rsp *http.Response) (*DeleteIssuerResponse, error
 	return response, nil
 }
 
-// ParseGetIssuerByIdResponse parses an HTTP response from a GetIssuerByIdWithResponse call
+// ParseGetIssuerByIdResponse parses an HTTP response from a GetIssuerById call
 func ParseGetIssuerByIdResponse(rsp *http.Response) (*GetIssuerByIdResponse, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
 	defer func() { _ = rsp.Body.Close() }()
@@ -18118,7 +18987,7 @@ func ParseGetIssuerByIdResponse(rsp *http.Response) (*GetIssuerByIdResponse, err
 	return response, nil
 }
 
-// ParseUpdateIssuerResponse parses an HTTP response from a UpdateIssuerWithResponse call
+// ParseUpdateIssuerResponse parses an HTTP response from a UpdateIssuer call
 func ParseUpdateIssuerResponse(rsp *http.Response) (*UpdateIssuerResponse, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
 	defer func() { _ = rsp.Body.Close() }()
@@ -18144,7 +19013,7 @@ func ParseUpdateIssuerResponse(rsp *http.Response) (*UpdateIssuerResponse, error
 	return response, nil
 }
 
-// ParseSetDefaultIssuerResponse parses an HTTP response from a SetDefaultIssuerWithResponse call
+// ParseSetDefaultIssuerResponse parses an HTTP response from a SetDefaultIssuer call
 func ParseSetDefaultIssuerResponse(rsp *http.Response) (*SetDefaultIssuerResponse, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
 	defer func() { _ = rsp.Body.Close() }()
@@ -18170,7 +19039,7 @@ func ParseSetDefaultIssuerResponse(rsp *http.Response) (*SetDefaultIssuerRespons
 	return response, nil
 }
 
-// ParseCreatePaymentResponse parses an HTTP response from a CreatePaymentWithResponse call
+// ParseCreatePaymentResponse parses an HTTP response from a CreatePayment call
 func ParseCreatePaymentResponse(rsp *http.Response) (*CreatePaymentResponse, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
 	defer func() { _ = rsp.Body.Close() }()
@@ -18196,7 +19065,7 @@ func ParseCreatePaymentResponse(rsp *http.Response) (*CreatePaymentResponse, err
 	return response, nil
 }
 
-// ParseVoidApplicationResponse parses an HTTP response from a VoidApplicationWithResponse call
+// ParseVoidApplicationResponse parses an HTTP response from a VoidApplication call
 func ParseVoidApplicationResponse(rsp *http.Response) (*VoidApplicationResponse, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
 	defer func() { _ = rsp.Body.Close() }()
@@ -18222,7 +19091,7 @@ func ParseVoidApplicationResponse(rsp *http.Response) (*VoidApplicationResponse,
 	return response, nil
 }
 
-// ParseGetClientStatementResponse parses an HTTP response from a GetClientStatementWithResponse call
+// ParseGetClientStatementResponse parses an HTTP response from a GetClientStatement call
 func ParseGetClientStatementResponse(rsp *http.Response) (*GetClientStatementResponse, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
 	defer func() { _ = rsp.Body.Close() }()
@@ -18248,7 +19117,7 @@ func ParseGetClientStatementResponse(rsp *http.Response) (*GetClientStatementRes
 	return response, nil
 }
 
-// ParseGetPaymentResponse parses an HTTP response from a GetPaymentWithResponse call
+// ParseGetPaymentResponse parses an HTTP response from a GetPayment call
 func ParseGetPaymentResponse(rsp *http.Response) (*GetPaymentResponse, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
 	defer func() { _ = rsp.Body.Close() }()
@@ -18274,7 +19143,7 @@ func ParseGetPaymentResponse(rsp *http.Response) (*GetPaymentResponse, error) {
 	return response, nil
 }
 
-// ParseApplyPaymentResponse parses an HTTP response from a ApplyPaymentWithResponse call
+// ParseApplyPaymentResponse parses an HTTP response from a ApplyPayment call
 func ParseApplyPaymentResponse(rsp *http.Response) (*ApplyPaymentResponse, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
 	defer func() { _ = rsp.Body.Close() }()
@@ -18300,7 +19169,7 @@ func ParseApplyPaymentResponse(rsp *http.Response) (*ApplyPaymentResponse, error
 	return response, nil
 }
 
-// ParseVoidPaymentResponse parses an HTTP response from a VoidPaymentWithResponse call
+// ParseVoidPaymentResponse parses an HTTP response from a VoidPayment call
 func ParseVoidPaymentResponse(rsp *http.Response) (*VoidPaymentResponse, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
 	defer func() { _ = rsp.Body.Close() }()
@@ -18326,7 +19195,7 @@ func ParseVoidPaymentResponse(rsp *http.Response) (*VoidPaymentResponse, error) 
 	return response, nil
 }
 
-// ParseGetSequencesResponse parses an HTTP response from a GetSequencesWithResponse call
+// ParseGetSequencesResponse parses an HTTP response from a GetSequences call
 func ParseGetSequencesResponse(rsp *http.Response) (*GetSequencesResponse, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
 	defer func() { _ = rsp.Body.Close() }()
@@ -18352,7 +19221,7 @@ func ParseGetSequencesResponse(rsp *http.Response) (*GetSequencesResponse, error
 	return response, nil
 }
 
-// ParseUpdateSequenceResponse parses an HTTP response from a UpdateSequenceWithResponse call
+// ParseUpdateSequenceResponse parses an HTTP response from a UpdateSequence call
 func ParseUpdateSequenceResponse(rsp *http.Response) (*UpdateSequenceResponse, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
 	defer func() { _ = rsp.Body.Close() }()
@@ -18378,7 +19247,7 @@ func ParseUpdateSequenceResponse(rsp *http.Response) (*UpdateSequenceResponse, e
 	return response, nil
 }
 
-// ParseGetAgriculturalProducerResponse parses an HTTP response from a GetAgriculturalProducerWithResponse call
+// ParseGetAgriculturalProducerResponse parses an HTTP response from a GetAgriculturalProducer call
 func ParseGetAgriculturalProducerResponse(rsp *http.Response) (*GetAgriculturalProducerResponse, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
 	defer func() { _ = rsp.Body.Close() }()
@@ -18404,7 +19273,7 @@ func ParseGetAgriculturalProducerResponse(rsp *http.Response) (*GetAgriculturalP
 	return response, nil
 }
 
-// ParseSearchCabysResponse parses an HTTP response from a SearchCabysWithResponse call
+// ParseSearchCabysResponse parses an HTTP response from a SearchCabys call
 func ParseSearchCabysResponse(rsp *http.Response) (*SearchCabysResponse, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
 	defer func() { _ = rsp.Body.Close() }()
@@ -18430,7 +19299,7 @@ func ParseSearchCabysResponse(rsp *http.Response) (*SearchCabysResponse, error) 
 	return response, nil
 }
 
-// ParseGetCabysByCodeResponse parses an HTTP response from a GetCabysByCodeWithResponse call
+// ParseGetCabysByCodeResponse parses an HTTP response from a GetCabysByCode call
 func ParseGetCabysByCodeResponse(rsp *http.Response) (*GetCabysByCodeResponse, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
 	defer func() { _ = rsp.Body.Close() }()
@@ -18456,7 +19325,7 @@ func ParseGetCabysByCodeResponse(rsp *http.Response) (*GetCabysByCodeResponse, e
 	return response, nil
 }
 
-// ParseGetExchangeRatesResponse parses an HTTP response from a GetExchangeRatesWithResponse call
+// ParseGetExchangeRatesResponse parses an HTTP response from a GetExchangeRates call
 func ParseGetExchangeRatesResponse(rsp *http.Response) (*GetExchangeRatesResponse, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
 	defer func() { _ = rsp.Body.Close() }()
@@ -18482,7 +19351,7 @@ func ParseGetExchangeRatesResponse(rsp *http.Response) (*GetExchangeRatesRespons
 	return response, nil
 }
 
-// ParseGetTaxAuthorityExonerationResponse parses an HTTP response from a GetTaxAuthorityExonerationWithResponse call
+// ParseGetTaxAuthorityExonerationResponse parses an HTTP response from a GetTaxAuthorityExoneration call
 func ParseGetTaxAuthorityExonerationResponse(rsp *http.Response) (*GetTaxAuthorityExonerationResponse, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
 	defer func() { _ = rsp.Body.Close() }()
@@ -18508,7 +19377,7 @@ func ParseGetTaxAuthorityExonerationResponse(rsp *http.Response) (*GetTaxAuthori
 	return response, nil
 }
 
-// ParseGetFishingProducerResponse parses an HTTP response from a GetFishingProducerWithResponse call
+// ParseGetFishingProducerResponse parses an HTTP response from a GetFishingProducer call
 func ParseGetFishingProducerResponse(rsp *http.Response) (*GetFishingProducerResponse, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
 	defer func() { _ = rsp.Body.Close() }()
@@ -18534,7 +19403,7 @@ func ParseGetFishingProducerResponse(rsp *http.Response) (*GetFishingProducerRes
 	return response, nil
 }
 
-// ParseGetTaxpayerResponse parses an HTTP response from a GetTaxpayerWithResponse call
+// ParseGetTaxpayerResponse parses an HTTP response from a GetTaxpayer call
 func ParseGetTaxpayerResponse(rsp *http.Response) (*GetTaxpayerResponse, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
 	defer func() { _ = rsp.Body.Close() }()
@@ -18560,7 +19429,7 @@ func ParseGetTaxpayerResponse(rsp *http.Response) (*GetTaxpayerResponse, error) 
 	return response, nil
 }
 
-// ParseGetTaxpayerInfoResponse parses an HTTP response from a GetTaxpayerInfoWithResponse call
+// ParseGetTaxpayerInfoResponse parses an HTTP response from a GetTaxpayerInfo call
 func ParseGetTaxpayerInfoResponse(rsp *http.Response) (*GetTaxpayerInfoResponse, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
 	defer func() { _ = rsp.Body.Close() }()
@@ -18586,7 +19455,7 @@ func ParseGetTaxpayerInfoResponse(rsp *http.Response) (*GetTaxpayerInfoResponse,
 	return response, nil
 }
 
-// ParseGetTenantResponse parses an HTTP response from a GetTenantWithResponse call
+// ParseGetTenantResponse parses an HTTP response from a GetTenant call
 func ParseGetTenantResponse(rsp *http.Response) (*GetTenantResponse, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
 	defer func() { _ = rsp.Body.Close() }()
@@ -18612,7 +19481,7 @@ func ParseGetTenantResponse(rsp *http.Response) (*GetTenantResponse, error) {
 	return response, nil
 }
 
-// ParseUpdateTenantResponse parses an HTTP response from a UpdateTenantWithResponse call
+// ParseUpdateTenantResponse parses an HTTP response from a UpdateTenant call
 func ParseUpdateTenantResponse(rsp *http.Response) (*UpdateTenantResponse, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
 	defer func() { _ = rsp.Body.Close() }()
@@ -18638,7 +19507,7 @@ func ParseUpdateTenantResponse(rsp *http.Response) (*UpdateTenantResponse, error
 	return response, nil
 }
 
-// ParseGetInvoicingStatusResponse parses an HTTP response from a GetInvoicingStatusWithResponse call
+// ParseGetInvoicingStatusResponse parses an HTTP response from a GetInvoicingStatus call
 func ParseGetInvoicingStatusResponse(rsp *http.Response) (*GetInvoicingStatusResponse, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
 	defer func() { _ = rsp.Body.Close() }()
@@ -18664,7 +19533,7 @@ func ParseGetInvoicingStatusResponse(rsp *http.Response) (*GetInvoicingStatusRes
 	return response, nil
 }
 
-// ParseDeleteLogoResponse parses an HTTP response from a DeleteLogoWithResponse call
+// ParseDeleteLogoResponse parses an HTTP response from a DeleteLogo call
 func ParseDeleteLogoResponse(rsp *http.Response) (*DeleteLogoResponse, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
 	defer func() { _ = rsp.Body.Close() }()
@@ -18680,7 +19549,7 @@ func ParseDeleteLogoResponse(rsp *http.Response) (*DeleteLogoResponse, error) {
 	return response, nil
 }
 
-// ParseGetLogoResponse parses an HTTP response from a GetLogoWithResponse call
+// ParseGetLogoResponse parses an HTTP response from a GetLogo call
 func ParseGetLogoResponse(rsp *http.Response) (*GetLogoResponse, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
 	defer func() { _ = rsp.Body.Close() }()
@@ -18706,7 +19575,7 @@ func ParseGetLogoResponse(rsp *http.Response) (*GetLogoResponse, error) {
 	return response, nil
 }
 
-// ParseUploadLogoResponse parses an HTTP response from a UploadLogoWithResponse call
+// ParseUploadLogoResponse parses an HTTP response from a UploadLogo call
 func ParseUploadLogoResponse(rsp *http.Response) (*UploadLogoResponse, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
 	defer func() { _ = rsp.Body.Close() }()
@@ -18732,7 +19601,7 @@ func ParseUploadLogoResponse(rsp *http.Response) (*UploadLogoResponse, error) {
 	return response, nil
 }
 
-// ParseUpdateSecretsResponse parses an HTTP response from a UpdateSecretsWithResponse call
+// ParseUpdateSecretsResponse parses an HTTP response from a UpdateSecrets call
 func ParseUpdateSecretsResponse(rsp *http.Response) (*UpdateSecretsResponse, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
 	defer func() { _ = rsp.Body.Close() }()
@@ -18758,7 +19627,7 @@ func ParseUpdateSecretsResponse(rsp *http.Response) (*UpdateSecretsResponse, err
 	return response, nil
 }
 
-// ParseGetWebhooksResponse parses an HTTP response from a GetWebhooksWithResponse call
+// ParseGetWebhooksResponse parses an HTTP response from a GetWebhooks call
 func ParseGetWebhooksResponse(rsp *http.Response) (*GetWebhooksResponse, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
 	defer func() { _ = rsp.Body.Close() }()
@@ -18784,7 +19653,7 @@ func ParseGetWebhooksResponse(rsp *http.Response) (*GetWebhooksResponse, error) 
 	return response, nil
 }
 
-// ParseCreateWebhookResponse parses an HTTP response from a CreateWebhookWithResponse call
+// ParseCreateWebhookResponse parses an HTTP response from a CreateWebhook call
 func ParseCreateWebhookResponse(rsp *http.Response) (*CreateWebhookResponse, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
 	defer func() { _ = rsp.Body.Close() }()
@@ -18810,7 +19679,7 @@ func ParseCreateWebhookResponse(rsp *http.Response) (*CreateWebhookResponse, err
 	return response, nil
 }
 
-// ParseDeleteWebhookResponse parses an HTTP response from a DeleteWebhookWithResponse call
+// ParseDeleteWebhookResponse parses an HTTP response from a DeleteWebhook call
 func ParseDeleteWebhookResponse(rsp *http.Response) (*DeleteWebhookResponse, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
 	defer func() { _ = rsp.Body.Close() }()
@@ -18826,7 +19695,7 @@ func ParseDeleteWebhookResponse(rsp *http.Response) (*DeleteWebhookResponse, err
 	return response, nil
 }
 
-// ParseGetWebhookResponse parses an HTTP response from a GetWebhookWithResponse call
+// ParseGetWebhookResponse parses an HTTP response from a GetWebhook call
 func ParseGetWebhookResponse(rsp *http.Response) (*GetWebhookResponse, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
 	defer func() { _ = rsp.Body.Close() }()
@@ -18852,7 +19721,7 @@ func ParseGetWebhookResponse(rsp *http.Response) (*GetWebhookResponse, error) {
 	return response, nil
 }
 
-// ParseUpdateWebhookResponse parses an HTTP response from a UpdateWebhookWithResponse call
+// ParseUpdateWebhookResponse parses an HTTP response from a UpdateWebhook call
 func ParseUpdateWebhookResponse(rsp *http.Response) (*UpdateWebhookResponse, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
 	defer func() { _ = rsp.Body.Close() }()
@@ -18878,7 +19747,7 @@ func ParseUpdateWebhookResponse(rsp *http.Response) (*UpdateWebhookResponse, err
 	return response, nil
 }
 
-// ParseGetLogsResponse parses an HTTP response from a GetLogsWithResponse call
+// ParseGetLogsResponse parses an HTTP response from a GetLogs call
 func ParseGetLogsResponse(rsp *http.Response) (*GetLogsResponse, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
 	defer func() { _ = rsp.Body.Close() }()
@@ -18904,7 +19773,7 @@ func ParseGetLogsResponse(rsp *http.Response) (*GetLogsResponse, error) {
 	return response, nil
 }
 
-// ParseTestWebhookResponse parses an HTTP response from a TestWebhookWithResponse call
+// ParseTestWebhookResponse parses an HTTP response from a TestWebhook call
 func ParseTestWebhookResponse(rsp *http.Response) (*TestWebhookResponse, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
 	defer func() { _ = rsp.Body.Close() }()

@@ -3,7 +3,7 @@
 Official Go client for the API-key integration surface of Faqturo. Requires Go 1.25 or newer.
 
 ```bash
-go get github.com/tinke-labs/faqturo-go-sdk@v0.1.9
+go get github.com/tinke-labs/faqturo-go-sdk@v0.2.0
 ```
 
 ## Client
@@ -27,9 +27,11 @@ will be preserved.
 
 ## Common workflows
 
-- Invoicing: construct an `InvoiceRequest` and call `CreateInvoiceWithResponse`.
-- Queries: use `GetAllDocumentsWithResponse` and the typed catalog, client, issuer, and tax-authority methods.
+- Invoicing: construct an `InvoiceRequest` and call `CreateInvoice`.
+- Queries: use `GetAllDocuments` and the typed catalog, client, issuer, and tax-authority methods.
+- Incoming XML: call `ValidateXML` to validate the original XML without issuing a document.
 - JSON responses expose status-specific fields such as `JSON200`; raw `Body` remains available for diagnostics.
+- Raw HTTP access is opt-in through `client.Raw()`, such as `client.Raw().GetTaxCodesRaw(...)`.
 - Files: PDF/XML methods return typed responses while CSV export responses preserve their binary body.
 - Multipart: generated helpers cover receiver XML, fiscal certificates, and tenant logos.
 - Errors: call `ErrorFromResponse(response, body)` for a structured `*APIError` containing validation errors and metadata.

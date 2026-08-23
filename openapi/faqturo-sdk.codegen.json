@@ -4328,6 +4328,107 @@
           }
         },
         "type": "object"
+      },
+      "XMLValidationIssue": {
+        "properties": {
+          "code": {
+            "type": "string"
+          },
+          "declaredValue": {
+            "format": "decimal",
+            "type": "number",
+            "x-go-type": "Decimal"
+          },
+          "difference": {
+            "format": "decimal",
+            "type": "number",
+            "x-go-type": "Decimal"
+          },
+          "expectedValue": {
+            "format": "decimal",
+            "type": "number",
+            "x-go-type": "Decimal"
+          },
+          "field": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          },
+          "overridable": {
+            "type": "boolean"
+          },
+          "rule": {
+            "type": "string"
+          },
+          "severity": {
+            "$ref": "#/components/schemas/XMLValidationIssueSeverity"
+          }
+        },
+        "required": [
+          "code",
+          "field",
+          "message",
+          "severity",
+          "overridable"
+        ],
+        "type": "object"
+      },
+      "XMLValidationIssueSeverity": {
+        "enum": [
+          "BLOCKING",
+          "OVERRIDABLE",
+          "WARNING"
+        ],
+        "type": "string"
+      },
+      "XMLValidationRequest": {
+        "properties": {
+          "xml": {
+            "minLength": 1,
+            "type": "string"
+          }
+        },
+        "required": [
+          "xml"
+        ],
+        "type": "object"
+      },
+      "XMLValidationResponse": {
+        "properties": {
+          "documentKey": {
+            "type": "string"
+          },
+          "documentType": {
+            "type": "string"
+          },
+          "issuerIdentification": {
+            "type": "string"
+          },
+          "issues": {
+            "items": {
+              "$ref": "#/components/schemas/XMLValidationIssue"
+            },
+            "type": "array"
+          },
+          "receiverIdentification": {
+            "type": "string"
+          },
+          "rootName": {
+            "type": "string"
+          },
+          "schemaVersion": {
+            "type": "string"
+          },
+          "valid": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "valid",
+          "issues"
+        ],
+        "type": "object"
       }
     },
     "securitySchemes": {
@@ -7427,6 +7528,56 @@
           }
         ],
         "summary": "Emitir Mensaje Receptor desde XML recibido",
+        "tags": [
+          "Documents"
+        ]
+      }
+    },
+    "/documents/validate-xml": {
+      "post": {
+        "operationId": "validateXml",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "API-Version",
+            "schema": {
+              "default": "1.0.0",
+              "enum": [
+                "v1",
+                "1.0.0"
+              ],
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/XMLValidationRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/XMLValidationResponse"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ],
+        "summary": "Validar XML recibido sin emitir documento",
         "tags": [
           "Documents"
         ]

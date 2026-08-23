@@ -77,10 +77,10 @@ func collectContracts(paths, components map[string]any) []endpointContract {
 				responseBody := responseBody(content, responseContentType, components)
 				_, hasJSONSchema := responseJSONSchema(content)
 
-				methodName := upperFirst(operationID) + "WithResponse"
-				if requestContentType != "" {
-					methodName = upperFirst(operationID) + "WithBodyWithResponse"
-				}
+			methodName := upperFirst(operationID)
+			if requestContentType != "" {
+				methodName = upperFirst(operationID) + "WithBody"
+			}
 
 				contracts = append(contracts, endpointContract{
 					operationID:           operationID,
