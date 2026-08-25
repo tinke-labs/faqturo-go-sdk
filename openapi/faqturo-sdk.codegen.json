@@ -3773,6 +3773,9 @@
       },
       "TaxRequest": {
         "properties": {
+          "alcoholicBeverageCalculationDataValid": {
+            "type": "boolean"
+          },
           "otherTaxDataValid": {
             "type": "boolean"
           },
@@ -4329,7 +4332,7 @@
         },
         "type": "object"
       },
-      "XMLValidationIssue": {
+      "XmlValidationIssueResponse": {
         "properties": {
           "code": {
             "type": "string"
@@ -4362,19 +4365,19 @@
             "type": "string"
           },
           "severity": {
-            "$ref": "#/components/schemas/XMLValidationIssueSeverity"
+            "$ref": "#/components/schemas/XmlValidationIssueSeverity"
           }
         },
         "required": [
           "code",
           "field",
           "message",
-          "severity",
-          "overridable"
+          "overridable",
+          "severity"
         ],
         "type": "object"
       },
-      "XMLValidationIssueSeverity": {
+      "XmlValidationIssueSeverity": {
         "enum": [
           "BLOCKING",
           "OVERRIDABLE",
@@ -4382,7 +4385,7 @@
         ],
         "type": "string"
       },
-      "XMLValidationRequest": {
+      "XmlValidationRequest": {
         "properties": {
           "xml": {
             "minLength": 1,
@@ -4394,7 +4397,7 @@
         ],
         "type": "object"
       },
-      "XMLValidationResponse": {
+      "XmlValidationResponse": {
         "properties": {
           "documentKey": {
             "type": "string"
@@ -4407,7 +4410,7 @@
           },
           "issues": {
             "items": {
-              "$ref": "#/components/schemas/XMLValidationIssue"
+              "$ref": "#/components/schemas/XmlValidationIssueResponse"
             },
             "type": "array"
           },
@@ -4425,8 +4428,8 @@
           }
         },
         "required": [
-          "valid",
-          "issues"
+          "issues",
+          "valid"
         ],
         "type": "object"
       }
@@ -7543,8 +7546,7 @@
             "schema": {
               "default": "1.0.0",
               "enum": [
-                "v1",
-                "1.0.0"
+                "v1"
               ],
               "type": "string"
             }
@@ -7554,7 +7556,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/XMLValidationRequest"
+                "$ref": "#/components/schemas/XmlValidationRequest"
               }
             }
           },
@@ -7565,7 +7567,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/XMLValidationResponse"
+                  "$ref": "#/components/schemas/XmlValidationResponse"
                 }
               }
             },
@@ -7577,7 +7579,7 @@
             "apiKeyAuth": []
           }
         ],
-        "summary": "Validar XML recibido sin emitir documento",
+        "summary": "Validar XML fiscal contra el XSD sin emitir",
         "tags": [
           "Documents"
         ]

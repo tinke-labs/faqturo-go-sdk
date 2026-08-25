@@ -85,7 +85,7 @@ func TestValidateXMLReturnsTypedResult(t *testing.T) {
 		if r.Method != http.MethodPost || r.URL.Path != "/api/documents/validate-xml" {
 			t.Errorf("request = %s %s", r.Method, r.URL.Path)
 		}
-		var request XMLValidationRequest
+		var request XmlValidationRequest
 		if err := json.NewDecoder(r.Body).Decode(&request); err != nil {
 			t.Fatalf("decoding request: %v", err)
 		}

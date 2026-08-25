@@ -641,15 +641,15 @@ func (e SpecificTaxDataRequestSpecificTaxType) Valid() bool {
 	}
 }
 
-// Defines values for XMLValidationIssueSeverity.
+// Defines values for XmlValidationIssueSeverity.
 const (
-	BLOCKING    XMLValidationIssueSeverity = "BLOCKING"
-	OVERRIDABLE XMLValidationIssueSeverity = "OVERRIDABLE"
-	WARNING     XMLValidationIssueSeverity = "WARNING"
+	BLOCKING    XmlValidationIssueSeverity = "BLOCKING"
+	OVERRIDABLE XmlValidationIssueSeverity = "OVERRIDABLE"
+	WARNING     XmlValidationIssueSeverity = "WARNING"
 )
 
-// Valid indicates whether the value is a known member of the XMLValidationIssueSeverity enum.
-func (e XMLValidationIssueSeverity) Valid() bool {
+// Valid indicates whether the value is a known member of the XmlValidationIssueSeverity enum.
+func (e XmlValidationIssueSeverity) Valid() bool {
 	switch e {
 	case BLOCKING:
 		return true
@@ -1492,15 +1492,12 @@ func (e CreateReceiverMessageParamsAPIVersion) Valid() bool {
 
 // Defines values for ValidateXmlParamsAPIVersion.
 const (
-	ValidateXmlParamsAPIVersionN100 ValidateXmlParamsAPIVersion = "1.0.0"
-	ValidateXmlParamsAPIVersionV1   ValidateXmlParamsAPIVersion = "v1"
+	ValidateXmlParamsAPIVersionV1 ValidateXmlParamsAPIVersion = "v1"
 )
 
 // Valid indicates whether the value is a known member of the ValidateXmlParamsAPIVersion enum.
 func (e ValidateXmlParamsAPIVersion) Valid() bool {
 	switch e {
-	case ValidateXmlParamsAPIVersionN100:
-		return true
 	case ValidateXmlParamsAPIVersionV1:
 		return true
 	default:
@@ -3324,6 +3321,7 @@ type TaxAuthorityExonerationResponse struct {
 
 // TaxRequest defines model for TaxRequest.
 type TaxRequest struct {
+	AlcoholicBeverageCalculationDataValid    *bool                   `json:"alcoholicBeverageCalculationDataValid,omitempty"`
 	OtherTaxDataValid                        *bool                   `json:"otherTaxDataValid,omitempty"`
 	SpecificTaxData                          *SpecificTaxDataRequest `json:"specificTaxData,omitempty"`
 	SpecificTaxTypeValidForCode05            *bool                   `json:"specificTaxTypeValidForCode05,omitempty"`
@@ -3520,8 +3518,8 @@ type WebhookTestResponse struct {
 	WebhookEndpointId *int64  `json:"webhookEndpointId,omitempty"`
 }
 
-// XMLValidationIssue defines model for XMLValidationIssue.
-type XMLValidationIssue struct {
+// XmlValidationIssueResponse defines model for XmlValidationIssueResponse.
+type XmlValidationIssueResponse struct {
 	Code          string                     `json:"code"`
 	DeclaredValue *Decimal                   `json:"declaredValue,omitempty"`
 	Difference    *Decimal                   `json:"difference,omitempty"`
@@ -3530,27 +3528,27 @@ type XMLValidationIssue struct {
 	Message       string                     `json:"message"`
 	Overridable   bool                       `json:"overridable"`
 	Rule          *string                    `json:"rule,omitempty"`
-	Severity      XMLValidationIssueSeverity `json:"severity"`
+	Severity      XmlValidationIssueSeverity `json:"severity"`
 }
 
-// XMLValidationIssueSeverity defines model for XMLValidationIssueSeverity.
-type XMLValidationIssueSeverity string
+// XmlValidationIssueSeverity defines model for XmlValidationIssueSeverity.
+type XmlValidationIssueSeverity string
 
-// XMLValidationRequest defines model for XMLValidationRequest.
-type XMLValidationRequest struct {
+// XmlValidationRequest defines model for XmlValidationRequest.
+type XmlValidationRequest struct {
 	Xml string `json:"xml"`
 }
 
-// XMLValidationResponse defines model for XMLValidationResponse.
-type XMLValidationResponse struct {
-	DocumentKey            *string              `json:"documentKey,omitempty"`
-	DocumentType           *string              `json:"documentType,omitempty"`
-	IssuerIdentification   *string              `json:"issuerIdentification,omitempty"`
-	Issues                 []XMLValidationIssue `json:"issues"`
-	ReceiverIdentification *string              `json:"receiverIdentification,omitempty"`
-	RootName               *string              `json:"rootName,omitempty"`
-	SchemaVersion          *string              `json:"schemaVersion,omitempty"`
-	Valid                  bool                 `json:"valid"`
+// XmlValidationResponse defines model for XmlValidationResponse.
+type XmlValidationResponse struct {
+	DocumentKey            *string                      `json:"documentKey,omitempty"`
+	DocumentType           *string                      `json:"documentType,omitempty"`
+	IssuerIdentification   *string                      `json:"issuerIdentification,omitempty"`
+	Issues                 []XmlValidationIssueResponse `json:"issues"`
+	ReceiverIdentification *string                      `json:"receiverIdentification,omitempty"`
+	RootName               *string                      `json:"rootName,omitempty"`
+	SchemaVersion          *string                      `json:"schemaVersion,omitempty"`
+	Valid                  bool                         `json:"valid"`
 }
 
 // apiKeyAuthContextKey is the context key for apiKeyAuth security scheme
@@ -4468,7 +4466,7 @@ type CreateReceiverMessageJSONRequestBody = ReceiverMessageRequest
 type CreateReceiverMessageMultipartRequestBody CreateReceiverMessageMultipartBody
 
 // ValidateXmlJSONRequestBody defines body for ValidateXml for application/json ContentType.
-type ValidateXmlJSONRequestBody = XMLValidationRequest
+type ValidateXmlJSONRequestBody = XmlValidationRequest
 
 // CreateIssuerJSONRequestBody defines body for CreateIssuer for application/json ContentType.
 type CreateIssuerJSONRequestBody = TenantIssuerRequest
@@ -14261,7 +14259,7 @@ func (r CreateReceiverMessageResponse) ContentType() string {
 type ValidateXmlResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
-	JSON200      *XMLValidationResponse
+	JSON200      *XmlValidationResponse
 }
 
 // Status returns HTTPResponse.Status
@@ -18726,7 +18724,7 @@ func ParseValidateXmlResponse(rsp *http.Response) (*ValidateXmlResponse, error) 
 
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest XMLValidationResponse
+		var dest XmlValidationResponse
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}

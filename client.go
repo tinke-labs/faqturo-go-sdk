@@ -79,8 +79,8 @@ func NewAPIKeyClient(server, apiKey string, options ...ClientOption) (*ClientWit
 // This is the ergonomic SDK entry point for the generated ValidateXml
 // operation. It returns the typed validation result instead of exposing the
 // generated HTTP response wrapper.
-func (c *ClientWithResponses) ValidateXML(ctx context.Context, xml []byte, reqEditors ...RequestEditorFn) (*XMLValidationResponse, error) {
-	response, err := c.ValidateXml(ctx, nil, XMLValidationRequest{Xml: string(xml)}, reqEditors...)
+func (c *ClientWithResponses) ValidateXML(ctx context.Context, xml []byte, reqEditors ...RequestEditorFn) (*XmlValidationResponse, error) {
+	response, err := c.ValidateXml(ctx, nil, XmlValidationRequest{Xml: string(xml)}, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
