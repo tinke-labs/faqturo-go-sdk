@@ -1522,6 +1522,47 @@
         } ]
       }
     },
+    "/documents/validate-xml" : {
+      "post" : {
+        "tags" : [ "Documents" ],
+        "summary" : "Validar XML fiscal contra el XSD sin emitir",
+        "operationId" : "validateXml",
+        "parameters" : [ {
+          "name" : "API-Version",
+          "in" : "header",
+          "schema" : {
+            "type" : "string",
+            "default" : "1.0.0",
+            "enum" : [ "v1" ]
+          }
+        } ],
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/XmlValidationRequest"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/XmlValidationResponse"
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "apiKeyAuth" : [ ]
+        } ]
+      }
+    },
     "/documents/receiver-message" : {
       "post" : {
         "tags" : [ "Documents" ],
@@ -5159,6 +5200,10 @@
           },
           "notes" : {
             "type" : "string"
+          },
+          "electronicPaymentReceiptId" : {
+            "type" : "integer",
+            "format" : "int64"
           }
         }
       },
@@ -5310,6 +5355,89 @@
           }
         },
         "required" : [ "address", "email", "issuerActivityCode", "name" ]
+      },
+      "XmlValidationRequest" : {
+        "type" : "object",
+        "properties" : {
+          "xml" : {
+            "type" : "string",
+            "minLength" : 1
+          }
+        },
+        "required" : [ "xml" ]
+      },
+      "XmlValidationIssueResponse" : {
+        "type" : "object",
+        "properties" : {
+          "code" : {
+            "type" : "string"
+          },
+          "field" : {
+            "type" : "string"
+          },
+          "message" : {
+            "type" : "string"
+          },
+          "severity" : {
+            "$ref" : "#/components/schemas/XmlValidationIssueSeverity"
+          },
+          "overridable" : {
+            "type" : "boolean"
+          },
+          "declaredValue" : {
+            "type" : "number",
+            "format" : "decimal"
+          },
+          "expectedValue" : {
+            "type" : "number",
+            "format" : "decimal"
+          },
+          "difference" : {
+            "type" : "number",
+            "format" : "decimal"
+          },
+          "rule" : {
+            "type" : "string"
+          }
+        },
+        "required" : [ "code", "field", "message", "overridable", "severity" ]
+      },
+      "XmlValidationIssueSeverity" : {
+        "type" : "string",
+        "enum" : [ "BLOCKING", "OVERRIDABLE", "WARNING" ]
+      },
+      "XmlValidationResponse" : {
+        "type" : "object",
+        "properties" : {
+          "valid" : {
+            "type" : "boolean"
+          },
+          "rootName" : {
+            "type" : "string"
+          },
+          "documentType" : {
+            "type" : "string"
+          },
+          "schemaVersion" : {
+            "type" : "string"
+          },
+          "documentKey" : {
+            "type" : "string"
+          },
+          "issuerIdentification" : {
+            "type" : "string"
+          },
+          "receiverIdentification" : {
+            "type" : "string"
+          },
+          "issues" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/XmlValidationIssueResponse"
+            }
+          }
+        },
+        "required" : [ "issues", "valid" ]
       },
       "AdditionalInformationEntryDto" : {
         "type" : "object",
@@ -6758,7 +6886,7 @@
           "creditTerm" : {
             "type" : "integer",
             "format" : "int32",
-            "description" : "Opcional por defecto. Requerido cuando saleCondition=02; representa dias de credito.",
+            "description" : "Requerido cuando saleCondition=02 o 10. Para 10 representa de 1 a 90 dias.",
             "example" : 30,
             "maximum" : 99999,
             "minimum" : 1
@@ -6985,22 +7113,25 @@
           "specificTaxData" : {
             "$ref" : "#/components/schemas/SpecificTaxDataRequest"
           },
-          "vatRateCodeValidForVatTax" : {
-            "type" : "boolean"
-          },
-          "usedGoodsVatCalculationDataValid" : {
-            "type" : "boolean"
-          },
-          "otherTaxDataValid" : {
+          "alcoholicBeverageCalculationDataValid" : {
             "type" : "boolean"
           },
           "taxRatePresentWhenRequiredForCalculation" : {
+            "type" : "boolean"
+          },
+          "usedGoodsVatCalculationDataValid" : {
             "type" : "boolean"
           },
           "specificTaxTypeValidForCode05" : {
             "type" : "boolean"
           },
           "vatSpecialCalculationDataValid" : {
+            "type" : "boolean"
+          },
+          "vatRateCodeValidForVatTax" : {
+            "type" : "boolean"
+          },
+          "otherTaxDataValid" : {
             "type" : "boolean"
           }
         },

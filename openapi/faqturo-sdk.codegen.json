@@ -1454,6 +1454,10 @@
           "documentKey": {
             "type": "string"
           },
+          "electronicPaymentReceiptId": {
+            "format": "int64",
+            "type": "integer"
+          },
           "id": {
             "format": "int64",
             "type": "integer"
@@ -1963,7 +1967,7 @@
             "type": "integer"
           },
           "creditTerm": {
-            "description": "Opcional por defecto. Requerido cuando saleCondition=02; representa dias de credito.",
+            "description": "Requerido cuando saleCondition=02 o 10. Para 10 representa de 1 a 90 dias.",
             "example": 30,
             "format": "int32",
             "maximum": 99999,
@@ -3769,6 +3773,9 @@
       },
       "TaxRequest": {
         "properties": {
+          "alcoholicBeverageCalculationDataValid": {
+            "type": "boolean"
+          },
           "otherTaxDataValid": {
             "type": "boolean"
           },
@@ -4323,6 +4330,107 @@
             "type": "integer"
           }
         },
+        "type": "object"
+      },
+      "XmlValidationIssueResponse": {
+        "properties": {
+          "code": {
+            "type": "string"
+          },
+          "declaredValue": {
+            "format": "decimal",
+            "type": "number",
+            "x-go-type": "Decimal"
+          },
+          "difference": {
+            "format": "decimal",
+            "type": "number",
+            "x-go-type": "Decimal"
+          },
+          "expectedValue": {
+            "format": "decimal",
+            "type": "number",
+            "x-go-type": "Decimal"
+          },
+          "field": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          },
+          "overridable": {
+            "type": "boolean"
+          },
+          "rule": {
+            "type": "string"
+          },
+          "severity": {
+            "$ref": "#/components/schemas/XmlValidationIssueSeverity"
+          }
+        },
+        "required": [
+          "code",
+          "field",
+          "message",
+          "overridable",
+          "severity"
+        ],
+        "type": "object"
+      },
+      "XmlValidationIssueSeverity": {
+        "enum": [
+          "BLOCKING",
+          "OVERRIDABLE",
+          "WARNING"
+        ],
+        "type": "string"
+      },
+      "XmlValidationRequest": {
+        "properties": {
+          "xml": {
+            "minLength": 1,
+            "type": "string"
+          }
+        },
+        "required": [
+          "xml"
+        ],
+        "type": "object"
+      },
+      "XmlValidationResponse": {
+        "properties": {
+          "documentKey": {
+            "type": "string"
+          },
+          "documentType": {
+            "type": "string"
+          },
+          "issuerIdentification": {
+            "type": "string"
+          },
+          "issues": {
+            "items": {
+              "$ref": "#/components/schemas/XmlValidationIssueResponse"
+            },
+            "type": "array"
+          },
+          "receiverIdentification": {
+            "type": "string"
+          },
+          "rootName": {
+            "type": "string"
+          },
+          "schemaVersion": {
+            "type": "string"
+          },
+          "valid": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "issues",
+          "valid"
+        ],
         "type": "object"
       }
     },
@@ -7423,6 +7531,55 @@
           }
         ],
         "summary": "Emitir Mensaje Receptor desde XML recibido",
+        "tags": [
+          "Documents"
+        ]
+      }
+    },
+    "/documents/validate-xml": {
+      "post": {
+        "operationId": "validateXml",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "API-Version",
+            "schema": {
+              "default": "1.0.0",
+              "enum": [
+                "v1"
+              ],
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/XmlValidationRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/XmlValidationResponse"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ],
+        "summary": "Validar XML fiscal contra el XSD sin emitir",
         "tags": [
           "Documents"
         ]

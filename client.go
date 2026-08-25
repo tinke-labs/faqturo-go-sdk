@@ -3,6 +3,7 @@ package faqturo
 import (
 	"context"
 	"errors"
+	"fmt"
 	"net/http"
 	"net/url"
 	"strings"
@@ -57,7 +58,7 @@ func NewAPIKeyClient(server, apiKey string, options ...ClientOption) (*ClientWit
 	if apiKey == "" {
 		return nil, errors.New("faqturo: API key is required")
 	}
-	apiServer, err := normalizeAPIKeyServer(server)
+	apiServer, err := normalizeServer(server)
 	if err != nil {
 		return nil, err
 	}
@@ -73,11 +74,32 @@ func NewAPIKeyClient(server, apiKey string, options ...ClientOption) (*ClientWit
 	return NewClientWithResponses(apiServer, append(defaults, options...)...)
 }
 
-// normalizeAPIKeyServer accepts Faqturo's public host and resolves the API
-// context path used by the API-key surface. Supplying an explicit path keeps
-// that path unchanged, so reverse proxies and self-hosted deployments remain
-// configurable.
-func normalizeAPIKeyServer(server string) (string, error) {
+// ValidateXML validates a received fiscal XML without issuing a document.
+//
+// This is the ergonomic SDK entry point for the generated ValidateXml
+// operation. It returns the typed validation result instead of exposing the
+// generated HTTP response wrapper.
+func (c *ClientWithResponses) ValidateXML(ctx context.Context, xml []byte, reqEditors ...RequestEditorFn) (*XmlValidationResponse, error) {
+	response, err := c.ValidateXml(ctx, nil, XmlValidationRequest{Xml: string(xml)}, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	if response == nil {
+		return nil, errors.New("faqturo: validate XML returned no response")
+	}
+	if response.JSON200 == nil {
+		if apiErr := ErrorFromResponse(response.HTTPResponse, response.Body); apiErr != nil {
+			return nil, apiErr
+		}
+		return nil, fmt.Errorf("faqturo: validate XML returned HTTP %d", response.StatusCode())
+	}
+	return response.JSON200, nil
+}
+
+// normalizeServer accepts Faqturo's public host and resolves the API context
+// path used by the SDK. Supplying an explicit path keeps that path unchanged,
+// so reverse proxies and self-hosted deployments remain configurable.
+func normalizeServer(server string) (string, error) {
 	parsed, err := url.Parse(strings.TrimSpace(server))
 	if err != nil || parsed.Scheme == "" || parsed.Host == "" {
 		return "", errors.New("faqturo: API server URL is required")

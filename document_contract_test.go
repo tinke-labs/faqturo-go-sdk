@@ -53,7 +53,7 @@ func TestCreateInvoiceContract(t *testing.T) {
 	}
 	key := "invoice-123"
 	currency := DocumentRequestCurrency("CRC")
-	response, err := client.CreateInvoiceWithResponse(context.Background(), &CreateInvoiceParams{IdempotencyKey: &key}, DocumentRequest{
+	response, err := client.CreateInvoice(context.Background(), &CreateInvoiceParams{IdempotencyKey: &key}, DocumentRequest{
 		Currency: &currency,
 		Items: []DocumentItemRequest{{
 			CabysCode:     "1234567890123",
@@ -149,7 +149,7 @@ func TestClientHonorsCanceledContext(t *testing.T) {
 	}
 	ctx, cancel := context.WithCancel(context.Background())
 	cancel()
-	if _, err := client.GetTaxCodesWithResponse(ctx, nil); err == nil {
+	if _, err := client.GetTaxCodes(ctx, nil); err == nil {
 		t.Fatal("expected context cancellation error")
 	}
 }

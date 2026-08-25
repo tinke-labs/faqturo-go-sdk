@@ -2,6 +2,7 @@ package faqturo
 
 import (
 	"context"
+	"encoding/json"
 	"net/http"
 	"net/http/httptest"
 	"testing"
@@ -27,12 +28,36 @@ func TestAPIKeyClientAddsAuthenticationAndVersion(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	response, err := client.GetTaxCodesWithResponse(context.Background(), nil)
+	response, err := client.GetTaxCodes(context.Background(), nil)
 	if err != nil {
 		t.Fatal(err)
 	}
 	if response.JSON200 == nil {
 		t.Fatal("expected typed JSON200 response")
+	}
+}
+
+func TestAPIKeyClientExposesRawOperation(t *testing.T) {
+	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		if r.URL.Path != "/api/catalogs/tax-codes" {
+			t.Errorf("path = %q", r.URL.Path)
+		}
+		w.Header().Set("Content-Type", "application/json")
+		_, _ = w.Write([]byte(`[]`))
+	}))
+	defer server.Close()
+
+	client, err := NewAPIKeyClient(server.URL, "secret")
+	if err != nil {
+		t.Fatal(err)
+	}
+	response, err := client.Raw().GetTaxCodesRaw(context.Background(), nil)
+	if err != nil {
+		t.Fatal(err)
+	}
+	defer func() { _ = response.Body.Close() }()
+	if response.StatusCode != http.StatusOK {
+		t.Fatalf("status = %d", response.StatusCode)
 	}
 }
 
@@ -50,16 +75,46 @@ func TestAPIKeyClientPreservesExplicitAPIPath(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if _, err := client.GetTaxCodesWithResponse(context.Background(), nil); err != nil {
+	if _, err := client.GetTaxCodes(context.Background(), nil); err != nil {
 		t.Fatal(err)
+	}
+}
+
+func TestValidateXMLReturnsTypedResult(t *testing.T) {
+	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		if r.Method != http.MethodPost || r.URL.Path != "/api/documents/validate-xml" {
+			t.Errorf("request = %s %s", r.Method, r.URL.Path)
+		}
+		var request XmlValidationRequest
+		if err := json.NewDecoder(r.Body).Decode(&request); err != nil {
+			t.Fatalf("decoding request: %v", err)
+		}
+		if request.Xml != "<FacturaElectronica/>" {
+			t.Errorf("xml = %q", request.Xml)
+		}
+		w.Header().Set("Content-Type", "application/json")
+		_, _ = w.Write([]byte(`{"valid":true,"issues":[]}`))
+	}))
+	defer server.Close()
+
+	client, err := NewAPIKeyClient(server.URL, "secret")
+	if err != nil {
+		t.Fatal(err)
+	}
+	result, err := client.ValidateXML(context.Background(), []byte("<FacturaElectronica/>"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	if result == nil || !result.Valid {
+		t.Fatalf("unexpected validation result: %#v", result)
 	}
 }
 
 func TestStableOperationNamesAreGenerated(t *testing.T) {
 	client := &ClientWithResponses{}
-	_ = client.UpdateCashRegisterSequenceWithResponse
-	_ = client.GetClientExonerationWithResponse
-	_ = client.GetTaxAuthorityExonerationWithResponse
+	_ = client.UpdateCashRegisterSequence
+	_ = client.GetClientExoneration
+	_ = client.GetTaxAuthorityExoneration
 }
 
 func TestAPIError(t *testing.T) {
