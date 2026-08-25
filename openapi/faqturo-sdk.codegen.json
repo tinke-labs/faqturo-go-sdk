@@ -2223,6 +2223,13 @@
             "format": "date-time",
             "type": "string"
           },
+          "purchaseExpenseType": {
+            "enum": [
+              "PURCHASE",
+              "EXPENSE"
+            ],
+            "type": "string"
+          },
           "qrCode": {
             "type": "string"
           },
@@ -2612,6 +2619,9 @@
           "issuerActivityCode": {
             "type": "string"
           },
+          "purchaseExpenseType": {
+            "type": "string"
+          },
           "receiverActivityCode": {
             "type": "string"
           },
@@ -2664,6 +2674,9 @@
           "lineNumber": {
             "format": "int32",
             "type": "integer"
+          },
+          "purchaseExpenseType": {
+            "type": "string"
           },
           "rate": {
             "format": "decimal",
@@ -2766,6 +2779,9 @@
             "x-go-type": "Decimal"
           },
           "exemptionType": {
+            "type": "string"
+          },
+          "purchaseExpenseType": {
             "type": "string"
           },
           "rate": {
@@ -2909,6 +2925,9 @@
             "format": "decimal",
             "type": "number",
             "x-go-type": "Decimal"
+          },
+          "purchaseExpenseType": {
+            "type": "string"
           },
           "rate": {
             "format": "decimal",
@@ -3512,6 +3531,13 @@
           "numeroConsecutivoReceptor": {
             "minLength": 1,
             "pattern": "\\d{20}",
+            "type": "string"
+          },
+          "purchaseExpenseType": {
+            "enum": [
+              "PURCHASE",
+              "EXPENSE"
+            ],
             "type": "string"
           },
           "totalVenta": {
@@ -7477,6 +7503,14 @@
             "required": false,
             "schema": {
               "type": "number"
+            }
+          },
+          {
+            "in": "query",
+            "name": "purchaseExpenseType",
+            "required": false,
+            "schema": {
+              "type": "string"
             }
           },
           {

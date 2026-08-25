@@ -1619,6 +1619,13 @@
             "type" : "number"
           }
         }, {
+          "name" : "purchaseExpenseType",
+          "in" : "query",
+          "required" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
           "name" : "API-Version",
           "in" : "header",
           "schema" : {
@@ -6029,6 +6036,10 @@
           "qrCode" : {
             "type" : "string"
           },
+          "purchaseExpenseType" : {
+            "type" : "string",
+            "enum" : [ "PURCHASE", "EXPENSE" ]
+          },
           "totalTaxed" : {
             "type" : "number",
             "format" : "decimal"
@@ -6426,6 +6437,10 @@
           "montoTotalDeGastoAplicable" : {
             "type" : "number",
             "format" : "decimal"
+          },
+          "purchaseExpenseType" : {
+            "type" : "string",
+            "enum" : [ "PURCHASE", "EXPENSE" ]
           },
           "totalVenta" : {
             "type" : "number",
@@ -7113,10 +7128,10 @@
           "specificTaxData" : {
             "$ref" : "#/components/schemas/SpecificTaxDataRequest"
           },
-          "alcoholicBeverageCalculationDataValid" : {
+          "vatRateCodeValidForVatTax" : {
             "type" : "boolean"
           },
-          "taxRatePresentWhenRequiredForCalculation" : {
+          "vatSpecialCalculationDataValid" : {
             "type" : "boolean"
           },
           "usedGoodsVatCalculationDataValid" : {
@@ -7125,10 +7140,10 @@
           "specificTaxTypeValidForCode05" : {
             "type" : "boolean"
           },
-          "vatSpecialCalculationDataValid" : {
+          "alcoholicBeverageCalculationDataValid" : {
             "type" : "boolean"
           },
-          "vatRateCodeValidForVatTax" : {
+          "taxRatePresentWhenRequiredForCalculation" : {
             "type" : "boolean"
           },
           "otherTaxDataValid" : {
@@ -7951,6 +7966,9 @@
           "section" : {
             "type" : "string"
           },
+          "purchaseExpenseType" : {
+            "type" : "string"
+          },
           "vatRateCode" : {
             "type" : "string"
           },
@@ -8009,6 +8027,9 @@
           "section" : {
             "type" : "string"
           },
+          "purchaseExpenseType" : {
+            "type" : "string"
+          },
           "issuerActivityCode" : {
             "type" : "string"
           },
@@ -8046,6 +8067,9 @@
             "type" : "string"
           },
           "section" : {
+            "type" : "string"
+          },
+          "purchaseExpenseType" : {
             "type" : "string"
           },
           "issuerActivityCode" : {
@@ -8156,6 +8180,9 @@
         "type" : "object",
         "properties" : {
           "section" : {
+            "type" : "string"
+          },
+          "purchaseExpenseType" : {
             "type" : "string"
           },
           "usageType" : {

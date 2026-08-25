@@ -419,6 +419,24 @@ func (e DocumentResponseCurrency) Valid() bool {
 	}
 }
 
+// Defines values for DocumentResponsePurchaseExpenseType.
+const (
+	DocumentResponsePurchaseExpenseTypeEXPENSE  DocumentResponsePurchaseExpenseType = "EXPENSE"
+	DocumentResponsePurchaseExpenseTypePURCHASE DocumentResponsePurchaseExpenseType = "PURCHASE"
+)
+
+// Valid indicates whether the value is a known member of the DocumentResponsePurchaseExpenseType enum.
+func (e DocumentResponsePurchaseExpenseType) Valid() bool {
+	switch e {
+	case DocumentResponsePurchaseExpenseTypeEXPENSE:
+		return true
+	case DocumentResponsePurchaseExpenseTypePURCHASE:
+		return true
+	default:
+		return false
+	}
+}
+
 // Defines values for DocumentResponseTaxAuthorityDocumentState.
 const (
 	ACCEPTED  DocumentResponseTaxAuthorityDocumentState = "ACCEPTED"
@@ -563,6 +581,24 @@ func (e OtherChargeRequestDocumentType) Valid() bool {
 	case OtherChargeRequestDocumentTypeN04:
 		return true
 	case OtherChargeRequestDocumentTypeN99:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for ReceiverMessageRequestPurchaseExpenseType.
+const (
+	ReceiverMessageRequestPurchaseExpenseTypeEXPENSE  ReceiverMessageRequestPurchaseExpenseType = "EXPENSE"
+	ReceiverMessageRequestPurchaseExpenseTypePURCHASE ReceiverMessageRequestPurchaseExpenseType = "PURCHASE"
+)
+
+// Valid indicates whether the value is a known member of the ReceiverMessageRequestPurchaseExpenseType enum.
+func (e ReceiverMessageRequestPurchaseExpenseType) Valid() bool {
+	switch e {
+	case ReceiverMessageRequestPurchaseExpenseTypeEXPENSE:
+		return true
+	case ReceiverMessageRequestPurchaseExpenseTypePURCHASE:
 		return true
 	default:
 		return false
@@ -2831,6 +2867,7 @@ type DocumentResponse struct {
 	PaymentMethods            *[]DocumentPaymentMethodDto                `json:"paymentMethods,omitempty"`
 	PdfAssetKey               *string                                    `json:"pdfAssetKey,omitempty"`
 	PdfGeneratedAt            *time.Time                                 `json:"pdfGeneratedAt,omitempty"`
+	PurchaseExpenseType       *DocumentResponsePurchaseExpenseType       `json:"purchaseExpenseType,omitempty"`
 	QrCode                    *string                                    `json:"qrCode,omitempty"`
 	ReferenceInformation      *[]DocumentReferenceInformationDto         `json:"referenceInformation,omitempty"`
 	RejectedByHaciendaAt      *time.Time                                 `json:"rejectedByHaciendaAt,omitempty"`
@@ -2851,6 +2888,9 @@ type DocumentResponse struct {
 
 // DocumentResponseCurrency defines model for DocumentResponse.Currency.
 type DocumentResponseCurrency string
+
+// DocumentResponsePurchaseExpenseType defines model for DocumentResponse.PurchaseExpenseType.
+type DocumentResponsePurchaseExpenseType string
 
 // DocumentResponseTaxAuthorityDocumentState defines model for DocumentResponse.TaxAuthorityDocumentState.
 type DocumentResponseTaxAuthorityDocumentState string
@@ -2938,6 +2978,7 @@ type FiscalReportActivitySummaryLineResponse struct {
 	BaseTotal            *Decimal `json:"baseTotal,omitempty"`
 	CreditTotal          *Decimal `json:"creditTotal,omitempty"`
 	IssuerActivityCode   *string  `json:"issuerActivityCode,omitempty"`
+	PurchaseExpenseType  *string  `json:"purchaseExpenseType,omitempty"`
 	ReceiverActivityCode *string  `json:"receiverActivityCode,omitempty"`
 	Section              *string  `json:"section,omitempty"`
 	TaxTotal             *Decimal `json:"taxTotal,omitempty"`
@@ -2956,6 +2997,7 @@ type FiscalReportDocumentLineResponse struct {
 	IssuerActivityCode   *string             `json:"issuerActivityCode,omitempty"`
 	LineDescription      *string             `json:"lineDescription,omitempty"`
 	LineNumber           *int32              `json:"lineNumber,omitempty"`
+	PurchaseExpenseType  *string             `json:"purchaseExpenseType,omitempty"`
 	Rate                 *Decimal            `json:"rate,omitempty"`
 	ReceiverActivityCode *string             `json:"receiverActivityCode,omitempty"`
 	ReceiverMessageState *string             `json:"receiverMessageState,omitempty"`
@@ -2991,14 +3033,15 @@ type FiscalReportGapLineResponse struct {
 
 // FiscalReportLineResponse defines model for FiscalReportLineResponse.
 type FiscalReportLineResponse struct {
-	BaseTotal     *Decimal `json:"baseTotal,omitempty"`
-	CreditTotal   *Decimal `json:"creditTotal,omitempty"`
-	ExemptionType *string  `json:"exemptionType,omitempty"`
-	Rate          *Decimal `json:"rate,omitempty"`
-	Section       *string  `json:"section,omitempty"`
-	TaxTotal      *Decimal `json:"taxTotal,omitempty"`
-	UsageType     *string  `json:"usageType,omitempty"`
-	VatRateCode   *string  `json:"vatRateCode,omitempty"`
+	BaseTotal           *Decimal `json:"baseTotal,omitempty"`
+	CreditTotal         *Decimal `json:"creditTotal,omitempty"`
+	ExemptionType       *string  `json:"exemptionType,omitempty"`
+	PurchaseExpenseType *string  `json:"purchaseExpenseType,omitempty"`
+	Rate                *Decimal `json:"rate,omitempty"`
+	Section             *string  `json:"section,omitempty"`
+	TaxTotal            *Decimal `json:"taxTotal,omitempty"`
+	UsageType           *string  `json:"usageType,omitempty"`
+	VatRateCode         *string  `json:"vatRateCode,omitempty"`
 }
 
 // FiscalReportResponse defines model for FiscalReportResponse.
@@ -3031,12 +3074,13 @@ type FiscalReportTotalsResponse struct {
 
 // FiscalTaxRateSummaryLineResponse defines model for FiscalTaxRateSummaryLineResponse.
 type FiscalTaxRateSummaryLineResponse struct {
-	BaseTotal   *Decimal `json:"baseTotal,omitempty"`
-	CreditTotal *Decimal `json:"creditTotal,omitempty"`
-	Rate        *Decimal `json:"rate,omitempty"`
-	Section     *string  `json:"section,omitempty"`
-	TaxTotal    *Decimal `json:"taxTotal,omitempty"`
-	VatRateCode *string  `json:"vatRateCode,omitempty"`
+	BaseTotal           *Decimal `json:"baseTotal,omitempty"`
+	CreditTotal         *Decimal `json:"creditTotal,omitempty"`
+	PurchaseExpenseType *string  `json:"purchaseExpenseType,omitempty"`
+	Rate                *Decimal `json:"rate,omitempty"`
+	Section             *string  `json:"section,omitempty"`
+	TaxTotal            *Decimal `json:"taxTotal,omitempty"`
+	VatRateCode         *string  `json:"vatRateCode,omitempty"`
 }
 
 // FiscalTaxRatesSummaryResponse defines model for FiscalTaxRatesSummaryResponse.
@@ -3226,19 +3270,23 @@ type Rate struct {
 
 // ReceiverMessageRequest defines model for ReceiverMessageRequest.
 type ReceiverMessageRequest struct {
-	Clave                       string   `json:"clave"`
-	CodigoActividad             string   `json:"codigoActividad"`
-	CondicionImpuesto           *string  `json:"condicionImpuesto,omitempty"`
-	DetalleMensaje              *string  `json:"detalleMensaje,omitempty"`
-	FechaEmisionDoc             string   `json:"fechaEmisionDoc"`
-	Mensaje                     int32    `json:"mensaje"`
-	MontoTotalDeGastoAplicable  *Decimal `json:"montoTotalDeGastoAplicable,omitempty"`
-	MontoTotalImpuesto          *Decimal `json:"montoTotalImpuesto,omitempty"`
-	MontoTotalImpuestoAcreditar *Decimal `json:"montoTotalImpuestoAcreditar,omitempty"`
-	NumeroCedulaEmisor          string   `json:"numeroCedulaEmisor"`
-	NumeroConsecutivoReceptor   string   `json:"numeroConsecutivoReceptor"`
-	TotalVenta                  Decimal  `json:"totalVenta"`
+	Clave                       string                                     `json:"clave"`
+	CodigoActividad             string                                     `json:"codigoActividad"`
+	CondicionImpuesto           *string                                    `json:"condicionImpuesto,omitempty"`
+	DetalleMensaje              *string                                    `json:"detalleMensaje,omitempty"`
+	FechaEmisionDoc             string                                     `json:"fechaEmisionDoc"`
+	Mensaje                     int32                                      `json:"mensaje"`
+	MontoTotalDeGastoAplicable  *Decimal                                   `json:"montoTotalDeGastoAplicable,omitempty"`
+	MontoTotalImpuesto          *Decimal                                   `json:"montoTotalImpuesto,omitempty"`
+	MontoTotalImpuestoAcreditar *Decimal                                   `json:"montoTotalImpuestoAcreditar,omitempty"`
+	NumeroCedulaEmisor          string                                     `json:"numeroCedulaEmisor"`
+	NumeroConsecutivoReceptor   string                                     `json:"numeroConsecutivoReceptor"`
+	PurchaseExpenseType         *ReceiverMessageRequestPurchaseExpenseType `json:"purchaseExpenseType,omitempty"`
+	TotalVenta                  Decimal                                    `json:"totalVenta"`
 }
+
+// ReceiverMessageRequestPurchaseExpenseType defines model for ReceiverMessageRequest.PurchaseExpenseType.
+type ReceiverMessageRequestPurchaseExpenseType string
 
 // SequenceResponse defines model for SequenceResponse.
 type SequenceResponse struct {
@@ -4042,6 +4090,7 @@ type CreateReceiverMessageParams struct {
 	TaxCondition            *string                                `form:"taxCondition,omitempty" json:"taxCondition,omitempty"`
 	CreditAmount            *float32                               `form:"creditAmount,omitempty" json:"creditAmount,omitempty"`
 	ApplicableExpenseAmount *float32                               `form:"applicableExpenseAmount,omitempty" json:"applicableExpenseAmount,omitempty"`
+	PurchaseExpenseType     *string                                `form:"purchaseExpenseType,omitempty" json:"purchaseExpenseType,omitempty"`
 	APIVersion              *CreateReceiverMessageParamsAPIVersion `json:"API-Version,omitempty"`
 }
 
@@ -9931,6 +9980,18 @@ func NewCreateReceiverMessageRequestWithBody(server string, params *CreateReceiv
 		if params.ApplicableExpenseAmount != nil {
 
 			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "applicableExpenseAmount", *params.ApplicableExpenseAmount, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "number", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.PurchaseExpenseType != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "purchaseExpenseType", *params.PurchaseExpenseType, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
 				return nil, err
 			} else {
 				for _, qp := range strings.Split(queryFrag, "&") {
