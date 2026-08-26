@@ -4118,6 +4118,29 @@
         },
         "type": "object"
       },
+      "TenantProfileResponse": {
+        "properties": {
+          "defaultIssuer": {
+            "$ref": "#/components/schemas/TenantIssuerResponse"
+          },
+          "issuers": {
+            "items": {
+              "$ref": "#/components/schemas/TenantIssuerResponse"
+            },
+            "type": "array"
+          },
+          "legalIdentification": {
+            "$ref": "#/components/schemas/LegalIdentificationResponse"
+          },
+          "name": {
+            "type": "string"
+          },
+          "taxpayer": {
+            "$ref": "#/components/schemas/TaxpayerInfoResponse"
+          }
+        },
+        "type": "object"
+      },
       "TenantProvisionRequest": {
         "properties": {
           "legalIdentification": {
@@ -9256,6 +9279,45 @@
           }
         ],
         "summary": "Subir o reemplazar logo del tenant",
+        "tags": [
+          "Tenants"
+        ]
+      }
+    },
+    "/tenants/profile": {
+      "get": {
+        "operationId": "getTenantProfile",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "API-Version",
+            "schema": {
+              "default": "1.0.0",
+              "enum": [
+                "v1"
+              ],
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TenantProfileResponse"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ],
+        "summary": "Obtener el perfil fiscal agregado del tenant",
         "tags": [
           "Tenants"
         ]

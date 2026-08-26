@@ -2796,6 +2796,37 @@
         } ]
       }
     },
+    "/tenants/profile" : {
+      "get" : {
+        "tags" : [ "Tenants" ],
+        "summary" : "Obtener el perfil fiscal agregado del tenant",
+        "operationId" : "getTenantProfile",
+        "parameters" : [ {
+          "name" : "API-Version",
+          "in" : "header",
+          "schema" : {
+            "type" : "string",
+            "default" : "1.0.0",
+            "enum" : [ "v1" ]
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/TenantProfileResponse"
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "apiKeyAuth" : [ ]
+        } ]
+      }
+    },
     "/tenants/invoicing-status" : {
       "get" : {
         "tags" : [ "Tenants" ],
@@ -7128,22 +7159,22 @@
           "specificTaxData" : {
             "$ref" : "#/components/schemas/SpecificTaxDataRequest"
           },
-          "vatRateCodeValidForVatTax" : {
-            "type" : "boolean"
-          },
-          "vatSpecialCalculationDataValid" : {
-            "type" : "boolean"
-          },
           "usedGoodsVatCalculationDataValid" : {
             "type" : "boolean"
           },
           "specificTaxTypeValidForCode05" : {
             "type" : "boolean"
           },
+          "vatSpecialCalculationDataValid" : {
+            "type" : "boolean"
+          },
           "alcoholicBeverageCalculationDataValid" : {
             "type" : "boolean"
           },
           "taxRatePresentWhenRequiredForCalculation" : {
+            "type" : "boolean"
+          },
+          "vatRateCodeValidForVatTax" : {
             "type" : "boolean"
           },
           "otherTaxDataValid" : {
@@ -7393,6 +7424,29 @@
             "type" : "array",
             "items" : {
               "$ref" : "#/components/schemas/EconomicActivity"
+            }
+          }
+        }
+      },
+      "TenantProfileResponse" : {
+        "type" : "object",
+        "properties" : {
+          "legalIdentification" : {
+            "$ref" : "#/components/schemas/LegalIdentificationResponse"
+          },
+          "name" : {
+            "type" : "string"
+          },
+          "taxpayer" : {
+            "$ref" : "#/components/schemas/TaxpayerInfoResponse"
+          },
+          "defaultIssuer" : {
+            "$ref" : "#/components/schemas/TenantIssuerResponse"
+          },
+          "issuers" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/TenantIssuerResponse"
             }
           }
         }

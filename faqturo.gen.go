@@ -2051,6 +2051,21 @@ func (e UploadLogoParamsAPIVersion) Valid() bool {
 	}
 }
 
+// Defines values for GetTenantProfileParamsAPIVersion.
+const (
+	GetTenantProfileParamsAPIVersionV1 GetTenantProfileParamsAPIVersion = "v1"
+)
+
+// Valid indicates whether the value is a known member of the GetTenantProfileParamsAPIVersion enum.
+func (e GetTenantProfileParamsAPIVersion) Valid() bool {
+	switch e {
+	case GetTenantProfileParamsAPIVersionV1:
+		return true
+	default:
+		return false
+	}
+}
+
 // Defines values for UpdateSecretsParamsAPIVersion.
 const (
 	UpdateSecretsParamsAPIVersionV1 UpdateSecretsParamsAPIVersion = "v1"
@@ -2158,13 +2173,13 @@ func (e GetLogsParamsAPIVersion) Valid() bool {
 
 // Defines values for TestWebhookParamsAPIVersion.
 const (
-	TestWebhookParamsAPIVersionV1 TestWebhookParamsAPIVersion = "v1"
+	V1 TestWebhookParamsAPIVersion = "v1"
 )
 
 // Valid indicates whether the value is a known member of the TestWebhookParamsAPIVersion enum.
 func (e TestWebhookParamsAPIVersion) Valid() bool {
 	switch e {
-	case TestWebhookParamsAPIVersionV1:
+	case V1:
 		return true
 	default:
 		return false
@@ -3475,6 +3490,15 @@ type TenantLogoResponse struct {
 	Url              *string    `json:"url,omitempty"`
 }
 
+// TenantProfileResponse defines model for TenantProfileResponse.
+type TenantProfileResponse struct {
+	DefaultIssuer       *TenantIssuerResponse        `json:"defaultIssuer,omitempty"`
+	Issuers             *[]TenantIssuerResponse      `json:"issuers,omitempty"`
+	LegalIdentification *LegalIdentificationResponse `json:"legalIdentification,omitempty"`
+	Name                *string                      `json:"name,omitempty"`
+	Taxpayer            *TaxpayerInfoResponse        `json:"taxpayer,omitempty"`
+}
+
 // TenantProvisionRequest defines model for TenantProvisionRequest.
 type TenantProvisionRequest struct {
 	LegalIdentification *LegalIdentificationRequest `json:"legalIdentification,omitempty"`
@@ -4387,6 +4411,14 @@ type UploadLogoParams struct {
 // UploadLogoParamsAPIVersion defines parameters for UploadLogo.
 type UploadLogoParamsAPIVersion string
 
+// GetTenantProfileParams defines parameters for GetTenantProfile.
+type GetTenantProfileParams struct {
+	APIVersion *GetTenantProfileParamsAPIVersion `json:"API-Version,omitempty"`
+}
+
+// GetTenantProfileParamsAPIVersion defines parameters for GetTenantProfile.
+type GetTenantProfileParamsAPIVersion string
+
 // UpdateSecretsParams defines parameters for UpdateSecrets.
 type UpdateSecretsParams struct {
 	APIVersion *UpdateSecretsParamsAPIVersion `json:"API-Version,omitempty"`
@@ -4953,6 +4985,9 @@ type ClientInterface interface {
 
 	// UploadLogoWithBody request with any body
 	UploadLogoWithBody(ctx context.Context, params *UploadLogoParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// GetTenantProfile request
+	GetTenantProfile(ctx context.Context, params *GetTenantProfileParams, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// UpdateSecretsWithBody request with any body
 	UpdateSecretsWithBody(ctx context.Context, params *UpdateSecretsParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
@@ -6401,6 +6436,18 @@ func (c *Client) GetLogo(ctx context.Context, params *GetLogoParams, reqEditors 
 
 func (c *Client) UploadLogoWithBody(ctx context.Context, params *UploadLogoParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewUploadLogoRequestWithBody(c.Server, params, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) GetTenantProfile(ctx context.Context, params *GetTenantProfileParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewGetTenantProfileRequest(c.Server, params)
 	if err != nil {
 		return nil, err
 	}
@@ -11857,6 +11904,48 @@ func NewUploadLogoRequestWithBody(server string, params *UploadLogoParams, conte
 	return req, nil
 }
 
+// NewGetTenantProfileRequest generates requests for GetTenantProfile
+func NewGetTenantProfileRequest(server string, params *GetTenantProfileParams) (*http.Request, error) {
+	var err error
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/tenants/profile")
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+
+		if params.APIVersion != nil {
+			var headerParam0 string
+
+			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "API-Version", *params.APIVersion, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: ""})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("API-Version", headerParam0)
+		}
+
+	}
+
+	return req, nil
+}
+
 // NewUpdateSecretsRequestWithBody generates requests for UpdateSecrets with any type of body
 func NewUpdateSecretsRequestWithBody(server string, params *UpdateSecretsParams, contentType string, body io.Reader) (*http.Request, error) {
 	var err error
@@ -12636,6 +12725,9 @@ type ClientWithResponsesInterface interface {
 
 	// UploadLogoWithBody request with any body
 	UploadLogoWithBody(ctx context.Context, params *UploadLogoParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UploadLogoResponse, error)
+
+	// GetTenantProfile request
+	GetTenantProfile(ctx context.Context, params *GetTenantProfileParams, reqEditors ...RequestEditorFn) (*GetTenantProfileResponse, error)
 
 	// UpdateSecretsWithBody request with any body
 	UpdateSecretsWithBody(ctx context.Context, params *UpdateSecretsParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpdateSecretsResponse, error)
@@ -15365,6 +15457,36 @@ func (r UploadLogoResponse) ContentType() string {
 	return ""
 }
 
+type GetTenantProfileResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	JSON200      *TenantProfileResponse
+}
+
+// Status returns HTTPResponse.Status
+func (r GetTenantProfileResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r GetTenantProfileResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r GetTenantProfileResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
 type UpdateSecretsResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
@@ -17210,6 +17332,20 @@ func (c *ClientWithResponses) UploadLogoWithBody(ctx context.Context, params *Up
 		return nil, err
 	}
 	return ParseUploadLogoResponse(rsp)
+}
+
+// GetTenantProfileRaw performs the request and returns the raw HTTP response.
+func (c *RawClient) GetTenantProfileRaw(ctx context.Context, params *GetTenantProfileParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	return c.client.GetTenantProfile(ctx, params, reqEditors...)
+}
+
+// GetTenantProfile request returning *GetTenantProfileResponse
+func (c *ClientWithResponses) GetTenantProfile(ctx context.Context, params *GetTenantProfileParams, reqEditors ...RequestEditorFn) (*GetTenantProfileResponse, error) {
+	rsp, err := c.client.GetTenantProfile(ctx, params, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseGetTenantProfileResponse(rsp)
 }
 
 // UpdateSecretsWithBodyRaw performs the request and returns the raw HTTP response.
@@ -19650,6 +19786,32 @@ func ParseUploadLogoResponse(rsp *http.Response) (*UploadLogoResponse, error) {
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
 		var dest TenantLogoResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseGetTenantProfileResponse parses an HTTP response from a GetTenantProfile call
+func ParseGetTenantProfileResponse(rsp *http.Response) (*GetTenantProfileResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &GetTenantProfileResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest TenantProfileResponse
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
