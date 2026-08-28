@@ -75,6 +75,49 @@ func TestCreateInvoiceContract(t *testing.T) {
 	}
 }
 
+func TestDocumentRequestSupportsOptionalClientAndReceiver(t *testing.T) {
+	clientID := int64(42)
+	commercialName := "Cliente contado"
+	request := DocumentRequest{
+		ClientId: &clientID,
+		Client: &ClientRequest{
+			LegalIdentification: LegalIdentificationRequest{Type: "01", Number: "112345678"},
+			Name:                "Juan Pérez",
+		},
+		Receiver: &ClientReceiverRequest{CommercialName: &commercialName},
+		Items:    []DocumentItemRequest{},
+	}
+
+	encoded, err := json.Marshal(request)
+	if err != nil {
+		t.Fatal(err)
+	}
+	var payload map[string]any
+	if err := json.Unmarshal(encoded, &payload); err != nil {
+		t.Fatal(err)
+	}
+	if got := payload["clientId"]; got != float64(clientID) {
+		t.Fatalf("clientId = %#v", got)
+	}
+	clientPayload, ok := payload["client"].(map[string]any)
+	if !ok {
+		t.Fatalf("client = %#v", payload["client"])
+	}
+	if clientPayload["name"] != request.Client.Name {
+		t.Fatalf("client.name = %#v", clientPayload["name"])
+	}
+	if _, ok := clientPayload["legalIdentification"].(map[string]any); !ok {
+		t.Fatalf("client.legalIdentification = %#v", clientPayload["legalIdentification"])
+	}
+	receiverPayload, ok := payload["receiver"].(map[string]any)
+	if !ok || receiverPayload["commercialName"] != commercialName {
+		t.Fatalf("receiver = %#v", payload["receiver"])
+	}
+	if _, ok := payload["receiverId"]; ok {
+		t.Fatal("receiverId should be omitted when it is nil")
+	}
+}
+
 func TestDocumentResponseRejectsTimestampWithoutOffset(t *testing.T) {
 	timestampFields := []string{
 		"issueDate", "paidAt", "paymentDueDate", "sentToHaciendaAt", "acceptedByHaciendaAt",

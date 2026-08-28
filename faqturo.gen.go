@@ -2794,7 +2794,11 @@ type DocumentRequest struct {
 	BranchId *int64 `json:"branchId,omitempty"`
 
 	// CashRegisterId Opcional. Si se envia, la sucursal se deriva de la caja y se guardan los codigos historicos.
-	CashRegisterId *int64 `json:"cashRegisterId,omitempty"`
+	CashRegisterId *int64         `json:"cashRegisterId,omitempty"`
+	Client         *ClientRequest `json:"client,omitempty"`
+
+	// ClientId ID del cliente persistido. Opcional si se envia client.
+	ClientId *int64 `json:"clientId,omitempty"`
 
 	// CreditTerm Requerido cuando saleCondition=02 o 10. Para 10 representa de 1 a 90 dias.
 	CreditTerm *int32 `json:"creditTerm,omitempty"`
@@ -2820,11 +2824,12 @@ type DocumentRequest struct {
 
 	// PaymentMethods Opcional por defecto; requerido para tipos de documento que exigen medio de pago. Maximo 4.
 	PaymentMethods *[]DocumentPaymentMethodRequest `json:"paymentMethods,omitempty"`
+	Receiver       *ClientReceiverRequest          `json:"receiver,omitempty"`
 
 	// ReceiverActivityCode Codigo CIIU4 del receptor. Opcional para FE/FEC/NC/ND y derivable del receptor; no debe enviarse en factura de exportacion ni tiquete.
 	ReceiverActivityCode *string `json:"receiverActivityCode,omitempty"`
 
-	// ReceiverId ID del receptor del cliente. Requerido para FE, NC, ND y otros documentos con receptor; omitido en casos donde Hacienda no permite receptor.
+	// ReceiverId ID del receptor persistido. Opcional para FE, NC, ND y REP cuando el receptor se resuelve desde client, receiver o factura original.
 	ReceiverId *int64 `json:"receiverId,omitempty"`
 
 	// ReferenceInformation Opcional por defecto. Para notas de credito/debito con documento especifico, incluir referencia al documento original; maximo 10.

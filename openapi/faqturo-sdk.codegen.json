@@ -1966,6 +1966,16 @@
             "minimum": 1,
             "type": "integer"
           },
+          "client": {
+            "$ref": "#/components/schemas/ClientRequest",
+            "description": "Identidad del receptor cuando no se envia clientId o receiverId."
+          },
+          "clientId": {
+            "description": "ID del cliente persistido. Opcional si se envia client.",
+            "format": "int64",
+            "minimum": 1,
+            "type": "integer"
+          },
           "creditTerm": {
             "description": "Requerido cuando saleCondition=02 o 10. Para 10 representa de 1 a 90 dias.",
             "example": 30,
@@ -2035,6 +2045,10 @@
             "minItems": 0,
             "type": "array"
           },
+          "receiver": {
+            "$ref": "#/components/schemas/ClientReceiverRequest",
+            "description": "Datos opcionales del receptor cuando no se envia receiverId."
+          },
           "receiverActivityCode": {
             "description": "Codigo CIIU4 del receptor. Opcional para FE/FEC/NC/ND y derivable del receptor; no debe enviarse en factura de exportacion ni tiquete.",
             "example": "4530.0",
@@ -2042,7 +2056,7 @@
             "type": "string"
           },
           "receiverId": {
-            "description": "ID del receptor del cliente. Requerido para FE, NC, ND y otros documentos con receptor; omitido en casos donde Hacienda no permite receptor.",
+            "description": "ID del receptor persistido. Opcional para FE, NC, ND y REP cuando el receptor se resuelve desde client, receiver o factura original.",
             "format": "int64",
             "minimum": 1,
             "type": "integer"

@@ -6901,8 +6901,22 @@
           "receiverId" : {
             "type" : "integer",
             "format" : "int64",
-            "description" : "ID del receptor del cliente. Requerido para FE, NC, ND y otros documentos con receptor; omitido en casos donde Hacienda no permite receptor.",
+            "description" : "ID del receptor persistido. Opcional para FE, NC, ND y REP cuando el receptor se resuelve desde client, receiver o factura original.",
             "minimum" : 1
+          },
+          "clientId" : {
+            "type" : "integer",
+            "format" : "int64",
+            "description" : "ID del cliente persistido. Opcional si se envia client.",
+            "minimum" : 1
+          },
+          "client" : {
+            "$ref" : "#/components/schemas/ClientRequest",
+            "description" : "Identidad del receptor cuando no se envia clientId o receiverId."
+          },
+          "receiver" : {
+            "$ref" : "#/components/schemas/ClientReceiverRequest",
+            "description" : "Datos opcionales del receptor cuando no se envia receiverId."
           },
           "issuerActivityCode" : {
             "type" : "string",
