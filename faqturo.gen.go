@@ -2345,12 +2345,14 @@ type ClientReceiverResponse struct {
 
 // ClientRequest defines model for ClientRequest.
 type ClientRequest struct {
+	Email               *openapi_types.Email       `json:"email,omitempty"`
 	LegalIdentification LegalIdentificationRequest `json:"legalIdentification"`
 	Name                string                     `json:"name"`
 }
 
 // ClientResponse defines model for ClientResponse.
 type ClientResponse struct {
+	Email               *openapi_types.Email         `json:"email,omitempty"`
 	Id                  *int64                       `json:"id,omitempty"`
 	LegalIdentification *LegalIdentificationResponse `json:"legalIdentification,omitempty"`
 	Name                *string                      `json:"name,omitempty"`
@@ -2359,6 +2361,7 @@ type ClientResponse struct {
 
 // ClientUpdateRequest defines model for ClientUpdateRequest.
 type ClientUpdateRequest struct {
+	Email               *openapi_types.Email        `json:"email,omitempty"`
 	LegalIdentification *LegalIdentificationRequest `json:"legalIdentification,omitempty"`
 	Name                *string                     `json:"name,omitempty"`
 }
@@ -2797,7 +2800,7 @@ type DocumentRequest struct {
 	CashRegisterId *int64         `json:"cashRegisterId,omitempty"`
 	Client         *ClientRequest `json:"client,omitempty"`
 
-	// ClientId ID del cliente persistido. Opcional si se envia client.
+	// ClientId ID del cliente persistido. Opcional si se envía client.
 	ClientId *int64 `json:"clientId,omitempty"`
 
 	// CreditTerm Requerido cuando saleCondition=02 o 10. Para 10 representa de 1 a 90 dias.

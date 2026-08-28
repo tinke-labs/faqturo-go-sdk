@@ -451,6 +451,12 @@
       },
       "ClientRequest": {
         "properties": {
+          "email": {
+            "format": "email",
+            "maxLength": 120,
+            "minLength": 0,
+            "type": "string"
+          },
           "legalIdentification": {
             "$ref": "#/components/schemas/LegalIdentificationRequest"
           },
@@ -468,6 +474,11 @@
       },
       "ClientResponse": {
         "properties": {
+          "email": {
+            "format": "email",
+            "maxLength": 120,
+            "type": "string"
+          },
           "id": {
             "format": "int64",
             "type": "integer"
@@ -489,6 +500,12 @@
       },
       "ClientUpdateRequest": {
         "properties": {
+          "email": {
+            "format": "email",
+            "maxLength": 120,
+            "minLength": 0,
+            "type": "string"
+          },
           "legalIdentification": {
             "$ref": "#/components/schemas/LegalIdentificationRequest"
           },
@@ -1967,11 +1984,10 @@
             "type": "integer"
           },
           "client": {
-            "$ref": "#/components/schemas/ClientRequest",
-            "description": "Identidad del receptor cuando no se envia clientId o receiverId."
+            "$ref": "#/components/schemas/ClientRequest"
           },
           "clientId": {
-            "description": "ID del cliente persistido. Opcional si se envia client.",
+            "description": "ID del cliente persistido. Opcional si se envía client.",
             "format": "int64",
             "minimum": 1,
             "type": "integer"
@@ -2047,7 +2063,7 @@
           },
           "receiver": {
             "$ref": "#/components/schemas/ClientReceiverRequest",
-            "description": "Datos opcionales del receptor cuando no se envia receiverId."
+            "description": "Datos opcionales del receptor cuando no se envía receiverId."
           },
           "receiverActivityCode": {
             "description": "Codigo CIIU4 del receptor. Opcional para FE/FEC/NC/ND y derivable del receptor; no debe enviarse en factura de exportacion ni tiquete.",

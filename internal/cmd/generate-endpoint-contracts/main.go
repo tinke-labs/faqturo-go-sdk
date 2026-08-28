@@ -209,6 +209,8 @@ func sampleSchema(schema map[string]any, components map[string]any, seen map[str
 			return "2026-08-11T10:16:58.882370375-06:00"
 		case "date":
 			return "2026-08-11"
+		case "email":
+			return "contract@example.com"
 		default:
 			return "contract"
 		}

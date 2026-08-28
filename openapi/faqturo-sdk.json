@@ -6505,6 +6505,26 @@
         },
         "required" : [ "value" ]
       },
+      "ClientRequest" : {
+        "type" : "object",
+        "properties" : {
+          "legalIdentification" : {
+            "$ref" : "#/components/schemas/LegalIdentificationRequest"
+          },
+          "name" : {
+            "type" : "string",
+            "maxLength" : 120,
+            "minLength" : 1
+          },
+          "email" : {
+            "type" : "string",
+            "format" : "email",
+            "maxLength" : 120,
+            "minLength" : 0
+          }
+        },
+        "required" : [ "legalIdentification", "name" ]
+      },
       "DocumentItemBundleItemRequest" : {
         "type" : "object",
         "properties" : {
@@ -6907,16 +6927,15 @@
           "clientId" : {
             "type" : "integer",
             "format" : "int64",
-            "description" : "ID del cliente persistido. Opcional si se envia client.",
+            "description" : "ID del cliente persistido. Opcional si se envía client.",
             "minimum" : 1
           },
           "client" : {
-            "$ref" : "#/components/schemas/ClientRequest",
-            "description" : "Identidad del receptor cuando no se envia clientId o receiverId."
+            "$ref" : "#/components/schemas/ClientRequest"
           },
           "receiver" : {
             "$ref" : "#/components/schemas/ClientReceiverRequest",
-            "description" : "Datos opcionales del receptor cuando no se envia receiverId."
+            "description" : "Datos opcionales del receptor cuando no se envía receiverId."
           },
           "issuerActivityCode" : {
             "type" : "string",
@@ -7182,34 +7201,20 @@
           "vatSpecialCalculationDataValid" : {
             "type" : "boolean"
           },
-          "alcoholicBeverageCalculationDataValid" : {
-            "type" : "boolean"
-          },
-          "taxRatePresentWhenRequiredForCalculation" : {
-            "type" : "boolean"
-          },
           "vatRateCodeValidForVatTax" : {
             "type" : "boolean"
           },
           "otherTaxDataValid" : {
             "type" : "boolean"
+          },
+          "alcoholicBeverageCalculationDataValid" : {
+            "type" : "boolean"
+          },
+          "taxRatePresentWhenRequiredForCalculation" : {
+            "type" : "boolean"
           }
         },
         "required" : [ "taxCode" ]
-      },
-      "ClientRequest" : {
-        "type" : "object",
-        "properties" : {
-          "legalIdentification" : {
-            "$ref" : "#/components/schemas/LegalIdentificationRequest"
-          },
-          "name" : {
-            "type" : "string",
-            "maxLength" : 120,
-            "minLength" : 1
-          }
-        },
-        "required" : [ "legalIdentification", "name" ]
       },
       "ClientResponse" : {
         "type" : "object",
@@ -7223,6 +7228,11 @@
           },
           "name" : {
             "type" : "string"
+          },
+          "email" : {
+            "type" : "string",
+            "format" : "email",
+            "maxLength" : 120
           },
           "receivers" : {
             "type" : "array",
@@ -7363,6 +7373,12 @@
           },
           "name" : {
             "type" : "string",
+            "maxLength" : 120,
+            "minLength" : 0
+          },
+          "email" : {
+            "type" : "string",
+            "format" : "email",
             "maxLength" : 120,
             "minLength" : 0
           }
