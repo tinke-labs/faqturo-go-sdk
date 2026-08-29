@@ -341,6 +341,75 @@ func (e DocumentPaymentStatementDocumentResponseCurrency) Valid() bool {
 	}
 }
 
+// Defines values for DocumentPreviewLineResponseReason.
+const (
+	CABYSNOTCOVERED        DocumentPreviewLineResponseReason = "CABYS_NOT_COVERED"
+	MULTIPLEMATCHES        DocumentPreviewLineResponseReason = "MULTIPLE_MATCHES"
+	NOCLIENT               DocumentPreviewLineResponseReason = "NO_CLIENT"
+	NOCURRENTAUTHORIZATION DocumentPreviewLineResponseReason = "NO_CURRENT_AUTHORIZATION"
+	NOTAX                  DocumentPreviewLineResponseReason = "NO_TAX"
+)
+
+// Valid indicates whether the value is a known member of the DocumentPreviewLineResponseReason enum.
+func (e DocumentPreviewLineResponseReason) Valid() bool {
+	switch e {
+	case CABYSNOTCOVERED:
+		return true
+	case MULTIPLEMATCHES:
+		return true
+	case NOCLIENT:
+		return true
+	case NOCURRENTAUTHORIZATION:
+		return true
+	case NOTAX:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for DocumentPreviewLineResponseStatus.
+const (
+	APPLIED           DocumentPreviewLineResponseStatus = "APPLIED"
+	NOTAPPLICABLE     DocumentPreviewLineResponseStatus = "NOT_APPLICABLE"
+	REQUIRESSELECTION DocumentPreviewLineResponseStatus = "REQUIRES_SELECTION"
+)
+
+// Valid indicates whether the value is a known member of the DocumentPreviewLineResponseStatus enum.
+func (e DocumentPreviewLineResponseStatus) Valid() bool {
+	switch e {
+	case APPLIED:
+		return true
+	case NOTAPPLICABLE:
+		return true
+	case REQUIRESSELECTION:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for DocumentPreviewRequestCurrency.
+const (
+	DocumentPreviewRequestCurrencyCRC DocumentPreviewRequestCurrency = "CRC"
+	DocumentPreviewRequestCurrencyEUR DocumentPreviewRequestCurrency = "EUR"
+	DocumentPreviewRequestCurrencyUSD DocumentPreviewRequestCurrency = "USD"
+)
+
+// Valid indicates whether the value is a known member of the DocumentPreviewRequestCurrency enum.
+func (e DocumentPreviewRequestCurrency) Valid() bool {
+	switch e {
+	case DocumentPreviewRequestCurrencyCRC:
+		return true
+	case DocumentPreviewRequestCurrencyEUR:
+		return true
+	case DocumentPreviewRequestCurrencyUSD:
+		return true
+	default:
+		return false
+	}
+}
+
 // Defines values for DocumentRequestCurrency.
 const (
 	DocumentRequestCurrencyCRC DocumentRequestCurrency = "CRC"
@@ -400,19 +469,19 @@ func (e DocumentRequestType) Valid() bool {
 
 // Defines values for DocumentResponseCurrency.
 const (
-	CRC DocumentResponseCurrency = "CRC"
-	EUR DocumentResponseCurrency = "EUR"
-	USD DocumentResponseCurrency = "USD"
+	DocumentResponseCurrencyCRC DocumentResponseCurrency = "CRC"
+	DocumentResponseCurrencyEUR DocumentResponseCurrency = "EUR"
+	DocumentResponseCurrencyUSD DocumentResponseCurrency = "USD"
 )
 
 // Valid indicates whether the value is a known member of the DocumentResponseCurrency enum.
 func (e DocumentResponseCurrency) Valid() bool {
 	switch e {
-	case CRC:
+	case DocumentResponseCurrencyCRC:
 		return true
-	case EUR:
+	case DocumentResponseCurrencyEUR:
 		return true
-	case USD:
+	case DocumentResponseCurrencyUSD:
 		return true
 	default:
 		return false
@@ -1478,6 +1547,21 @@ func (e CreateInvoiceParamsAPIVersion) Valid() bool {
 	}
 }
 
+// Defines values for PreviewParamsAPIVersion.
+const (
+	PreviewParamsAPIVersionV1 PreviewParamsAPIVersion = "v1"
+)
+
+// Valid indicates whether the value is a known member of the PreviewParamsAPIVersion enum.
+func (e PreviewParamsAPIVersion) Valid() bool {
+	switch e {
+	case PreviewParamsAPIVersionV1:
+		return true
+	default:
+		return false
+	}
+}
+
 // Defines values for CreatePurchaseInvoiceParamsAPIVersion.
 const (
 	CreatePurchaseInvoiceParamsAPIVersionV1 CreatePurchaseInvoiceParamsAPIVersion = "v1"
@@ -2173,13 +2257,13 @@ func (e GetLogsParamsAPIVersion) Valid() bool {
 
 // Defines values for TestWebhookParamsAPIVersion.
 const (
-	V1 TestWebhookParamsAPIVersion = "v1"
+	TestWebhookParamsAPIVersionV1 TestWebhookParamsAPIVersion = "v1"
 )
 
 // Valid indicates whether the value is a known member of the TestWebhookParamsAPIVersion enum.
 func (e TestWebhookParamsAPIVersion) Valid() bool {
 	switch e {
-	case V1:
+	case TestWebhookParamsAPIVersionV1:
 		return true
 	default:
 		return false
@@ -2751,6 +2835,50 @@ type DocumentPaymentStatementResponse struct {
 type DocumentPaymentVoidRequest struct {
 	Reason   string  `json:"reason"`
 	VoidedBy *string `json:"voidedBy,omitempty"`
+}
+
+// DocumentPreviewLineResponse defines model for DocumentPreviewLineResponse.
+type DocumentPreviewLineResponse struct {
+	Discount             *Decimal                           `json:"discount,omitempty"`
+	EligibleExonerations *[]ClientExonerationResponse       `json:"eligibleExonerations,omitempty"`
+	Exoneration          *Decimal                           `json:"exoneration,omitempty"`
+	ExonerationRate      *Decimal                           `json:"exonerationRate,omitempty"`
+	GrossTax             *Decimal                           `json:"grossTax,omitempty"`
+	LineNumber           *string                            `json:"lineNumber,omitempty"`
+	NetTax               *Decimal                           `json:"netTax,omitempty"`
+	Reason               *DocumentPreviewLineResponseReason `json:"reason,omitempty"`
+	SelectedExoneration  *ClientExonerationResponse         `json:"selectedExoneration,omitempty"`
+	Status               *DocumentPreviewLineResponseStatus `json:"status,omitempty"`
+	Subtotal             *Decimal                           `json:"subtotal,omitempty"`
+	Total                *Decimal                           `json:"total,omitempty"`
+}
+
+// DocumentPreviewLineResponseReason defines model for DocumentPreviewLineResponse.Reason.
+type DocumentPreviewLineResponseReason string
+
+// DocumentPreviewLineResponseStatus defines model for DocumentPreviewLineResponse.Status.
+type DocumentPreviewLineResponseStatus string
+
+// DocumentPreviewRequest Solicitud de calculo fiscal autoritativo sin persistencia ni emision.
+type DocumentPreviewRequest struct {
+	ClientId     *int64                          `json:"clientId,omitempty"`
+	Currency     *DocumentPreviewRequestCurrency `json:"currency,omitempty"`
+	Items        []DocumentItemRequest           `json:"items"`
+	OtherCharges *[]OtherChargeRequest           `json:"otherCharges,omitempty"`
+}
+
+// DocumentPreviewRequestCurrency defines model for DocumentPreviewRequest.Currency.
+type DocumentPreviewRequestCurrency string
+
+// DocumentPreviewResponse defines model for DocumentPreviewResponse.
+type DocumentPreviewResponse struct {
+	Discount    *Decimal                       `json:"discount,omitempty"`
+	Exoneration *Decimal                       `json:"exoneration,omitempty"`
+	GrossTax    *Decimal                       `json:"grossTax,omitempty"`
+	Lines       *[]DocumentPreviewLineResponse `json:"lines,omitempty"`
+	NetTax      *Decimal                       `json:"netTax,omitempty"`
+	Subtotal    *Decimal                       `json:"subtotal,omitempty"`
+	Total       *Decimal                       `json:"total,omitempty"`
 }
 
 // DocumentReferenceInformationDto defines model for DocumentReferenceInformationDto.
@@ -4090,6 +4218,14 @@ type CreateInvoiceParams struct {
 // CreateInvoiceParamsAPIVersion defines parameters for CreateInvoice.
 type CreateInvoiceParamsAPIVersion string
 
+// PreviewParams defines parameters for Preview.
+type PreviewParams struct {
+	APIVersion *PreviewParamsAPIVersion `json:"API-Version,omitempty"`
+}
+
+// PreviewParamsAPIVersion defines parameters for Preview.
+type PreviewParamsAPIVersion string
+
 // CreatePurchaseInvoiceParams defines parameters for CreatePurchaseInvoice.
 type CreatePurchaseInvoiceParams struct {
 	IdempotencyKey *string                                `json:"Idempotency-Key,omitempty"`
@@ -4542,6 +4678,9 @@ type CreateExportInvoiceJSONRequestBody = DocumentRequest
 // CreateInvoiceJSONRequestBody defines body for CreateInvoice for application/json ContentType.
 type CreateInvoiceJSONRequestBody = DocumentRequest
 
+// PreviewJSONRequestBody defines body for Preview for application/json ContentType.
+type PreviewJSONRequestBody = DocumentPreviewRequest
+
 // CreatePurchaseInvoiceJSONRequestBody defines body for CreatePurchaseInvoice for application/json ContentType.
 type CreatePurchaseInvoiceJSONRequestBody = DocumentRequest
 
@@ -4855,6 +4994,11 @@ type ClientInterface interface {
 	CreateInvoiceWithBody(ctx context.Context, params *CreateInvoiceParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	CreateInvoice(ctx context.Context, params *CreateInvoiceParams, body CreateInvoiceJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// PreviewWithBody request with any body
+	PreviewWithBody(ctx context.Context, params *PreviewParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	Preview(ctx context.Context, params *PreviewParams, body PreviewJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// CreatePurchaseInvoiceWithBody request with any body
 	CreatePurchaseInvoiceWithBody(ctx context.Context, params *CreatePurchaseInvoiceParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
@@ -5844,6 +5988,30 @@ func (c *Client) CreateInvoiceWithBody(ctx context.Context, params *CreateInvoic
 
 func (c *Client) CreateInvoice(ctx context.Context, params *CreateInvoiceParams, body CreateInvoiceJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewCreateInvoiceRequest(c.Server, params, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) PreviewWithBody(ctx context.Context, params *PreviewParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewPreviewRequestWithBody(c.Server, params, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) Preview(ctx context.Context, params *PreviewParams, body PreviewJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewPreviewRequest(c.Server, params, body)
 	if err != nil {
 		return nil, err
 	}
@@ -9793,6 +9961,61 @@ func NewCreateInvoiceRequestWithBody(server string, params *CreateInvoiceParams,
 	return req, nil
 }
 
+// NewPreviewRequest calls the generic Preview builder with application/json body
+func NewPreviewRequest(server string, params *PreviewParams, body PreviewJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewPreviewRequestWithBody(server, params, "application/json", bodyReader)
+}
+
+// NewPreviewRequestWithBody generates requests for Preview with any type of body
+func NewPreviewRequestWithBody(server string, params *PreviewParams, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/documents/preview")
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPost, queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
+
+	if params != nil {
+
+		if params.APIVersion != nil {
+			var headerParam0 string
+
+			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "API-Version", *params.APIVersion, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: ""})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("API-Version", headerParam0)
+		}
+
+	}
+
+	return req, nil
+}
+
 // NewCreatePurchaseInvoiceRequest calls the generic CreatePurchaseInvoice builder with application/json body
 func NewCreatePurchaseInvoiceRequest(server string, params *CreatePurchaseInvoiceParams, body CreatePurchaseInvoiceJSONRequestBody) (*http.Request, error) {
 	var bodyReader io.Reader
@@ -12596,6 +12819,11 @@ type ClientWithResponsesInterface interface {
 
 	CreateInvoice(ctx context.Context, params *CreateInvoiceParams, body CreateInvoiceJSONRequestBody, reqEditors ...RequestEditorFn) (*CreateInvoiceResponse, error)
 
+	// PreviewWithBody request with any body
+	PreviewWithBody(ctx context.Context, params *PreviewParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*PreviewResponse, error)
+
+	Preview(ctx context.Context, params *PreviewParams, body PreviewJSONRequestBody, reqEditors ...RequestEditorFn) (*PreviewResponse, error)
+
 	// CreatePurchaseInvoiceWithBody request with any body
 	CreatePurchaseInvoiceWithBody(ctx context.Context, params *CreatePurchaseInvoiceParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreatePurchaseInvoiceResponse, error)
 
@@ -14321,6 +14549,36 @@ func (r CreateInvoiceResponse) StatusCode() int {
 
 // ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
 func (r CreateInvoiceResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type PreviewResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	JSON200      *DocumentPreviewResponse
+}
+
+// Status returns HTTPResponse.Status
+func (r PreviewResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r PreviewResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r PreviewResponse) ContentType() string {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.Header.Get("Content-Type")
 	}
@@ -16666,6 +16924,32 @@ func (c *ClientWithResponses) CreateInvoice(ctx context.Context, params *CreateI
 	return ParseCreateInvoiceResponse(rsp)
 }
 
+// PreviewWithBodyRaw performs the request and returns the raw HTTP response.
+func (c *RawClient) PreviewWithBodyRaw(ctx context.Context, params *PreviewParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	return c.client.PreviewWithBody(ctx, params, contentType, body, reqEditors...)
+}
+
+// PreviewWithBody request with arbitrary body returning *PreviewResponse
+func (c *ClientWithResponses) PreviewWithBody(ctx context.Context, params *PreviewParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*PreviewResponse, error) {
+	rsp, err := c.client.PreviewWithBody(ctx, params, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParsePreviewResponse(rsp)
+}
+
+func (c *RawClient) PreviewRaw(ctx context.Context, params *PreviewParams, body PreviewJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	return c.client.Preview(ctx, params, body, reqEditors...)
+}
+
+func (c *ClientWithResponses) Preview(ctx context.Context, params *PreviewParams, body PreviewJSONRequestBody, reqEditors ...RequestEditorFn) (*PreviewResponse, error) {
+	rsp, err := c.client.Preview(ctx, params, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParsePreviewResponse(rsp)
+}
+
 // CreatePurchaseInvoiceWithBodyRaw performs the request and returns the raw HTTP response.
 func (c *RawClient) CreatePurchaseInvoiceWithBodyRaw(ctx context.Context, params *CreatePurchaseInvoiceParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	return c.client.CreatePurchaseInvoiceWithBody(ctx, params, contentType, body, reqEditors...)
@@ -18826,6 +19110,32 @@ func ParseCreateInvoiceResponse(rsp *http.Response) (*CreateInvoiceResponse, err
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
 		var dest DocumentResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParsePreviewResponse parses an HTTP response from a Preview call
+func ParsePreviewResponse(rsp *http.Response) (*PreviewResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &PreviewResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest DocumentPreviewResponse
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}

@@ -1768,6 +1768,47 @@
         } ]
       }
     },
+    "/documents/preview" : {
+      "post" : {
+        "tags" : [ "Documents" ],
+        "summary" : "Previsualizar calculo fiscal sin persistir ni emitir",
+        "operationId" : "preview",
+        "parameters" : [ {
+          "name" : "API-Version",
+          "in" : "header",
+          "schema" : {
+            "type" : "string",
+            "default" : "1.0.0",
+            "enum" : [ "v1" ]
+          }
+        } ],
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/DocumentPreviewRequest"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/DocumentPreviewResponse"
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "apiKeyAuth" : [ ]
+        } ]
+      }
+    },
     "/documents/invoice" : {
       "post" : {
         "tags" : [ "Documents" ],
@@ -7204,54 +7245,49 @@
           "vatRateCodeValidForVatTax" : {
             "type" : "boolean"
           },
-          "otherTaxDataValid" : {
-            "type" : "boolean"
-          },
           "alcoholicBeverageCalculationDataValid" : {
             "type" : "boolean"
           },
           "taxRatePresentWhenRequiredForCalculation" : {
             "type" : "boolean"
+          },
+          "otherTaxDataValid" : {
+            "type" : "boolean"
           }
         },
         "required" : [ "taxCode" ]
       },
-      "ClientResponse" : {
+      "DocumentPreviewRequest" : {
         "type" : "object",
+        "description" : "Solicitud de calculo fiscal autoritativo sin persistencia ni emision.",
         "properties" : {
-          "id" : {
+          "clientId" : {
             "type" : "integer",
-            "format" : "int64"
+            "format" : "int64",
+            "minimum" : 1
           },
-          "legalIdentification" : {
-            "$ref" : "#/components/schemas/LegalIdentificationResponse"
-          },
-          "name" : {
-            "type" : "string"
-          },
-          "email" : {
+          "currency" : {
             "type" : "string",
-            "format" : "email",
-            "maxLength" : 120
+            "enum" : [ "CRC", "USD", "EUR" ]
           },
-          "receivers" : {
+          "items" : {
             "type" : "array",
             "items" : {
-              "$ref" : "#/components/schemas/ClientReceiverResponse"
-            }
-          }
-        }
-      },
-      "ClientExonerationRequest" : {
-        "type" : "object",
-        "properties" : {
-          "documentNumber" : {
-            "type" : "string",
-            "maxLength" : 100,
-            "minLength" : 0
+              "$ref" : "#/components/schemas/DocumentItemRequest"
+            },
+            "maxItems" : 1000,
+            "minItems" : 0
+          },
+          "otherCharges" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/OtherChargeRequest"
+            },
+            "maxItems" : 15,
+            "minItems" : 0
           }
         },
-        "required" : [ "documentNumber" ]
+        "required" : [ "items" ]
       },
       "ClientExonerationResponse" : {
         "type" : "object",
@@ -7325,6 +7361,131 @@
             "type" : "boolean"
           }
         }
+      },
+      "DocumentPreviewLineResponse" : {
+        "type" : "object",
+        "properties" : {
+          "lineNumber" : {
+            "type" : "string"
+          },
+          "status" : {
+            "type" : "string",
+            "enum" : [ "APPLIED", "NOT_APPLICABLE", "REQUIRES_SELECTION" ]
+          },
+          "reason" : {
+            "type" : "string",
+            "enum" : [ "NO_CLIENT", "NO_TAX", "NO_CURRENT_AUTHORIZATION", "CABYS_NOT_COVERED", "MULTIPLE_MATCHES" ]
+          },
+          "selectedExoneration" : {
+            "$ref" : "#/components/schemas/ClientExonerationResponse"
+          },
+          "eligibleExonerations" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/ClientExonerationResponse"
+            }
+          },
+          "exonerationRate" : {
+            "type" : "number",
+            "format" : "decimal"
+          },
+          "subtotal" : {
+            "type" : "number",
+            "format" : "decimal"
+          },
+          "discount" : {
+            "type" : "number",
+            "format" : "decimal"
+          },
+          "grossTax" : {
+            "type" : "number",
+            "format" : "decimal"
+          },
+          "exoneration" : {
+            "type" : "number",
+            "format" : "decimal"
+          },
+          "netTax" : {
+            "type" : "number",
+            "format" : "decimal"
+          },
+          "total" : {
+            "type" : "number",
+            "format" : "decimal"
+          }
+        }
+      },
+      "DocumentPreviewResponse" : {
+        "type" : "object",
+        "properties" : {
+          "subtotal" : {
+            "type" : "number",
+            "format" : "decimal"
+          },
+          "discount" : {
+            "type" : "number",
+            "format" : "decimal"
+          },
+          "grossTax" : {
+            "type" : "number",
+            "format" : "decimal"
+          },
+          "exoneration" : {
+            "type" : "number",
+            "format" : "decimal"
+          },
+          "netTax" : {
+            "type" : "number",
+            "format" : "decimal"
+          },
+          "total" : {
+            "type" : "number",
+            "format" : "decimal"
+          },
+          "lines" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/DocumentPreviewLineResponse"
+            }
+          }
+        }
+      },
+      "ClientResponse" : {
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "type" : "integer",
+            "format" : "int64"
+          },
+          "legalIdentification" : {
+            "$ref" : "#/components/schemas/LegalIdentificationResponse"
+          },
+          "name" : {
+            "type" : "string"
+          },
+          "email" : {
+            "type" : "string",
+            "format" : "email",
+            "maxLength" : 120
+          },
+          "receivers" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/ClientReceiverResponse"
+            }
+          }
+        }
+      },
+      "ClientExonerationRequest" : {
+        "type" : "object",
+        "properties" : {
+          "documentNumber" : {
+            "type" : "string",
+            "maxLength" : 100,
+            "minLength" : 0
+          }
+        },
+        "required" : [ "documentNumber" ]
       },
       "TenantUpdateRequest" : {
         "type" : "object",
