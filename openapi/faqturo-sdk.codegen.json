@@ -2896,6 +2896,116 @@
         },
         "type": "object"
       },
+      "FiscalReportExportItemResponse": {
+        "properties": {
+          "applicableExpenseAmount": {
+            "format": "decimal",
+            "type": "number",
+            "x-go-type": "Decimal"
+          },
+          "applicableTaxCredit": {
+            "format": "decimal",
+            "type": "number",
+            "x-go-type": "Decimal"
+          },
+          "classificationStatus": {
+            "type": "string"
+          },
+          "consecutive": {
+            "type": "string"
+          },
+          "counterpartyIdNumber": {
+            "type": "string"
+          },
+          "counterpartyName": {
+            "type": "string"
+          },
+          "date": {
+            "format": "date",
+            "type": "string"
+          },
+          "destinationType": {
+            "type": "string"
+          },
+          "documentKey": {
+            "type": "string"
+          },
+          "documentType": {
+            "type": "string"
+          },
+          "exclusionReason": {
+            "type": "string"
+          },
+          "inclusionStatus": {
+            "type": "string"
+          },
+          "issuerActivityCode": {
+            "type": "string"
+          },
+          "itemType": {
+            "type": "string"
+          },
+          "lineDescription": {
+            "type": "string"
+          },
+          "lineNumber": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "rate": {
+            "format": "decimal",
+            "type": "number",
+            "x-go-type": "Decimal"
+          },
+          "receivedDocumentId": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "receiverActivityCode": {
+            "type": "string"
+          },
+          "receiverMessageDocumentId": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "rowId": {
+            "type": "string"
+          },
+          "sourceLineId": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "supportedVat": {
+            "format": "decimal",
+            "type": "number",
+            "x-go-type": "Decimal"
+          },
+          "taxableBase": {
+            "format": "decimal",
+            "type": "number",
+            "x-go-type": "Decimal"
+          },
+          "vatCondition": {
+            "type": "string"
+          },
+          "vatCreditType": {
+            "type": "string"
+          },
+          "vatExemptionType": {
+            "type": "string"
+          },
+          "vatRateCode": {
+            "type": "string"
+          },
+          "vatUsageType": {
+            "type": "string"
+          },
+          "xmlReference": {
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
       "FiscalReportFormMatrixLineResponse": {
         "properties": {
           "evidence": {
@@ -2985,6 +3095,28 @@
         },
         "type": "object"
       },
+      "FiscalReportOfficialBoxResponse": {
+        "properties": {
+          "amount": {
+            "format": "decimal",
+            "type": "number",
+            "x-go-type": "Decimal"
+          },
+          "code": {
+            "type": "string"
+          },
+          "derivation": {
+            "type": "string"
+          },
+          "label": {
+            "type": "string"
+          },
+          "section": {
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
       "FiscalReportResponse": {
         "properties": {
           "activitySummary": {
@@ -2993,12 +3125,22 @@
             },
             "type": "array"
           },
+          "calculationVersion": {
+            "type": "string"
+          },
           "compliant": {
+            "deprecated": true,
             "type": "boolean"
           },
           "documentLines": {
             "items": {
               "$ref": "#/components/schemas/FiscalReportDocumentLineResponse"
+            },
+            "type": "array"
+          },
+          "exportItems": {
+            "items": {
+              "$ref": "#/components/schemas/FiscalReportExportItemResponse"
             },
             "type": "array"
           },
@@ -3021,9 +3163,18 @@
             },
             "type": "array"
           },
+          "legalBasisVersion": {
+            "type": "string"
+          },
           "lines": {
             "items": {
               "$ref": "#/components/schemas/FiscalReportLineResponse"
+            },
+            "type": "array"
+          },
+          "officialBoxes": {
+            "items": {
+              "$ref": "#/components/schemas/FiscalReportOfficialBoxResponse"
             },
             "type": "array"
           },
@@ -3032,12 +3183,21 @@
             "type": "number",
             "x-go-type": "Decimal"
           },
+          "readinessStatus": {
+            "type": "string"
+          },
           "to": {
             "format": "date",
             "type": "string"
           },
           "totals": {
             "$ref": "#/components/schemas/FiscalReportTotalsResponse"
+          },
+          "validations": {
+            "items": {
+              "$ref": "#/components/schemas/FiscalReportValidationResponse"
+            },
+            "type": "array"
           },
           "warnings": {
             "items": {
@@ -3089,6 +3249,34 @@
             "format": "decimal",
             "type": "number",
             "x-go-type": "Decimal"
+          }
+        },
+        "type": "object"
+      },
+      "FiscalReportValidationResponse": {
+        "properties": {
+          "code": {
+            "type": "string"
+          },
+          "documentKey": {
+            "type": "string"
+          },
+          "inclusionStatus": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          },
+          "receivedDocumentId": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "severity": {
+            "type": "string"
+          },
+          "sourceLineId": {
+            "format": "int64",
+            "type": "integer"
           }
         },
         "type": "object"
@@ -3652,6 +3840,350 @@
             "format": "decimal",
             "type": "number",
             "x-go-type": "Decimal"
+          }
+        },
+        "type": "object"
+      },
+      "ReceivedFiscalDocumentImportRequest": {
+        "properties": {
+          "declaredCreditAmount": {
+            "format": "decimal",
+            "minimum": 0,
+            "type": "number",
+            "x-go-type": "Decimal"
+          },
+          "declaredExpenseAmount": {
+            "format": "decimal",
+            "minimum": 0,
+            "type": "number",
+            "x-go-type": "Decimal"
+          },
+          "dryRun": {
+            "type": "boolean"
+          },
+          "messageState": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "purchaseExpenseType": {
+            "pattern": "PURCHASE|EXPENSE",
+            "type": "string"
+          },
+          "receiverMessageDocumentId": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "sourceReference": {
+            "type": "string"
+          },
+          "vatCondition": {
+            "pattern": "01|02|03|04|05",
+            "type": "string"
+          },
+          "xml": {
+            "minLength": 1,
+            "type": "string"
+          }
+        },
+        "required": [
+          "xml"
+        ],
+        "type": "object"
+      },
+      "ReceivedFiscalDocumentLineResponse": {
+        "properties": {
+          "accountingCategory": {
+            "type": "string"
+          },
+          "applicableCreditAmount": {
+            "format": "decimal",
+            "type": "number",
+            "x-go-type": "Decimal"
+          },
+          "applicableExpenseAmount": {
+            "format": "decimal",
+            "type": "number",
+            "x-go-type": "Decimal"
+          },
+          "cabysCode": {
+            "type": "string"
+          },
+          "classificationStatus": {
+            "type": "string"
+          },
+          "confirmedAt": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "confirmedBy": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "destinationType": {
+            "type": "string"
+          },
+          "id": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "lineNumber": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "lineTotal": {
+            "format": "decimal",
+            "type": "number",
+            "x-go-type": "Decimal"
+          },
+          "quantity": {
+            "format": "decimal",
+            "type": "number",
+            "x-go-type": "Decimal"
+          },
+          "taxableBase": {
+            "format": "decimal",
+            "type": "number",
+            "x-go-type": "Decimal"
+          },
+          "taxes": {
+            "items": {
+              "$ref": "#/components/schemas/ReceivedFiscalDocumentTaxResponse"
+            },
+            "type": "array"
+          },
+          "vatCreditType": {
+            "type": "string"
+          },
+          "vatExemptionType": {
+            "type": "string"
+          },
+          "vatUsageType": {
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "ReceivedFiscalDocumentResponse": {
+        "properties": {
+          "consecutive": {
+            "type": "string"
+          },
+          "currency": {
+            "type": "string"
+          },
+          "declaredCreditAmount": {
+            "format": "decimal",
+            "type": "number",
+            "x-go-type": "Decimal"
+          },
+          "declaredExpenseAmount": {
+            "format": "decimal",
+            "type": "number",
+            "x-go-type": "Decimal"
+          },
+          "documentKey": {
+            "type": "string"
+          },
+          "existing": {
+            "type": "boolean"
+          },
+          "id": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "ingestionSource": {
+            "type": "string"
+          },
+          "issuedDate": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "issuerActivityCode": {
+            "type": "string"
+          },
+          "issuerIdNumber": {
+            "type": "string"
+          },
+          "issuerIdType": {
+            "type": "string"
+          },
+          "issuerName": {
+            "type": "string"
+          },
+          "lines": {
+            "items": {
+              "$ref": "#/components/schemas/ReceivedFiscalDocumentLineResponse"
+            },
+            "type": "array"
+          },
+          "originalDocumentType": {
+            "type": "string"
+          },
+          "purchaseExpenseType": {
+            "type": "string"
+          },
+          "receiverActivityCode": {
+            "type": "string"
+          },
+          "receiverIdNumber": {
+            "type": "string"
+          },
+          "receiverIdType": {
+            "type": "string"
+          },
+          "receiverMessageDocumentId": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "receiverMessageState": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "receiverName": {
+            "type": "string"
+          },
+          "reconciliationStatus": {
+            "type": "string"
+          },
+          "sourceReference": {
+            "type": "string"
+          },
+          "totalDocument": {
+            "format": "decimal",
+            "type": "number",
+            "x-go-type": "Decimal"
+          },
+          "totalSale": {
+            "format": "decimal",
+            "type": "number",
+            "x-go-type": "Decimal"
+          },
+          "totalTax": {
+            "format": "decimal",
+            "type": "number",
+            "x-go-type": "Decimal"
+          },
+          "vatCondition": {
+            "type": "string"
+          },
+          "xmlSha256": {
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "ReceivedFiscalDocumentTaxResponse": {
+        "properties": {
+          "amount": {
+            "format": "decimal",
+            "type": "number",
+            "x-go-type": "Decimal"
+          },
+          "exoneratedAmount": {
+            "format": "decimal",
+            "type": "number",
+            "x-go-type": "Decimal"
+          },
+          "rate": {
+            "format": "decimal",
+            "type": "number",
+            "x-go-type": "Decimal"
+          },
+          "taxCode": {
+            "type": "string"
+          },
+          "vatRateCode": {
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "ReceivedFiscalLineClassificationRequest": {
+        "properties": {
+          "accountingCategory": {
+            "type": "string"
+          },
+          "applicableCreditAmount": {
+            "format": "decimal",
+            "minimum": 0,
+            "type": "number",
+            "x-go-type": "Decimal"
+          },
+          "applicableExpenseAmount": {
+            "format": "decimal",
+            "minimum": 0,
+            "type": "number",
+            "x-go-type": "Decimal"
+          },
+          "destinationType": {
+            "minLength": 1,
+            "pattern": "IDENTIFIED|UNIDENTIFIED",
+            "type": "string"
+          },
+          "vatCreditType": {
+            "minLength": 1,
+            "pattern": "credito_pleno|sin_derecho|proporcional",
+            "type": "string"
+          },
+          "vatExemptionType": {
+            "pattern": "ley|transitorio|exportacion|exenta|no_sujeta|exonerada|otro",
+            "type": "string"
+          },
+          "vatUsageType": {
+            "minLength": 1,
+            "pattern": "bien|servicio",
+            "type": "string"
+          }
+        },
+        "required": [
+          "destinationType",
+          "vatCreditType",
+          "vatUsageType"
+        ],
+        "type": "object"
+      },
+      "ReceivedFiscalLineClassificationResponse": {
+        "properties": {
+          "accountingCategory": {
+            "type": "string"
+          },
+          "applicableCreditAmount": {
+            "format": "decimal",
+            "type": "number",
+            "x-go-type": "Decimal"
+          },
+          "applicableExpenseAmount": {
+            "format": "decimal",
+            "type": "number",
+            "x-go-type": "Decimal"
+          },
+          "classificationStatus": {
+            "type": "string"
+          },
+          "confirmedAt": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "confirmedBy": {
+            "type": "string"
+          },
+          "destinationType": {
+            "type": "string"
+          },
+          "lineId": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "vatCreditType": {
+            "type": "string"
+          },
+          "vatExemptionType": {
+            "type": "string"
+          },
+          "vatUsageType": {
+            "type": "string"
           }
         },
         "type": "object"
@@ -4419,6 +4951,60 @@
         },
         "type": "object"
       },
+      "VatProrationProfileRequest": {
+        "properties": {
+          "coefficient": {
+            "format": "decimal",
+            "maximum": 1,
+            "minimum": 0,
+            "type": "number",
+            "x-go-type": "Decimal"
+          },
+          "comment": {
+            "type": "string"
+          },
+          "source": {
+            "pattern": "DERIVED|MANUAL",
+            "type": "string"
+          }
+        },
+        "required": [
+          "coefficient",
+          "source"
+        ],
+        "type": "object"
+      },
+      "VatProrationProfileResponse": {
+        "properties": {
+          "coefficient": {
+            "format": "decimal",
+            "type": "number",
+            "x-go-type": "Decimal"
+          },
+          "comment": {
+            "type": "string"
+          },
+          "confirmedAt": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "confirmedBy": {
+            "type": "string"
+          },
+          "fiscalYear": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "id": {
+            "format": "int64",
+            "type": "integer"
+          },
+          "source": {
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
       "WebhookDeliveryLogResponse": {
         "properties": {
           "attempt": {
@@ -4762,7 +5348,7 @@
     },
     "/accounting/fiscal-reports": {
       "get": {
-        "description": "Calcula bajo demanda el consolidado fiscal para un rango de fechas o para el atajo year/month. Si el rango no es un mes calendario completo, compliant=false.",
+        "description": "Calcula bajo demanda el formulario mensual IVA-150 para un rango de fechas o para el atajo year/month. readinessStatus indica si está bloqueado, requiere revisión o listo para exportar.",
         "operationId": "getFiscalReport",
         "parameters": [
           {
@@ -4848,7 +5434,7 @@
             "apiKeyAuth": []
           }
         ],
-        "summary": "Obtener reporte fiscal D-150",
+        "summary": "Obtener reporte fiscal IVA-150",
         "tags": [
           "Accounting"
         ]
@@ -4957,6 +5543,211 @@
         ]
       }
     },
+    "/accounting/received-document-lines/{lineId}/classification": {
+      "put": {
+        "operationId": "classifyReceivedLine",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "lineId",
+            "required": true,
+            "schema": {
+              "format": "int64",
+              "type": "integer"
+            }
+          },
+          {
+            "in": "header",
+            "name": "API-Version",
+            "schema": {
+              "default": "1.0.0",
+              "enum": [
+                "v1"
+              ],
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ReceivedFiscalLineClassificationRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ReceivedFiscalLineClassificationResponse"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ],
+        "summary": "Confirmar clasificación fiscal de una línea recibida",
+        "tags": [
+          "Accounting"
+        ]
+      }
+    },
+    "/accounting/received-documents/import": {
+      "post": {
+        "description": "Normaliza un XML histórico o ejecuta un dry-run. Nunca firma, emite ni reenvía mensajes a Hacienda.",
+        "operationId": "importReceivedDocument",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "API-Version",
+            "schema": {
+              "default": "1.0.0",
+              "enum": [
+                "v1"
+              ],
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ReceivedFiscalDocumentImportRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ReceivedFiscalDocumentResponse"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ],
+        "summary": "Importar comprobante fiscal recibido sin emitir",
+        "tags": [
+          "Accounting"
+        ]
+      }
+    },
+    "/accounting/received-documents/{documentId}": {
+      "get": {
+        "operationId": "getReceivedDocument",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "documentId",
+            "required": true,
+            "schema": {
+              "format": "int64",
+              "type": "integer"
+            }
+          },
+          {
+            "in": "header",
+            "name": "API-Version",
+            "schema": {
+              "default": "1.0.0",
+              "enum": [
+                "v1"
+              ],
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ReceivedFiscalDocumentResponse"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ],
+        "summary": "Obtener comprobante fiscal recibido normalizado",
+        "tags": [
+          "Accounting"
+        ]
+      }
+    },
+    "/accounting/received-documents/{documentId}/xml": {
+      "get": {
+        "operationId": "getReceivedDocumentXml",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "documentId",
+            "required": true,
+            "schema": {
+              "format": "int64",
+              "type": "integer"
+            }
+          },
+          {
+            "in": "header",
+            "name": "API-Version",
+            "schema": {
+              "default": "1.0.0",
+              "enum": [
+                "v1"
+              ],
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/xml": {
+                "schema": {
+                  "format": "byte",
+                  "type": "string"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ],
+        "summary": "Obtener XML fuente de un comprobante fiscal recibido",
+        "tags": [
+          "Accounting"
+        ]
+      }
+    },
     "/accounting/tax-rates-summary": {
       "get": {
         "description": "Agrupa el consolidado fiscal por sección y código de tarifa IVA, incluyendo base, impuesto y crédito aplicable.",
@@ -5051,9 +5842,113 @@
         ]
       }
     },
+    "/accounting/vat-proration/{fiscalYear}": {
+      "get": {
+        "operationId": "getVatProrationProfile",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "fiscalYear",
+            "required": true,
+            "schema": {
+              "format": "int32",
+              "type": "integer"
+            }
+          },
+          {
+            "in": "header",
+            "name": "API-Version",
+            "schema": {
+              "default": "1.0.0",
+              "enum": [
+                "v1"
+              ],
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VatProrationProfileResponse"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ],
+        "summary": "Obtener perfil anual de proporcionalidad IVA",
+        "tags": [
+          "Accounting"
+        ]
+      },
+      "put": {
+        "operationId": "confirmVatProrationProfile",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "fiscalYear",
+            "required": true,
+            "schema": {
+              "format": "int32",
+              "type": "integer"
+            }
+          },
+          {
+            "in": "header",
+            "name": "API-Version",
+            "schema": {
+              "default": "1.0.0",
+              "enum": [
+                "v1"
+              ],
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/VatProrationProfileRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VatProrationProfileResponse"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ],
+        "summary": "Confirmar perfil anual de proporcionalidad IVA",
+        "tags": [
+          "Accounting"
+        ]
+      }
+    },
     "/accounting/vat-summary": {
       "get": {
-        "description": "Devuelve totales de débito fiscal, crédito fiscal y saldo para el mismo criterio de rango del reporte D-150.",
+        "description": "Devuelve totales de débito fiscal, crédito fiscal y saldo para el mismo criterio de rango del reporte IVA-150.",
         "operationId": "getVatSummary",
         "parameters": [
           {

@@ -812,6 +812,66 @@ func (e ExportFiscalReportParamsAPIVersion) Valid() bool {
 	}
 }
 
+// Defines values for ClassifyReceivedLineParamsAPIVersion.
+const (
+	ClassifyReceivedLineParamsAPIVersionV1 ClassifyReceivedLineParamsAPIVersion = "v1"
+)
+
+// Valid indicates whether the value is a known member of the ClassifyReceivedLineParamsAPIVersion enum.
+func (e ClassifyReceivedLineParamsAPIVersion) Valid() bool {
+	switch e {
+	case ClassifyReceivedLineParamsAPIVersionV1:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for ImportReceivedDocumentParamsAPIVersion.
+const (
+	ImportReceivedDocumentParamsAPIVersionV1 ImportReceivedDocumentParamsAPIVersion = "v1"
+)
+
+// Valid indicates whether the value is a known member of the ImportReceivedDocumentParamsAPIVersion enum.
+func (e ImportReceivedDocumentParamsAPIVersion) Valid() bool {
+	switch e {
+	case ImportReceivedDocumentParamsAPIVersionV1:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for GetReceivedDocumentParamsAPIVersion.
+const (
+	GetReceivedDocumentParamsAPIVersionV1 GetReceivedDocumentParamsAPIVersion = "v1"
+)
+
+// Valid indicates whether the value is a known member of the GetReceivedDocumentParamsAPIVersion enum.
+func (e GetReceivedDocumentParamsAPIVersion) Valid() bool {
+	switch e {
+	case GetReceivedDocumentParamsAPIVersionV1:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for GetReceivedDocumentXmlParamsAPIVersion.
+const (
+	GetReceivedDocumentXmlParamsAPIVersionV1 GetReceivedDocumentXmlParamsAPIVersion = "v1"
+)
+
+// Valid indicates whether the value is a known member of the GetReceivedDocumentXmlParamsAPIVersion enum.
+func (e GetReceivedDocumentXmlParamsAPIVersion) Valid() bool {
+	switch e {
+	case GetReceivedDocumentXmlParamsAPIVersionV1:
+		return true
+	default:
+		return false
+	}
+}
+
 // Defines values for GetTaxRatesSummaryParamsAPIVersion.
 const (
 	GetTaxRatesSummaryParamsAPIVersionV1 GetTaxRatesSummaryParamsAPIVersion = "v1"
@@ -821,6 +881,36 @@ const (
 func (e GetTaxRatesSummaryParamsAPIVersion) Valid() bool {
 	switch e {
 	case GetTaxRatesSummaryParamsAPIVersionV1:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for GetVatProrationProfileParamsAPIVersion.
+const (
+	GetVatProrationProfileParamsAPIVersionV1 GetVatProrationProfileParamsAPIVersion = "v1"
+)
+
+// Valid indicates whether the value is a known member of the GetVatProrationProfileParamsAPIVersion enum.
+func (e GetVatProrationProfileParamsAPIVersion) Valid() bool {
+	switch e {
+	case GetVatProrationProfileParamsAPIVersionV1:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for ConfirmVatProrationProfileParamsAPIVersion.
+const (
+	ConfirmVatProrationProfileParamsAPIVersionV1 ConfirmVatProrationProfileParamsAPIVersion = "v1"
+)
+
+// Valid indicates whether the value is a known member of the ConfirmVatProrationProfileParamsAPIVersion enum.
+func (e ConfirmVatProrationProfileParamsAPIVersion) Valid() bool {
+	switch e {
+	case ConfirmVatProrationProfileParamsAPIVersionV1:
 		return true
 	default:
 		return false
@@ -3161,6 +3251,40 @@ type FiscalReportDocumentLineResponse struct {
 	VatRateCode          *string             `json:"vatRateCode,omitempty"`
 }
 
+// FiscalReportExportItemResponse defines model for FiscalReportExportItemResponse.
+type FiscalReportExportItemResponse struct {
+	ApplicableExpenseAmount   *Decimal            `json:"applicableExpenseAmount,omitempty"`
+	ApplicableTaxCredit       *Decimal            `json:"applicableTaxCredit,omitempty"`
+	ClassificationStatus      *string             `json:"classificationStatus,omitempty"`
+	Consecutive               *string             `json:"consecutive,omitempty"`
+	CounterpartyIdNumber      *string             `json:"counterpartyIdNumber,omitempty"`
+	CounterpartyName          *string             `json:"counterpartyName,omitempty"`
+	Date                      *openapi_types.Date `json:"date,omitempty"`
+	DestinationType           *string             `json:"destinationType,omitempty"`
+	DocumentKey               *string             `json:"documentKey,omitempty"`
+	DocumentType              *string             `json:"documentType,omitempty"`
+	ExclusionReason           *string             `json:"exclusionReason,omitempty"`
+	InclusionStatus           *string             `json:"inclusionStatus,omitempty"`
+	IssuerActivityCode        *string             `json:"issuerActivityCode,omitempty"`
+	ItemType                  *string             `json:"itemType,omitempty"`
+	LineDescription           *string             `json:"lineDescription,omitempty"`
+	LineNumber                *int32              `json:"lineNumber,omitempty"`
+	Rate                      *Decimal            `json:"rate,omitempty"`
+	ReceivedDocumentId        *int64              `json:"receivedDocumentId,omitempty"`
+	ReceiverActivityCode      *string             `json:"receiverActivityCode,omitempty"`
+	ReceiverMessageDocumentId *int64              `json:"receiverMessageDocumentId,omitempty"`
+	RowId                     *string             `json:"rowId,omitempty"`
+	SourceLineId              *int64              `json:"sourceLineId,omitempty"`
+	SupportedVat              *Decimal            `json:"supportedVat,omitempty"`
+	TaxableBase               *Decimal            `json:"taxableBase,omitempty"`
+	VatCondition              *string             `json:"vatCondition,omitempty"`
+	VatCreditType             *string             `json:"vatCreditType,omitempty"`
+	VatExemptionType          *string             `json:"vatExemptionType,omitempty"`
+	VatRateCode               *string             `json:"vatRateCode,omitempty"`
+	VatUsageType              *string             `json:"vatUsageType,omitempty"`
+	XmlReference              *string             `json:"xmlReference,omitempty"`
+}
+
 // FiscalReportFormMatrixLineResponse defines model for FiscalReportFormMatrixLineResponse.
 type FiscalReportFormMatrixLineResponse struct {
 	Evidence      *string `json:"evidence,omitempty"`
@@ -3195,20 +3319,36 @@ type FiscalReportLineResponse struct {
 	VatRateCode         *string  `json:"vatRateCode,omitempty"`
 }
 
+// FiscalReportOfficialBoxResponse defines model for FiscalReportOfficialBoxResponse.
+type FiscalReportOfficialBoxResponse struct {
+	Amount     *Decimal `json:"amount,omitempty"`
+	Code       *string  `json:"code,omitempty"`
+	Derivation *string  `json:"derivation,omitempty"`
+	Label      *string  `json:"label,omitempty"`
+	Section    *string  `json:"section,omitempty"`
+}
+
 // FiscalReportResponse defines model for FiscalReportResponse.
 type FiscalReportResponse struct {
-	ActivitySummary      *[]FiscalReportActivitySummaryLineResponse `json:"activitySummary,omitempty"`
-	Compliant            *bool                                      `json:"compliant,omitempty"`
-	DocumentLines        *[]FiscalReportDocumentLineResponse        `json:"documentLines,omitempty"`
-	FormCode             *string                                    `json:"formCode,omitempty"`
-	FormMatrix           *[]FiscalReportFormMatrixLineResponse      `json:"formMatrix,omitempty"`
-	From                 *openapi_types.Date                        `json:"from,omitempty"`
-	GapLines             *[]FiscalReportGapLineResponse             `json:"gapLines,omitempty"`
-	Lines                *[]FiscalReportLineResponse                `json:"lines,omitempty"`
-	ProrationCoefficient *Decimal                                   `json:"prorationCoefficient,omitempty"`
-	To                   *openapi_types.Date                        `json:"to,omitempty"`
-	Totals               *FiscalReportTotalsResponse                `json:"totals,omitempty"`
-	Warnings             *[]string                                  `json:"warnings,omitempty"`
+	ActivitySummary    *[]FiscalReportActivitySummaryLineResponse `json:"activitySummary,omitempty"`
+	CalculationVersion *string                                    `json:"calculationVersion,omitempty"`
+	// Deprecated: this property has been marked as deprecated upstream, but no `x-deprecated-reason` was set
+	Compliant            *bool                                 `json:"compliant,omitempty"`
+	DocumentLines        *[]FiscalReportDocumentLineResponse   `json:"documentLines,omitempty"`
+	ExportItems          *[]FiscalReportExportItemResponse     `json:"exportItems,omitempty"`
+	FormCode             *string                               `json:"formCode,omitempty"`
+	FormMatrix           *[]FiscalReportFormMatrixLineResponse `json:"formMatrix,omitempty"`
+	From                 *openapi_types.Date                   `json:"from,omitempty"`
+	GapLines             *[]FiscalReportGapLineResponse        `json:"gapLines,omitempty"`
+	LegalBasisVersion    *string                               `json:"legalBasisVersion,omitempty"`
+	Lines                *[]FiscalReportLineResponse           `json:"lines,omitempty"`
+	OfficialBoxes        *[]FiscalReportOfficialBoxResponse    `json:"officialBoxes,omitempty"`
+	ProrationCoefficient *Decimal                              `json:"prorationCoefficient,omitempty"`
+	ReadinessStatus      *string                               `json:"readinessStatus,omitempty"`
+	To                   *openapi_types.Date                   `json:"to,omitempty"`
+	Totals               *FiscalReportTotalsResponse           `json:"totals,omitempty"`
+	Validations          *[]FiscalReportValidationResponse     `json:"validations,omitempty"`
+	Warnings             *[]string                             `json:"warnings,omitempty"`
 }
 
 // FiscalReportTotalsResponse defines model for FiscalReportTotalsResponse.
@@ -3221,6 +3361,17 @@ type FiscalReportTotalsResponse struct {
 	SalesTaxTotal      *Decimal `json:"salesTaxTotal,omitempty"`
 	TaxCreditBalance   *Decimal `json:"taxCreditBalance,omitempty"`
 	TaxPayable         *Decimal `json:"taxPayable,omitempty"`
+}
+
+// FiscalReportValidationResponse defines model for FiscalReportValidationResponse.
+type FiscalReportValidationResponse struct {
+	Code               *string `json:"code,omitempty"`
+	DocumentKey        *string `json:"documentKey,omitempty"`
+	InclusionStatus    *string `json:"inclusionStatus,omitempty"`
+	Message            *string `json:"message,omitempty"`
+	ReceivedDocumentId *int64  `json:"receivedDocumentId,omitempty"`
+	Severity           *string `json:"severity,omitempty"`
+	SourceLineId       *int64  `json:"sourceLineId,omitempty"`
 }
 
 // FiscalTaxRateSummaryLineResponse defines model for FiscalTaxRateSummaryLineResponse.
@@ -3417,6 +3568,109 @@ type ProducerRegistryResponse struct {
 type Rate struct {
 	Date  *openapi_types.Date `json:"date,omitempty"`
 	Value *Decimal            `json:"value,omitempty"`
+}
+
+// ReceivedFiscalDocumentImportRequest defines model for ReceivedFiscalDocumentImportRequest.
+type ReceivedFiscalDocumentImportRequest struct {
+	DeclaredCreditAmount      *Decimal `json:"declaredCreditAmount,omitempty"`
+	DeclaredExpenseAmount     *Decimal `json:"declaredExpenseAmount,omitempty"`
+	DryRun                    *bool    `json:"dryRun,omitempty"`
+	MessageState              *int32   `json:"messageState,omitempty"`
+	PurchaseExpenseType       *string  `json:"purchaseExpenseType,omitempty"`
+	ReceiverMessageDocumentId *int64   `json:"receiverMessageDocumentId,omitempty"`
+	SourceReference           *string  `json:"sourceReference,omitempty"`
+	VatCondition              *string  `json:"vatCondition,omitempty"`
+	Xml                       string   `json:"xml"`
+}
+
+// ReceivedFiscalDocumentLineResponse defines model for ReceivedFiscalDocumentLineResponse.
+type ReceivedFiscalDocumentLineResponse struct {
+	AccountingCategory      *string                              `json:"accountingCategory,omitempty"`
+	ApplicableCreditAmount  *Decimal                             `json:"applicableCreditAmount,omitempty"`
+	ApplicableExpenseAmount *Decimal                             `json:"applicableExpenseAmount,omitempty"`
+	CabysCode               *string                              `json:"cabysCode,omitempty"`
+	ClassificationStatus    *string                              `json:"classificationStatus,omitempty"`
+	ConfirmedAt             *time.Time                           `json:"confirmedAt,omitempty"`
+	ConfirmedBy             *string                              `json:"confirmedBy,omitempty"`
+	Description             *string                              `json:"description,omitempty"`
+	DestinationType         *string                              `json:"destinationType,omitempty"`
+	Id                      *int64                               `json:"id,omitempty"`
+	LineNumber              *int32                               `json:"lineNumber,omitempty"`
+	LineTotal               *Decimal                             `json:"lineTotal,omitempty"`
+	Quantity                *Decimal                             `json:"quantity,omitempty"`
+	TaxableBase             *Decimal                             `json:"taxableBase,omitempty"`
+	Taxes                   *[]ReceivedFiscalDocumentTaxResponse `json:"taxes,omitempty"`
+	VatCreditType           *string                              `json:"vatCreditType,omitempty"`
+	VatExemptionType        *string                              `json:"vatExemptionType,omitempty"`
+	VatUsageType            *string                              `json:"vatUsageType,omitempty"`
+}
+
+// ReceivedFiscalDocumentResponse defines model for ReceivedFiscalDocumentResponse.
+type ReceivedFiscalDocumentResponse struct {
+	Consecutive               *string                               `json:"consecutive,omitempty"`
+	Currency                  *string                               `json:"currency,omitempty"`
+	DeclaredCreditAmount      *Decimal                              `json:"declaredCreditAmount,omitempty"`
+	DeclaredExpenseAmount     *Decimal                              `json:"declaredExpenseAmount,omitempty"`
+	DocumentKey               *string                               `json:"documentKey,omitempty"`
+	Existing                  *bool                                 `json:"existing,omitempty"`
+	Id                        *int64                                `json:"id,omitempty"`
+	IngestionSource           *string                               `json:"ingestionSource,omitempty"`
+	IssuedDate                *time.Time                            `json:"issuedDate,omitempty"`
+	IssuerActivityCode        *string                               `json:"issuerActivityCode,omitempty"`
+	IssuerIdNumber            *string                               `json:"issuerIdNumber,omitempty"`
+	IssuerIdType              *string                               `json:"issuerIdType,omitempty"`
+	IssuerName                *string                               `json:"issuerName,omitempty"`
+	Lines                     *[]ReceivedFiscalDocumentLineResponse `json:"lines,omitempty"`
+	OriginalDocumentType      *string                               `json:"originalDocumentType,omitempty"`
+	PurchaseExpenseType       *string                               `json:"purchaseExpenseType,omitempty"`
+	ReceiverActivityCode      *string                               `json:"receiverActivityCode,omitempty"`
+	ReceiverIdNumber          *string                               `json:"receiverIdNumber,omitempty"`
+	ReceiverIdType            *string                               `json:"receiverIdType,omitempty"`
+	ReceiverMessageDocumentId *int64                                `json:"receiverMessageDocumentId,omitempty"`
+	ReceiverMessageState      *int32                                `json:"receiverMessageState,omitempty"`
+	ReceiverName              *string                               `json:"receiverName,omitempty"`
+	ReconciliationStatus      *string                               `json:"reconciliationStatus,omitempty"`
+	SourceReference           *string                               `json:"sourceReference,omitempty"`
+	TotalDocument             *Decimal                              `json:"totalDocument,omitempty"`
+	TotalSale                 *Decimal                              `json:"totalSale,omitempty"`
+	TotalTax                  *Decimal                              `json:"totalTax,omitempty"`
+	VatCondition              *string                               `json:"vatCondition,omitempty"`
+	XmlSha256                 *string                               `json:"xmlSha256,omitempty"`
+}
+
+// ReceivedFiscalDocumentTaxResponse defines model for ReceivedFiscalDocumentTaxResponse.
+type ReceivedFiscalDocumentTaxResponse struct {
+	Amount           *Decimal `json:"amount,omitempty"`
+	ExoneratedAmount *Decimal `json:"exoneratedAmount,omitempty"`
+	Rate             *Decimal `json:"rate,omitempty"`
+	TaxCode          *string  `json:"taxCode,omitempty"`
+	VatRateCode      *string  `json:"vatRateCode,omitempty"`
+}
+
+// ReceivedFiscalLineClassificationRequest defines model for ReceivedFiscalLineClassificationRequest.
+type ReceivedFiscalLineClassificationRequest struct {
+	AccountingCategory      *string  `json:"accountingCategory,omitempty"`
+	ApplicableCreditAmount  *Decimal `json:"applicableCreditAmount,omitempty"`
+	ApplicableExpenseAmount *Decimal `json:"applicableExpenseAmount,omitempty"`
+	DestinationType         string   `json:"destinationType"`
+	VatCreditType           string   `json:"vatCreditType"`
+	VatExemptionType        *string  `json:"vatExemptionType,omitempty"`
+	VatUsageType            string   `json:"vatUsageType"`
+}
+
+// ReceivedFiscalLineClassificationResponse defines model for ReceivedFiscalLineClassificationResponse.
+type ReceivedFiscalLineClassificationResponse struct {
+	AccountingCategory      *string    `json:"accountingCategory,omitempty"`
+	ApplicableCreditAmount  *Decimal   `json:"applicableCreditAmount,omitempty"`
+	ApplicableExpenseAmount *Decimal   `json:"applicableExpenseAmount,omitempty"`
+	ClassificationStatus    *string    `json:"classificationStatus,omitempty"`
+	ConfirmedAt             *time.Time `json:"confirmedAt,omitempty"`
+	ConfirmedBy             *string    `json:"confirmedBy,omitempty"`
+	DestinationType         *string    `json:"destinationType,omitempty"`
+	LineId                  *int64     `json:"lineId,omitempty"`
+	VatCreditType           *string    `json:"vatCreditType,omitempty"`
+	VatExemptionType        *string    `json:"vatExemptionType,omitempty"`
+	VatUsageType            *string    `json:"vatUsageType,omitempty"`
 }
 
 // ReceiverMessageRequest defines model for ReceiverMessageRequest.
@@ -3680,6 +3934,24 @@ type TenantUpdateRequest struct {
 	ProvinceCode   *string `json:"provinceCode,omitempty"`
 }
 
+// VatProrationProfileRequest defines model for VatProrationProfileRequest.
+type VatProrationProfileRequest struct {
+	Coefficient Decimal `json:"coefficient"`
+	Comment     *string `json:"comment,omitempty"`
+	Source      string  `json:"source"`
+}
+
+// VatProrationProfileResponse defines model for VatProrationProfileResponse.
+type VatProrationProfileResponse struct {
+	Coefficient *Decimal   `json:"coefficient,omitempty"`
+	Comment     *string    `json:"comment,omitempty"`
+	ConfirmedAt *time.Time `json:"confirmedAt,omitempty"`
+	ConfirmedBy *string    `json:"confirmedBy,omitempty"`
+	FiscalYear  *int32     `json:"fiscalYear,omitempty"`
+	Id          *int64     `json:"id,omitempty"`
+	Source      *string    `json:"source,omitempty"`
+}
+
 // WebhookDeliveryLogResponse defines model for WebhookDeliveryLogResponse.
 type WebhookDeliveryLogResponse struct {
 	Attempt           *int32     `json:"attempt,omitempty"`
@@ -3797,6 +4069,38 @@ type ExportFiscalReportParams struct {
 // ExportFiscalReportParamsAPIVersion defines parameters for ExportFiscalReport.
 type ExportFiscalReportParamsAPIVersion string
 
+// ClassifyReceivedLineParams defines parameters for ClassifyReceivedLine.
+type ClassifyReceivedLineParams struct {
+	APIVersion *ClassifyReceivedLineParamsAPIVersion `json:"API-Version,omitempty"`
+}
+
+// ClassifyReceivedLineParamsAPIVersion defines parameters for ClassifyReceivedLine.
+type ClassifyReceivedLineParamsAPIVersion string
+
+// ImportReceivedDocumentParams defines parameters for ImportReceivedDocument.
+type ImportReceivedDocumentParams struct {
+	APIVersion *ImportReceivedDocumentParamsAPIVersion `json:"API-Version,omitempty"`
+}
+
+// ImportReceivedDocumentParamsAPIVersion defines parameters for ImportReceivedDocument.
+type ImportReceivedDocumentParamsAPIVersion string
+
+// GetReceivedDocumentParams defines parameters for GetReceivedDocument.
+type GetReceivedDocumentParams struct {
+	APIVersion *GetReceivedDocumentParamsAPIVersion `json:"API-Version,omitempty"`
+}
+
+// GetReceivedDocumentParamsAPIVersion defines parameters for GetReceivedDocument.
+type GetReceivedDocumentParamsAPIVersion string
+
+// GetReceivedDocumentXmlParams defines parameters for GetReceivedDocumentXml.
+type GetReceivedDocumentXmlParams struct {
+	APIVersion *GetReceivedDocumentXmlParamsAPIVersion `json:"API-Version,omitempty"`
+}
+
+// GetReceivedDocumentXmlParamsAPIVersion defines parameters for GetReceivedDocumentXml.
+type GetReceivedDocumentXmlParamsAPIVersion string
+
 // GetTaxRatesSummaryParams defines parameters for GetTaxRatesSummary.
 type GetTaxRatesSummaryParams struct {
 	From       *openapi_types.Date                 `form:"from,omitempty" json:"from,omitempty"`
@@ -3809,6 +4113,22 @@ type GetTaxRatesSummaryParams struct {
 
 // GetTaxRatesSummaryParamsAPIVersion defines parameters for GetTaxRatesSummary.
 type GetTaxRatesSummaryParamsAPIVersion string
+
+// GetVatProrationProfileParams defines parameters for GetVatProrationProfile.
+type GetVatProrationProfileParams struct {
+	APIVersion *GetVatProrationProfileParamsAPIVersion `json:"API-Version,omitempty"`
+}
+
+// GetVatProrationProfileParamsAPIVersion defines parameters for GetVatProrationProfile.
+type GetVatProrationProfileParamsAPIVersion string
+
+// ConfirmVatProrationProfileParams defines parameters for ConfirmVatProrationProfile.
+type ConfirmVatProrationProfileParams struct {
+	APIVersion *ConfirmVatProrationProfileParamsAPIVersion `json:"API-Version,omitempty"`
+}
+
+// ConfirmVatProrationProfileParamsAPIVersion defines parameters for ConfirmVatProrationProfile.
+type ConfirmVatProrationProfileParamsAPIVersion string
 
 // GetVatSummaryParams defines parameters for GetVatSummary.
 type GetVatSummaryParams struct {
@@ -4630,6 +4950,15 @@ type TestWebhookParamsAPIVersion string
 // ClassifyDocumentItemJSONRequestBody defines body for ClassifyDocumentItem for application/json ContentType.
 type ClassifyDocumentItemJSONRequestBody = DocumentItemAccountingClassificationRequest
 
+// ClassifyReceivedLineJSONRequestBody defines body for ClassifyReceivedLine for application/json ContentType.
+type ClassifyReceivedLineJSONRequestBody = ReceivedFiscalLineClassificationRequest
+
+// ImportReceivedDocumentJSONRequestBody defines body for ImportReceivedDocument for application/json ContentType.
+type ImportReceivedDocumentJSONRequestBody = ReceivedFiscalDocumentImportRequest
+
+// ConfirmVatProrationProfileJSONRequestBody defines body for ConfirmVatProrationProfile for application/json ContentType.
+type ConfirmVatProrationProfileJSONRequestBody = VatProrationProfileRequest
+
 // CreateBranchJSONRequestBody defines body for CreateBranch for application/json ContentType.
 type CreateBranchJSONRequestBody = BranchRequest
 
@@ -4816,8 +5145,32 @@ type ClientInterface interface {
 	// ExportFiscalReport request
 	ExportFiscalReport(ctx context.Context, params *ExportFiscalReportParams, reqEditors ...RequestEditorFn) (*http.Response, error)
 
+	// ClassifyReceivedLineWithBody request with any body
+	ClassifyReceivedLineWithBody(ctx context.Context, lineId int64, params *ClassifyReceivedLineParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	ClassifyReceivedLine(ctx context.Context, lineId int64, params *ClassifyReceivedLineParams, body ClassifyReceivedLineJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// ImportReceivedDocumentWithBody request with any body
+	ImportReceivedDocumentWithBody(ctx context.Context, params *ImportReceivedDocumentParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	ImportReceivedDocument(ctx context.Context, params *ImportReceivedDocumentParams, body ImportReceivedDocumentJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// GetReceivedDocument request
+	GetReceivedDocument(ctx context.Context, documentId int64, params *GetReceivedDocumentParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// GetReceivedDocumentXml request
+	GetReceivedDocumentXml(ctx context.Context, documentId int64, params *GetReceivedDocumentXmlParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+
 	// GetTaxRatesSummary request
 	GetTaxRatesSummary(ctx context.Context, params *GetTaxRatesSummaryParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// GetVatProrationProfile request
+	GetVatProrationProfile(ctx context.Context, fiscalYear int32, params *GetVatProrationProfileParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// ConfirmVatProrationProfileWithBody request with any body
+	ConfirmVatProrationProfileWithBody(ctx context.Context, fiscalYear int32, params *ConfirmVatProrationProfileParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	ConfirmVatProrationProfile(ctx context.Context, fiscalYear int32, params *ConfirmVatProrationProfileParams, body ConfirmVatProrationProfileJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// GetVatSummary request
 	GetVatSummary(ctx context.Context, params *GetVatSummaryParams, reqEditors ...RequestEditorFn) (*http.Response, error)
@@ -5218,8 +5571,116 @@ func (c *Client) ExportFiscalReport(ctx context.Context, params *ExportFiscalRep
 	return c.Client.Do(req)
 }
 
+func (c *Client) ClassifyReceivedLineWithBody(ctx context.Context, lineId int64, params *ClassifyReceivedLineParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewClassifyReceivedLineRequestWithBody(c.Server, lineId, params, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) ClassifyReceivedLine(ctx context.Context, lineId int64, params *ClassifyReceivedLineParams, body ClassifyReceivedLineJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewClassifyReceivedLineRequest(c.Server, lineId, params, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) ImportReceivedDocumentWithBody(ctx context.Context, params *ImportReceivedDocumentParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewImportReceivedDocumentRequestWithBody(c.Server, params, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) ImportReceivedDocument(ctx context.Context, params *ImportReceivedDocumentParams, body ImportReceivedDocumentJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewImportReceivedDocumentRequest(c.Server, params, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) GetReceivedDocument(ctx context.Context, documentId int64, params *GetReceivedDocumentParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewGetReceivedDocumentRequest(c.Server, documentId, params)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) GetReceivedDocumentXml(ctx context.Context, documentId int64, params *GetReceivedDocumentXmlParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewGetReceivedDocumentXmlRequest(c.Server, documentId, params)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
 func (c *Client) GetTaxRatesSummary(ctx context.Context, params *GetTaxRatesSummaryParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewGetTaxRatesSummaryRequest(c.Server, params)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) GetVatProrationProfile(ctx context.Context, fiscalYear int32, params *GetVatProrationProfileParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewGetVatProrationProfileRequest(c.Server, fiscalYear, params)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) ConfirmVatProrationProfileWithBody(ctx context.Context, fiscalYear int32, params *ConfirmVatProrationProfileParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewConfirmVatProrationProfileRequestWithBody(c.Server, fiscalYear, params, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) ConfirmVatProrationProfile(ctx context.Context, fiscalYear int32, params *ConfirmVatProrationProfileParams, body ConfirmVatProrationProfileJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewConfirmVatProrationProfileRequest(c.Server, fiscalYear, params, body)
 	if err != nil {
 		return nil, err
 	}
@@ -7062,6 +7523,221 @@ func NewExportFiscalReportRequest(server string, params *ExportFiscalReportParam
 	return req, nil
 }
 
+// NewClassifyReceivedLineRequest calls the generic ClassifyReceivedLine builder with application/json body
+func NewClassifyReceivedLineRequest(server string, lineId int64, params *ClassifyReceivedLineParams, body ClassifyReceivedLineJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewClassifyReceivedLineRequestWithBody(server, lineId, params, "application/json", bodyReader)
+}
+
+// NewClassifyReceivedLineRequestWithBody generates requests for ClassifyReceivedLine with any type of body
+func NewClassifyReceivedLineRequestWithBody(server string, lineId int64, params *ClassifyReceivedLineParams, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "lineId", lineId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "integer", Format: "int64"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/accounting/received-document-lines/%s/classification", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPut, queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
+
+	if params != nil {
+
+		if params.APIVersion != nil {
+			var headerParam0 string
+
+			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "API-Version", *params.APIVersion, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: ""})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("API-Version", headerParam0)
+		}
+
+	}
+
+	return req, nil
+}
+
+// NewImportReceivedDocumentRequest calls the generic ImportReceivedDocument builder with application/json body
+func NewImportReceivedDocumentRequest(server string, params *ImportReceivedDocumentParams, body ImportReceivedDocumentJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewImportReceivedDocumentRequestWithBody(server, params, "application/json", bodyReader)
+}
+
+// NewImportReceivedDocumentRequestWithBody generates requests for ImportReceivedDocument with any type of body
+func NewImportReceivedDocumentRequestWithBody(server string, params *ImportReceivedDocumentParams, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/accounting/received-documents/import")
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPost, queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
+
+	if params != nil {
+
+		if params.APIVersion != nil {
+			var headerParam0 string
+
+			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "API-Version", *params.APIVersion, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: ""})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("API-Version", headerParam0)
+		}
+
+	}
+
+	return req, nil
+}
+
+// NewGetReceivedDocumentRequest generates requests for GetReceivedDocument
+func NewGetReceivedDocumentRequest(server string, documentId int64, params *GetReceivedDocumentParams) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "documentId", documentId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "integer", Format: "int64"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/accounting/received-documents/%s", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+
+		if params.APIVersion != nil {
+			var headerParam0 string
+
+			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "API-Version", *params.APIVersion, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: ""})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("API-Version", headerParam0)
+		}
+
+	}
+
+	return req, nil
+}
+
+// NewGetReceivedDocumentXmlRequest generates requests for GetReceivedDocumentXml
+func NewGetReceivedDocumentXmlRequest(server string, documentId int64, params *GetReceivedDocumentXmlParams) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "documentId", documentId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "integer", Format: "int64"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/accounting/received-documents/%s/xml", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+
+		if params.APIVersion != nil {
+			var headerParam0 string
+
+			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "API-Version", *params.APIVersion, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: ""})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("API-Version", headerParam0)
+		}
+
+	}
+
+	return req, nil
+}
+
 // NewGetTaxRatesSummaryRequest generates requests for GetTaxRatesSummary
 func NewGetTaxRatesSummaryRequest(server string, params *GetTaxRatesSummaryParams) (*http.Request, error) {
 	var err error
@@ -7160,6 +7836,117 @@ func NewGetTaxRatesSummaryRequest(server string, params *GetTaxRatesSummaryParam
 	if err != nil {
 		return nil, err
 	}
+
+	if params != nil {
+
+		if params.APIVersion != nil {
+			var headerParam0 string
+
+			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "API-Version", *params.APIVersion, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: ""})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("API-Version", headerParam0)
+		}
+
+	}
+
+	return req, nil
+}
+
+// NewGetVatProrationProfileRequest generates requests for GetVatProrationProfile
+func NewGetVatProrationProfileRequest(server string, fiscalYear int32, params *GetVatProrationProfileParams) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "fiscalYear", fiscalYear, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "integer", Format: "int32"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/accounting/vat-proration/%s", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+
+		if params.APIVersion != nil {
+			var headerParam0 string
+
+			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "API-Version", *params.APIVersion, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: ""})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("API-Version", headerParam0)
+		}
+
+	}
+
+	return req, nil
+}
+
+// NewConfirmVatProrationProfileRequest calls the generic ConfirmVatProrationProfile builder with application/json body
+func NewConfirmVatProrationProfileRequest(server string, fiscalYear int32, params *ConfirmVatProrationProfileParams, body ConfirmVatProrationProfileJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewConfirmVatProrationProfileRequestWithBody(server, fiscalYear, params, "application/json", bodyReader)
+}
+
+// NewConfirmVatProrationProfileRequestWithBody generates requests for ConfirmVatProrationProfile with any type of body
+func NewConfirmVatProrationProfileRequestWithBody(server string, fiscalYear int32, params *ConfirmVatProrationProfileParams, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "fiscalYear", fiscalYear, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "integer", Format: "int32"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/accounting/vat-proration/%s", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPut, queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
 
 	if params != nil {
 
@@ -12640,8 +13427,32 @@ type ClientWithResponsesInterface interface {
 	// ExportFiscalReport request
 	ExportFiscalReport(ctx context.Context, params *ExportFiscalReportParams, reqEditors ...RequestEditorFn) (*ExportFiscalReportResponse, error)
 
+	// ClassifyReceivedLineWithBody request with any body
+	ClassifyReceivedLineWithBody(ctx context.Context, lineId int64, params *ClassifyReceivedLineParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*ClassifyReceivedLineResponse, error)
+
+	ClassifyReceivedLine(ctx context.Context, lineId int64, params *ClassifyReceivedLineParams, body ClassifyReceivedLineJSONRequestBody, reqEditors ...RequestEditorFn) (*ClassifyReceivedLineResponse, error)
+
+	// ImportReceivedDocumentWithBody request with any body
+	ImportReceivedDocumentWithBody(ctx context.Context, params *ImportReceivedDocumentParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*ImportReceivedDocumentResponse, error)
+
+	ImportReceivedDocument(ctx context.Context, params *ImportReceivedDocumentParams, body ImportReceivedDocumentJSONRequestBody, reqEditors ...RequestEditorFn) (*ImportReceivedDocumentResponse, error)
+
+	// GetReceivedDocument request
+	GetReceivedDocument(ctx context.Context, documentId int64, params *GetReceivedDocumentParams, reqEditors ...RequestEditorFn) (*GetReceivedDocumentResponse, error)
+
+	// GetReceivedDocumentXml request
+	GetReceivedDocumentXml(ctx context.Context, documentId int64, params *GetReceivedDocumentXmlParams, reqEditors ...RequestEditorFn) (*GetReceivedDocumentXmlResponse, error)
+
 	// GetTaxRatesSummary request
 	GetTaxRatesSummary(ctx context.Context, params *GetTaxRatesSummaryParams, reqEditors ...RequestEditorFn) (*GetTaxRatesSummaryResponse, error)
+
+	// GetVatProrationProfile request
+	GetVatProrationProfile(ctx context.Context, fiscalYear int32, params *GetVatProrationProfileParams, reqEditors ...RequestEditorFn) (*GetVatProrationProfileResponse, error)
+
+	// ConfirmVatProrationProfileWithBody request with any body
+	ConfirmVatProrationProfileWithBody(ctx context.Context, fiscalYear int32, params *ConfirmVatProrationProfileParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*ConfirmVatProrationProfileResponse, error)
+
+	ConfirmVatProrationProfile(ctx context.Context, fiscalYear int32, params *ConfirmVatProrationProfileParams, body ConfirmVatProrationProfileJSONRequestBody, reqEditors ...RequestEditorFn) (*ConfirmVatProrationProfileResponse, error)
 
 	// GetVatSummary request
 	GetVatSummary(ctx context.Context, params *GetVatSummaryParams, reqEditors ...RequestEditorFn) (*GetVatSummaryResponse, error)
@@ -13088,6 +13899,126 @@ func (r ExportFiscalReportResponse) ContentType() string {
 	return ""
 }
 
+type ClassifyReceivedLineResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	JSON200      *ReceivedFiscalLineClassificationResponse
+}
+
+// Status returns HTTPResponse.Status
+func (r ClassifyReceivedLineResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r ClassifyReceivedLineResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r ClassifyReceivedLineResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type ImportReceivedDocumentResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	JSON200      *ReceivedFiscalDocumentResponse
+}
+
+// Status returns HTTPResponse.Status
+func (r ImportReceivedDocumentResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r ImportReceivedDocumentResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r ImportReceivedDocumentResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type GetReceivedDocumentResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	JSON200      *ReceivedFiscalDocumentResponse
+}
+
+// Status returns HTTPResponse.Status
+func (r GetReceivedDocumentResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r GetReceivedDocumentResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r GetReceivedDocumentResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type GetReceivedDocumentXmlResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	XML200       *[]byte
+}
+
+// Status returns HTTPResponse.Status
+func (r GetReceivedDocumentXmlResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r GetReceivedDocumentXmlResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r GetReceivedDocumentXmlResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
 type GetTaxRatesSummaryResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
@@ -13113,6 +14044,66 @@ func (r GetTaxRatesSummaryResponse) StatusCode() int {
 
 // ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
 func (r GetTaxRatesSummaryResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type GetVatProrationProfileResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	JSON200      *VatProrationProfileResponse
+}
+
+// Status returns HTTPResponse.Status
+func (r GetVatProrationProfileResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r GetVatProrationProfileResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r GetVatProrationProfileResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type ConfirmVatProrationProfileResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	JSON200      *VatProrationProfileResponse
+}
+
+// Status returns HTTPResponse.Status
+func (r ConfirmVatProrationProfileResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r ConfirmVatProrationProfileResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r ConfirmVatProrationProfileResponse) ContentType() string {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.Header.Get("Content-Type")
 	}
@@ -16046,6 +17037,86 @@ func (c *ClientWithResponses) ExportFiscalReport(ctx context.Context, params *Ex
 	return ParseExportFiscalReportResponse(rsp)
 }
 
+// ClassifyReceivedLineWithBodyRaw performs the request and returns the raw HTTP response.
+func (c *RawClient) ClassifyReceivedLineWithBodyRaw(ctx context.Context, lineId int64, params *ClassifyReceivedLineParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	return c.client.ClassifyReceivedLineWithBody(ctx, lineId, params, contentType, body, reqEditors...)
+}
+
+// ClassifyReceivedLineWithBody request with arbitrary body returning *ClassifyReceivedLineResponse
+func (c *ClientWithResponses) ClassifyReceivedLineWithBody(ctx context.Context, lineId int64, params *ClassifyReceivedLineParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*ClassifyReceivedLineResponse, error) {
+	rsp, err := c.client.ClassifyReceivedLineWithBody(ctx, lineId, params, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseClassifyReceivedLineResponse(rsp)
+}
+
+func (c *RawClient) ClassifyReceivedLineRaw(ctx context.Context, lineId int64, params *ClassifyReceivedLineParams, body ClassifyReceivedLineJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	return c.client.ClassifyReceivedLine(ctx, lineId, params, body, reqEditors...)
+}
+
+func (c *ClientWithResponses) ClassifyReceivedLine(ctx context.Context, lineId int64, params *ClassifyReceivedLineParams, body ClassifyReceivedLineJSONRequestBody, reqEditors ...RequestEditorFn) (*ClassifyReceivedLineResponse, error) {
+	rsp, err := c.client.ClassifyReceivedLine(ctx, lineId, params, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseClassifyReceivedLineResponse(rsp)
+}
+
+// ImportReceivedDocumentWithBodyRaw performs the request and returns the raw HTTP response.
+func (c *RawClient) ImportReceivedDocumentWithBodyRaw(ctx context.Context, params *ImportReceivedDocumentParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	return c.client.ImportReceivedDocumentWithBody(ctx, params, contentType, body, reqEditors...)
+}
+
+// ImportReceivedDocumentWithBody request with arbitrary body returning *ImportReceivedDocumentResponse
+func (c *ClientWithResponses) ImportReceivedDocumentWithBody(ctx context.Context, params *ImportReceivedDocumentParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*ImportReceivedDocumentResponse, error) {
+	rsp, err := c.client.ImportReceivedDocumentWithBody(ctx, params, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseImportReceivedDocumentResponse(rsp)
+}
+
+func (c *RawClient) ImportReceivedDocumentRaw(ctx context.Context, params *ImportReceivedDocumentParams, body ImportReceivedDocumentJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	return c.client.ImportReceivedDocument(ctx, params, body, reqEditors...)
+}
+
+func (c *ClientWithResponses) ImportReceivedDocument(ctx context.Context, params *ImportReceivedDocumentParams, body ImportReceivedDocumentJSONRequestBody, reqEditors ...RequestEditorFn) (*ImportReceivedDocumentResponse, error) {
+	rsp, err := c.client.ImportReceivedDocument(ctx, params, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseImportReceivedDocumentResponse(rsp)
+}
+
+// GetReceivedDocumentRaw performs the request and returns the raw HTTP response.
+func (c *RawClient) GetReceivedDocumentRaw(ctx context.Context, documentId int64, params *GetReceivedDocumentParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	return c.client.GetReceivedDocument(ctx, documentId, params, reqEditors...)
+}
+
+// GetReceivedDocument request returning *GetReceivedDocumentResponse
+func (c *ClientWithResponses) GetReceivedDocument(ctx context.Context, documentId int64, params *GetReceivedDocumentParams, reqEditors ...RequestEditorFn) (*GetReceivedDocumentResponse, error) {
+	rsp, err := c.client.GetReceivedDocument(ctx, documentId, params, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseGetReceivedDocumentResponse(rsp)
+}
+
+// GetReceivedDocumentXmlRaw performs the request and returns the raw HTTP response.
+func (c *RawClient) GetReceivedDocumentXmlRaw(ctx context.Context, documentId int64, params *GetReceivedDocumentXmlParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	return c.client.GetReceivedDocumentXml(ctx, documentId, params, reqEditors...)
+}
+
+// GetReceivedDocumentXml request returning *GetReceivedDocumentXmlResponse
+func (c *ClientWithResponses) GetReceivedDocumentXml(ctx context.Context, documentId int64, params *GetReceivedDocumentXmlParams, reqEditors ...RequestEditorFn) (*GetReceivedDocumentXmlResponse, error) {
+	rsp, err := c.client.GetReceivedDocumentXml(ctx, documentId, params, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseGetReceivedDocumentXmlResponse(rsp)
+}
+
 // GetTaxRatesSummaryRaw performs the request and returns the raw HTTP response.
 func (c *RawClient) GetTaxRatesSummaryRaw(ctx context.Context, params *GetTaxRatesSummaryParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	return c.client.GetTaxRatesSummary(ctx, params, reqEditors...)
@@ -16058,6 +17129,46 @@ func (c *ClientWithResponses) GetTaxRatesSummary(ctx context.Context, params *Ge
 		return nil, err
 	}
 	return ParseGetTaxRatesSummaryResponse(rsp)
+}
+
+// GetVatProrationProfileRaw performs the request and returns the raw HTTP response.
+func (c *RawClient) GetVatProrationProfileRaw(ctx context.Context, fiscalYear int32, params *GetVatProrationProfileParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	return c.client.GetVatProrationProfile(ctx, fiscalYear, params, reqEditors...)
+}
+
+// GetVatProrationProfile request returning *GetVatProrationProfileResponse
+func (c *ClientWithResponses) GetVatProrationProfile(ctx context.Context, fiscalYear int32, params *GetVatProrationProfileParams, reqEditors ...RequestEditorFn) (*GetVatProrationProfileResponse, error) {
+	rsp, err := c.client.GetVatProrationProfile(ctx, fiscalYear, params, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseGetVatProrationProfileResponse(rsp)
+}
+
+// ConfirmVatProrationProfileWithBodyRaw performs the request and returns the raw HTTP response.
+func (c *RawClient) ConfirmVatProrationProfileWithBodyRaw(ctx context.Context, fiscalYear int32, params *ConfirmVatProrationProfileParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	return c.client.ConfirmVatProrationProfileWithBody(ctx, fiscalYear, params, contentType, body, reqEditors...)
+}
+
+// ConfirmVatProrationProfileWithBody request with arbitrary body returning *ConfirmVatProrationProfileResponse
+func (c *ClientWithResponses) ConfirmVatProrationProfileWithBody(ctx context.Context, fiscalYear int32, params *ConfirmVatProrationProfileParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*ConfirmVatProrationProfileResponse, error) {
+	rsp, err := c.client.ConfirmVatProrationProfileWithBody(ctx, fiscalYear, params, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseConfirmVatProrationProfileResponse(rsp)
+}
+
+func (c *RawClient) ConfirmVatProrationProfileRaw(ctx context.Context, fiscalYear int32, params *ConfirmVatProrationProfileParams, body ConfirmVatProrationProfileJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	return c.client.ConfirmVatProrationProfile(ctx, fiscalYear, params, body, reqEditors...)
+}
+
+func (c *ClientWithResponses) ConfirmVatProrationProfile(ctx context.Context, fiscalYear int32, params *ConfirmVatProrationProfileParams, body ConfirmVatProrationProfileJSONRequestBody, reqEditors ...RequestEditorFn) (*ConfirmVatProrationProfileResponse, error) {
+	rsp, err := c.client.ConfirmVatProrationProfile(ctx, fiscalYear, params, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseConfirmVatProrationProfileResponse(rsp)
 }
 
 // GetVatSummaryRaw performs the request and returns the raw HTTP response.
@@ -17882,6 +18993,110 @@ func ParseExportFiscalReportResponse(rsp *http.Response) (*ExportFiscalReportRes
 	return response, nil
 }
 
+// ParseClassifyReceivedLineResponse parses an HTTP response from a ClassifyReceivedLine call
+func ParseClassifyReceivedLineResponse(rsp *http.Response) (*ClassifyReceivedLineResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &ClassifyReceivedLineResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest ReceivedFiscalLineClassificationResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseImportReceivedDocumentResponse parses an HTTP response from a ImportReceivedDocument call
+func ParseImportReceivedDocumentResponse(rsp *http.Response) (*ImportReceivedDocumentResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &ImportReceivedDocumentResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest ReceivedFiscalDocumentResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseGetReceivedDocumentResponse parses an HTTP response from a GetReceivedDocument call
+func ParseGetReceivedDocumentResponse(rsp *http.Response) (*GetReceivedDocumentResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &GetReceivedDocumentResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest ReceivedFiscalDocumentResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseGetReceivedDocumentXmlResponse parses an HTTP response from a GetReceivedDocumentXml call
+func ParseGetReceivedDocumentXmlResponse(rsp *http.Response) (*GetReceivedDocumentXmlResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &GetReceivedDocumentXmlResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "xml") && rsp.StatusCode == 200:
+		var dest []byte
+		if err := xml.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.XML200 = &dest
+
+	}
+
+	return response, nil
+}
+
 // ParseGetTaxRatesSummaryResponse parses an HTTP response from a GetTaxRatesSummary call
 func ParseGetTaxRatesSummaryResponse(rsp *http.Response) (*GetTaxRatesSummaryResponse, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
@@ -17909,6 +19124,58 @@ func ParseGetTaxRatesSummaryResponse(rsp *http.Response) (*GetTaxRatesSummaryRes
 			return nil, err
 		}
 		response.JSON400 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseGetVatProrationProfileResponse parses an HTTP response from a GetVatProrationProfile call
+func ParseGetVatProrationProfileResponse(rsp *http.Response) (*GetVatProrationProfileResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &GetVatProrationProfileResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest VatProrationProfileResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseConfirmVatProrationProfileResponse parses an HTTP response from a ConfirmVatProrationProfile call
+func ParseConfirmVatProrationProfileResponse(rsp *http.Response) (*ConfirmVatProrationProfileResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &ConfirmVatProrationProfileResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest VatProrationProfileResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
 
 	}
 
