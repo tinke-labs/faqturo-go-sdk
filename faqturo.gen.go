@@ -3891,6 +3891,7 @@ type TenantProfileResponse struct {
 
 // TenantProvisionRequest defines model for TenantProvisionRequest.
 type TenantProvisionRequest struct {
+	HubOrganizationId   *string                     `json:"hubOrganizationId,omitempty"`
 	LegalIdentification *LegalIdentificationRequest `json:"legalIdentification,omitempty"`
 	Name                *string                     `json:"name,omitempty"`
 	TenantSlug          *string                     `json:"tenantSlug,omitempty"`
