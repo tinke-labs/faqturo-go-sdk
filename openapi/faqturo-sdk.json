@@ -5536,6 +5536,9 @@
           "tenantSlug" : {
             "type" : "string"
           },
+          "hubOrganizationId" : {
+            "type" : "string"
+          },
           "legalIdentification" : {
             "$ref" : "#/components/schemas/LegalIdentificationRequest"
           },
@@ -7618,22 +7621,22 @@
           "specificTaxData" : {
             "$ref" : "#/components/schemas/SpecificTaxDataRequest"
           },
+          "vatRateCodeValidForVatTax" : {
+            "type" : "boolean"
+          },
           "usedGoodsVatCalculationDataValid" : {
             "type" : "boolean"
           },
           "specificTaxTypeValidForCode05" : {
             "type" : "boolean"
           },
+          "alcoholicBeverageCalculationDataValid" : {
+            "type" : "boolean"
+          },
           "vatSpecialCalculationDataValid" : {
             "type" : "boolean"
           },
           "otherTaxDataValid" : {
-            "type" : "boolean"
-          },
-          "vatRateCodeValidForVatTax" : {
-            "type" : "boolean"
-          },
-          "alcoholicBeverageCalculationDataValid" : {
             "type" : "boolean"
           },
           "taxRatePresentWhenRequiredForCalculation" : {

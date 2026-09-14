@@ -4854,6 +4854,9 @@
       },
       "TenantProvisionRequest": {
         "properties": {
+          "hubOrganizationId": {
+            "type": "string"
+          },
           "legalIdentification": {
             "$ref": "#/components/schemas/LegalIdentificationRequest"
           },
