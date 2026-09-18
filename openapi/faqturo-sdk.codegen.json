@@ -4236,7 +4236,7 @@
           },
           "numeroCedulaEmisor": {
             "minLength": 1,
-            "pattern": "\\d{12}",
+            "pattern": "\\d{9,12}",
             "type": "string"
           },
           "numeroConsecutivoReceptor": {
@@ -4854,6 +4854,9 @@
       },
       "TenantProvisionRequest": {
         "properties": {
+          "hubOrganizationId": {
+            "type": "string"
+          },
           "legalIdentification": {
             "$ref": "#/components/schemas/LegalIdentificationRequest"
           },

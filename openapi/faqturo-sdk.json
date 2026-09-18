@@ -5536,6 +5536,9 @@
           "tenantSlug" : {
             "type" : "string"
           },
+          "hubOrganizationId" : {
+            "type" : "string"
+          },
           "legalIdentification" : {
             "$ref" : "#/components/schemas/LegalIdentificationRequest"
           },
@@ -6906,7 +6909,7 @@
           "numeroCedulaEmisor" : {
             "type" : "string",
             "minLength" : 1,
-            "pattern" : "\\d{12}"
+            "pattern" : "\\d{9,12}"
           },
           "fechaEmisionDoc" : {
             "type" : "string",
@@ -7630,13 +7633,13 @@
           "otherTaxDataValid" : {
             "type" : "boolean"
           },
-          "vatRateCodeValidForVatTax" : {
-            "type" : "boolean"
-          },
           "alcoholicBeverageCalculationDataValid" : {
             "type" : "boolean"
           },
           "taxRatePresentWhenRequiredForCalculation" : {
+            "type" : "boolean"
+          },
+          "vatRateCodeValidForVatTax" : {
             "type" : "boolean"
           }
         },
