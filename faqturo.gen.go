@@ -2824,13 +2824,16 @@ type DocumentPaymentCreateRequest struct {
 	Amount          Decimal                                      `json:"amount"`
 	ApplicationMode *DocumentPaymentCreateRequestApplicationMode `json:"applicationMode,omitempty"`
 	Applications    *[]DocumentPaymentApplicationRequest         `json:"applications,omitempty"`
-	ClientId        int64                                        `json:"clientId"`
-	Currency        DocumentPaymentCreateRequestCurrency         `json:"currency"`
-	Notes           *string                                      `json:"notes,omitempty"`
-	PaymentDate     *time.Time                                   `json:"paymentDate,omitempty"`
-	PaymentMethod   *string                                      `json:"paymentMethod,omitempty"`
-	ReceivedBy      *string                                      `json:"receivedBy,omitempty"`
-	ReferenceNumber *string                                      `json:"referenceNumber,omitempty"`
+
+	// CardPaymentReference Opcional y exclusivo para tarjeta (02): últimos cuatro dígitos de la tarjeta utilizada. No es un PAN ni un código de autorización.
+	CardPaymentReference *string                              `json:"cardPaymentReference,omitempty"`
+	ClientId             int64                                `json:"clientId"`
+	Currency             DocumentPaymentCreateRequestCurrency `json:"currency"`
+	Notes                *string                              `json:"notes,omitempty"`
+	PaymentDate          *time.Time                           `json:"paymentDate,omitempty"`
+	PaymentMethod        *string                              `json:"paymentMethod,omitempty"`
+	ReceivedBy           *string                              `json:"receivedBy,omitempty"`
+	ReferenceNumber      *string                              `json:"referenceNumber,omitempty"`
 }
 
 // DocumentPaymentCreateRequestApplicationMode defines model for DocumentPaymentCreateRequest.ApplicationMode.
@@ -2841,10 +2844,11 @@ type DocumentPaymentCreateRequestCurrency string
 
 // DocumentPaymentMethodDto defines model for DocumentPaymentMethodDto.
 type DocumentPaymentMethodDto struct {
-	Amount           *Decimal                            `json:"amount,omitempty"`
-	Id               *int64                              `json:"id,omitempty"`
-	OtherDescription *string                             `json:"otherDescription,omitempty"`
-	PaymentType      DocumentPaymentMethodDtoPaymentType `json:"paymentType"`
+	Amount               *Decimal                            `json:"amount,omitempty"`
+	CardPaymentReference *string                             `json:"cardPaymentReference,omitempty"`
+	Id                   *int64                              `json:"id,omitempty"`
+	OtherDescription     *string                             `json:"otherDescription,omitempty"`
+	PaymentType          DocumentPaymentMethodDtoPaymentType `json:"paymentType"`
 }
 
 // DocumentPaymentMethodDtoPaymentType defines model for DocumentPaymentMethodDto.PaymentType.
@@ -2854,6 +2858,9 @@ type DocumentPaymentMethodDtoPaymentType string
 type DocumentPaymentMethodRequest struct {
 	// Amount Opcional. Monto pagado con este medio cuando se requiere distribuir pagos.
 	Amount *Decimal `json:"amount,omitempty"`
+
+	// CardPaymentReference Opcional y exclusivo para tarjeta (02): últimos cuatro dígitos de la tarjeta utilizada. No es un PAN ni un código de autorización.
+	CardPaymentReference *string `json:"cardPaymentReference,omitempty"`
 
 	// OtherDescription Opcional por defecto. Requerido cuando paymentType=99.
 	OtherDescription *string `json:"otherDescription,omitempty"`
@@ -2867,25 +2874,26 @@ type DocumentPaymentMethodRequestPaymentType string
 
 // DocumentPaymentResponse defines model for DocumentPaymentResponse.
 type DocumentPaymentResponse struct {
-	Amount          *Decimal                              `json:"amount,omitempty"`
-	Applications    *[]DocumentPaymentApplicationResponse `json:"applications,omitempty"`
-	AppliedAmount   *Decimal                              `json:"appliedAmount,omitempty"`
-	AvailableAmount *Decimal                              `json:"availableAmount,omitempty"`
-	ClientId        *int64                                `json:"clientId,omitempty"`
-	ClientName      *string                               `json:"clientName,omitempty"`
-	CreatedAt       *time.Time                            `json:"createdAt,omitempty"`
-	Currency        *DocumentPaymentResponseCurrency      `json:"currency,omitempty"`
-	Id              *int64                                `json:"id,omitempty"`
-	IsVoided        *bool                                 `json:"isVoided,omitempty"`
-	Notes           *string                               `json:"notes,omitempty"`
-	PaymentDate     *time.Time                            `json:"paymentDate,omitempty"`
-	PaymentMethod   *string                               `json:"paymentMethod,omitempty"`
-	ReceivedBy      *string                               `json:"receivedBy,omitempty"`
-	ReferenceNumber *string                               `json:"referenceNumber,omitempty"`
-	UpdatedAt       *time.Time                            `json:"updatedAt,omitempty"`
-	VoidReason      *string                               `json:"voidReason,omitempty"`
-	VoidedAt        *time.Time                            `json:"voidedAt,omitempty"`
-	VoidedBy        *string                               `json:"voidedBy,omitempty"`
+	Amount               *Decimal                              `json:"amount,omitempty"`
+	Applications         *[]DocumentPaymentApplicationResponse `json:"applications,omitempty"`
+	AppliedAmount        *Decimal                              `json:"appliedAmount,omitempty"`
+	AvailableAmount      *Decimal                              `json:"availableAmount,omitempty"`
+	CardPaymentReference *string                               `json:"cardPaymentReference,omitempty"`
+	ClientId             *int64                                `json:"clientId,omitempty"`
+	ClientName           *string                               `json:"clientName,omitempty"`
+	CreatedAt            *time.Time                            `json:"createdAt,omitempty"`
+	Currency             *DocumentPaymentResponseCurrency      `json:"currency,omitempty"`
+	Id                   *int64                                `json:"id,omitempty"`
+	IsVoided             *bool                                 `json:"isVoided,omitempty"`
+	Notes                *string                               `json:"notes,omitempty"`
+	PaymentDate          *time.Time                            `json:"paymentDate,omitempty"`
+	PaymentMethod        *string                               `json:"paymentMethod,omitempty"`
+	ReceivedBy           *string                               `json:"receivedBy,omitempty"`
+	ReferenceNumber      *string                               `json:"referenceNumber,omitempty"`
+	UpdatedAt            *time.Time                            `json:"updatedAt,omitempty"`
+	VoidReason           *string                               `json:"voidReason,omitempty"`
+	VoidedAt             *time.Time                            `json:"voidedAt,omitempty"`
+	VoidedBy             *string                               `json:"voidedBy,omitempty"`
 }
 
 // DocumentPaymentResponseCurrency defines model for DocumentPaymentResponse.Currency.
@@ -3171,9 +3179,10 @@ type DocumentSummaryDto struct {
 
 // DocumentSummaryPaymentMethodDto defines model for DocumentSummaryPaymentMethodDto.
 type DocumentSummaryPaymentMethodDto struct {
-	PaymentMethodOther *string                                           `json:"paymentMethodOther,omitempty"`
-	PaymentMethodTotal *Decimal                                          `json:"paymentMethodTotal,omitempty"`
-	PaymentMethodType  *DocumentSummaryPaymentMethodDtoPaymentMethodType `json:"paymentMethodType,omitempty"`
+	CardPaymentReference *string                                           `json:"cardPaymentReference,omitempty"`
+	PaymentMethodOther   *string                                           `json:"paymentMethodOther,omitempty"`
+	PaymentMethodTotal   *Decimal                                          `json:"paymentMethodTotal,omitempty"`
+	PaymentMethodType    *DocumentSummaryPaymentMethodDtoPaymentMethodType `json:"paymentMethodType,omitempty"`
 }
 
 // DocumentSummaryPaymentMethodDtoPaymentMethodType defines model for DocumentSummaryPaymentMethodDto.PaymentMethodType.

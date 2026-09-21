@@ -1544,6 +1544,12 @@
             },
             "type": "array"
           },
+          "cardPaymentReference": {
+            "description": "Opcional y exclusivo para tarjeta (02): últimos cuatro dígitos de la tarjeta utilizada. No es un PAN ni un código de autorización.",
+            "example": "1234",
+            "pattern": "\\d{4}",
+            "type": "string"
+          },
           "clientId": {
             "format": "int64",
             "type": "integer"
@@ -1597,6 +1603,10 @@
             "type": "number",
             "x-go-type": "Decimal"
           },
+          "cardPaymentReference": {
+            "pattern": "\\d{4}",
+            "type": "string"
+          },
           "id": {
             "format": "int64",
             "type": "integer"
@@ -1636,6 +1646,12 @@
             "minimum": 0.00001,
             "type": "number",
             "x-go-type": "Decimal"
+          },
+          "cardPaymentReference": {
+            "description": "Opcional y exclusivo para tarjeta (02): últimos cuatro dígitos de la tarjeta utilizada. No es un PAN ni un código de autorización.",
+            "example": "1234",
+            "pattern": "\\d{4}",
+            "type": "string"
           },
           "otherDescription": {
             "description": "Opcional por defecto. Requerido cuando paymentType=99.",
@@ -1688,6 +1704,9 @@
             "format": "decimal",
             "type": "number",
             "x-go-type": "Decimal"
+          },
+          "cardPaymentReference": {
+            "type": "string"
           },
           "clientId": {
             "format": "int64",
@@ -2668,6 +2687,10 @@
       },
       "DocumentSummaryPaymentMethodDto": {
         "properties": {
+          "cardPaymentReference": {
+            "pattern": "\\d{4}",
+            "type": "string"
+          },
           "paymentMethodOther": {
             "maxLength": 100,
             "minLength": 3,

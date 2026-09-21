@@ -5592,6 +5592,12 @@
             "maxLength" : 100,
             "minLength" : 0
           },
+          "cardPaymentReference" : {
+            "type" : "string",
+            "description" : "Opcional y exclusivo para tarjeta (02): últimos cuatro dígitos de la tarjeta utilizada. No es un PAN ni un código de autorización.",
+            "example" : "1234",
+            "pattern" : "\\d{4}"
+          },
           "referenceNumber" : {
             "type" : "string",
             "maxLength" : 100,
@@ -5705,6 +5711,9 @@
             "format" : "decimal"
           },
           "paymentMethod" : {
+            "type" : "string"
+          },
+          "cardPaymentReference" : {
             "type" : "string"
           },
           "referenceNumber" : {
@@ -6393,6 +6402,10 @@
             "type" : "string",
             "maxLength" : 100,
             "minLength" : 3
+          },
+          "cardPaymentReference" : {
+            "type" : "string",
+            "pattern" : "\\d{4}"
           }
         },
         "required" : [ "paymentType" ]
@@ -6778,6 +6791,10 @@
             "format" : "decimal",
             "maximum" : 1.0E13,
             "minimum" : 0
+          },
+          "cardPaymentReference" : {
+            "type" : "string",
+            "pattern" : "\\d{4}"
           }
         }
       },
@@ -7274,6 +7291,12 @@
             "example" : "Transferencia por plataforma externa",
             "maxLength" : 100,
             "minLength" : 3
+          },
+          "cardPaymentReference" : {
+            "type" : "string",
+            "description" : "Opcional y exclusivo para tarjeta (02): últimos cuatro dígitos de la tarjeta utilizada. No es un PAN ni un código de autorización.",
+            "example" : "1234",
+            "pattern" : "\\d{4}"
           }
         },
         "required" : [ "paymentType" ]
@@ -7633,13 +7656,13 @@
           "otherTaxDataValid" : {
             "type" : "boolean"
           },
+          "vatRateCodeValidForVatTax" : {
+            "type" : "boolean"
+          },
           "alcoholicBeverageCalculationDataValid" : {
             "type" : "boolean"
           },
           "taxRatePresentWhenRequiredForCalculation" : {
-            "type" : "boolean"
-          },
-          "vatRateCodeValidForVatTax" : {
             "type" : "boolean"
           }
         },

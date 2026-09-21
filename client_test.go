@@ -118,10 +118,15 @@ func TestStableOperationNamesAreGenerated(t *testing.T) {
 }
 
 func TestAPIError(t *testing.T) {
-	err := ErrorFromResponse(&http.Response{StatusCode: 422}, []byte(`{"message":"invalid","metadata":{"field":"amount"}}`))
+	header := make(http.Header)
+	header.Set("X-Request-ID", "provider-123")
+	err := ErrorFromResponse(&http.Response{StatusCode: 422, Header: header}, []byte(`{"message":"invalid","metadata":{"field":"amount"}}`))
 	apiErr, ok := err.(*APIError)
 	if !ok || apiErr.StatusCode != 422 || apiErr.Message != "invalid" {
 		t.Fatalf("unexpected error: %#v", err)
+	}
+	if apiErr.RequestID != "provider-123" || apiErr.Retryable {
+		t.Fatalf("unexpected provider metadata: %#v", apiErr)
 	}
 }
 
