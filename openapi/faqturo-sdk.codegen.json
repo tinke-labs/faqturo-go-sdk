@@ -1136,6 +1136,18 @@
             "minItems": 0,
             "type": "array"
           },
+          "exonerationSelection": {
+            "description": "Decisión explícita de exoneración. Omitir conserva el comportamiento anterior.",
+            "enum": [
+              "AUTO",
+              "NONE",
+              "SELECTED"
+            ],
+            "type": "string"
+          },
+          "exonerationSelectionConsistent": {
+            "type": "boolean"
+          },
           "lineNumber": {
             "description": "Numero de linea dentro del documento.",
             "example": 1,
@@ -1925,7 +1937,8 @@
               "NO_TAX",
               "NO_CURRENT_AUTHORIZATION",
               "CABYS_NOT_COVERED",
-              "MULTIPLE_MATCHES"
+              "MULTIPLE_MATCHES",
+              "USER_DECLINED"
             ],
             "type": "string"
           },
