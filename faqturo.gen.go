@@ -167,6 +167,27 @@ func (e DocumentItemAccountingClassificationRequestVatUsageType) Valid() bool {
 	}
 }
 
+// Defines values for DocumentItemRequestExonerationSelection.
+const (
+	AUTO     DocumentItemRequestExonerationSelection = "AUTO"
+	NONE     DocumentItemRequestExonerationSelection = "NONE"
+	SELECTED DocumentItemRequestExonerationSelection = "SELECTED"
+)
+
+// Valid indicates whether the value is a known member of the DocumentItemRequestExonerationSelection enum.
+func (e DocumentItemRequestExonerationSelection) Valid() bool {
+	switch e {
+	case AUTO:
+		return true
+	case NONE:
+		return true
+	case SELECTED:
+		return true
+	default:
+		return false
+	}
+}
+
 // Defines values for DocumentItemRequestVatChargedAtFactory.
 const (
 	DocumentItemRequestVatChargedAtFactoryN01 DocumentItemRequestVatChargedAtFactory = "01"
@@ -348,6 +369,7 @@ const (
 	NOCLIENT               DocumentPreviewLineResponseReason = "NO_CLIENT"
 	NOCURRENTAUTHORIZATION DocumentPreviewLineResponseReason = "NO_CURRENT_AUTHORIZATION"
 	NOTAX                  DocumentPreviewLineResponseReason = "NO_TAX"
+	USERDECLINED           DocumentPreviewLineResponseReason = "USER_DECLINED"
 )
 
 // Valid indicates whether the value is a known member of the DocumentPreviewLineResponseReason enum.
@@ -362,6 +384,8 @@ func (e DocumentPreviewLineResponseReason) Valid() bool {
 	case NOCURRENTAUTHORIZATION:
 		return true
 	case NOTAX:
+		return true
+	case USERDECLINED:
 		return true
 	default:
 		return false
@@ -2703,6 +2727,10 @@ type DocumentItemRequest struct {
 	// Discounts Opcional. Descuentos de linea; si discountCode=99, discountCodeOther es requerido.
 	Discounts *[]DocumentItemDiscountRequest `json:"discounts,omitempty"`
 
+	// ExonerationSelection Decisión explícita de exoneración. Omitir conserva el comportamiento anterior.
+	ExonerationSelection           *DocumentItemRequestExonerationSelection `json:"exonerationSelection,omitempty"`
+	ExonerationSelectionConsistent *bool                                    `json:"exonerationSelectionConsistent,omitempty"`
+
 	// LineNumber Numero de linea dentro del documento.
 	LineNumber int32 `json:"lineNumber"`
 
@@ -2739,6 +2767,9 @@ type DocumentItemRequest struct {
 	// VinOrSerialNumbers Opcional por defecto. Requerido cuando el codigo CAByS corresponde a medios de transporte; cada valor maximo 17 caracteres.
 	VinOrSerialNumbers *[]string `json:"vinOrSerialNumbers,omitempty"`
 }
+
+// DocumentItemRequestExonerationSelection Decisión explícita de exoneración. Omitir conserva el comportamiento anterior.
+type DocumentItemRequestExonerationSelection string
 
 // DocumentItemRequestVatChargedAtFactory Opcional. Requerido por Hacienda para casos especificos de IVA cobrado a nivel de fabrica.
 type DocumentItemRequestVatChargedAtFactory string
