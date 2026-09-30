@@ -7692,25 +7692,25 @@
           "specificTaxData" : {
             "$ref" : "#/components/schemas/SpecificTaxDataRequest"
           },
+          "vatRateCodeValidForVatTax" : {
+            "type" : "boolean"
+          },
           "usedGoodsVatCalculationDataValid" : {
             "type" : "boolean"
           },
           "specificTaxTypeValidForCode05" : {
             "type" : "boolean"
           },
-          "vatSpecialCalculationDataValid" : {
-            "type" : "boolean"
-          },
           "alcoholicBeverageCalculationDataValid" : {
             "type" : "boolean"
           },
-          "taxRatePresentWhenRequiredForCalculation" : {
+          "vatSpecialCalculationDataValid" : {
             "type" : "boolean"
           },
           "otherTaxDataValid" : {
             "type" : "boolean"
           },
-          "vatRateCodeValidForVatTax" : {
+          "taxRatePresentWhenRequiredForCalculation" : {
             "type" : "boolean"
           }
         },
