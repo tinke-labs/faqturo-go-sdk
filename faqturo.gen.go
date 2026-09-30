@@ -167,6 +167,27 @@ func (e DocumentItemAccountingClassificationRequestVatUsageType) Valid() bool {
 	}
 }
 
+// Defines values for DocumentItemRequestExonerationSelection.
+const (
+	AUTO     DocumentItemRequestExonerationSelection = "AUTO"
+	NONE     DocumentItemRequestExonerationSelection = "NONE"
+	SELECTED DocumentItemRequestExonerationSelection = "SELECTED"
+)
+
+// Valid indicates whether the value is a known member of the DocumentItemRequestExonerationSelection enum.
+func (e DocumentItemRequestExonerationSelection) Valid() bool {
+	switch e {
+	case AUTO:
+		return true
+	case NONE:
+		return true
+	case SELECTED:
+		return true
+	default:
+		return false
+	}
+}
+
 // Defines values for DocumentItemRequestVatChargedAtFactory.
 const (
 	DocumentItemRequestVatChargedAtFactoryN01 DocumentItemRequestVatChargedAtFactory = "01"
@@ -348,6 +369,7 @@ const (
 	NOCLIENT               DocumentPreviewLineResponseReason = "NO_CLIENT"
 	NOCURRENTAUTHORIZATION DocumentPreviewLineResponseReason = "NO_CURRENT_AUTHORIZATION"
 	NOTAX                  DocumentPreviewLineResponseReason = "NO_TAX"
+	USERDECLINED           DocumentPreviewLineResponseReason = "USER_DECLINED"
 )
 
 // Valid indicates whether the value is a known member of the DocumentPreviewLineResponseReason enum.
@@ -362,6 +384,8 @@ func (e DocumentPreviewLineResponseReason) Valid() bool {
 	case NOCURRENTAUTHORIZATION:
 		return true
 	case NOTAX:
+		return true
+	case USERDECLINED:
 		return true
 	default:
 		return false
@@ -1745,6 +1769,21 @@ func (e GetDocumentPdfParamsAPIVersion) Valid() bool {
 	}
 }
 
+// Defines values for GetDocumentPrintDataParamsAPIVersion.
+const (
+	GetDocumentPrintDataParamsAPIVersionV1 GetDocumentPrintDataParamsAPIVersion = "v1"
+)
+
+// Valid indicates whether the value is a known member of the GetDocumentPrintDataParamsAPIVersion enum.
+func (e GetDocumentPrintDataParamsAPIVersion) Valid() bool {
+	switch e {
+	case GetDocumentPrintDataParamsAPIVersionV1:
+		return true
+	default:
+		return false
+	}
+}
+
 // Defines values for RegenerateDocumentPdfParamsAPIVersion.
 const (
 	RegenerateDocumentPdfParamsAPIVersionV1 RegenerateDocumentPdfParamsAPIVersion = "v1"
@@ -2347,13 +2386,13 @@ func (e GetLogsParamsAPIVersion) Valid() bool {
 
 // Defines values for TestWebhookParamsAPIVersion.
 const (
-	TestWebhookParamsAPIVersionV1 TestWebhookParamsAPIVersion = "v1"
+	V1 TestWebhookParamsAPIVersion = "v1"
 )
 
 // Valid indicates whether the value is a known member of the TestWebhookParamsAPIVersion enum.
 func (e TestWebhookParamsAPIVersion) Valid() bool {
 	switch e {
-	case TestWebhookParamsAPIVersionV1:
+	case V1:
 		return true
 	default:
 		return false
@@ -2703,6 +2742,10 @@ type DocumentItemRequest struct {
 	// Discounts Opcional. Descuentos de linea; si discountCode=99, discountCodeOther es requerido.
 	Discounts *[]DocumentItemDiscountRequest `json:"discounts,omitempty"`
 
+	// ExonerationSelection Decisión explícita de exoneración. Omitir conserva el comportamiento anterior.
+	ExonerationSelection           *DocumentItemRequestExonerationSelection `json:"exonerationSelection,omitempty"`
+	ExonerationSelectionConsistent *bool                                    `json:"exonerationSelectionConsistent,omitempty"`
+
 	// LineNumber Numero de linea dentro del documento.
 	LineNumber int32 `json:"lineNumber"`
 
@@ -2739,6 +2782,9 @@ type DocumentItemRequest struct {
 	// VinOrSerialNumbers Opcional por defecto. Requerido cuando el codigo CAByS corresponde a medios de transporte; cada valor maximo 17 caracteres.
 	VinOrSerialNumbers *[]string `json:"vinOrSerialNumbers,omitempty"`
 }
+
+// DocumentItemRequestExonerationSelection Decisión explícita de exoneración. Omitir conserva el comportamiento anterior.
+type DocumentItemRequestExonerationSelection string
 
 // DocumentItemRequestVatChargedAtFactory Opcional. Requerido por Hacienda para casos especificos de IVA cobrado a nivel de fabrica.
 type DocumentItemRequestVatChargedAtFactory string
@@ -2977,6 +3023,30 @@ type DocumentPreviewResponse struct {
 	NetTax      *Decimal                       `json:"netTax,omitempty"`
 	Subtotal    *Decimal                       `json:"subtotal,omitempty"`
 	Total       *Decimal                       `json:"total,omitempty"`
+}
+
+// DocumentPrintDataLineResponse defines model for DocumentPrintDataLineResponse.
+type DocumentPrintDataLineResponse struct {
+	Cabys       *string  `json:"cabys,omitempty"`
+	Description *string  `json:"description,omitempty"`
+	LineNet     *Decimal `json:"lineNet,omitempty"`
+	Quantity    *Decimal `json:"quantity,omitempty"`
+	UnitPrice   *Decimal `json:"unitPrice,omitempty"`
+}
+
+// DocumentPrintDataResponse defines model for DocumentPrintDataResponse.
+type DocumentPrintDataResponse struct {
+	IssuerActivityCode           *string                          `json:"issuerActivityCode,omitempty"`
+	IssuerEmail                  *string                          `json:"issuerEmail,omitempty"`
+	IssuerIdentificationNumber   *string                          `json:"issuerIdentificationNumber,omitempty"`
+	IssuerIdentificationType     *string                          `json:"issuerIdentificationType,omitempty"`
+	IssuerName                   *string                          `json:"issuerName,omitempty"`
+	Lines                        *[]DocumentPrintDataLineResponse `json:"lines,omitempty"`
+	ReceiverActivityCode         *string                          `json:"receiverActivityCode,omitempty"`
+	ReceiverEmail                *string                          `json:"receiverEmail,omitempty"`
+	ReceiverIdentificationNumber *string                          `json:"receiverIdentificationNumber,omitempty"`
+	ReceiverIdentificationType   *string                          `json:"receiverIdentificationType,omitempty"`
+	ReceiverName                 *string                          `json:"receiverName,omitempty"`
 }
 
 // DocumentReferenceInformationDto defines model for DocumentReferenceInformationDto.
@@ -4619,6 +4689,14 @@ type GetDocumentPdfParams struct {
 // GetDocumentPdfParamsAPIVersion defines parameters for GetDocumentPdf.
 type GetDocumentPdfParamsAPIVersion string
 
+// GetDocumentPrintDataParams defines parameters for GetDocumentPrintData.
+type GetDocumentPrintDataParams struct {
+	APIVersion *GetDocumentPrintDataParamsAPIVersion `json:"API-Version,omitempty"`
+}
+
+// GetDocumentPrintDataParamsAPIVersion defines parameters for GetDocumentPrintData.
+type GetDocumentPrintDataParamsAPIVersion string
+
 // RegenerateDocumentPdfParams defines parameters for RegenerateDocumentPdf.
 type RegenerateDocumentPdfParams struct {
 	APIVersion *RegenerateDocumentPdfParamsAPIVersion `json:"API-Version,omitempty"`
@@ -5388,6 +5466,9 @@ type ClientInterface interface {
 
 	// GetDocumentPdf request
 	GetDocumentPdf(ctx context.Context, id int64, params *GetDocumentPdfParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// GetDocumentPrintData request
+	GetDocumentPrintData(ctx context.Context, id int64, params *GetDocumentPrintDataParams, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// RegenerateDocumentPdf request
 	RegenerateDocumentPdf(ctx context.Context, id int64, params *RegenerateDocumentPdfParams, reqEditors ...RequestEditorFn) (*http.Response, error)
@@ -6603,6 +6684,18 @@ func (c *Client) GetDocumentById(ctx context.Context, id int64, params *GetDocum
 
 func (c *Client) GetDocumentPdf(ctx context.Context, id int64, params *GetDocumentPdfParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewGetDocumentPdfRequest(c.Server, id, params)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) GetDocumentPrintData(ctx context.Context, id int64, params *GetDocumentPrintDataParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewGetDocumentPrintDataRequest(c.Server, id, params)
 	if err != nil {
 		return nil, err
 	}
@@ -11260,6 +11353,55 @@ func NewGetDocumentPdfRequest(server string, id int64, params *GetDocumentPdfPar
 	return req, nil
 }
 
+// NewGetDocumentPrintDataRequest generates requests for GetDocumentPrintData
+func NewGetDocumentPrintDataRequest(server string, id int64, params *GetDocumentPrintDataParams) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "id", id, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "integer", Format: "int64"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/documents/%s/print-data", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+
+		if params.APIVersion != nil {
+			var headerParam0 string
+
+			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "API-Version", *params.APIVersion, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: ""})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("API-Version", headerParam0)
+		}
+
+	}
+
+	return req, nil
+}
+
 // NewRegenerateDocumentPdfRequest generates requests for RegenerateDocumentPdf
 func NewRegenerateDocumentPdfRequest(server string, id int64, params *RegenerateDocumentPdfParams) (*http.Request, error) {
 	var err error
@@ -13671,6 +13813,9 @@ type ClientWithResponsesInterface interface {
 	// GetDocumentPdf request
 	GetDocumentPdf(ctx context.Context, id int64, params *GetDocumentPdfParams, reqEditors ...RequestEditorFn) (*GetDocumentPdfResponse, error)
 
+	// GetDocumentPrintData request
+	GetDocumentPrintData(ctx context.Context, id int64, params *GetDocumentPrintDataParams, reqEditors ...RequestEditorFn) (*GetDocumentPrintDataResponse, error)
+
 	// RegenerateDocumentPdf request
 	RegenerateDocumentPdf(ctx context.Context, id int64, params *RegenerateDocumentPdfParams, reqEditors ...RequestEditorFn) (*RegenerateDocumentPdfResponse, error)
 
@@ -15760,6 +15905,36 @@ func (r GetDocumentPdfResponse) StatusCode() int {
 
 // ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
 func (r GetDocumentPdfResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type GetDocumentPrintDataResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	JSON200      *DocumentPrintDataResponse
+}
+
+// Status returns HTTPResponse.Status
+func (r GetDocumentPrintDataResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r GetDocumentPrintDataResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r GetDocumentPrintDataResponse) ContentType() string {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.Header.Get("Content-Type")
 	}
@@ -18203,6 +18378,20 @@ func (c *ClientWithResponses) GetDocumentPdf(ctx context.Context, id int64, para
 	return ParseGetDocumentPdfResponse(rsp)
 }
 
+// GetDocumentPrintDataRaw performs the request and returns the raw HTTP response.
+func (c *RawClient) GetDocumentPrintDataRaw(ctx context.Context, id int64, params *GetDocumentPrintDataParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	return c.client.GetDocumentPrintData(ctx, id, params, reqEditors...)
+}
+
+// GetDocumentPrintData request returning *GetDocumentPrintDataResponse
+func (c *ClientWithResponses) GetDocumentPrintData(ctx context.Context, id int64, params *GetDocumentPrintDataParams, reqEditors ...RequestEditorFn) (*GetDocumentPrintDataResponse, error) {
+	rsp, err := c.client.GetDocumentPrintData(ctx, id, params, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseGetDocumentPrintDataResponse(rsp)
+}
+
 // RegenerateDocumentPdfRaw performs the request and returns the raw HTTP response.
 func (c *RawClient) RegenerateDocumentPdfRaw(ctx context.Context, id int64, params *RegenerateDocumentPdfParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	return c.client.RegenerateDocumentPdf(ctx, id, params, reqEditors...)
@@ -20569,6 +20758,32 @@ func ParseGetDocumentPdfResponse(rsp *http.Response) (*GetDocumentPdfResponse, e
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
 		var dest map[string]string
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseGetDocumentPrintDataResponse parses an HTTP response from a GetDocumentPrintData call
+func ParseGetDocumentPrintDataResponse(rsp *http.Response) (*GetDocumentPrintDataResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &GetDocumentPrintDataResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest DocumentPrintDataResponse
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}

@@ -1136,6 +1136,18 @@
             "minItems": 0,
             "type": "array"
           },
+          "exonerationSelection": {
+            "description": "Decisión explícita de exoneración. Omitir conserva el comportamiento anterior.",
+            "enum": [
+              "AUTO",
+              "NONE",
+              "SELECTED"
+            ],
+            "type": "string"
+          },
+          "exonerationSelectionConsistent": {
+            "type": "boolean"
+          },
           "lineNumber": {
             "description": "Numero de linea dentro del documento.",
             "example": 1,
@@ -1925,7 +1937,8 @@
               "NO_TAX",
               "NO_CURRENT_AUTHORIZATION",
               "CABYS_NOT_COVERED",
-              "MULTIPLE_MATCHES"
+              "MULTIPLE_MATCHES",
+              "USER_DECLINED"
             ],
             "type": "string"
           },
@@ -2028,6 +2041,73 @@
             "format": "decimal",
             "type": "number",
             "x-go-type": "Decimal"
+          }
+        },
+        "type": "object"
+      },
+      "DocumentPrintDataLineResponse": {
+        "properties": {
+          "cabys": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "lineNet": {
+            "format": "decimal",
+            "type": "number",
+            "x-go-type": "Decimal"
+          },
+          "quantity": {
+            "format": "decimal",
+            "type": "number",
+            "x-go-type": "Decimal"
+          },
+          "unitPrice": {
+            "format": "decimal",
+            "type": "number",
+            "x-go-type": "Decimal"
+          }
+        },
+        "type": "object"
+      },
+      "DocumentPrintDataResponse": {
+        "properties": {
+          "issuerActivityCode": {
+            "type": "string"
+          },
+          "issuerEmail": {
+            "type": "string"
+          },
+          "issuerIdentificationNumber": {
+            "type": "string"
+          },
+          "issuerIdentificationType": {
+            "type": "string"
+          },
+          "issuerName": {
+            "type": "string"
+          },
+          "lines": {
+            "items": {
+              "$ref": "#/components/schemas/DocumentPrintDataLineResponse"
+            },
+            "type": "array"
+          },
+          "receiverActivityCode": {
+            "type": "string"
+          },
+          "receiverEmail": {
+            "type": "string"
+          },
+          "receiverIdentificationNumber": {
+            "type": "string"
+          },
+          "receiverIdentificationType": {
+            "type": "string"
+          },
+          "receiverName": {
+            "type": "string"
           }
         },
         "type": "object"
@@ -8885,6 +8965,55 @@
           }
         ],
         "summary": "Obtener URL firmada del PDF",
+        "tags": [
+          "Documents"
+        ]
+      }
+    },
+    "/documents/{id}/print-data": {
+      "get": {
+        "description": "Devuelve únicamente datos guardados al emitir el documento, limitados al tenant autenticado.",
+        "operationId": "getDocumentPrintData",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "format": "int64",
+              "type": "integer"
+            }
+          },
+          {
+            "in": "header",
+            "name": "API-Version",
+            "schema": {
+              "default": "1.0.0",
+              "enum": [
+                "v1"
+              ],
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DocumentPrintDataResponse"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ],
+        "summary": "Obtener los datos históricos para imprimir un documento",
         "tags": [
           "Documents"
         ]
