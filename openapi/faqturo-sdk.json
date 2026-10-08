@@ -3045,10 +3045,40 @@
         } ]
       }
     },
-    "/tenants/invoicing-status" : {
+    "/tenants/fiscal-status" : {
       "get" : {
         "tags" : [ "Tenants" ],
-        "operationId" : "getInvoicingStatus",
+        "operationId" : "getFiscalStatus",
+        "parameters" : [ {
+          "name" : "API-Version",
+          "in" : "header",
+          "schema" : {
+            "type" : "string",
+            "default" : "1.0.0",
+            "enum" : [ "v1" ]
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/TenantInvoicingStatusResponse"
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "apiKeyAuth" : [ ]
+        } ]
+      }
+    },
+    "/tenants/fiscal-status/verify-credentials" : {
+      "post" : {
+        "tags" : [ "Tenants" ],
+        "operationId" : "verifyHaciendaCredentials",
         "parameters" : [ {
           "name" : "API-Version",
           "in" : "header",

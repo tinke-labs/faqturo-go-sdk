@@ -10402,9 +10402,47 @@
         ]
       }
     },
-    "/tenants/invoicing-status": {
+    "/tenants/fiscal-status": {
       "get": {
-        "operationId": "getInvoicingStatus",
+        "operationId": "getFiscalStatus",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "API-Version",
+            "schema": {
+              "default": "1.0.0",
+              "enum": [
+                "v1"
+              ],
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TenantInvoicingStatusResponse"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ],
+        "tags": [
+          "Tenants"
+        ]
+      }
+    },
+    "/tenants/fiscal-status/verify-credentials": {
+      "post": {
+        "operationId": "verifyHaciendaCredentials",
         "parameters": [
           {
             "in": "header",
