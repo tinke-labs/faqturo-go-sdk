@@ -2204,15 +2204,30 @@ func (e UpdateTenantParamsAPIVersion) Valid() bool {
 	}
 }
 
-// Defines values for GetInvoicingStatusParamsAPIVersion.
+// Defines values for GetFiscalStatusParamsAPIVersion.
 const (
-	GetInvoicingStatusParamsAPIVersionV1 GetInvoicingStatusParamsAPIVersion = "v1"
+	GetFiscalStatusParamsAPIVersionV1 GetFiscalStatusParamsAPIVersion = "v1"
 )
 
-// Valid indicates whether the value is a known member of the GetInvoicingStatusParamsAPIVersion enum.
-func (e GetInvoicingStatusParamsAPIVersion) Valid() bool {
+// Valid indicates whether the value is a known member of the GetFiscalStatusParamsAPIVersion enum.
+func (e GetFiscalStatusParamsAPIVersion) Valid() bool {
 	switch e {
-	case GetInvoicingStatusParamsAPIVersionV1:
+	case GetFiscalStatusParamsAPIVersionV1:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for VerifyHaciendaCredentialsParamsAPIVersion.
+const (
+	VerifyHaciendaCredentialsParamsAPIVersionV1 VerifyHaciendaCredentialsParamsAPIVersion = "v1"
+)
+
+// Valid indicates whether the value is a known member of the VerifyHaciendaCredentialsParamsAPIVersion enum.
+func (e VerifyHaciendaCredentialsParamsAPIVersion) Valid() bool {
+	switch e {
+	case VerifyHaciendaCredentialsParamsAPIVersionV1:
 		return true
 	default:
 		return false
@@ -2386,13 +2401,13 @@ func (e GetLogsParamsAPIVersion) Valid() bool {
 
 // Defines values for TestWebhookParamsAPIVersion.
 const (
-	V1 TestWebhookParamsAPIVersion = "v1"
+	TestWebhookParamsAPIVersionV1 TestWebhookParamsAPIVersion = "v1"
 )
 
 // Valid indicates whether the value is a known member of the TestWebhookParamsAPIVersion enum.
 func (e TestWebhookParamsAPIVersion) Valid() bool {
 	switch e {
-	case V1:
+	case TestWebhookParamsAPIVersionV1:
 		return true
 	default:
 		return false
@@ -4926,13 +4941,21 @@ type UpdateTenantParams struct {
 // UpdateTenantParamsAPIVersion defines parameters for UpdateTenant.
 type UpdateTenantParamsAPIVersion string
 
-// GetInvoicingStatusParams defines parameters for GetInvoicingStatus.
-type GetInvoicingStatusParams struct {
-	APIVersion *GetInvoicingStatusParamsAPIVersion `json:"API-Version,omitempty"`
+// GetFiscalStatusParams defines parameters for GetFiscalStatus.
+type GetFiscalStatusParams struct {
+	APIVersion *GetFiscalStatusParamsAPIVersion `json:"API-Version,omitempty"`
 }
 
-// GetInvoicingStatusParamsAPIVersion defines parameters for GetInvoicingStatus.
-type GetInvoicingStatusParamsAPIVersion string
+// GetFiscalStatusParamsAPIVersion defines parameters for GetFiscalStatus.
+type GetFiscalStatusParamsAPIVersion string
+
+// VerifyHaciendaCredentialsParams defines parameters for VerifyHaciendaCredentials.
+type VerifyHaciendaCredentialsParams struct {
+	APIVersion *VerifyHaciendaCredentialsParamsAPIVersion `json:"API-Version,omitempty"`
+}
+
+// VerifyHaciendaCredentialsParamsAPIVersion defines parameters for VerifyHaciendaCredentials.
+type VerifyHaciendaCredentialsParamsAPIVersion string
 
 // DeleteLogoParams defines parameters for DeleteLogo.
 type DeleteLogoParams struct {
@@ -5570,8 +5593,11 @@ type ClientInterface interface {
 
 	UpdateTenant(ctx context.Context, params *UpdateTenantParams, body UpdateTenantJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	// GetInvoicingStatus request
-	GetInvoicingStatus(ctx context.Context, params *GetInvoicingStatusParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+	// GetFiscalStatus request
+	GetFiscalStatus(ctx context.Context, params *GetFiscalStatusParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// VerifyHaciendaCredentials request
+	VerifyHaciendaCredentials(ctx context.Context, params *VerifyHaciendaCredentialsParams, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// DeleteLogo request
 	DeleteLogo(ctx context.Context, params *DeleteLogoParams, reqEditors ...RequestEditorFn) (*http.Response, error)
@@ -7138,8 +7164,20 @@ func (c *Client) UpdateTenant(ctx context.Context, params *UpdateTenantParams, b
 	return c.Client.Do(req)
 }
 
-func (c *Client) GetInvoicingStatus(ctx context.Context, params *GetInvoicingStatusParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewGetInvoicingStatusRequest(c.Server, params)
+func (c *Client) GetFiscalStatus(ctx context.Context, params *GetFiscalStatusParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewGetFiscalStatusRequest(c.Server, params)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) VerifyHaciendaCredentials(ctx context.Context, params *VerifyHaciendaCredentialsParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewVerifyHaciendaCredentialsRequest(c.Server, params)
 	if err != nil {
 		return nil, err
 	}
@@ -12904,8 +12942,8 @@ func NewUpdateTenantRequestWithBody(server string, params *UpdateTenantParams, c
 	return req, nil
 }
 
-// NewGetInvoicingStatusRequest generates requests for GetInvoicingStatus
-func NewGetInvoicingStatusRequest(server string, params *GetInvoicingStatusParams) (*http.Request, error) {
+// NewGetFiscalStatusRequest generates requests for GetFiscalStatus
+func NewGetFiscalStatusRequest(server string, params *GetFiscalStatusParams) (*http.Request, error) {
 	var err error
 
 	serverURL, err := url.Parse(server)
@@ -12913,7 +12951,7 @@ func NewGetInvoicingStatusRequest(server string, params *GetInvoicingStatusParam
 		return nil, err
 	}
 
-	operationPath := fmt.Sprintf("/tenants/invoicing-status")
+	operationPath := fmt.Sprintf("/tenants/fiscal-status")
 	if operationPath[0] == '/' {
 		operationPath = "." + operationPath
 	}
@@ -12924,6 +12962,48 @@ func NewGetInvoicingStatusRequest(server string, params *GetInvoicingStatusParam
 	}
 
 	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+
+		if params.APIVersion != nil {
+			var headerParam0 string
+
+			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "API-Version", *params.APIVersion, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: ""})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("API-Version", headerParam0)
+		}
+
+	}
+
+	return req, nil
+}
+
+// NewVerifyHaciendaCredentialsRequest generates requests for VerifyHaciendaCredentials
+func NewVerifyHaciendaCredentialsRequest(server string, params *VerifyHaciendaCredentialsParams) (*http.Request, error) {
+	var err error
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/tenants/fiscal-status/verify-credentials")
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPost, queryURL.String(), nil)
 	if err != nil {
 		return nil, err
 	}
@@ -13916,8 +13996,11 @@ type ClientWithResponsesInterface interface {
 
 	UpdateTenant(ctx context.Context, params *UpdateTenantParams, body UpdateTenantJSONRequestBody, reqEditors ...RequestEditorFn) (*UpdateTenantResponse, error)
 
-	// GetInvoicingStatus request
-	GetInvoicingStatus(ctx context.Context, params *GetInvoicingStatusParams, reqEditors ...RequestEditorFn) (*GetInvoicingStatusResponse, error)
+	// GetFiscalStatus request
+	GetFiscalStatus(ctx context.Context, params *GetFiscalStatusParams, reqEditors ...RequestEditorFn) (*GetFiscalStatusResponse, error)
+
+	// VerifyHaciendaCredentials request
+	VerifyHaciendaCredentials(ctx context.Context, params *VerifyHaciendaCredentialsParams, reqEditors ...RequestEditorFn) (*VerifyHaciendaCredentialsResponse, error)
 
 	// DeleteLogo request
 	DeleteLogo(ctx context.Context, params *DeleteLogoParams, reqEditors ...RequestEditorFn) (*DeleteLogoResponse, error)
@@ -16780,14 +16863,14 @@ func (r UpdateTenantResponse) ContentType() string {
 	return ""
 }
 
-type GetInvoicingStatusResponse struct {
+type GetFiscalStatusResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
 	JSON200      *TenantInvoicingStatusResponse
 }
 
 // Status returns HTTPResponse.Status
-func (r GetInvoicingStatusResponse) Status() string {
+func (r GetFiscalStatusResponse) Status() string {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.Status
 	}
@@ -16795,7 +16878,7 @@ func (r GetInvoicingStatusResponse) Status() string {
 }
 
 // StatusCode returns HTTPResponse.StatusCode
-func (r GetInvoicingStatusResponse) StatusCode() int {
+func (r GetFiscalStatusResponse) StatusCode() int {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.StatusCode
 	}
@@ -16803,7 +16886,37 @@ func (r GetInvoicingStatusResponse) StatusCode() int {
 }
 
 // ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
-func (r GetInvoicingStatusResponse) ContentType() string {
+func (r GetFiscalStatusResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type VerifyHaciendaCredentialsResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	JSON200      *TenantInvoicingStatusResponse
+}
+
+// Status returns HTTPResponse.Status
+func (r VerifyHaciendaCredentialsResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r VerifyHaciendaCredentialsResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r VerifyHaciendaCredentialsResponse) ContentType() string {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.Header.Get("Content-Type")
 	}
@@ -18880,18 +18993,32 @@ func (c *ClientWithResponses) UpdateTenant(ctx context.Context, params *UpdateTe
 	return ParseUpdateTenantResponse(rsp)
 }
 
-// GetInvoicingStatusRaw performs the request and returns the raw HTTP response.
-func (c *RawClient) GetInvoicingStatusRaw(ctx context.Context, params *GetInvoicingStatusParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	return c.client.GetInvoicingStatus(ctx, params, reqEditors...)
+// GetFiscalStatusRaw performs the request and returns the raw HTTP response.
+func (c *RawClient) GetFiscalStatusRaw(ctx context.Context, params *GetFiscalStatusParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	return c.client.GetFiscalStatus(ctx, params, reqEditors...)
 }
 
-// GetInvoicingStatus request returning *GetInvoicingStatusResponse
-func (c *ClientWithResponses) GetInvoicingStatus(ctx context.Context, params *GetInvoicingStatusParams, reqEditors ...RequestEditorFn) (*GetInvoicingStatusResponse, error) {
-	rsp, err := c.client.GetInvoicingStatus(ctx, params, reqEditors...)
+// GetFiscalStatus request returning *GetFiscalStatusResponse
+func (c *ClientWithResponses) GetFiscalStatus(ctx context.Context, params *GetFiscalStatusParams, reqEditors ...RequestEditorFn) (*GetFiscalStatusResponse, error) {
+	rsp, err := c.client.GetFiscalStatus(ctx, params, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
-	return ParseGetInvoicingStatusResponse(rsp)
+	return ParseGetFiscalStatusResponse(rsp)
+}
+
+// VerifyHaciendaCredentialsRaw performs the request and returns the raw HTTP response.
+func (c *RawClient) VerifyHaciendaCredentialsRaw(ctx context.Context, params *VerifyHaciendaCredentialsParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	return c.client.VerifyHaciendaCredentials(ctx, params, reqEditors...)
+}
+
+// VerifyHaciendaCredentials request returning *VerifyHaciendaCredentialsResponse
+func (c *ClientWithResponses) VerifyHaciendaCredentials(ctx context.Context, params *VerifyHaciendaCredentialsParams, reqEditors ...RequestEditorFn) (*VerifyHaciendaCredentialsResponse, error) {
+	rsp, err := c.client.VerifyHaciendaCredentials(ctx, params, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseVerifyHaciendaCredentialsResponse(rsp)
 }
 
 // DeleteLogoRaw performs the request and returns the raw HTTP response.
@@ -21512,15 +21639,41 @@ func ParseUpdateTenantResponse(rsp *http.Response) (*UpdateTenantResponse, error
 	return response, nil
 }
 
-// ParseGetInvoicingStatusResponse parses an HTTP response from a GetInvoicingStatus call
-func ParseGetInvoicingStatusResponse(rsp *http.Response) (*GetInvoicingStatusResponse, error) {
+// ParseGetFiscalStatusResponse parses an HTTP response from a GetFiscalStatus call
+func ParseGetFiscalStatusResponse(rsp *http.Response) (*GetFiscalStatusResponse, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
 	defer func() { _ = rsp.Body.Close() }()
 	if err != nil {
 		return nil, err
 	}
 
-	response := &GetInvoicingStatusResponse{
+	response := &GetFiscalStatusResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest TenantInvoicingStatusResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseVerifyHaciendaCredentialsResponse parses an HTTP response from a VerifyHaciendaCredentials call
+func ParseVerifyHaciendaCredentialsResponse(rsp *http.Response) (*VerifyHaciendaCredentialsResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &VerifyHaciendaCredentialsResponse{
 		Body:         bodyBytes,
 		HTTPResponse: rsp,
 	}
