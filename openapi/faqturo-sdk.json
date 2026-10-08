@@ -3078,7 +3078,7 @@
     "/tenants/fiscal-status/verify-credentials" : {
       "post" : {
         "tags" : [ "Tenants" ],
-        "operationId" : "verifyHaciendaCredentials",
+        "operationId" : "verifyTaxAuthorityCredentials",
         "parameters" : [ {
           "name" : "API-Version",
           "in" : "header",

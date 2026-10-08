@@ -2219,15 +2219,15 @@ func (e GetFiscalStatusParamsAPIVersion) Valid() bool {
 	}
 }
 
-// Defines values for VerifyHaciendaCredentialsParamsAPIVersion.
+// Defines values for VerifyTaxAuthorityCredentialsParamsAPIVersion.
 const (
-	VerifyHaciendaCredentialsParamsAPIVersionV1 VerifyHaciendaCredentialsParamsAPIVersion = "v1"
+	VerifyTaxAuthorityCredentialsParamsAPIVersionV1 VerifyTaxAuthorityCredentialsParamsAPIVersion = "v1"
 )
 
-// Valid indicates whether the value is a known member of the VerifyHaciendaCredentialsParamsAPIVersion enum.
-func (e VerifyHaciendaCredentialsParamsAPIVersion) Valid() bool {
+// Valid indicates whether the value is a known member of the VerifyTaxAuthorityCredentialsParamsAPIVersion enum.
+func (e VerifyTaxAuthorityCredentialsParamsAPIVersion) Valid() bool {
 	switch e {
-	case VerifyHaciendaCredentialsParamsAPIVersionV1:
+	case VerifyTaxAuthorityCredentialsParamsAPIVersionV1:
 		return true
 	default:
 		return false
@@ -4949,13 +4949,13 @@ type GetFiscalStatusParams struct {
 // GetFiscalStatusParamsAPIVersion defines parameters for GetFiscalStatus.
 type GetFiscalStatusParamsAPIVersion string
 
-// VerifyHaciendaCredentialsParams defines parameters for VerifyHaciendaCredentials.
-type VerifyHaciendaCredentialsParams struct {
-	APIVersion *VerifyHaciendaCredentialsParamsAPIVersion `json:"API-Version,omitempty"`
+// VerifyTaxAuthorityCredentialsParams defines parameters for VerifyTaxAuthorityCredentials.
+type VerifyTaxAuthorityCredentialsParams struct {
+	APIVersion *VerifyTaxAuthorityCredentialsParamsAPIVersion `json:"API-Version,omitempty"`
 }
 
-// VerifyHaciendaCredentialsParamsAPIVersion defines parameters for VerifyHaciendaCredentials.
-type VerifyHaciendaCredentialsParamsAPIVersion string
+// VerifyTaxAuthorityCredentialsParamsAPIVersion defines parameters for VerifyTaxAuthorityCredentials.
+type VerifyTaxAuthorityCredentialsParamsAPIVersion string
 
 // DeleteLogoParams defines parameters for DeleteLogo.
 type DeleteLogoParams struct {
@@ -5596,8 +5596,8 @@ type ClientInterface interface {
 	// GetFiscalStatus request
 	GetFiscalStatus(ctx context.Context, params *GetFiscalStatusParams, reqEditors ...RequestEditorFn) (*http.Response, error)
 
-	// VerifyHaciendaCredentials request
-	VerifyHaciendaCredentials(ctx context.Context, params *VerifyHaciendaCredentialsParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+	// VerifyTaxAuthorityCredentials request
+	VerifyTaxAuthorityCredentials(ctx context.Context, params *VerifyTaxAuthorityCredentialsParams, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// DeleteLogo request
 	DeleteLogo(ctx context.Context, params *DeleteLogoParams, reqEditors ...RequestEditorFn) (*http.Response, error)
@@ -7176,8 +7176,8 @@ func (c *Client) GetFiscalStatus(ctx context.Context, params *GetFiscalStatusPar
 	return c.Client.Do(req)
 }
 
-func (c *Client) VerifyHaciendaCredentials(ctx context.Context, params *VerifyHaciendaCredentialsParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewVerifyHaciendaCredentialsRequest(c.Server, params)
+func (c *Client) VerifyTaxAuthorityCredentials(ctx context.Context, params *VerifyTaxAuthorityCredentialsParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewVerifyTaxAuthorityCredentialsRequest(c.Server, params)
 	if err != nil {
 		return nil, err
 	}
@@ -12984,8 +12984,8 @@ func NewGetFiscalStatusRequest(server string, params *GetFiscalStatusParams) (*h
 	return req, nil
 }
 
-// NewVerifyHaciendaCredentialsRequest generates requests for VerifyHaciendaCredentials
-func NewVerifyHaciendaCredentialsRequest(server string, params *VerifyHaciendaCredentialsParams) (*http.Request, error) {
+// NewVerifyTaxAuthorityCredentialsRequest generates requests for VerifyTaxAuthorityCredentials
+func NewVerifyTaxAuthorityCredentialsRequest(server string, params *VerifyTaxAuthorityCredentialsParams) (*http.Request, error) {
 	var err error
 
 	serverURL, err := url.Parse(server)
@@ -13999,8 +13999,8 @@ type ClientWithResponsesInterface interface {
 	// GetFiscalStatus request
 	GetFiscalStatus(ctx context.Context, params *GetFiscalStatusParams, reqEditors ...RequestEditorFn) (*GetFiscalStatusResponse, error)
 
-	// VerifyHaciendaCredentials request
-	VerifyHaciendaCredentials(ctx context.Context, params *VerifyHaciendaCredentialsParams, reqEditors ...RequestEditorFn) (*VerifyHaciendaCredentialsResponse, error)
+	// VerifyTaxAuthorityCredentials request
+	VerifyTaxAuthorityCredentials(ctx context.Context, params *VerifyTaxAuthorityCredentialsParams, reqEditors ...RequestEditorFn) (*VerifyTaxAuthorityCredentialsResponse, error)
 
 	// DeleteLogo request
 	DeleteLogo(ctx context.Context, params *DeleteLogoParams, reqEditors ...RequestEditorFn) (*DeleteLogoResponse, error)
@@ -16893,14 +16893,14 @@ func (r GetFiscalStatusResponse) ContentType() string {
 	return ""
 }
 
-type VerifyHaciendaCredentialsResponse struct {
+type VerifyTaxAuthorityCredentialsResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
 	JSON200      *TenantInvoicingStatusResponse
 }
 
 // Status returns HTTPResponse.Status
-func (r VerifyHaciendaCredentialsResponse) Status() string {
+func (r VerifyTaxAuthorityCredentialsResponse) Status() string {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.Status
 	}
@@ -16908,7 +16908,7 @@ func (r VerifyHaciendaCredentialsResponse) Status() string {
 }
 
 // StatusCode returns HTTPResponse.StatusCode
-func (r VerifyHaciendaCredentialsResponse) StatusCode() int {
+func (r VerifyTaxAuthorityCredentialsResponse) StatusCode() int {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.StatusCode
 	}
@@ -16916,7 +16916,7 @@ func (r VerifyHaciendaCredentialsResponse) StatusCode() int {
 }
 
 // ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
-func (r VerifyHaciendaCredentialsResponse) ContentType() string {
+func (r VerifyTaxAuthorityCredentialsResponse) ContentType() string {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.Header.Get("Content-Type")
 	}
@@ -19007,18 +19007,18 @@ func (c *ClientWithResponses) GetFiscalStatus(ctx context.Context, params *GetFi
 	return ParseGetFiscalStatusResponse(rsp)
 }
 
-// VerifyHaciendaCredentialsRaw performs the request and returns the raw HTTP response.
-func (c *RawClient) VerifyHaciendaCredentialsRaw(ctx context.Context, params *VerifyHaciendaCredentialsParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	return c.client.VerifyHaciendaCredentials(ctx, params, reqEditors...)
+// VerifyTaxAuthorityCredentialsRaw performs the request and returns the raw HTTP response.
+func (c *RawClient) VerifyTaxAuthorityCredentialsRaw(ctx context.Context, params *VerifyTaxAuthorityCredentialsParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	return c.client.VerifyTaxAuthorityCredentials(ctx, params, reqEditors...)
 }
 
-// VerifyHaciendaCredentials request returning *VerifyHaciendaCredentialsResponse
-func (c *ClientWithResponses) VerifyHaciendaCredentials(ctx context.Context, params *VerifyHaciendaCredentialsParams, reqEditors ...RequestEditorFn) (*VerifyHaciendaCredentialsResponse, error) {
-	rsp, err := c.client.VerifyHaciendaCredentials(ctx, params, reqEditors...)
+// VerifyTaxAuthorityCredentials request returning *VerifyTaxAuthorityCredentialsResponse
+func (c *ClientWithResponses) VerifyTaxAuthorityCredentials(ctx context.Context, params *VerifyTaxAuthorityCredentialsParams, reqEditors ...RequestEditorFn) (*VerifyTaxAuthorityCredentialsResponse, error) {
+	rsp, err := c.client.VerifyTaxAuthorityCredentials(ctx, params, reqEditors...)
 	if err != nil {
 		return nil, err
 	}
-	return ParseVerifyHaciendaCredentialsResponse(rsp)
+	return ParseVerifyTaxAuthorityCredentialsResponse(rsp)
 }
 
 // DeleteLogoRaw performs the request and returns the raw HTTP response.
@@ -21665,15 +21665,15 @@ func ParseGetFiscalStatusResponse(rsp *http.Response) (*GetFiscalStatusResponse,
 	return response, nil
 }
 
-// ParseVerifyHaciendaCredentialsResponse parses an HTTP response from a VerifyHaciendaCredentials call
-func ParseVerifyHaciendaCredentialsResponse(rsp *http.Response) (*VerifyHaciendaCredentialsResponse, error) {
+// ParseVerifyTaxAuthorityCredentialsResponse parses an HTTP response from a VerifyTaxAuthorityCredentials call
+func ParseVerifyTaxAuthorityCredentialsResponse(rsp *http.Response) (*VerifyTaxAuthorityCredentialsResponse, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
 	defer func() { _ = rsp.Body.Close() }()
 	if err != nil {
 		return nil, err
 	}
 
-	response := &VerifyHaciendaCredentialsResponse{
+	response := &VerifyTaxAuthorityCredentialsResponse{
 		Body:         bodyBytes,
 		HTTPResponse: rsp,
 	}

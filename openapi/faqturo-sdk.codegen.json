@@ -10442,7 +10442,7 @@
     },
     "/tenants/fiscal-status/verify-credentials": {
       "post": {
-        "operationId": "verifyHaciendaCredentials",
+        "operationId": "verifyTaxAuthorityCredentials",
         "parameters": [
           {
             "in": "header",

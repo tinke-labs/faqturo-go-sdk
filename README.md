@@ -28,7 +28,7 @@ will be preserved.
 ## Common workflows
 
 - Invoicing: construct an `InvoiceRequest` and call `CreateInvoice`.
-- Fiscal setup: call `GetFiscalStatus` for readiness and `VerifyHaciendaCredentials` for an explicit live credential diagnostic. The diagnostic does not change readiness.
+- Fiscal setup: call `GetFiscalStatus` for readiness and `VerifyTaxAuthorityCredentials` for an explicit live credential diagnostic. The diagnostic does not change readiness.
 - Queries: use `GetAllDocuments` and the typed catalog, client, issuer, and tax-authority methods.
 - Incoming XML: call `ValidateXML` to validate the original XML without issuing a document.
 - JSON responses expose status-specific fields such as `JSON200`; raw `Body` remains available for diagnostics.
