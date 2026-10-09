@@ -3986,6 +3986,7 @@ type TenantProfileResponse struct {
 // TenantProvisionRequest defines model for TenantProvisionRequest.
 type TenantProvisionRequest struct {
 	HubOrganizationId   *string                     `json:"hubOrganizationId,omitempty"`
+	IssueApiKey         *bool                       `json:"issueApiKey,omitempty"`
 	LegalIdentification *LegalIdentificationRequest `json:"legalIdentification,omitempty"`
 	Name                *string                     `json:"name,omitempty"`
 	TenantSlug          *string                     `json:"tenantSlug,omitempty"`
@@ -3994,6 +3995,7 @@ type TenantProvisionRequest struct {
 // TenantResponse defines model for TenantResponse.
 type TenantResponse struct {
 	CreatedAt           *time.Time                   `json:"createdAt,omitempty"`
+	Id                  *int64                       `json:"id,omitempty"`
 	LegalIdentification *LegalIdentificationResponse `json:"legalIdentification,omitempty"`
 	Name                *string                      `json:"name,omitempty"`
 	Slug                *string                      `json:"slug,omitempty"`

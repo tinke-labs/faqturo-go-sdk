@@ -1297,6 +1297,37 @@
         } ]
       }
     },
+    "/tenants/fiscal-status/verify-credentials" : {
+      "post" : {
+        "tags" : [ "Tenants" ],
+        "summary" : "Verificar credenciales de Hacienda",
+        "operationId" : "verifyTaxAuthorityCredentials",
+        "parameters" : [ {
+          "name" : "API-Version",
+          "in" : "header",
+          "schema" : {
+            "type" : "string",
+            "default" : "1.0.0",
+            "enum" : [ "v1" ]
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/TenantInvoicingStatusResponse"
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "apiKeyAuth" : [ ]
+        } ]
+      }
+    },
     "/payments" : {
       "post" : {
         "tags" : [ "Payments" ],
@@ -3048,37 +3079,8 @@
     "/tenants/fiscal-status" : {
       "get" : {
         "tags" : [ "Tenants" ],
+        "summary" : "Obtener el estado fiscal del tenant",
         "operationId" : "getFiscalStatus",
-        "parameters" : [ {
-          "name" : "API-Version",
-          "in" : "header",
-          "schema" : {
-            "type" : "string",
-            "default" : "1.0.0",
-            "enum" : [ "v1" ]
-          }
-        } ],
-        "responses" : {
-          "200" : {
-            "description" : "OK",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/TenantInvoicingStatusResponse"
-                }
-              }
-            }
-          }
-        },
-        "security" : [ {
-          "apiKeyAuth" : [ ]
-        } ]
-      }
-    },
-    "/tenants/fiscal-status/verify-credentials" : {
-      "post" : {
-        "tags" : [ "Tenants" ],
-        "operationId" : "verifyTaxAuthorityCredentials",
         "parameters" : [ {
           "name" : "API-Version",
           "in" : "header",
@@ -5582,6 +5584,10 @@
       "TenantResponse" : {
         "type" : "object",
         "properties" : {
+          "id" : {
+            "type" : "integer",
+            "format" : "int64"
+          },
           "slug" : {
             "type" : "string"
           },
@@ -5614,6 +5620,9 @@
           },
           "name" : {
             "type" : "string"
+          },
+          "issueApiKey" : {
+            "type" : "boolean"
           }
         }
       },
@@ -7722,25 +7731,25 @@
           "specificTaxData" : {
             "$ref" : "#/components/schemas/SpecificTaxDataRequest"
           },
+          "vatRateCodeValidForVatTax" : {
+            "type" : "boolean"
+          },
           "usedGoodsVatCalculationDataValid" : {
             "type" : "boolean"
           },
           "specificTaxTypeValidForCode05" : {
             "type" : "boolean"
           },
-          "vatSpecialCalculationDataValid" : {
-            "type" : "boolean"
-          },
           "alcoholicBeverageCalculationDataValid" : {
             "type" : "boolean"
           },
-          "taxRatePresentWhenRequiredForCalculation" : {
+          "vatSpecialCalculationDataValid" : {
             "type" : "boolean"
           },
           "otherTaxDataValid" : {
             "type" : "boolean"
           },
-          "vatRateCodeValidForVatTax" : {
+          "taxRatePresentWhenRequiredForCalculation" : {
             "type" : "boolean"
           }
         },

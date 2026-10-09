@@ -4960,6 +4960,9 @@
           "hubOrganizationId": {
             "type": "string"
           },
+          "issueApiKey": {
+            "type": "boolean"
+          },
           "legalIdentification": {
             "$ref": "#/components/schemas/LegalIdentificationRequest"
           },
@@ -4977,6 +4980,10 @@
           "createdAt": {
             "format": "date-time",
             "type": "string"
+          },
+          "id": {
+            "format": "int64",
+            "type": "integer"
           },
           "legalIdentification": {
             "$ref": "#/components/schemas/LegalIdentificationResponse"
@@ -10435,6 +10442,7 @@
             "apiKeyAuth": []
           }
         ],
+        "summary": "Obtener el estado fiscal del tenant",
         "tags": [
           "Tenants"
         ]
@@ -10473,6 +10481,7 @@
             "apiKeyAuth": []
           }
         ],
+        "summary": "Verificar credenciales de Hacienda",
         "tags": [
           "Tenants"
         ]
