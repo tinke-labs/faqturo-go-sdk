@@ -3,7 +3,7 @@
 Official Go client for Faqturo's API-key integration and internal platform surfaces. Requires Go 1.25 or newer.
 
 ```bash
-go get github.com/tinke-labs/faqturo-go-sdk@v0.9.0
+go get github.com/tinke-labs/faqturo-go-sdk@v0.12.0
 ```
 
 ## Client
