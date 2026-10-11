@@ -1,6 +1,6 @@
 # Faqturo Go SDK
 
-Official Go client for the API-key integration surface of Faqturo. Requires Go 1.25 or newer.
+Official Go client for Faqturo's API-key integration and internal platform surfaces. Requires Go 1.25 or newer.
 
 ```bash
 go get github.com/tinke-labs/faqturo-go-sdk@v0.9.0
@@ -24,6 +24,24 @@ Pass the public Faqturo host (for example `https://api.faqturo.com` or
 `http://localhost:4004`): `NewAPIKeyClient` adds the `/api` context path. If
 your deployment exposes a different explicit path, pass it in the URL and it
 will be preserved.
+
+## Platform client
+
+Trusted services can use `NewPlatformClient` for Faqturo's internal M2M
+contract. It sends `X-Platform-Token` and includes the typed platform status,
+tenant read and reconciliation, and service-token operations.
+
+```go
+client, err := faqturo.NewPlatformClient("https://api.faqturo.com", platformToken)
+if err != nil {
+    return err
+}
+
+status, err := client.GetPlatformStatus(context.Background())
+```
+
+Treat the platform token as a server-side secret. Do not use this client from
+browser applications.
 
 ## Common workflows
 
