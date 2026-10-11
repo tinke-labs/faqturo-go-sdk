@@ -37,6 +37,44 @@ func TestAPIKeyClientAddsAuthenticationAndVersion(t *testing.T) {
 	}
 }
 
+func TestPlatformClientAddsM2MAuthenticationAndStatusIsTyped(t *testing.T) {
+	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		if got := r.URL.Path; got != "/api/platform/status" {
+			t.Errorf("path = %q", got)
+		}
+		if got := r.Header.Get("X-Platform-Token"); got != "platform-secret" {
+			t.Errorf("platform token = %q", got)
+		}
+		if got := r.Header.Get("X-API-KEY"); got != "" {
+			t.Errorf("unexpected API key = %q", got)
+		}
+		if got := r.Header.Get("API-Version"); got != "v1" {
+			t.Errorf("version = %q", got)
+		}
+		w.Header().Set("Content-Type", "application/json")
+		_, _ = w.Write([]byte(`{"product":"faqturo","status":"healthy","m2m_authenticated":true,"capabilities":["tenant.read"]}`))
+	}))
+	defer server.Close()
+
+	client, err := NewPlatformClient(server.URL, "platform-secret", WithTimeout(time.Second))
+	if err != nil {
+		t.Fatal(err)
+	}
+	response, err := client.GetPlatformStatus(context.Background(), nil)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if response.JSON200 == nil || response.JSON200.Product == nil || *response.JSON200.Product != "faqturo" {
+		t.Fatalf("expected typed platform status, got %#v", response)
+	}
+}
+
+func TestPlatformClientRequiresToken(t *testing.T) {
+	if _, err := NewPlatformClient("https://api.faqturo.com", ""); err == nil {
+		t.Fatal("expected missing platform token error")
+	}
+}
+
 func TestAPIKeyClientExposesRawOperation(t *testing.T) {
 	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		if r.URL.Path != "/api/catalogs/tax-codes" {

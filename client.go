@@ -79,6 +79,28 @@ func NewAPIKeyClient(server, apiKey string, options ...ClientOption) (*ClientWit
 // This is the ergonomic SDK entry point for the generated ValidateXml
 // operation. It returns the typed validation result instead of exposing the
 // generated HTTP response wrapper.
+// NewPlatformClient creates a client for Faqturo's internal platform API.
+// Platform tokens are intended for trusted service-to-service integrations.
+func NewPlatformClient(server, platformToken string, options ...ClientOption) (*ClientWithResponses, error) {
+	if platformToken == "" {
+		return nil, errors.New("faqturo: platform token is required")
+	}
+	apiServer, err := normalizeServer(server)
+	if err != nil {
+		return nil, err
+	}
+	auth := func(_ context.Context, req *http.Request) error {
+		req.Header.Set("X-Platform-Token", platformToken)
+		req.Header.Set("API-Version", "v1")
+		return nil
+	}
+	defaults := []ClientOption{
+		WithHTTPClient(&http.Client{Timeout: 30 * time.Second}),
+		WithRequestEditorFn(auth),
+	}
+	return NewClientWithResponses(apiServer, append(defaults, options...)...)
+}
+
 func (c *ClientWithResponses) ValidateXML(ctx context.Context, xml []byte, reqEditors ...RequestEditorFn) (*XmlValidationResponse, error) {
 	response, err := c.ValidateXml(ctx, nil, XmlValidationRequest{Xml: string(xml)}, reqEditors...)
 	if err != nil {

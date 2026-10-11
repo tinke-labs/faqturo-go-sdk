@@ -3921,6 +3921,82 @@
         },
         "type": "object"
       },
+      "PlatformServiceTokenRequest": {
+        "properties": {
+          "token": {
+            "minLength": 1,
+            "type": "string"
+          }
+        },
+        "required": [
+          "token"
+        ],
+        "type": "object"
+      },
+      "PlatformStatusResponse": {
+        "properties": {
+          "capabilities": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "m2m_authenticated": {
+            "type": "boolean"
+          },
+          "product": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "PlatformTenantResponse": {
+        "properties": {
+          "exists": {
+            "type": "boolean"
+          },
+          "hub_organization_id": {
+            "type": "string"
+          },
+          "slug": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string"
+          },
+          "tenant_id": {
+            "type": "string"
+          },
+          "updated_at": {
+            "format": "date-time",
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "PlatformTenantUpsertRequest": {
+        "properties": {
+          "hub_organization_id": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "legal_identification": {
+            "$ref": "#/components/schemas/LegalIdentificationRequest"
+          },
+          "name": {
+            "minLength": 1,
+            "type": "string"
+          }
+        },
+        "required": [
+          "hub_organization_id",
+          "name"
+        ],
+        "type": "object"
+      },
       "ProducerRegistryResponse": {
         "properties": {
           "details": {
@@ -4960,6 +5036,9 @@
           "hubOrganizationId": {
             "type": "string"
           },
+          "issueApiKey": {
+            "type": "boolean"
+          },
           "legalIdentification": {
             "$ref": "#/components/schemas/LegalIdentificationRequest"
           },
@@ -4977,6 +5056,10 @@
           "createdAt": {
             "format": "date-time",
             "type": "string"
+          },
+          "id": {
+            "format": "int64",
+            "type": "integer"
           },
           "legalIdentification": {
             "$ref": "#/components/schemas/LegalIdentificationResponse"
@@ -5359,6 +5442,12 @@
         "description": "API key de integración de Faqturo.",
         "in": "header",
         "name": "X-API-KEY",
+        "type": "apiKey"
+      },
+      "platformTokenAuth": {
+        "description": "Token M2M de la plataforma Tinke.",
+        "in": "header",
+        "name": "X-Platform-Token",
         "type": "apiKey"
       }
     }
@@ -9838,6 +9927,189 @@
         ]
       }
     },
+    "/platform/status": {
+      "get": {
+        "operationId": "getPlatformStatus",
+        "parameters": [
+          {
+            "description": "Versión del API. Para este SDK debe ser v1.",
+            "in": "header",
+            "name": "API-Version",
+            "required": true,
+            "schema": {
+              "default": "v1"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PlatformStatusResponse"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "security": [
+          {
+            "platformTokenAuth": []
+          }
+        ],
+        "summary": "Consultar salud M2M y capacidades de Faqturo",
+        "tags": [
+          "Platform"
+        ]
+      }
+    },
+    "/platform/tenants/{slug}": {
+      "get": {
+        "operationId": "getPlatformTenant",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "slug",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "Versión del API. Para este SDK debe ser v1.",
+            "in": "header",
+            "name": "API-Version",
+            "required": true,
+            "schema": {
+              "default": "v1"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PlatformTenantResponse"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "security": [
+          {
+            "platformTokenAuth": []
+          }
+        ],
+        "summary": "Consultar existencia y estado de un tenant",
+        "tags": [
+          "Platform"
+        ]
+      },
+      "put": {
+        "operationId": "upsertTenant",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "slug",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "Versión del API. Para este SDK debe ser v1.",
+            "in": "header",
+            "name": "API-Version",
+            "required": true,
+            "schema": {
+              "default": "v1"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PlatformTenantUpsertRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PlatformTenantResponse"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "security": [
+          {
+            "platformTokenAuth": []
+          }
+        ],
+        "summary": "Crear o reconciliar de forma idempotente un tenant",
+        "tags": [
+          "Platform"
+        ]
+      }
+    },
+    "/platform/tenants/{slug}/service-token": {
+      "put": {
+        "operationId": "storePlatformServiceToken",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "slug",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "Versión del API. Para este SDK debe ser v1.",
+            "in": "header",
+            "name": "API-Version",
+            "required": true,
+            "schema": {
+              "default": "v1"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PlatformServiceTokenRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "security": [
+          {
+            "platformTokenAuth": []
+          }
+        ],
+        "summary": "Registrar o actualizar el service token de un tenant",
+        "tags": [
+          "Platform"
+        ]
+      }
+    },
     "/sequences": {
       "get": {
         "operationId": "getSequences",
@@ -10435,6 +10707,7 @@
             "apiKeyAuth": []
           }
         ],
+        "summary": "Obtener el estado fiscal del tenant",
         "tags": [
           "Tenants"
         ]
@@ -10473,6 +10746,7 @@
             "apiKeyAuth": []
           }
         ],
+        "summary": "Verificar credenciales de Hacienda",
         "tags": [
           "Tenants"
         ]
@@ -11032,16 +11306,20 @@
   ],
   "tags": [
     {
-      "description": "Configuración del tenant, secretos fiscales y logo",
-      "name": "Tenants"
+      "description": "Operaciones M2M para la plataforma Tinke",
+      "name": "Platform"
     },
     {
-      "description": "Emisión, consulta, pagos y activos PDF/XML de documentos electrónicos",
-      "name": "Documents"
+      "description": "Cajas o terminales por sucursal",
+      "name": "Cash Registers"
     },
     {
-      "description": "Clientes, receptores y exoneraciones",
-      "name": "Clients"
+      "description": "Consultas de contribuyentes, exoneraciones, registros, tipo de cambio y CAByS ante Hacienda",
+      "name": "Tax Authority Queries"
+    },
+    {
+      "description": "Estado básico del servicio",
+      "name": "Health"
     },
     {
       "description": "Emisores del tenant",
@@ -11052,8 +11330,8 @@
       "name": "Branches"
     },
     {
-      "description": "Cajas o terminales por sucursal",
-      "name": "Cash Registers"
+      "description": "Emisión, consulta, pagos y activos PDF/XML de documentos electrónicos",
+      "name": "Documents"
     },
     {
       "description": "Catálogos públicos de referencia",
@@ -11064,12 +11342,12 @@
       "name": "Taxpayers"
     },
     {
-      "description": "Consultas de contribuyentes, exoneraciones, registros, tipo de cambio y CAByS ante Hacienda",
-      "name": "Tax Authority Queries"
+      "description": "Configuración del tenant, secretos fiscales y logo",
+      "name": "Tenants"
     },
     {
-      "description": "Estado básico del servicio",
-      "name": "Health"
+      "description": "Clientes, receptores y exoneraciones",
+      "name": "Clients"
     }
   ]
 }

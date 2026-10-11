@@ -20,7 +20,8 @@ import (
 )
 
 const (
-	ApiKeyAuthScopes apiKeyAuthContextKey = "apiKeyAuth.Scopes"
+	ApiKeyAuthScopes        apiKeyAuthContextKey        = "apiKeyAuth.Scopes"
+	PlatformTokenAuthScopes platformTokenAuthContextKey = "platformTokenAuth.Scopes"
 )
 
 // Defines values for CashRegisterSequenceResponseDocumentType.
@@ -3652,6 +3653,36 @@ type PhoneResponse struct {
 	Number      *string `json:"number,omitempty"`
 }
 
+// PlatformServiceTokenRequest defines model for PlatformServiceTokenRequest.
+type PlatformServiceTokenRequest struct {
+	Token string `json:"token"`
+}
+
+// PlatformStatusResponse defines model for PlatformStatusResponse.
+type PlatformStatusResponse struct {
+	Capabilities     *[]string `json:"capabilities,omitempty"`
+	M2mAuthenticated *bool     `json:"m2m_authenticated,omitempty"`
+	Product          *string   `json:"product,omitempty"`
+	Status           *string   `json:"status,omitempty"`
+}
+
+// PlatformTenantResponse defines model for PlatformTenantResponse.
+type PlatformTenantResponse struct {
+	Exists            *bool      `json:"exists,omitempty"`
+	HubOrganizationId *string    `json:"hub_organization_id,omitempty"`
+	Slug              *string    `json:"slug,omitempty"`
+	Status            *string    `json:"status,omitempty"`
+	TenantId          *string    `json:"tenant_id,omitempty"`
+	UpdatedAt         *time.Time `json:"updated_at,omitempty"`
+}
+
+// PlatformTenantUpsertRequest defines model for PlatformTenantUpsertRequest.
+type PlatformTenantUpsertRequest struct {
+	HubOrganizationId   string                      `json:"hub_organization_id"`
+	LegalIdentification *LegalIdentificationRequest `json:"legal_identification,omitempty"`
+	Name                string                      `json:"name"`
+}
+
 // ProducerRegistryResponse defines model for ProducerRegistryResponse.
 type ProducerRegistryResponse struct {
 	Details             *map[string]interface{} `json:"details,omitempty"`
@@ -3986,6 +4017,7 @@ type TenantProfileResponse struct {
 // TenantProvisionRequest defines model for TenantProvisionRequest.
 type TenantProvisionRequest struct {
 	HubOrganizationId   *string                     `json:"hubOrganizationId,omitempty"`
+	IssueApiKey         *bool                       `json:"issueApiKey,omitempty"`
 	LegalIdentification *LegalIdentificationRequest `json:"legalIdentification,omitempty"`
 	Name                *string                     `json:"name,omitempty"`
 	TenantSlug          *string                     `json:"tenantSlug,omitempty"`
@@ -3994,6 +4026,7 @@ type TenantProvisionRequest struct {
 // TenantResponse defines model for TenantResponse.
 type TenantResponse struct {
 	CreatedAt           *time.Time                   `json:"createdAt,omitempty"`
+	Id                  *int64                       `json:"id,omitempty"`
 	LegalIdentification *LegalIdentificationResponse `json:"legalIdentification,omitempty"`
 	Name                *string                      `json:"name,omitempty"`
 	Slug                *string                      `json:"slug,omitempty"`
@@ -4128,6 +4161,9 @@ type XmlValidationResponse struct {
 
 // apiKeyAuthContextKey is the context key for apiKeyAuth security scheme
 type apiKeyAuthContextKey string
+
+// platformTokenAuthContextKey is the context key for platformTokenAuth security scheme
+type platformTokenAuthContextKey string
 
 // ClassifyDocumentItemParams defines parameters for ClassifyDocumentItem.
 type ClassifyDocumentItemParams struct {
@@ -4843,6 +4879,30 @@ type VoidPaymentParams struct {
 // VoidPaymentParamsAPIVersion defines parameters for VoidPayment.
 type VoidPaymentParamsAPIVersion string
 
+// GetPlatformStatusParams defines parameters for GetPlatformStatus.
+type GetPlatformStatusParams struct {
+	// APIVersion Versión del API. Para este SDK debe ser v1.
+	APIVersion interface{} `json:"API-Version"`
+}
+
+// GetPlatformTenantParams defines parameters for GetPlatformTenant.
+type GetPlatformTenantParams struct {
+	// APIVersion Versión del API. Para este SDK debe ser v1.
+	APIVersion interface{} `json:"API-Version"`
+}
+
+// UpsertTenantParams defines parameters for UpsertTenant.
+type UpsertTenantParams struct {
+	// APIVersion Versión del API. Para este SDK debe ser v1.
+	APIVersion interface{} `json:"API-Version"`
+}
+
+// StorePlatformServiceTokenParams defines parameters for StorePlatformServiceToken.
+type StorePlatformServiceTokenParams struct {
+	// APIVersion Versión del API. Para este SDK debe ser v1.
+	APIVersion interface{} `json:"API-Version"`
+}
+
 // GetSequencesParams defines parameters for GetSequences.
 type GetSequencesParams struct {
 	APIVersion *GetSequencesParamsAPIVersion `json:"API-Version,omitempty"`
@@ -5153,6 +5213,12 @@ type ApplyPaymentJSONRequestBody = DocumentPaymentApplyRequest
 
 // VoidPaymentJSONRequestBody defines body for VoidPayment for application/json ContentType.
 type VoidPaymentJSONRequestBody = DocumentPaymentVoidRequest
+
+// UpsertTenantJSONRequestBody defines body for UpsertTenant for application/json ContentType.
+type UpsertTenantJSONRequestBody = PlatformTenantUpsertRequest
+
+// StorePlatformServiceTokenJSONRequestBody defines body for StorePlatformServiceToken for application/json ContentType.
+type StorePlatformServiceTokenJSONRequestBody = PlatformServiceTokenRequest
 
 // UpdateSequenceJSONRequestBody defines body for UpdateSequence for application/json ContentType.
 type UpdateSequenceJSONRequestBody = SequenceUpdateRequest
@@ -5552,6 +5618,22 @@ type ClientInterface interface {
 	VoidPaymentWithBody(ctx context.Context, paymentId int64, params *VoidPaymentParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	VoidPayment(ctx context.Context, paymentId int64, params *VoidPaymentParams, body VoidPaymentJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// GetPlatformStatus request
+	GetPlatformStatus(ctx context.Context, params *GetPlatformStatusParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// GetPlatformTenant request
+	GetPlatformTenant(ctx context.Context, slug string, params *GetPlatformTenantParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// UpsertTenantWithBody request with any body
+	UpsertTenantWithBody(ctx context.Context, slug string, params *UpsertTenantParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	UpsertTenant(ctx context.Context, slug string, params *UpsertTenantParams, body UpsertTenantJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// StorePlatformServiceTokenWithBody request with any body
+	StorePlatformServiceTokenWithBody(ctx context.Context, slug string, params *StorePlatformServiceTokenParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	StorePlatformServiceToken(ctx context.Context, slug string, params *StorePlatformServiceTokenParams, body StorePlatformServiceTokenJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// GetSequences request
 	GetSequences(ctx context.Context, params *GetSequencesParams, reqEditors ...RequestEditorFn) (*http.Response, error)
@@ -6986,6 +7068,78 @@ func (c *Client) VoidPaymentWithBody(ctx context.Context, paymentId int64, param
 
 func (c *Client) VoidPayment(ctx context.Context, paymentId int64, params *VoidPaymentParams, body VoidPaymentJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewVoidPaymentRequest(c.Server, paymentId, params, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) GetPlatformStatus(ctx context.Context, params *GetPlatformStatusParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewGetPlatformStatusRequest(c.Server, params)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) GetPlatformTenant(ctx context.Context, slug string, params *GetPlatformTenantParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewGetPlatformTenantRequest(c.Server, slug, params)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) UpsertTenantWithBody(ctx context.Context, slug string, params *UpsertTenantParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewUpsertTenantRequestWithBody(c.Server, slug, params, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) UpsertTenant(ctx context.Context, slug string, params *UpsertTenantParams, body UpsertTenantJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewUpsertTenantRequest(c.Server, slug, params, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) StorePlatformServiceTokenWithBody(ctx context.Context, slug string, params *StorePlatformServiceTokenParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewStorePlatformServiceTokenRequestWithBody(c.Server, slug, params, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) StorePlatformServiceToken(ctx context.Context, slug string, params *StorePlatformServiceTokenParams, body StorePlatformServiceTokenJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewStorePlatformServiceTokenRequest(c.Server, slug, params, body)
 	if err != nil {
 		return nil, err
 	}
@@ -12328,6 +12482,213 @@ func NewVoidPaymentRequestWithBody(server string, paymentId int64, params *VoidP
 	return req, nil
 }
 
+// NewGetPlatformStatusRequest generates requests for GetPlatformStatus
+func NewGetPlatformStatusRequest(server string, params *GetPlatformStatusParams) (*http.Request, error) {
+	var err error
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/platform/status")
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+
+		var headerParam0 string
+
+		headerParam0, err = runtime.StyleParamWithOptions("simple", false, "API-Version", params.APIVersion, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "", Format: ""})
+		if err != nil {
+			return nil, err
+		}
+
+		req.Header.Set("API-Version", headerParam0)
+
+	}
+
+	return req, nil
+}
+
+// NewGetPlatformTenantRequest generates requests for GetPlatformTenant
+func NewGetPlatformTenantRequest(server string, slug string, params *GetPlatformTenantParams) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "slug", slug, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: ""})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/platform/tenants/%s", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+
+		var headerParam0 string
+
+		headerParam0, err = runtime.StyleParamWithOptions("simple", false, "API-Version", params.APIVersion, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "", Format: ""})
+		if err != nil {
+			return nil, err
+		}
+
+		req.Header.Set("API-Version", headerParam0)
+
+	}
+
+	return req, nil
+}
+
+// NewUpsertTenantRequest calls the generic UpsertTenant builder with application/json body
+func NewUpsertTenantRequest(server string, slug string, params *UpsertTenantParams, body UpsertTenantJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewUpsertTenantRequestWithBody(server, slug, params, "application/json", bodyReader)
+}
+
+// NewUpsertTenantRequestWithBody generates requests for UpsertTenant with any type of body
+func NewUpsertTenantRequestWithBody(server string, slug string, params *UpsertTenantParams, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "slug", slug, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: ""})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/platform/tenants/%s", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPut, queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
+
+	if params != nil {
+
+		var headerParam0 string
+
+		headerParam0, err = runtime.StyleParamWithOptions("simple", false, "API-Version", params.APIVersion, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "", Format: ""})
+		if err != nil {
+			return nil, err
+		}
+
+		req.Header.Set("API-Version", headerParam0)
+
+	}
+
+	return req, nil
+}
+
+// NewStorePlatformServiceTokenRequest calls the generic StorePlatformServiceToken builder with application/json body
+func NewStorePlatformServiceTokenRequest(server string, slug string, params *StorePlatformServiceTokenParams, body StorePlatformServiceTokenJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewStorePlatformServiceTokenRequestWithBody(server, slug, params, "application/json", bodyReader)
+}
+
+// NewStorePlatformServiceTokenRequestWithBody generates requests for StorePlatformServiceToken with any type of body
+func NewStorePlatformServiceTokenRequestWithBody(server string, slug string, params *StorePlatformServiceTokenParams, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "slug", slug, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "string", Format: ""})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/platform/tenants/%s/service-token", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPut, queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
+
+	if params != nil {
+
+		var headerParam0 string
+
+		headerParam0, err = runtime.StyleParamWithOptions("simple", false, "API-Version", params.APIVersion, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "", Format: ""})
+		if err != nil {
+			return nil, err
+		}
+
+		req.Header.Set("API-Version", headerParam0)
+
+	}
+
+	return req, nil
+}
+
 // NewGetSequencesRequest generates requests for GetSequences
 func NewGetSequencesRequest(server string, params *GetSequencesParams) (*http.Request, error) {
 	var err error
@@ -13955,6 +14316,22 @@ type ClientWithResponsesInterface interface {
 	VoidPaymentWithBody(ctx context.Context, paymentId int64, params *VoidPaymentParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*VoidPaymentResponse, error)
 
 	VoidPayment(ctx context.Context, paymentId int64, params *VoidPaymentParams, body VoidPaymentJSONRequestBody, reqEditors ...RequestEditorFn) (*VoidPaymentResponse, error)
+
+	// GetPlatformStatus request
+	GetPlatformStatus(ctx context.Context, params *GetPlatformStatusParams, reqEditors ...RequestEditorFn) (*GetPlatformStatusResponse, error)
+
+	// GetPlatformTenant request
+	GetPlatformTenant(ctx context.Context, slug string, params *GetPlatformTenantParams, reqEditors ...RequestEditorFn) (*GetPlatformTenantResponse, error)
+
+	// UpsertTenantWithBody request with any body
+	UpsertTenantWithBody(ctx context.Context, slug string, params *UpsertTenantParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpsertTenantResponse, error)
+
+	UpsertTenant(ctx context.Context, slug string, params *UpsertTenantParams, body UpsertTenantJSONRequestBody, reqEditors ...RequestEditorFn) (*UpsertTenantResponse, error)
+
+	// StorePlatformServiceTokenWithBody request with any body
+	StorePlatformServiceTokenWithBody(ctx context.Context, slug string, params *StorePlatformServiceTokenParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*StorePlatformServiceTokenResponse, error)
+
+	StorePlatformServiceToken(ctx context.Context, slug string, params *StorePlatformServiceTokenParams, body StorePlatformServiceTokenJSONRequestBody, reqEditors ...RequestEditorFn) (*StorePlatformServiceTokenResponse, error)
 
 	// GetSequences request
 	GetSequences(ctx context.Context, params *GetSequencesParams, reqEditors ...RequestEditorFn) (*GetSequencesResponse, error)
@@ -16503,6 +16880,125 @@ func (r VoidPaymentResponse) ContentType() string {
 	return ""
 }
 
+type GetPlatformStatusResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	JSON200      *PlatformStatusResponse
+}
+
+// Status returns HTTPResponse.Status
+func (r GetPlatformStatusResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r GetPlatformStatusResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r GetPlatformStatusResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type GetPlatformTenantResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	JSON200      *PlatformTenantResponse
+}
+
+// Status returns HTTPResponse.Status
+func (r GetPlatformTenantResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r GetPlatformTenantResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r GetPlatformTenantResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type UpsertTenantResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	JSON200      *PlatformTenantResponse
+}
+
+// Status returns HTTPResponse.Status
+func (r UpsertTenantResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r UpsertTenantResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r UpsertTenantResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type StorePlatformServiceTokenResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+}
+
+// Status returns HTTPResponse.Status
+func (r StorePlatformServiceTokenResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r StorePlatformServiceTokenResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r StorePlatformServiceTokenResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
 type GetSequencesResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
@@ -18799,6 +19295,86 @@ func (c *ClientWithResponses) VoidPayment(ctx context.Context, paymentId int64, 
 		return nil, err
 	}
 	return ParseVoidPaymentResponse(rsp)
+}
+
+// GetPlatformStatusRaw performs the request and returns the raw HTTP response.
+func (c *RawClient) GetPlatformStatusRaw(ctx context.Context, params *GetPlatformStatusParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	return c.client.GetPlatformStatus(ctx, params, reqEditors...)
+}
+
+// GetPlatformStatus request returning *GetPlatformStatusResponse
+func (c *ClientWithResponses) GetPlatformStatus(ctx context.Context, params *GetPlatformStatusParams, reqEditors ...RequestEditorFn) (*GetPlatformStatusResponse, error) {
+	rsp, err := c.client.GetPlatformStatus(ctx, params, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseGetPlatformStatusResponse(rsp)
+}
+
+// GetPlatformTenantRaw performs the request and returns the raw HTTP response.
+func (c *RawClient) GetPlatformTenantRaw(ctx context.Context, slug string, params *GetPlatformTenantParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	return c.client.GetPlatformTenant(ctx, slug, params, reqEditors...)
+}
+
+// GetPlatformTenant request returning *GetPlatformTenantResponse
+func (c *ClientWithResponses) GetPlatformTenant(ctx context.Context, slug string, params *GetPlatformTenantParams, reqEditors ...RequestEditorFn) (*GetPlatformTenantResponse, error) {
+	rsp, err := c.client.GetPlatformTenant(ctx, slug, params, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseGetPlatformTenantResponse(rsp)
+}
+
+// UpsertTenantWithBodyRaw performs the request and returns the raw HTTP response.
+func (c *RawClient) UpsertTenantWithBodyRaw(ctx context.Context, slug string, params *UpsertTenantParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	return c.client.UpsertTenantWithBody(ctx, slug, params, contentType, body, reqEditors...)
+}
+
+// UpsertTenantWithBody request with arbitrary body returning *UpsertTenantResponse
+func (c *ClientWithResponses) UpsertTenantWithBody(ctx context.Context, slug string, params *UpsertTenantParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*UpsertTenantResponse, error) {
+	rsp, err := c.client.UpsertTenantWithBody(ctx, slug, params, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseUpsertTenantResponse(rsp)
+}
+
+func (c *RawClient) UpsertTenantRaw(ctx context.Context, slug string, params *UpsertTenantParams, body UpsertTenantJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	return c.client.UpsertTenant(ctx, slug, params, body, reqEditors...)
+}
+
+func (c *ClientWithResponses) UpsertTenant(ctx context.Context, slug string, params *UpsertTenantParams, body UpsertTenantJSONRequestBody, reqEditors ...RequestEditorFn) (*UpsertTenantResponse, error) {
+	rsp, err := c.client.UpsertTenant(ctx, slug, params, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseUpsertTenantResponse(rsp)
+}
+
+// StorePlatformServiceTokenWithBodyRaw performs the request and returns the raw HTTP response.
+func (c *RawClient) StorePlatformServiceTokenWithBodyRaw(ctx context.Context, slug string, params *StorePlatformServiceTokenParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	return c.client.StorePlatformServiceTokenWithBody(ctx, slug, params, contentType, body, reqEditors...)
+}
+
+// StorePlatformServiceTokenWithBody request with arbitrary body returning *StorePlatformServiceTokenResponse
+func (c *ClientWithResponses) StorePlatformServiceTokenWithBody(ctx context.Context, slug string, params *StorePlatformServiceTokenParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*StorePlatformServiceTokenResponse, error) {
+	rsp, err := c.client.StorePlatformServiceTokenWithBody(ctx, slug, params, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseStorePlatformServiceTokenResponse(rsp)
+}
+
+func (c *RawClient) StorePlatformServiceTokenRaw(ctx context.Context, slug string, params *StorePlatformServiceTokenParams, body StorePlatformServiceTokenJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	return c.client.StorePlatformServiceToken(ctx, slug, params, body, reqEditors...)
+}
+
+func (c *ClientWithResponses) StorePlatformServiceToken(ctx context.Context, slug string, params *StorePlatformServiceTokenParams, body StorePlatformServiceTokenJSONRequestBody, reqEditors ...RequestEditorFn) (*StorePlatformServiceTokenResponse, error) {
+	rsp, err := c.client.StorePlatformServiceToken(ctx, slug, params, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseStorePlatformServiceTokenResponse(rsp)
 }
 
 // GetSequencesRaw performs the request and returns the raw HTTP response.
@@ -21322,6 +21898,100 @@ func ParseVoidPaymentResponse(rsp *http.Response) (*VoidPaymentResponse, error) 
 		}
 		response.JSON200 = &dest
 
+	}
+
+	return response, nil
+}
+
+// ParseGetPlatformStatusResponse parses an HTTP response from a GetPlatformStatus call
+func ParseGetPlatformStatusResponse(rsp *http.Response) (*GetPlatformStatusResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &GetPlatformStatusResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest PlatformStatusResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseGetPlatformTenantResponse parses an HTTP response from a GetPlatformTenant call
+func ParseGetPlatformTenantResponse(rsp *http.Response) (*GetPlatformTenantResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &GetPlatformTenantResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest PlatformTenantResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseUpsertTenantResponse parses an HTTP response from a UpsertTenant call
+func ParseUpsertTenantResponse(rsp *http.Response) (*UpsertTenantResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &UpsertTenantResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest PlatformTenantResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseStorePlatformServiceTokenResponse parses an HTTP response from a StorePlatformServiceToken call
+func ParseStorePlatformServiceTokenResponse(rsp *http.Response) (*StorePlatformServiceTokenResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &StorePlatformServiceTokenResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
 	}
 
 	return response, nil
