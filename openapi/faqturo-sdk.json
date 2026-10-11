@@ -3686,6 +3686,78 @@
         } ]
       }
     },
+    "/payments/client/{clientId}/statement.pdf" : {
+      "get" : {
+        "tags" : [ "Payments" ],
+        "summary" : "Estado de cuenta PDF de un cliente y receptor",
+        "operationId" : "pdf",
+        "parameters" : [ {
+          "name" : "clientId",
+          "in" : "path",
+          "required" : true,
+          "schema" : {
+            "type" : "integer",
+            "format" : "int64"
+          }
+        }, {
+          "name" : "receiver_id",
+          "in" : "query",
+          "required" : false,
+          "schema" : {
+            "type" : "integer",
+            "format" : "int64"
+          }
+        }, {
+          "name" : "from",
+          "in" : "query",
+          "required" : false,
+          "schema" : {
+            "type" : "string",
+            "format" : "date"
+          }
+        }, {
+          "name" : "to",
+          "in" : "query",
+          "required" : false,
+          "schema" : {
+            "type" : "string",
+            "format" : "date"
+          }
+        }, {
+          "name" : "date_field",
+          "in" : "query",
+          "required" : false,
+          "schema" : {
+            "type" : "string",
+            "default" : "issue_date"
+          }
+        }, {
+          "name" : "API-Version",
+          "in" : "header",
+          "schema" : {
+            "type" : "string",
+            "default" : "1.0.0",
+            "enum" : [ "v1" ]
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/pdf" : {
+                "schema" : {
+                  "type" : "string",
+                  "format" : "binary"
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "apiKeyAuth" : [ ]
+        } ]
+      }
+    },
     "/documents" : {
       "get" : {
         "tags" : [ "Documents" ],
@@ -7941,15 +8013,6 @@
           "specificTaxData" : {
             "$ref" : "#/components/schemas/SpecificTaxDataRequest"
           },
-          "alcoholicBeverageCalculationDataValid" : {
-            "type" : "boolean"
-          },
-          "taxRatePresentWhenRequiredForCalculation" : {
-            "type" : "boolean"
-          },
-          "vatRateCodeValidForVatTax" : {
-            "type" : "boolean"
-          },
           "usedGoodsVatCalculationDataValid" : {
             "type" : "boolean"
           },
@@ -7960,6 +8023,15 @@
             "type" : "boolean"
           },
           "otherTaxDataValid" : {
+            "type" : "boolean"
+          },
+          "vatRateCodeValidForVatTax" : {
+            "type" : "boolean"
+          },
+          "alcoholicBeverageCalculationDataValid" : {
+            "type" : "boolean"
+          },
+          "taxRatePresentWhenRequiredForCalculation" : {
             "type" : "boolean"
           }
         },

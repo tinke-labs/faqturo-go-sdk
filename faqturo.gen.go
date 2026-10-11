@@ -1980,6 +1980,21 @@ func (e GetClientStatementParamsAPIVersion) Valid() bool {
 	}
 }
 
+// Defines values for PdfParamsAPIVersion.
+const (
+	PdfParamsAPIVersionV1 PdfParamsAPIVersion = "v1"
+)
+
+// Valid indicates whether the value is a known member of the PdfParamsAPIVersion enum.
+func (e PdfParamsAPIVersion) Valid() bool {
+	switch e {
+	case PdfParamsAPIVersionV1:
+		return true
+	default:
+		return false
+	}
+}
+
 // Defines values for GetPaymentParamsAPIVersion.
 const (
 	GetPaymentParamsAPIVersionV1 GetPaymentParamsAPIVersion = "v1"
@@ -2402,13 +2417,13 @@ func (e GetLogsParamsAPIVersion) Valid() bool {
 
 // Defines values for TestWebhookParamsAPIVersion.
 const (
-	TestWebhookParamsAPIVersionV1 TestWebhookParamsAPIVersion = "v1"
+	V1 TestWebhookParamsAPIVersion = "v1"
 )
 
 // Valid indicates whether the value is a known member of the TestWebhookParamsAPIVersion enum.
 func (e TestWebhookParamsAPIVersion) Valid() bool {
 	switch e {
-	case TestWebhookParamsAPIVersionV1:
+	case V1:
 		return true
 	default:
 		return false
@@ -4855,6 +4870,18 @@ type GetClientStatementParams struct {
 // GetClientStatementParamsAPIVersion defines parameters for GetClientStatement.
 type GetClientStatementParamsAPIVersion string
 
+// PdfParams defines parameters for Pdf.
+type PdfParams struct {
+	ReceiverId *int64               `form:"receiver_id,omitempty" json:"receiver_id,omitempty"`
+	From       *openapi_types.Date  `form:"from,omitempty" json:"from,omitempty"`
+	To         *openapi_types.Date  `form:"to,omitempty" json:"to,omitempty"`
+	DateField  *string              `form:"date_field,omitempty" json:"date_field,omitempty"`
+	APIVersion *PdfParamsAPIVersion `json:"API-Version,omitempty"`
+}
+
+// PdfParamsAPIVersion defines parameters for Pdf.
+type PdfParamsAPIVersion string
+
 // GetPaymentParams defines parameters for GetPayment.
 type GetPaymentParams struct {
 	APIVersion *GetPaymentParamsAPIVersion `json:"API-Version,omitempty"`
@@ -5605,6 +5632,9 @@ type ClientInterface interface {
 
 	// GetClientStatement request
 	GetClientStatement(ctx context.Context, clientId int64, params *GetClientStatementParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// Pdf request
+	Pdf(ctx context.Context, clientId int64, params *PdfParams, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// GetPayment request
 	GetPayment(ctx context.Context, paymentId int64, params *GetPaymentParams, reqEditors ...RequestEditorFn) (*http.Response, error)
@@ -7008,6 +7038,18 @@ func (c *Client) VoidApplication(ctx context.Context, applicationId int64, param
 
 func (c *Client) GetClientStatement(ctx context.Context, clientId int64, params *GetClientStatementParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewGetClientStatementRequest(c.Server, clientId, params)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) Pdf(ctx context.Context, clientId int64, params *PdfParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewPdfRequest(c.Server, clientId, params)
 	if err != nil {
 		return nil, err
 	}
@@ -12309,6 +12351,118 @@ func NewGetClientStatementRequest(server string, clientId int64, params *GetClie
 	return req, nil
 }
 
+// NewPdfRequest generates requests for Pdf
+func NewPdfRequest(server string, clientId int64, params *PdfParams) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "clientId", clientId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "integer", Format: "int64"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/payments/client/%s/statement.pdf", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+		// queryValues collects non-styled parameters (passthrough, JSON)
+		// that are safe to round-trip through url.Values.Encode().
+		queryValues := queryURL.Query()
+		// rawQueryFragments collects pre-encoded query fragments from
+		// styled parameters, preserving literal commas as delimiters
+		// per the OpenAPI spec (e.g. "color=blue,black,brown").
+		var rawQueryFragments []string
+
+		if params.ReceiverId != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "receiver_id", *params.ReceiverId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "integer", Format: "int64"}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.From != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "from", *params.From, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: "date"}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.To != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "to", *params.To, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: "date"}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.DateField != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "date_field", *params.DateField, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if encoded := queryValues.Encode(); encoded != "" {
+			rawQueryFragments = append(rawQueryFragments, encoded)
+		}
+		queryURL.RawQuery = strings.Join(rawQueryFragments, "&")
+	}
+
+	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+
+		if params.APIVersion != nil {
+			var headerParam0 string
+
+			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "API-Version", *params.APIVersion, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: ""})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("API-Version", headerParam0)
+		}
+
+	}
+
+	return req, nil
+}
+
 // NewGetPaymentRequest generates requests for GetPayment
 func NewGetPaymentRequest(server string, paymentId int64, params *GetPaymentParams) (*http.Request, error) {
 	var err error
@@ -14303,6 +14457,9 @@ type ClientWithResponsesInterface interface {
 
 	// GetClientStatement request
 	GetClientStatement(ctx context.Context, clientId int64, params *GetClientStatementParams, reqEditors ...RequestEditorFn) (*GetClientStatementResponse, error)
+
+	// Pdf request
+	Pdf(ctx context.Context, clientId int64, params *PdfParams, reqEditors ...RequestEditorFn) (*PdfResponse, error)
 
 	// GetPayment request
 	GetPayment(ctx context.Context, paymentId int64, params *GetPaymentParams, reqEditors ...RequestEditorFn) (*GetPaymentResponse, error)
@@ -16790,6 +16947,35 @@ func (r GetClientStatementResponse) ContentType() string {
 	return ""
 }
 
+type PdfResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+}
+
+// Status returns HTTPResponse.Status
+func (r PdfResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r PdfResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r PdfResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
 type GetPaymentResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
@@ -19229,6 +19415,20 @@ func (c *ClientWithResponses) GetClientStatement(ctx context.Context, clientId i
 		return nil, err
 	}
 	return ParseGetClientStatementResponse(rsp)
+}
+
+// PdfRaw performs the request and returns the raw HTTP response.
+func (c *RawClient) PdfRaw(ctx context.Context, clientId int64, params *PdfParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	return c.client.Pdf(ctx, clientId, params, reqEditors...)
+}
+
+// Pdf request returning *PdfResponse
+func (c *ClientWithResponses) Pdf(ctx context.Context, clientId int64, params *PdfParams, reqEditors ...RequestEditorFn) (*PdfResponse, error) {
+	rsp, err := c.client.Pdf(ctx, clientId, params, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParsePdfResponse(rsp)
 }
 
 // GetPaymentRaw performs the request and returns the raw HTTP response.
@@ -21820,6 +22020,22 @@ func ParseGetClientStatementResponse(rsp *http.Response) (*GetClientStatementRes
 		}
 		response.JSON200 = &dest
 
+	}
+
+	return response, nil
+}
+
+// ParsePdfResponse parses an HTTP response from a Pdf call
+func ParsePdfResponse(rsp *http.Response) (*PdfResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &PdfResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
 	}
 
 	return response, nil

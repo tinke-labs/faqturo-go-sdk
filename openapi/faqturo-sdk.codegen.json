@@ -9763,6 +9763,91 @@
         ]
       }
     },
+    "/payments/client/{clientId}/statement.pdf": {
+      "get": {
+        "operationId": "pdf",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "clientId",
+            "required": true,
+            "schema": {
+              "format": "int64",
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "receiver_id",
+            "required": false,
+            "schema": {
+              "format": "int64",
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "from",
+            "required": false,
+            "schema": {
+              "format": "date",
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "to",
+            "required": false,
+            "schema": {
+              "format": "date",
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "date_field",
+            "required": false,
+            "schema": {
+              "default": "issue_date",
+              "type": "string"
+            }
+          },
+          {
+            "in": "header",
+            "name": "API-Version",
+            "schema": {
+              "default": "1.0.0",
+              "enum": [
+                "v1"
+              ],
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/pdf": {
+                "schema": {
+                  "format": "binary",
+                  "type": "string"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ],
+        "summary": "Estado de cuenta PDF de un cliente y receptor",
+        "tags": [
+          "Payments"
+        ]
+      }
+    },
     "/payments/{paymentId}": {
       "get": {
         "operationId": "getPayment",
