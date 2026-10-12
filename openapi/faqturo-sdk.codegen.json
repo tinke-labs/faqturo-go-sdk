@@ -6235,6 +6235,410 @@
         ]
       }
     },
+    "/accounts-receivable/clients/{clientId}/statement": {
+      "get": {
+        "operationId": "getClientStatement",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "clientId",
+            "required": true,
+            "schema": {
+              "format": "int64",
+              "type": "integer"
+            }
+          },
+          {
+            "in": "header",
+            "name": "API-Version",
+            "schema": {
+              "default": "1.0.0",
+              "enum": [
+                "v1"
+              ],
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DocumentPaymentStatementResponse"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ],
+        "summary": "Consultar estado de cuenta de cliente",
+        "tags": [
+          "Accounts Receivable"
+        ]
+      }
+    },
+    "/accounts-receivable/clients/{clientId}/statement.pdf": {
+      "get": {
+        "operationId": "getClientAccountStatementPdf",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "clientId",
+            "required": true,
+            "schema": {
+              "format": "int64",
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "receiver_id",
+            "required": false,
+            "schema": {
+              "format": "int64",
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "from",
+            "required": false,
+            "schema": {
+              "format": "date",
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "to",
+            "required": false,
+            "schema": {
+              "format": "date",
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "date_field",
+            "required": false,
+            "schema": {
+              "default": "issue_date",
+              "type": "string"
+            }
+          },
+          {
+            "in": "header",
+            "name": "API-Version",
+            "schema": {
+              "default": "1.0.0",
+              "enum": [
+                "v1"
+              ],
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/pdf": {
+                "schema": {
+                  "format": "binary",
+                  "type": "string"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ],
+        "summary": "Estado de cuenta PDF de un cliente y receptor",
+        "tags": [
+          "Accounts Receivable"
+        ]
+      }
+    },
+    "/accounts-receivable/payments": {
+      "post": {
+        "operationId": "createPayment",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "API-Version",
+            "schema": {
+              "default": "1.0.0",
+              "enum": [
+                "v1"
+              ],
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DocumentPaymentCreateRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DocumentPaymentResponse"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ],
+        "summary": "Crear pago recibido de cliente",
+        "tags": [
+          "Accounts Receivable"
+        ]
+      }
+    },
+    "/accounts-receivable/payments/applications/{applicationId}/void": {
+      "post": {
+        "operationId": "voidApplication",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "applicationId",
+            "required": true,
+            "schema": {
+              "format": "int64",
+              "type": "integer"
+            }
+          },
+          {
+            "in": "header",
+            "name": "API-Version",
+            "schema": {
+              "default": "1.0.0",
+              "enum": [
+                "v1"
+              ],
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DocumentPaymentVoidRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DocumentPaymentApplicationResponse"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ],
+        "summary": "Anular aplicación de pago",
+        "tags": [
+          "Accounts Receivable"
+        ]
+      }
+    },
+    "/accounts-receivable/payments/{paymentId}": {
+      "get": {
+        "operationId": "getPayment",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "paymentId",
+            "required": true,
+            "schema": {
+              "format": "int64",
+              "type": "integer"
+            }
+          },
+          {
+            "in": "header",
+            "name": "API-Version",
+            "schema": {
+              "default": "1.0.0",
+              "enum": [
+                "v1"
+              ],
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DocumentPaymentResponse"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ],
+        "summary": "Consultar pago recibido",
+        "tags": [
+          "Accounts Receivable"
+        ]
+      }
+    },
+    "/accounts-receivable/payments/{paymentId}/applications": {
+      "post": {
+        "operationId": "applyPayment",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "paymentId",
+            "required": true,
+            "schema": {
+              "format": "int64",
+              "type": "integer"
+            }
+          },
+          {
+            "in": "header",
+            "name": "API-Version",
+            "schema": {
+              "default": "1.0.0",
+              "enum": [
+                "v1"
+              ],
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DocumentPaymentApplyRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DocumentPaymentResponse"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ],
+        "summary": "Aplicar saldo disponible de un pago",
+        "tags": [
+          "Accounts Receivable"
+        ]
+      }
+    },
+    "/accounts-receivable/payments/{paymentId}/void": {
+      "post": {
+        "operationId": "voidPayment",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "paymentId",
+            "required": true,
+            "schema": {
+              "format": "int64",
+              "type": "integer"
+            }
+          },
+          {
+            "in": "header",
+            "name": "API-Version",
+            "schema": {
+              "default": "1.0.0",
+              "enum": [
+                "v1"
+              ],
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DocumentPaymentVoidRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DocumentPaymentResponse"
+                }
+              }
+            },
+            "description": "OK"
+          }
+        },
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ],
+        "summary": "Anular pago recibido sin aplicaciones activas",
+        "tags": [
+          "Accounts Receivable"
+        ]
+      }
+    },
     "/branches": {
       "get": {
         "operationId": "getBranches",
@@ -9605,410 +10009,6 @@
         ],
         "tags": [
           "Issuers"
-        ]
-      }
-    },
-    "/payments": {
-      "post": {
-        "operationId": "createPayment",
-        "parameters": [
-          {
-            "in": "header",
-            "name": "API-Version",
-            "schema": {
-              "default": "1.0.0",
-              "enum": [
-                "v1"
-              ],
-              "type": "string"
-            }
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/DocumentPaymentCreateRequest"
-              }
-            }
-          },
-          "required": true
-        },
-        "responses": {
-          "200": {
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/DocumentPaymentResponse"
-                }
-              }
-            },
-            "description": "OK"
-          }
-        },
-        "security": [
-          {
-            "apiKeyAuth": []
-          }
-        ],
-        "summary": "Crear pago recibido de cliente",
-        "tags": [
-          "Payments"
-        ]
-      }
-    },
-    "/payments/applications/{applicationId}/void": {
-      "post": {
-        "operationId": "voidApplication",
-        "parameters": [
-          {
-            "in": "path",
-            "name": "applicationId",
-            "required": true,
-            "schema": {
-              "format": "int64",
-              "type": "integer"
-            }
-          },
-          {
-            "in": "header",
-            "name": "API-Version",
-            "schema": {
-              "default": "1.0.0",
-              "enum": [
-                "v1"
-              ],
-              "type": "string"
-            }
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/DocumentPaymentVoidRequest"
-              }
-            }
-          },
-          "required": true
-        },
-        "responses": {
-          "200": {
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/DocumentPaymentApplicationResponse"
-                }
-              }
-            },
-            "description": "OK"
-          }
-        },
-        "security": [
-          {
-            "apiKeyAuth": []
-          }
-        ],
-        "summary": "Anular aplicación de pago",
-        "tags": [
-          "Payments"
-        ]
-      }
-    },
-    "/payments/client/{clientId}/statement": {
-      "get": {
-        "operationId": "getClientStatement",
-        "parameters": [
-          {
-            "in": "path",
-            "name": "clientId",
-            "required": true,
-            "schema": {
-              "format": "int64",
-              "type": "integer"
-            }
-          },
-          {
-            "in": "header",
-            "name": "API-Version",
-            "schema": {
-              "default": "1.0.0",
-              "enum": [
-                "v1"
-              ],
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/DocumentPaymentStatementResponse"
-                }
-              }
-            },
-            "description": "OK"
-          }
-        },
-        "security": [
-          {
-            "apiKeyAuth": []
-          }
-        ],
-        "summary": "Consultar estado de cuenta de cliente",
-        "tags": [
-          "Payments"
-        ]
-      }
-    },
-    "/payments/client/{clientId}/statement.pdf": {
-      "get": {
-        "operationId": "pdf",
-        "parameters": [
-          {
-            "in": "path",
-            "name": "clientId",
-            "required": true,
-            "schema": {
-              "format": "int64",
-              "type": "integer"
-            }
-          },
-          {
-            "in": "query",
-            "name": "receiver_id",
-            "required": false,
-            "schema": {
-              "format": "int64",
-              "type": "integer"
-            }
-          },
-          {
-            "in": "query",
-            "name": "from",
-            "required": false,
-            "schema": {
-              "format": "date",
-              "type": "string"
-            }
-          },
-          {
-            "in": "query",
-            "name": "to",
-            "required": false,
-            "schema": {
-              "format": "date",
-              "type": "string"
-            }
-          },
-          {
-            "in": "query",
-            "name": "date_field",
-            "required": false,
-            "schema": {
-              "default": "issue_date",
-              "type": "string"
-            }
-          },
-          {
-            "in": "header",
-            "name": "API-Version",
-            "schema": {
-              "default": "1.0.0",
-              "enum": [
-                "v1"
-              ],
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "content": {
-              "application/pdf": {
-                "schema": {
-                  "format": "binary",
-                  "type": "string"
-                }
-              }
-            },
-            "description": "OK"
-          }
-        },
-        "security": [
-          {
-            "apiKeyAuth": []
-          }
-        ],
-        "summary": "Estado de cuenta PDF de un cliente y receptor",
-        "tags": [
-          "Payments"
-        ]
-      }
-    },
-    "/payments/{paymentId}": {
-      "get": {
-        "operationId": "getPayment",
-        "parameters": [
-          {
-            "in": "path",
-            "name": "paymentId",
-            "required": true,
-            "schema": {
-              "format": "int64",
-              "type": "integer"
-            }
-          },
-          {
-            "in": "header",
-            "name": "API-Version",
-            "schema": {
-              "default": "1.0.0",
-              "enum": [
-                "v1"
-              ],
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/DocumentPaymentResponse"
-                }
-              }
-            },
-            "description": "OK"
-          }
-        },
-        "security": [
-          {
-            "apiKeyAuth": []
-          }
-        ],
-        "summary": "Consultar pago recibido",
-        "tags": [
-          "Payments"
-        ]
-      }
-    },
-    "/payments/{paymentId}/applications": {
-      "post": {
-        "operationId": "applyPayment",
-        "parameters": [
-          {
-            "in": "path",
-            "name": "paymentId",
-            "required": true,
-            "schema": {
-              "format": "int64",
-              "type": "integer"
-            }
-          },
-          {
-            "in": "header",
-            "name": "API-Version",
-            "schema": {
-              "default": "1.0.0",
-              "enum": [
-                "v1"
-              ],
-              "type": "string"
-            }
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/DocumentPaymentApplyRequest"
-              }
-            }
-          },
-          "required": true
-        },
-        "responses": {
-          "200": {
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/DocumentPaymentResponse"
-                }
-              }
-            },
-            "description": "OK"
-          }
-        },
-        "security": [
-          {
-            "apiKeyAuth": []
-          }
-        ],
-        "summary": "Aplicar saldo disponible de un pago",
-        "tags": [
-          "Payments"
-        ]
-      }
-    },
-    "/payments/{paymentId}/void": {
-      "post": {
-        "operationId": "voidPayment",
-        "parameters": [
-          {
-            "in": "path",
-            "name": "paymentId",
-            "required": true,
-            "schema": {
-              "format": "int64",
-              "type": "integer"
-            }
-          },
-          {
-            "in": "header",
-            "name": "API-Version",
-            "schema": {
-              "default": "1.0.0",
-              "enum": [
-                "v1"
-              ],
-              "type": "string"
-            }
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/DocumentPaymentVoidRequest"
-              }
-            }
-          },
-          "required": true
-        },
-        "responses": {
-          "200": {
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/DocumentPaymentResponse"
-                }
-              }
-            },
-            "description": "OK"
-          }
-        },
-        "security": [
-          {
-            "apiKeyAuth": []
-          }
-        ],
-        "summary": "Anular pago recibido sin aplicaciones activas",
-        "tags": [
-          "Payments"
         ]
       }
     },
