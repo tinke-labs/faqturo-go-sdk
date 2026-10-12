@@ -1456,194 +1456,6 @@
         } ]
       }
     },
-    "/payments" : {
-      "post" : {
-        "tags" : [ "Payments" ],
-        "summary" : "Crear pago recibido de cliente",
-        "operationId" : "createPayment",
-        "parameters" : [ {
-          "name" : "API-Version",
-          "in" : "header",
-          "schema" : {
-            "type" : "string",
-            "default" : "1.0.0",
-            "enum" : [ "v1" ]
-          }
-        } ],
-        "requestBody" : {
-          "content" : {
-            "application/json" : {
-              "schema" : {
-                "$ref" : "#/components/schemas/DocumentPaymentCreateRequest"
-              }
-            }
-          },
-          "required" : true
-        },
-        "responses" : {
-          "200" : {
-            "description" : "OK",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/DocumentPaymentResponse"
-                }
-              }
-            }
-          }
-        },
-        "security" : [ {
-          "apiKeyAuth" : [ ]
-        } ]
-      }
-    },
-    "/payments/{paymentId}/void" : {
-      "post" : {
-        "tags" : [ "Payments" ],
-        "summary" : "Anular pago recibido sin aplicaciones activas",
-        "operationId" : "voidPayment",
-        "parameters" : [ {
-          "name" : "paymentId",
-          "in" : "path",
-          "required" : true,
-          "schema" : {
-            "type" : "integer",
-            "format" : "int64"
-          }
-        }, {
-          "name" : "API-Version",
-          "in" : "header",
-          "schema" : {
-            "type" : "string",
-            "default" : "1.0.0",
-            "enum" : [ "v1" ]
-          }
-        } ],
-        "requestBody" : {
-          "content" : {
-            "application/json" : {
-              "schema" : {
-                "$ref" : "#/components/schemas/DocumentPaymentVoidRequest"
-              }
-            }
-          },
-          "required" : true
-        },
-        "responses" : {
-          "200" : {
-            "description" : "OK",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/DocumentPaymentResponse"
-                }
-              }
-            }
-          }
-        },
-        "security" : [ {
-          "apiKeyAuth" : [ ]
-        } ]
-      }
-    },
-    "/payments/{paymentId}/applications" : {
-      "post" : {
-        "tags" : [ "Payments" ],
-        "summary" : "Aplicar saldo disponible de un pago",
-        "operationId" : "applyPayment",
-        "parameters" : [ {
-          "name" : "paymentId",
-          "in" : "path",
-          "required" : true,
-          "schema" : {
-            "type" : "integer",
-            "format" : "int64"
-          }
-        }, {
-          "name" : "API-Version",
-          "in" : "header",
-          "schema" : {
-            "type" : "string",
-            "default" : "1.0.0",
-            "enum" : [ "v1" ]
-          }
-        } ],
-        "requestBody" : {
-          "content" : {
-            "application/json" : {
-              "schema" : {
-                "$ref" : "#/components/schemas/DocumentPaymentApplyRequest"
-              }
-            }
-          },
-          "required" : true
-        },
-        "responses" : {
-          "200" : {
-            "description" : "OK",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/DocumentPaymentResponse"
-                }
-              }
-            }
-          }
-        },
-        "security" : [ {
-          "apiKeyAuth" : [ ]
-        } ]
-      }
-    },
-    "/payments/applications/{applicationId}/void" : {
-      "post" : {
-        "tags" : [ "Payments" ],
-        "summary" : "Anular aplicación de pago",
-        "operationId" : "voidApplication",
-        "parameters" : [ {
-          "name" : "applicationId",
-          "in" : "path",
-          "required" : true,
-          "schema" : {
-            "type" : "integer",
-            "format" : "int64"
-          }
-        }, {
-          "name" : "API-Version",
-          "in" : "header",
-          "schema" : {
-            "type" : "string",
-            "default" : "1.0.0",
-            "enum" : [ "v1" ]
-          }
-        } ],
-        "requestBody" : {
-          "content" : {
-            "application/json" : {
-              "schema" : {
-                "$ref" : "#/components/schemas/DocumentPaymentVoidRequest"
-              }
-            }
-          },
-          "required" : true
-        },
-        "responses" : {
-          "200" : {
-            "description" : "OK",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/DocumentPaymentApplicationResponse"
-                }
-              }
-            }
-          }
-        },
-        "security" : [ {
-          "apiKeyAuth" : [ ]
-        } ]
-      }
-    },
     "/issuers" : {
       "get" : {
         "tags" : [ "Issuers" ],
@@ -2726,6 +2538,194 @@
         } ]
       }
     },
+    "/accounts-receivable/payments" : {
+      "post" : {
+        "tags" : [ "Accounts Receivable" ],
+        "summary" : "Crear pago recibido de cliente",
+        "operationId" : "createPayment",
+        "parameters" : [ {
+          "name" : "API-Version",
+          "in" : "header",
+          "schema" : {
+            "type" : "string",
+            "default" : "1.0.0",
+            "enum" : [ "v1" ]
+          }
+        } ],
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/DocumentPaymentCreateRequest"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/DocumentPaymentResponse"
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "apiKeyAuth" : [ ]
+        } ]
+      }
+    },
+    "/accounts-receivable/payments/{paymentId}/void" : {
+      "post" : {
+        "tags" : [ "Accounts Receivable" ],
+        "summary" : "Anular pago recibido sin aplicaciones activas",
+        "operationId" : "voidPayment",
+        "parameters" : [ {
+          "name" : "paymentId",
+          "in" : "path",
+          "required" : true,
+          "schema" : {
+            "type" : "integer",
+            "format" : "int64"
+          }
+        }, {
+          "name" : "API-Version",
+          "in" : "header",
+          "schema" : {
+            "type" : "string",
+            "default" : "1.0.0",
+            "enum" : [ "v1" ]
+          }
+        } ],
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/DocumentPaymentVoidRequest"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/DocumentPaymentResponse"
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "apiKeyAuth" : [ ]
+        } ]
+      }
+    },
+    "/accounts-receivable/payments/{paymentId}/applications" : {
+      "post" : {
+        "tags" : [ "Accounts Receivable" ],
+        "summary" : "Aplicar saldo disponible de un pago",
+        "operationId" : "applyPayment",
+        "parameters" : [ {
+          "name" : "paymentId",
+          "in" : "path",
+          "required" : true,
+          "schema" : {
+            "type" : "integer",
+            "format" : "int64"
+          }
+        }, {
+          "name" : "API-Version",
+          "in" : "header",
+          "schema" : {
+            "type" : "string",
+            "default" : "1.0.0",
+            "enum" : [ "v1" ]
+          }
+        } ],
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/DocumentPaymentApplyRequest"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/DocumentPaymentResponse"
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "apiKeyAuth" : [ ]
+        } ]
+      }
+    },
+    "/accounts-receivable/payments/applications/{applicationId}/void" : {
+      "post" : {
+        "tags" : [ "Accounts Receivable" ],
+        "summary" : "Anular aplicación de pago",
+        "operationId" : "voidApplication",
+        "parameters" : [ {
+          "name" : "applicationId",
+          "in" : "path",
+          "required" : true,
+          "schema" : {
+            "type" : "integer",
+            "format" : "int64"
+          }
+        }, {
+          "name" : "API-Version",
+          "in" : "header",
+          "schema" : {
+            "type" : "string",
+            "default" : "1.0.0",
+            "enum" : [ "v1" ]
+          }
+        } ],
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/DocumentPaymentVoidRequest"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/DocumentPaymentApplicationResponse"
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "apiKeyAuth" : [ ]
+        } ]
+      }
+    },
     "/accounting/received-documents/import" : {
       "post" : {
         "tags" : [ "Accounting" ],
@@ -3608,84 +3608,6 @@
         } ]
       }
     },
-    "/payments/{paymentId}" : {
-      "get" : {
-        "tags" : [ "Payments" ],
-        "summary" : "Consultar pago recibido",
-        "operationId" : "getPayment",
-        "parameters" : [ {
-          "name" : "paymentId",
-          "in" : "path",
-          "required" : true,
-          "schema" : {
-            "type" : "integer",
-            "format" : "int64"
-          }
-        }, {
-          "name" : "API-Version",
-          "in" : "header",
-          "schema" : {
-            "type" : "string",
-            "default" : "1.0.0",
-            "enum" : [ "v1" ]
-          }
-        } ],
-        "responses" : {
-          "200" : {
-            "description" : "OK",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/DocumentPaymentResponse"
-                }
-              }
-            }
-          }
-        },
-        "security" : [ {
-          "apiKeyAuth" : [ ]
-        } ]
-      }
-    },
-    "/payments/client/{clientId}/statement" : {
-      "get" : {
-        "tags" : [ "Payments" ],
-        "summary" : "Consultar estado de cuenta de cliente",
-        "operationId" : "getClientStatement",
-        "parameters" : [ {
-          "name" : "clientId",
-          "in" : "path",
-          "required" : true,
-          "schema" : {
-            "type" : "integer",
-            "format" : "int64"
-          }
-        }, {
-          "name" : "API-Version",
-          "in" : "header",
-          "schema" : {
-            "type" : "string",
-            "default" : "1.0.0",
-            "enum" : [ "v1" ]
-          }
-        } ],
-        "responses" : {
-          "200" : {
-            "description" : "OK",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/DocumentPaymentStatementResponse"
-                }
-              }
-            }
-          }
-        },
-        "security" : [ {
-          "apiKeyAuth" : [ ]
-        } ]
-      }
-    },
     "/documents" : {
       "get" : {
         "tags" : [ "Documents" ],
@@ -4444,6 +4366,156 @@
                   "items" : {
                     "$ref" : "#/components/schemas/CatalogItemResponse"
                   }
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "apiKeyAuth" : [ ]
+        } ]
+      }
+    },
+    "/accounts-receivable/payments/{paymentId}" : {
+      "get" : {
+        "tags" : [ "Accounts Receivable" ],
+        "summary" : "Consultar pago recibido",
+        "operationId" : "getPayment",
+        "parameters" : [ {
+          "name" : "paymentId",
+          "in" : "path",
+          "required" : true,
+          "schema" : {
+            "type" : "integer",
+            "format" : "int64"
+          }
+        }, {
+          "name" : "API-Version",
+          "in" : "header",
+          "schema" : {
+            "type" : "string",
+            "default" : "1.0.0",
+            "enum" : [ "v1" ]
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/DocumentPaymentResponse"
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "apiKeyAuth" : [ ]
+        } ]
+      }
+    },
+    "/accounts-receivable/clients/{clientId}/statement" : {
+      "get" : {
+        "tags" : [ "Accounts Receivable" ],
+        "summary" : "Consultar estado de cuenta de cliente",
+        "operationId" : "getClientStatement",
+        "parameters" : [ {
+          "name" : "clientId",
+          "in" : "path",
+          "required" : true,
+          "schema" : {
+            "type" : "integer",
+            "format" : "int64"
+          }
+        }, {
+          "name" : "API-Version",
+          "in" : "header",
+          "schema" : {
+            "type" : "string",
+            "default" : "1.0.0",
+            "enum" : [ "v1" ]
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/DocumentPaymentStatementResponse"
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "apiKeyAuth" : [ ]
+        } ]
+      }
+    },
+    "/accounts-receivable/clients/{clientId}/statement.pdf" : {
+      "get" : {
+        "tags" : [ "Accounts Receivable" ],
+        "summary" : "Estado de cuenta PDF de un cliente y receptor",
+        "operationId" : "getClientAccountStatementPdf",
+        "parameters" : [ {
+          "name" : "clientId",
+          "in" : "path",
+          "required" : true,
+          "schema" : {
+            "type" : "integer",
+            "format" : "int64"
+          }
+        }, {
+          "name" : "receiver_id",
+          "in" : "query",
+          "required" : false,
+          "schema" : {
+            "type" : "integer",
+            "format" : "int64"
+          }
+        }, {
+          "name" : "from",
+          "in" : "query",
+          "required" : false,
+          "schema" : {
+            "type" : "string",
+            "format" : "date"
+          }
+        }, {
+          "name" : "to",
+          "in" : "query",
+          "required" : false,
+          "schema" : {
+            "type" : "string",
+            "format" : "date"
+          }
+        }, {
+          "name" : "date_field",
+          "in" : "query",
+          "required" : false,
+          "schema" : {
+            "type" : "string",
+            "default" : "issue_date"
+          }
+        }, {
+          "name" : "API-Version",
+          "in" : "header",
+          "schema" : {
+            "type" : "string",
+            "default" : "1.0.0",
+            "enum" : [ "v1" ]
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/pdf" : {
+                "schema" : {
+                  "type" : "string",
+                  "format" : "binary"
                 }
               }
             }
@@ -5835,251 +5907,6 @@
             "type" : "boolean"
           }
         }
-      },
-      "DocumentPaymentApplicationRequest" : {
-        "type" : "object",
-        "properties" : {
-          "documentId" : {
-            "type" : "integer",
-            "format" : "int64"
-          },
-          "amount" : {
-            "type" : "number",
-            "format" : "decimal",
-            "minimum" : 1.0E-5
-          },
-          "notes" : {
-            "type" : "string",
-            "maxLength" : 500,
-            "minLength" : 0
-          }
-        },
-        "required" : [ "amount", "documentId" ]
-      },
-      "DocumentPaymentCreateRequest" : {
-        "type" : "object",
-        "properties" : {
-          "clientId" : {
-            "type" : "integer",
-            "format" : "int64"
-          },
-          "amount" : {
-            "type" : "number",
-            "format" : "decimal",
-            "minimum" : 1.0E-5
-          },
-          "currency" : {
-            "type" : "string",
-            "enum" : [ "CRC", "USD", "EUR" ]
-          },
-          "applicationMode" : {
-            "type" : "string",
-            "enum" : [ "MANUAL", "OLDEST_FIRST", "UNAPPLIED" ]
-          },
-          "paymentMethod" : {
-            "type" : "string",
-            "maxLength" : 100,
-            "minLength" : 0
-          },
-          "cardPaymentReference" : {
-            "type" : "string",
-            "description" : "Opcional y exclusivo para tarjeta (02): últimos cuatro dígitos de la tarjeta utilizada. No es un PAN ni un código de autorización.",
-            "example" : "1234",
-            "pattern" : "\\d{4}"
-          },
-          "referenceNumber" : {
-            "type" : "string",
-            "maxLength" : 100,
-            "minLength" : 0
-          },
-          "paymentDate" : {
-            "type" : "string",
-            "format" : "date-time"
-          },
-          "receivedBy" : {
-            "type" : "string",
-            "maxLength" : 100,
-            "minLength" : 0
-          },
-          "notes" : {
-            "type" : "string",
-            "maxLength" : 500,
-            "minLength" : 0
-          },
-          "applications" : {
-            "type" : "array",
-            "items" : {
-              "$ref" : "#/components/schemas/DocumentPaymentApplicationRequest"
-            }
-          }
-        },
-        "required" : [ "amount", "clientId", "currency" ]
-      },
-      "DocumentPaymentApplicationResponse" : {
-        "type" : "object",
-        "properties" : {
-          "id" : {
-            "type" : "integer",
-            "format" : "int64"
-          },
-          "paymentId" : {
-            "type" : "integer",
-            "format" : "int64"
-          },
-          "documentId" : {
-            "type" : "integer",
-            "format" : "int64"
-          },
-          "documentKey" : {
-            "type" : "string"
-          },
-          "consecutive" : {
-            "type" : "string"
-          },
-          "amount" : {
-            "type" : "number",
-            "format" : "decimal"
-          },
-          "isVoided" : {
-            "type" : "boolean"
-          },
-          "appliedAt" : {
-            "type" : "string",
-            "format" : "date-time"
-          },
-          "appliedBy" : {
-            "type" : "string"
-          },
-          "voidedAt" : {
-            "type" : "string",
-            "format" : "date-time"
-          },
-          "voidReason" : {
-            "type" : "string"
-          },
-          "voidedBy" : {
-            "type" : "string"
-          },
-          "notes" : {
-            "type" : "string"
-          },
-          "electronicPaymentReceiptId" : {
-            "type" : "integer",
-            "format" : "int64"
-          }
-        }
-      },
-      "DocumentPaymentResponse" : {
-        "type" : "object",
-        "properties" : {
-          "id" : {
-            "type" : "integer",
-            "format" : "int64"
-          },
-          "clientId" : {
-            "type" : "integer",
-            "format" : "int64"
-          },
-          "clientName" : {
-            "type" : "string"
-          },
-          "amount" : {
-            "type" : "number",
-            "format" : "decimal"
-          },
-          "currency" : {
-            "type" : "string",
-            "enum" : [ "CRC", "USD", "EUR" ]
-          },
-          "appliedAmount" : {
-            "type" : "number",
-            "format" : "decimal"
-          },
-          "availableAmount" : {
-            "type" : "number",
-            "format" : "decimal"
-          },
-          "paymentMethod" : {
-            "type" : "string"
-          },
-          "cardPaymentReference" : {
-            "type" : "string"
-          },
-          "referenceNumber" : {
-            "type" : "string"
-          },
-          "paymentDate" : {
-            "type" : "string",
-            "format" : "date-time"
-          },
-          "receivedBy" : {
-            "type" : "string"
-          },
-          "notes" : {
-            "type" : "string"
-          },
-          "isVoided" : {
-            "type" : "boolean"
-          },
-          "voidedAt" : {
-            "type" : "string",
-            "format" : "date-time"
-          },
-          "voidReason" : {
-            "type" : "string"
-          },
-          "voidedBy" : {
-            "type" : "string"
-          },
-          "createdAt" : {
-            "type" : "string",
-            "format" : "date-time"
-          },
-          "updatedAt" : {
-            "type" : "string",
-            "format" : "date-time"
-          },
-          "applications" : {
-            "type" : "array",
-            "items" : {
-              "$ref" : "#/components/schemas/DocumentPaymentApplicationResponse"
-            }
-          }
-        }
-      },
-      "DocumentPaymentVoidRequest" : {
-        "type" : "object",
-        "properties" : {
-          "reason" : {
-            "type" : "string",
-            "maxLength" : 200,
-            "minLength" : 0
-          },
-          "voidedBy" : {
-            "type" : "string",
-            "maxLength" : 100,
-            "minLength" : 0
-          }
-        },
-        "required" : [ "reason" ]
-      },
-      "DocumentPaymentApplyRequest" : {
-        "type" : "object",
-        "properties" : {
-          "applications" : {
-            "type" : "array",
-            "items" : {
-              "$ref" : "#/components/schemas/DocumentPaymentApplicationRequest"
-            },
-            "minItems" : 1
-          },
-          "appliedBy" : {
-            "type" : "string",
-            "maxLength" : 100,
-            "minLength" : 0
-          }
-        },
-        "required" : [ "applications" ]
       },
       "TenantIssuerRequest" : {
         "type" : "object",
@@ -7941,12 +7768,6 @@
           "specificTaxData" : {
             "$ref" : "#/components/schemas/SpecificTaxDataRequest"
           },
-          "alcoholicBeverageCalculationDataValid" : {
-            "type" : "boolean"
-          },
-          "taxRatePresentWhenRequiredForCalculation" : {
-            "type" : "boolean"
-          },
           "vatRateCodeValidForVatTax" : {
             "type" : "boolean"
           },
@@ -7960,6 +7781,12 @@
             "type" : "boolean"
           },
           "otherTaxDataValid" : {
+            "type" : "boolean"
+          },
+          "alcoholicBeverageCalculationDataValid" : {
+            "type" : "boolean"
+          },
+          "taxRatePresentWhenRequiredForCalculation" : {
             "type" : "boolean"
           }
         },
@@ -8194,6 +8021,251 @@
           }
         },
         "required" : [ "documentNumber" ]
+      },
+      "DocumentPaymentApplicationRequest" : {
+        "type" : "object",
+        "properties" : {
+          "documentId" : {
+            "type" : "integer",
+            "format" : "int64"
+          },
+          "amount" : {
+            "type" : "number",
+            "format" : "decimal",
+            "minimum" : 1.0E-5
+          },
+          "notes" : {
+            "type" : "string",
+            "maxLength" : 500,
+            "minLength" : 0
+          }
+        },
+        "required" : [ "amount", "documentId" ]
+      },
+      "DocumentPaymentCreateRequest" : {
+        "type" : "object",
+        "properties" : {
+          "clientId" : {
+            "type" : "integer",
+            "format" : "int64"
+          },
+          "amount" : {
+            "type" : "number",
+            "format" : "decimal",
+            "minimum" : 1.0E-5
+          },
+          "currency" : {
+            "type" : "string",
+            "enum" : [ "CRC", "USD", "EUR" ]
+          },
+          "applicationMode" : {
+            "type" : "string",
+            "enum" : [ "MANUAL", "OLDEST_FIRST", "UNAPPLIED" ]
+          },
+          "paymentMethod" : {
+            "type" : "string",
+            "maxLength" : 100,
+            "minLength" : 0
+          },
+          "cardPaymentReference" : {
+            "type" : "string",
+            "description" : "Opcional y exclusivo para tarjeta (02): últimos cuatro dígitos de la tarjeta utilizada. No es un PAN ni un código de autorización.",
+            "example" : "1234",
+            "pattern" : "\\d{4}"
+          },
+          "referenceNumber" : {
+            "type" : "string",
+            "maxLength" : 100,
+            "minLength" : 0
+          },
+          "paymentDate" : {
+            "type" : "string",
+            "format" : "date-time"
+          },
+          "receivedBy" : {
+            "type" : "string",
+            "maxLength" : 100,
+            "minLength" : 0
+          },
+          "notes" : {
+            "type" : "string",
+            "maxLength" : 500,
+            "minLength" : 0
+          },
+          "applications" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/DocumentPaymentApplicationRequest"
+            }
+          }
+        },
+        "required" : [ "amount", "clientId", "currency" ]
+      },
+      "DocumentPaymentApplicationResponse" : {
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "type" : "integer",
+            "format" : "int64"
+          },
+          "paymentId" : {
+            "type" : "integer",
+            "format" : "int64"
+          },
+          "documentId" : {
+            "type" : "integer",
+            "format" : "int64"
+          },
+          "documentKey" : {
+            "type" : "string"
+          },
+          "consecutive" : {
+            "type" : "string"
+          },
+          "amount" : {
+            "type" : "number",
+            "format" : "decimal"
+          },
+          "isVoided" : {
+            "type" : "boolean"
+          },
+          "appliedAt" : {
+            "type" : "string",
+            "format" : "date-time"
+          },
+          "appliedBy" : {
+            "type" : "string"
+          },
+          "voidedAt" : {
+            "type" : "string",
+            "format" : "date-time"
+          },
+          "voidReason" : {
+            "type" : "string"
+          },
+          "voidedBy" : {
+            "type" : "string"
+          },
+          "notes" : {
+            "type" : "string"
+          },
+          "electronicPaymentReceiptId" : {
+            "type" : "integer",
+            "format" : "int64"
+          }
+        }
+      },
+      "DocumentPaymentResponse" : {
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "type" : "integer",
+            "format" : "int64"
+          },
+          "clientId" : {
+            "type" : "integer",
+            "format" : "int64"
+          },
+          "clientName" : {
+            "type" : "string"
+          },
+          "amount" : {
+            "type" : "number",
+            "format" : "decimal"
+          },
+          "currency" : {
+            "type" : "string",
+            "enum" : [ "CRC", "USD", "EUR" ]
+          },
+          "appliedAmount" : {
+            "type" : "number",
+            "format" : "decimal"
+          },
+          "availableAmount" : {
+            "type" : "number",
+            "format" : "decimal"
+          },
+          "paymentMethod" : {
+            "type" : "string"
+          },
+          "cardPaymentReference" : {
+            "type" : "string"
+          },
+          "referenceNumber" : {
+            "type" : "string"
+          },
+          "paymentDate" : {
+            "type" : "string",
+            "format" : "date-time"
+          },
+          "receivedBy" : {
+            "type" : "string"
+          },
+          "notes" : {
+            "type" : "string"
+          },
+          "isVoided" : {
+            "type" : "boolean"
+          },
+          "voidedAt" : {
+            "type" : "string",
+            "format" : "date-time"
+          },
+          "voidReason" : {
+            "type" : "string"
+          },
+          "voidedBy" : {
+            "type" : "string"
+          },
+          "createdAt" : {
+            "type" : "string",
+            "format" : "date-time"
+          },
+          "updatedAt" : {
+            "type" : "string",
+            "format" : "date-time"
+          },
+          "applications" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/DocumentPaymentApplicationResponse"
+            }
+          }
+        }
+      },
+      "DocumentPaymentVoidRequest" : {
+        "type" : "object",
+        "properties" : {
+          "reason" : {
+            "type" : "string",
+            "maxLength" : 200,
+            "minLength" : 0
+          },
+          "voidedBy" : {
+            "type" : "string",
+            "maxLength" : 100,
+            "minLength" : 0
+          }
+        },
+        "required" : [ "reason" ]
+      },
+      "DocumentPaymentApplyRequest" : {
+        "type" : "object",
+        "properties" : {
+          "applications" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/DocumentPaymentApplicationRequest"
+            },
+            "minItems" : 1
+          },
+          "appliedBy" : {
+            "type" : "string",
+            "maxLength" : 100,
+            "minLength" : 0
+          }
+        },
+        "required" : [ "applications" ]
       },
       "ReceivedFiscalDocumentImportRequest" : {
         "type" : "object",
@@ -8771,94 +8843,6 @@
           }
         }
       },
-      "DocumentPaymentStatementDocumentResponse" : {
-        "type" : "object",
-        "properties" : {
-          "documentId" : {
-            "type" : "integer",
-            "format" : "int64"
-          },
-          "documentKey" : {
-            "type" : "string"
-          },
-          "consecutive" : {
-            "type" : "string"
-          },
-          "currency" : {
-            "type" : "string",
-            "enum" : [ "CRC", "USD", "EUR" ]
-          },
-          "issueDate" : {
-            "type" : "string",
-            "format" : "date-time"
-          },
-          "paymentDueDate" : {
-            "type" : "string",
-            "format" : "date-time"
-          },
-          "documentTotal" : {
-            "type" : "number",
-            "format" : "decimal"
-          },
-          "amountPaid" : {
-            "type" : "number",
-            "format" : "decimal"
-          },
-          "amountPending" : {
-            "type" : "number",
-            "format" : "decimal"
-          },
-          "overdue" : {
-            "type" : "boolean"
-          },
-          "daysOverdue" : {
-            "type" : "integer",
-            "format" : "int64"
-          }
-        }
-      },
-      "DocumentPaymentStatementResponse" : {
-        "type" : "object",
-        "properties" : {
-          "clientId" : {
-            "type" : "integer",
-            "format" : "int64"
-          },
-          "clientName" : {
-            "type" : "string"
-          },
-          "pendingAmount" : {
-            "type" : "number",
-            "format" : "decimal"
-          },
-          "overdueAmount" : {
-            "type" : "number",
-            "format" : "decimal"
-          },
-          "availableAmount" : {
-            "type" : "number",
-            "format" : "decimal"
-          },
-          "pendingDocuments" : {
-            "type" : "array",
-            "items" : {
-              "$ref" : "#/components/schemas/DocumentPaymentStatementDocumentResponse"
-            }
-          },
-          "availablePayments" : {
-            "type" : "array",
-            "items" : {
-              "$ref" : "#/components/schemas/DocumentPaymentResponse"
-            }
-          },
-          "applications" : {
-            "type" : "array",
-            "items" : {
-              "$ref" : "#/components/schemas/DocumentPaymentApplicationResponse"
-            }
-          }
-        }
-      },
       "Pageable" : {
         "type" : "object",
         "properties" : {
@@ -9176,6 +9160,94 @@
           },
           "description" : {
             "type" : "string"
+          }
+        }
+      },
+      "DocumentPaymentStatementDocumentResponse" : {
+        "type" : "object",
+        "properties" : {
+          "documentId" : {
+            "type" : "integer",
+            "format" : "int64"
+          },
+          "documentKey" : {
+            "type" : "string"
+          },
+          "consecutive" : {
+            "type" : "string"
+          },
+          "currency" : {
+            "type" : "string",
+            "enum" : [ "CRC", "USD", "EUR" ]
+          },
+          "issueDate" : {
+            "type" : "string",
+            "format" : "date-time"
+          },
+          "paymentDueDate" : {
+            "type" : "string",
+            "format" : "date-time"
+          },
+          "documentTotal" : {
+            "type" : "number",
+            "format" : "decimal"
+          },
+          "amountPaid" : {
+            "type" : "number",
+            "format" : "decimal"
+          },
+          "amountPending" : {
+            "type" : "number",
+            "format" : "decimal"
+          },
+          "overdue" : {
+            "type" : "boolean"
+          },
+          "daysOverdue" : {
+            "type" : "integer",
+            "format" : "int64"
+          }
+        }
+      },
+      "DocumentPaymentStatementResponse" : {
+        "type" : "object",
+        "properties" : {
+          "clientId" : {
+            "type" : "integer",
+            "format" : "int64"
+          },
+          "clientName" : {
+            "type" : "string"
+          },
+          "pendingAmount" : {
+            "type" : "number",
+            "format" : "decimal"
+          },
+          "overdueAmount" : {
+            "type" : "number",
+            "format" : "decimal"
+          },
+          "availableAmount" : {
+            "type" : "number",
+            "format" : "decimal"
+          },
+          "pendingDocuments" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/DocumentPaymentStatementDocumentResponse"
+            }
+          },
+          "availablePayments" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/DocumentPaymentResponse"
+            }
+          },
+          "applications" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/DocumentPaymentApplicationResponse"
+            }
           }
         }
       },

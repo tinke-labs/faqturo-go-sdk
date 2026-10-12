@@ -957,6 +957,111 @@ func (e GetVatSummaryParamsAPIVersion) Valid() bool {
 	}
 }
 
+// Defines values for GetClientStatementParamsAPIVersion.
+const (
+	GetClientStatementParamsAPIVersionV1 GetClientStatementParamsAPIVersion = "v1"
+)
+
+// Valid indicates whether the value is a known member of the GetClientStatementParamsAPIVersion enum.
+func (e GetClientStatementParamsAPIVersion) Valid() bool {
+	switch e {
+	case GetClientStatementParamsAPIVersionV1:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for GetClientAccountStatementPdfParamsAPIVersion.
+const (
+	GetClientAccountStatementPdfParamsAPIVersionV1 GetClientAccountStatementPdfParamsAPIVersion = "v1"
+)
+
+// Valid indicates whether the value is a known member of the GetClientAccountStatementPdfParamsAPIVersion enum.
+func (e GetClientAccountStatementPdfParamsAPIVersion) Valid() bool {
+	switch e {
+	case GetClientAccountStatementPdfParamsAPIVersionV1:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for CreatePaymentParamsAPIVersion.
+const (
+	CreatePaymentParamsAPIVersionV1 CreatePaymentParamsAPIVersion = "v1"
+)
+
+// Valid indicates whether the value is a known member of the CreatePaymentParamsAPIVersion enum.
+func (e CreatePaymentParamsAPIVersion) Valid() bool {
+	switch e {
+	case CreatePaymentParamsAPIVersionV1:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for VoidApplicationParamsAPIVersion.
+const (
+	VoidApplicationParamsAPIVersionV1 VoidApplicationParamsAPIVersion = "v1"
+)
+
+// Valid indicates whether the value is a known member of the VoidApplicationParamsAPIVersion enum.
+func (e VoidApplicationParamsAPIVersion) Valid() bool {
+	switch e {
+	case VoidApplicationParamsAPIVersionV1:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for GetPaymentParamsAPIVersion.
+const (
+	GetPaymentParamsAPIVersionV1 GetPaymentParamsAPIVersion = "v1"
+)
+
+// Valid indicates whether the value is a known member of the GetPaymentParamsAPIVersion enum.
+func (e GetPaymentParamsAPIVersion) Valid() bool {
+	switch e {
+	case GetPaymentParamsAPIVersionV1:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for ApplyPaymentParamsAPIVersion.
+const (
+	ApplyPaymentParamsAPIVersionV1 ApplyPaymentParamsAPIVersion = "v1"
+)
+
+// Valid indicates whether the value is a known member of the ApplyPaymentParamsAPIVersion enum.
+func (e ApplyPaymentParamsAPIVersion) Valid() bool {
+	switch e {
+	case ApplyPaymentParamsAPIVersionV1:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for VoidPaymentParamsAPIVersion.
+const (
+	VoidPaymentParamsAPIVersionV1 VoidPaymentParamsAPIVersion = "v1"
+)
+
+// Valid indicates whether the value is a known member of the VoidPaymentParamsAPIVersion enum.
+func (e VoidPaymentParamsAPIVersion) Valid() bool {
+	switch e {
+	case VoidPaymentParamsAPIVersionV1:
+		return true
+	default:
+		return false
+	}
+}
+
 // Defines values for GetBranchesParamsAPIVersion.
 const (
 	GetBranchesParamsAPIVersionV1 GetBranchesParamsAPIVersion = "v1"
@@ -1935,96 +2040,6 @@ func (e SetDefaultIssuerParamsAPIVersion) Valid() bool {
 	}
 }
 
-// Defines values for CreatePaymentParamsAPIVersion.
-const (
-	CreatePaymentParamsAPIVersionV1 CreatePaymentParamsAPIVersion = "v1"
-)
-
-// Valid indicates whether the value is a known member of the CreatePaymentParamsAPIVersion enum.
-func (e CreatePaymentParamsAPIVersion) Valid() bool {
-	switch e {
-	case CreatePaymentParamsAPIVersionV1:
-		return true
-	default:
-		return false
-	}
-}
-
-// Defines values for VoidApplicationParamsAPIVersion.
-const (
-	VoidApplicationParamsAPIVersionV1 VoidApplicationParamsAPIVersion = "v1"
-)
-
-// Valid indicates whether the value is a known member of the VoidApplicationParamsAPIVersion enum.
-func (e VoidApplicationParamsAPIVersion) Valid() bool {
-	switch e {
-	case VoidApplicationParamsAPIVersionV1:
-		return true
-	default:
-		return false
-	}
-}
-
-// Defines values for GetClientStatementParamsAPIVersion.
-const (
-	GetClientStatementParamsAPIVersionV1 GetClientStatementParamsAPIVersion = "v1"
-)
-
-// Valid indicates whether the value is a known member of the GetClientStatementParamsAPIVersion enum.
-func (e GetClientStatementParamsAPIVersion) Valid() bool {
-	switch e {
-	case GetClientStatementParamsAPIVersionV1:
-		return true
-	default:
-		return false
-	}
-}
-
-// Defines values for GetPaymentParamsAPIVersion.
-const (
-	GetPaymentParamsAPIVersionV1 GetPaymentParamsAPIVersion = "v1"
-)
-
-// Valid indicates whether the value is a known member of the GetPaymentParamsAPIVersion enum.
-func (e GetPaymentParamsAPIVersion) Valid() bool {
-	switch e {
-	case GetPaymentParamsAPIVersionV1:
-		return true
-	default:
-		return false
-	}
-}
-
-// Defines values for ApplyPaymentParamsAPIVersion.
-const (
-	ApplyPaymentParamsAPIVersionV1 ApplyPaymentParamsAPIVersion = "v1"
-)
-
-// Valid indicates whether the value is a known member of the ApplyPaymentParamsAPIVersion enum.
-func (e ApplyPaymentParamsAPIVersion) Valid() bool {
-	switch e {
-	case ApplyPaymentParamsAPIVersionV1:
-		return true
-	default:
-		return false
-	}
-}
-
-// Defines values for VoidPaymentParamsAPIVersion.
-const (
-	VoidPaymentParamsAPIVersionV1 VoidPaymentParamsAPIVersion = "v1"
-)
-
-// Valid indicates whether the value is a known member of the VoidPaymentParamsAPIVersion enum.
-func (e VoidPaymentParamsAPIVersion) Valid() bool {
-	switch e {
-	case VoidPaymentParamsAPIVersionV1:
-		return true
-	default:
-		return false
-	}
-}
-
 // Defines values for GetSequencesParamsAPIVersion.
 const (
 	GetSequencesParamsAPIVersionV1 GetSequencesParamsAPIVersion = "v1"
@@ -2402,13 +2417,13 @@ func (e GetLogsParamsAPIVersion) Valid() bool {
 
 // Defines values for TestWebhookParamsAPIVersion.
 const (
-	TestWebhookParamsAPIVersionV1 TestWebhookParamsAPIVersion = "v1"
+	V1 TestWebhookParamsAPIVersion = "v1"
 )
 
 // Valid indicates whether the value is a known member of the TestWebhookParamsAPIVersion enum.
 func (e TestWebhookParamsAPIVersion) Valid() bool {
 	switch e {
-	case TestWebhookParamsAPIVersionV1:
+	case V1:
 		return true
 	default:
 		return false
@@ -4274,6 +4289,66 @@ type GetVatSummaryParams struct {
 // GetVatSummaryParamsAPIVersion defines parameters for GetVatSummary.
 type GetVatSummaryParamsAPIVersion string
 
+// GetClientStatementParams defines parameters for GetClientStatement.
+type GetClientStatementParams struct {
+	APIVersion *GetClientStatementParamsAPIVersion `json:"API-Version,omitempty"`
+}
+
+// GetClientStatementParamsAPIVersion defines parameters for GetClientStatement.
+type GetClientStatementParamsAPIVersion string
+
+// GetClientAccountStatementPdfParams defines parameters for GetClientAccountStatementPdf.
+type GetClientAccountStatementPdfParams struct {
+	ReceiverId *int64                                        `form:"receiver_id,omitempty" json:"receiver_id,omitempty"`
+	From       *openapi_types.Date                           `form:"from,omitempty" json:"from,omitempty"`
+	To         *openapi_types.Date                           `form:"to,omitempty" json:"to,omitempty"`
+	DateField  *string                                       `form:"date_field,omitempty" json:"date_field,omitempty"`
+	APIVersion *GetClientAccountStatementPdfParamsAPIVersion `json:"API-Version,omitempty"`
+}
+
+// GetClientAccountStatementPdfParamsAPIVersion defines parameters for GetClientAccountStatementPdf.
+type GetClientAccountStatementPdfParamsAPIVersion string
+
+// CreatePaymentParams defines parameters for CreatePayment.
+type CreatePaymentParams struct {
+	APIVersion *CreatePaymentParamsAPIVersion `json:"API-Version,omitempty"`
+}
+
+// CreatePaymentParamsAPIVersion defines parameters for CreatePayment.
+type CreatePaymentParamsAPIVersion string
+
+// VoidApplicationParams defines parameters for VoidApplication.
+type VoidApplicationParams struct {
+	APIVersion *VoidApplicationParamsAPIVersion `json:"API-Version,omitempty"`
+}
+
+// VoidApplicationParamsAPIVersion defines parameters for VoidApplication.
+type VoidApplicationParamsAPIVersion string
+
+// GetPaymentParams defines parameters for GetPayment.
+type GetPaymentParams struct {
+	APIVersion *GetPaymentParamsAPIVersion `json:"API-Version,omitempty"`
+}
+
+// GetPaymentParamsAPIVersion defines parameters for GetPayment.
+type GetPaymentParamsAPIVersion string
+
+// ApplyPaymentParams defines parameters for ApplyPayment.
+type ApplyPaymentParams struct {
+	APIVersion *ApplyPaymentParamsAPIVersion `json:"API-Version,omitempty"`
+}
+
+// ApplyPaymentParamsAPIVersion defines parameters for ApplyPayment.
+type ApplyPaymentParamsAPIVersion string
+
+// VoidPaymentParams defines parameters for VoidPayment.
+type VoidPaymentParams struct {
+	APIVersion *VoidPaymentParamsAPIVersion `json:"API-Version,omitempty"`
+}
+
+// VoidPaymentParamsAPIVersion defines parameters for VoidPayment.
+type VoidPaymentParamsAPIVersion string
+
 // GetBranchesParams defines parameters for GetBranches.
 type GetBranchesParams struct {
 	APIVersion *GetBranchesParamsAPIVersion `json:"API-Version,omitempty"`
@@ -4831,54 +4906,6 @@ type SetDefaultIssuerParams struct {
 // SetDefaultIssuerParamsAPIVersion defines parameters for SetDefaultIssuer.
 type SetDefaultIssuerParamsAPIVersion string
 
-// CreatePaymentParams defines parameters for CreatePayment.
-type CreatePaymentParams struct {
-	APIVersion *CreatePaymentParamsAPIVersion `json:"API-Version,omitempty"`
-}
-
-// CreatePaymentParamsAPIVersion defines parameters for CreatePayment.
-type CreatePaymentParamsAPIVersion string
-
-// VoidApplicationParams defines parameters for VoidApplication.
-type VoidApplicationParams struct {
-	APIVersion *VoidApplicationParamsAPIVersion `json:"API-Version,omitempty"`
-}
-
-// VoidApplicationParamsAPIVersion defines parameters for VoidApplication.
-type VoidApplicationParamsAPIVersion string
-
-// GetClientStatementParams defines parameters for GetClientStatement.
-type GetClientStatementParams struct {
-	APIVersion *GetClientStatementParamsAPIVersion `json:"API-Version,omitempty"`
-}
-
-// GetClientStatementParamsAPIVersion defines parameters for GetClientStatement.
-type GetClientStatementParamsAPIVersion string
-
-// GetPaymentParams defines parameters for GetPayment.
-type GetPaymentParams struct {
-	APIVersion *GetPaymentParamsAPIVersion `json:"API-Version,omitempty"`
-}
-
-// GetPaymentParamsAPIVersion defines parameters for GetPayment.
-type GetPaymentParamsAPIVersion string
-
-// ApplyPaymentParams defines parameters for ApplyPayment.
-type ApplyPaymentParams struct {
-	APIVersion *ApplyPaymentParamsAPIVersion `json:"API-Version,omitempty"`
-}
-
-// ApplyPaymentParamsAPIVersion defines parameters for ApplyPayment.
-type ApplyPaymentParamsAPIVersion string
-
-// VoidPaymentParams defines parameters for VoidPayment.
-type VoidPaymentParams struct {
-	APIVersion *VoidPaymentParamsAPIVersion `json:"API-Version,omitempty"`
-}
-
-// VoidPaymentParamsAPIVersion defines parameters for VoidPayment.
-type VoidPaymentParamsAPIVersion string
-
 // GetPlatformStatusParams defines parameters for GetPlatformStatus.
 type GetPlatformStatusParams struct {
 	// APIVersion Versión del API. Para este SDK debe ser v1.
@@ -5130,6 +5157,18 @@ type ImportReceivedDocumentJSONRequestBody = ReceivedFiscalDocumentImportRequest
 // ConfirmVatProrationProfileJSONRequestBody defines body for ConfirmVatProrationProfile for application/json ContentType.
 type ConfirmVatProrationProfileJSONRequestBody = VatProrationProfileRequest
 
+// CreatePaymentJSONRequestBody defines body for CreatePayment for application/json ContentType.
+type CreatePaymentJSONRequestBody = DocumentPaymentCreateRequest
+
+// VoidApplicationJSONRequestBody defines body for VoidApplication for application/json ContentType.
+type VoidApplicationJSONRequestBody = DocumentPaymentVoidRequest
+
+// ApplyPaymentJSONRequestBody defines body for ApplyPayment for application/json ContentType.
+type ApplyPaymentJSONRequestBody = DocumentPaymentApplyRequest
+
+// VoidPaymentJSONRequestBody defines body for VoidPayment for application/json ContentType.
+type VoidPaymentJSONRequestBody = DocumentPaymentVoidRequest
+
 // CreateBranchJSONRequestBody defines body for CreateBranch for application/json ContentType.
 type CreateBranchJSONRequestBody = BranchRequest
 
@@ -5201,18 +5240,6 @@ type CreateIssuerJSONRequestBody = TenantIssuerRequest
 
 // UpdateIssuerJSONRequestBody defines body for UpdateIssuer for application/json ContentType.
 type UpdateIssuerJSONRequestBody = TenantIssuerRequest
-
-// CreatePaymentJSONRequestBody defines body for CreatePayment for application/json ContentType.
-type CreatePaymentJSONRequestBody = DocumentPaymentCreateRequest
-
-// VoidApplicationJSONRequestBody defines body for VoidApplication for application/json ContentType.
-type VoidApplicationJSONRequestBody = DocumentPaymentVoidRequest
-
-// ApplyPaymentJSONRequestBody defines body for ApplyPayment for application/json ContentType.
-type ApplyPaymentJSONRequestBody = DocumentPaymentApplyRequest
-
-// VoidPaymentJSONRequestBody defines body for VoidPayment for application/json ContentType.
-type VoidPaymentJSONRequestBody = DocumentPaymentVoidRequest
 
 // UpsertTenantJSONRequestBody defines body for UpsertTenant for application/json ContentType.
 type UpsertTenantJSONRequestBody = PlatformTenantUpsertRequest
@@ -5351,6 +5378,35 @@ type ClientInterface interface {
 
 	// GetVatSummary request
 	GetVatSummary(ctx context.Context, params *GetVatSummaryParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// GetClientStatement request
+	GetClientStatement(ctx context.Context, clientId int64, params *GetClientStatementParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// GetClientAccountStatementPdf request
+	GetClientAccountStatementPdf(ctx context.Context, clientId int64, params *GetClientAccountStatementPdfParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// CreatePaymentWithBody request with any body
+	CreatePaymentWithBody(ctx context.Context, params *CreatePaymentParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	CreatePayment(ctx context.Context, params *CreatePaymentParams, body CreatePaymentJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// VoidApplicationWithBody request with any body
+	VoidApplicationWithBody(ctx context.Context, applicationId int64, params *VoidApplicationParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	VoidApplication(ctx context.Context, applicationId int64, params *VoidApplicationParams, body VoidApplicationJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// GetPayment request
+	GetPayment(ctx context.Context, paymentId int64, params *GetPaymentParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// ApplyPaymentWithBody request with any body
+	ApplyPaymentWithBody(ctx context.Context, paymentId int64, params *ApplyPaymentParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	ApplyPayment(ctx context.Context, paymentId int64, params *ApplyPaymentParams, body ApplyPaymentJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// VoidPaymentWithBody request with any body
+	VoidPaymentWithBody(ctx context.Context, paymentId int64, params *VoidPaymentParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	VoidPayment(ctx context.Context, paymentId int64, params *VoidPaymentParams, body VoidPaymentJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// GetBranches request
 	GetBranches(ctx context.Context, params *GetBranchesParams, reqEditors ...RequestEditorFn) (*http.Response, error)
@@ -5592,32 +5648,6 @@ type ClientInterface interface {
 
 	// SetDefaultIssuer request
 	SetDefaultIssuer(ctx context.Context, id int64, params *SetDefaultIssuerParams, reqEditors ...RequestEditorFn) (*http.Response, error)
-
-	// CreatePaymentWithBody request with any body
-	CreatePaymentWithBody(ctx context.Context, params *CreatePaymentParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
-
-	CreatePayment(ctx context.Context, params *CreatePaymentParams, body CreatePaymentJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
-
-	// VoidApplicationWithBody request with any body
-	VoidApplicationWithBody(ctx context.Context, applicationId int64, params *VoidApplicationParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
-
-	VoidApplication(ctx context.Context, applicationId int64, params *VoidApplicationParams, body VoidApplicationJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
-
-	// GetClientStatement request
-	GetClientStatement(ctx context.Context, clientId int64, params *GetClientStatementParams, reqEditors ...RequestEditorFn) (*http.Response, error)
-
-	// GetPayment request
-	GetPayment(ctx context.Context, paymentId int64, params *GetPaymentParams, reqEditors ...RequestEditorFn) (*http.Response, error)
-
-	// ApplyPaymentWithBody request with any body
-	ApplyPaymentWithBody(ctx context.Context, paymentId int64, params *ApplyPaymentParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
-
-	ApplyPayment(ctx context.Context, paymentId int64, params *ApplyPaymentParams, body ApplyPaymentJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
-
-	// VoidPaymentWithBody request with any body
-	VoidPaymentWithBody(ctx context.Context, paymentId int64, params *VoidPaymentParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
-
-	VoidPayment(ctx context.Context, paymentId int64, params *VoidPaymentParams, body VoidPaymentJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// GetPlatformStatus request
 	GetPlatformStatus(ctx context.Context, params *GetPlatformStatusParams, reqEditors ...RequestEditorFn) (*http.Response, error)
@@ -5892,6 +5922,138 @@ func (c *Client) ConfirmVatProrationProfile(ctx context.Context, fiscalYear int3
 
 func (c *Client) GetVatSummary(ctx context.Context, params *GetVatSummaryParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewGetVatSummaryRequest(c.Server, params)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) GetClientStatement(ctx context.Context, clientId int64, params *GetClientStatementParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewGetClientStatementRequest(c.Server, clientId, params)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) GetClientAccountStatementPdf(ctx context.Context, clientId int64, params *GetClientAccountStatementPdfParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewGetClientAccountStatementPdfRequest(c.Server, clientId, params)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) CreatePaymentWithBody(ctx context.Context, params *CreatePaymentParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCreatePaymentRequestWithBody(c.Server, params, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) CreatePayment(ctx context.Context, params *CreatePaymentParams, body CreatePaymentJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewCreatePaymentRequest(c.Server, params, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) VoidApplicationWithBody(ctx context.Context, applicationId int64, params *VoidApplicationParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewVoidApplicationRequestWithBody(c.Server, applicationId, params, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) VoidApplication(ctx context.Context, applicationId int64, params *VoidApplicationParams, body VoidApplicationJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewVoidApplicationRequest(c.Server, applicationId, params, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) GetPayment(ctx context.Context, paymentId int64, params *GetPaymentParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewGetPaymentRequest(c.Server, paymentId, params)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) ApplyPaymentWithBody(ctx context.Context, paymentId int64, params *ApplyPaymentParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewApplyPaymentRequestWithBody(c.Server, paymentId, params, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) ApplyPayment(ctx context.Context, paymentId int64, params *ApplyPaymentParams, body ApplyPaymentJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewApplyPaymentRequest(c.Server, paymentId, params, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) VoidPaymentWithBody(ctx context.Context, paymentId int64, params *VoidPaymentParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewVoidPaymentRequestWithBody(c.Server, paymentId, params, contentType, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) VoidPayment(ctx context.Context, paymentId int64, params *VoidPaymentParams, body VoidPaymentJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewVoidPaymentRequest(c.Server, paymentId, params, body)
 	if err != nil {
 		return nil, err
 	}
@@ -6948,126 +7110,6 @@ func (c *Client) UpdateIssuer(ctx context.Context, id int64, params *UpdateIssue
 
 func (c *Client) SetDefaultIssuer(ctx context.Context, id int64, params *SetDefaultIssuerParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewSetDefaultIssuerRequest(c.Server, id, params)
-	if err != nil {
-		return nil, err
-	}
-	req = req.WithContext(ctx)
-	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
-		return nil, err
-	}
-	return c.Client.Do(req)
-}
-
-func (c *Client) CreatePaymentWithBody(ctx context.Context, params *CreatePaymentParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewCreatePaymentRequestWithBody(c.Server, params, contentType, body)
-	if err != nil {
-		return nil, err
-	}
-	req = req.WithContext(ctx)
-	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
-		return nil, err
-	}
-	return c.Client.Do(req)
-}
-
-func (c *Client) CreatePayment(ctx context.Context, params *CreatePaymentParams, body CreatePaymentJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewCreatePaymentRequest(c.Server, params, body)
-	if err != nil {
-		return nil, err
-	}
-	req = req.WithContext(ctx)
-	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
-		return nil, err
-	}
-	return c.Client.Do(req)
-}
-
-func (c *Client) VoidApplicationWithBody(ctx context.Context, applicationId int64, params *VoidApplicationParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewVoidApplicationRequestWithBody(c.Server, applicationId, params, contentType, body)
-	if err != nil {
-		return nil, err
-	}
-	req = req.WithContext(ctx)
-	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
-		return nil, err
-	}
-	return c.Client.Do(req)
-}
-
-func (c *Client) VoidApplication(ctx context.Context, applicationId int64, params *VoidApplicationParams, body VoidApplicationJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewVoidApplicationRequest(c.Server, applicationId, params, body)
-	if err != nil {
-		return nil, err
-	}
-	req = req.WithContext(ctx)
-	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
-		return nil, err
-	}
-	return c.Client.Do(req)
-}
-
-func (c *Client) GetClientStatement(ctx context.Context, clientId int64, params *GetClientStatementParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewGetClientStatementRequest(c.Server, clientId, params)
-	if err != nil {
-		return nil, err
-	}
-	req = req.WithContext(ctx)
-	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
-		return nil, err
-	}
-	return c.Client.Do(req)
-}
-
-func (c *Client) GetPayment(ctx context.Context, paymentId int64, params *GetPaymentParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewGetPaymentRequest(c.Server, paymentId, params)
-	if err != nil {
-		return nil, err
-	}
-	req = req.WithContext(ctx)
-	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
-		return nil, err
-	}
-	return c.Client.Do(req)
-}
-
-func (c *Client) ApplyPaymentWithBody(ctx context.Context, paymentId int64, params *ApplyPaymentParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewApplyPaymentRequestWithBody(c.Server, paymentId, params, contentType, body)
-	if err != nil {
-		return nil, err
-	}
-	req = req.WithContext(ctx)
-	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
-		return nil, err
-	}
-	return c.Client.Do(req)
-}
-
-func (c *Client) ApplyPayment(ctx context.Context, paymentId int64, params *ApplyPaymentParams, body ApplyPaymentJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewApplyPaymentRequest(c.Server, paymentId, params, body)
-	if err != nil {
-		return nil, err
-	}
-	req = req.WithContext(ctx)
-	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
-		return nil, err
-	}
-	return c.Client.Do(req)
-}
-
-func (c *Client) VoidPaymentWithBody(ctx context.Context, paymentId int64, params *VoidPaymentParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewVoidPaymentRequestWithBody(c.Server, paymentId, params, contentType, body)
-	if err != nil {
-		return nil, err
-	}
-	req = req.WithContext(ctx)
-	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
-		return nil, err
-	}
-	return c.Client.Do(req)
-}
-
-func (c *Client) VoidPayment(ctx context.Context, paymentId int64, params *VoidPaymentParams, body VoidPaymentJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	req, err := NewVoidPaymentRequest(c.Server, paymentId, params, body)
 	if err != nil {
 		return nil, err
 	}
@@ -8359,6 +8401,457 @@ func NewGetVatSummaryRequest(server string, params *GetVatSummaryParams) (*http.
 	if err != nil {
 		return nil, err
 	}
+
+	if params != nil {
+
+		if params.APIVersion != nil {
+			var headerParam0 string
+
+			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "API-Version", *params.APIVersion, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: ""})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("API-Version", headerParam0)
+		}
+
+	}
+
+	return req, nil
+}
+
+// NewGetClientStatementRequest generates requests for GetClientStatement
+func NewGetClientStatementRequest(server string, clientId int64, params *GetClientStatementParams) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "clientId", clientId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "integer", Format: "int64"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/accounts-receivable/clients/%s/statement", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+
+		if params.APIVersion != nil {
+			var headerParam0 string
+
+			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "API-Version", *params.APIVersion, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: ""})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("API-Version", headerParam0)
+		}
+
+	}
+
+	return req, nil
+}
+
+// NewGetClientAccountStatementPdfRequest generates requests for GetClientAccountStatementPdf
+func NewGetClientAccountStatementPdfRequest(server string, clientId int64, params *GetClientAccountStatementPdfParams) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "clientId", clientId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "integer", Format: "int64"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/accounts-receivable/clients/%s/statement.pdf", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+		// queryValues collects non-styled parameters (passthrough, JSON)
+		// that are safe to round-trip through url.Values.Encode().
+		queryValues := queryURL.Query()
+		// rawQueryFragments collects pre-encoded query fragments from
+		// styled parameters, preserving literal commas as delimiters
+		// per the OpenAPI spec (e.g. "color=blue,black,brown").
+		var rawQueryFragments []string
+
+		if params.ReceiverId != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "receiver_id", *params.ReceiverId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "integer", Format: "int64"}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.From != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "from", *params.From, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: "date"}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.To != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "to", *params.To, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: "date"}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.DateField != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "date_field", *params.DateField, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if encoded := queryValues.Encode(); encoded != "" {
+			rawQueryFragments = append(rawQueryFragments, encoded)
+		}
+		queryURL.RawQuery = strings.Join(rawQueryFragments, "&")
+	}
+
+	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+
+		if params.APIVersion != nil {
+			var headerParam0 string
+
+			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "API-Version", *params.APIVersion, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: ""})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("API-Version", headerParam0)
+		}
+
+	}
+
+	return req, nil
+}
+
+// NewCreatePaymentRequest calls the generic CreatePayment builder with application/json body
+func NewCreatePaymentRequest(server string, params *CreatePaymentParams, body CreatePaymentJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewCreatePaymentRequestWithBody(server, params, "application/json", bodyReader)
+}
+
+// NewCreatePaymentRequestWithBody generates requests for CreatePayment with any type of body
+func NewCreatePaymentRequestWithBody(server string, params *CreatePaymentParams, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/accounts-receivable/payments")
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPost, queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
+
+	if params != nil {
+
+		if params.APIVersion != nil {
+			var headerParam0 string
+
+			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "API-Version", *params.APIVersion, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: ""})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("API-Version", headerParam0)
+		}
+
+	}
+
+	return req, nil
+}
+
+// NewVoidApplicationRequest calls the generic VoidApplication builder with application/json body
+func NewVoidApplicationRequest(server string, applicationId int64, params *VoidApplicationParams, body VoidApplicationJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewVoidApplicationRequestWithBody(server, applicationId, params, "application/json", bodyReader)
+}
+
+// NewVoidApplicationRequestWithBody generates requests for VoidApplication with any type of body
+func NewVoidApplicationRequestWithBody(server string, applicationId int64, params *VoidApplicationParams, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "applicationId", applicationId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "integer", Format: "int64"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/accounts-receivable/payments/applications/%s/void", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPost, queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
+
+	if params != nil {
+
+		if params.APIVersion != nil {
+			var headerParam0 string
+
+			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "API-Version", *params.APIVersion, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: ""})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("API-Version", headerParam0)
+		}
+
+	}
+
+	return req, nil
+}
+
+// NewGetPaymentRequest generates requests for GetPayment
+func NewGetPaymentRequest(server string, paymentId int64, params *GetPaymentParams) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "paymentId", paymentId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "integer", Format: "int64"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/accounts-receivable/payments/%s", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+
+		if params.APIVersion != nil {
+			var headerParam0 string
+
+			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "API-Version", *params.APIVersion, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: ""})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("API-Version", headerParam0)
+		}
+
+	}
+
+	return req, nil
+}
+
+// NewApplyPaymentRequest calls the generic ApplyPayment builder with application/json body
+func NewApplyPaymentRequest(server string, paymentId int64, params *ApplyPaymentParams, body ApplyPaymentJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewApplyPaymentRequestWithBody(server, paymentId, params, "application/json", bodyReader)
+}
+
+// NewApplyPaymentRequestWithBody generates requests for ApplyPayment with any type of body
+func NewApplyPaymentRequestWithBody(server string, paymentId int64, params *ApplyPaymentParams, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "paymentId", paymentId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "integer", Format: "int64"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/accounts-receivable/payments/%s/applications", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPost, queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
+
+	if params != nil {
+
+		if params.APIVersion != nil {
+			var headerParam0 string
+
+			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "API-Version", *params.APIVersion, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: ""})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("API-Version", headerParam0)
+		}
+
+	}
+
+	return req, nil
+}
+
+// NewVoidPaymentRequest calls the generic VoidPayment builder with application/json body
+func NewVoidPaymentRequest(server string, paymentId int64, params *VoidPaymentParams, body VoidPaymentJSONRequestBody) (*http.Request, error) {
+	var bodyReader io.Reader
+	buf, err := json.Marshal(body)
+	if err != nil {
+		return nil, err
+	}
+	bodyReader = bytes.NewReader(buf)
+	return NewVoidPaymentRequestWithBody(server, paymentId, params, "application/json", bodyReader)
+}
+
+// NewVoidPaymentRequestWithBody generates requests for VoidPayment with any type of body
+func NewVoidPaymentRequestWithBody(server string, paymentId int64, params *VoidPaymentParams, contentType string, body io.Reader) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "paymentId", paymentId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "integer", Format: "int64"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/accounts-receivable/payments/%s/void", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPost, queryURL.String(), body)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Add("Content-Type", contentType)
 
 	if params != nil {
 
@@ -12143,345 +12636,6 @@ func NewSetDefaultIssuerRequest(server string, id int64, params *SetDefaultIssue
 	return req, nil
 }
 
-// NewCreatePaymentRequest calls the generic CreatePayment builder with application/json body
-func NewCreatePaymentRequest(server string, params *CreatePaymentParams, body CreatePaymentJSONRequestBody) (*http.Request, error) {
-	var bodyReader io.Reader
-	buf, err := json.Marshal(body)
-	if err != nil {
-		return nil, err
-	}
-	bodyReader = bytes.NewReader(buf)
-	return NewCreatePaymentRequestWithBody(server, params, "application/json", bodyReader)
-}
-
-// NewCreatePaymentRequestWithBody generates requests for CreatePayment with any type of body
-func NewCreatePaymentRequestWithBody(server string, params *CreatePaymentParams, contentType string, body io.Reader) (*http.Request, error) {
-	var err error
-
-	serverURL, err := url.Parse(server)
-	if err != nil {
-		return nil, err
-	}
-
-	operationPath := fmt.Sprintf("/payments")
-	if operationPath[0] == '/' {
-		operationPath = "." + operationPath
-	}
-
-	queryURL, err := serverURL.Parse(operationPath)
-	if err != nil {
-		return nil, err
-	}
-
-	req, err := http.NewRequest(http.MethodPost, queryURL.String(), body)
-	if err != nil {
-		return nil, err
-	}
-
-	req.Header.Add("Content-Type", contentType)
-
-	if params != nil {
-
-		if params.APIVersion != nil {
-			var headerParam0 string
-
-			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "API-Version", *params.APIVersion, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: ""})
-			if err != nil {
-				return nil, err
-			}
-
-			req.Header.Set("API-Version", headerParam0)
-		}
-
-	}
-
-	return req, nil
-}
-
-// NewVoidApplicationRequest calls the generic VoidApplication builder with application/json body
-func NewVoidApplicationRequest(server string, applicationId int64, params *VoidApplicationParams, body VoidApplicationJSONRequestBody) (*http.Request, error) {
-	var bodyReader io.Reader
-	buf, err := json.Marshal(body)
-	if err != nil {
-		return nil, err
-	}
-	bodyReader = bytes.NewReader(buf)
-	return NewVoidApplicationRequestWithBody(server, applicationId, params, "application/json", bodyReader)
-}
-
-// NewVoidApplicationRequestWithBody generates requests for VoidApplication with any type of body
-func NewVoidApplicationRequestWithBody(server string, applicationId int64, params *VoidApplicationParams, contentType string, body io.Reader) (*http.Request, error) {
-	var err error
-
-	var pathParam0 string
-
-	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "applicationId", applicationId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "integer", Format: "int64"})
-	if err != nil {
-		return nil, err
-	}
-
-	serverURL, err := url.Parse(server)
-	if err != nil {
-		return nil, err
-	}
-
-	operationPath := fmt.Sprintf("/payments/applications/%s/void", pathParam0)
-	if operationPath[0] == '/' {
-		operationPath = "." + operationPath
-	}
-
-	queryURL, err := serverURL.Parse(operationPath)
-	if err != nil {
-		return nil, err
-	}
-
-	req, err := http.NewRequest(http.MethodPost, queryURL.String(), body)
-	if err != nil {
-		return nil, err
-	}
-
-	req.Header.Add("Content-Type", contentType)
-
-	if params != nil {
-
-		if params.APIVersion != nil {
-			var headerParam0 string
-
-			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "API-Version", *params.APIVersion, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: ""})
-			if err != nil {
-				return nil, err
-			}
-
-			req.Header.Set("API-Version", headerParam0)
-		}
-
-	}
-
-	return req, nil
-}
-
-// NewGetClientStatementRequest generates requests for GetClientStatement
-func NewGetClientStatementRequest(server string, clientId int64, params *GetClientStatementParams) (*http.Request, error) {
-	var err error
-
-	var pathParam0 string
-
-	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "clientId", clientId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "integer", Format: "int64"})
-	if err != nil {
-		return nil, err
-	}
-
-	serverURL, err := url.Parse(server)
-	if err != nil {
-		return nil, err
-	}
-
-	operationPath := fmt.Sprintf("/payments/client/%s/statement", pathParam0)
-	if operationPath[0] == '/' {
-		operationPath = "." + operationPath
-	}
-
-	queryURL, err := serverURL.Parse(operationPath)
-	if err != nil {
-		return nil, err
-	}
-
-	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
-	if err != nil {
-		return nil, err
-	}
-
-	if params != nil {
-
-		if params.APIVersion != nil {
-			var headerParam0 string
-
-			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "API-Version", *params.APIVersion, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: ""})
-			if err != nil {
-				return nil, err
-			}
-
-			req.Header.Set("API-Version", headerParam0)
-		}
-
-	}
-
-	return req, nil
-}
-
-// NewGetPaymentRequest generates requests for GetPayment
-func NewGetPaymentRequest(server string, paymentId int64, params *GetPaymentParams) (*http.Request, error) {
-	var err error
-
-	var pathParam0 string
-
-	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "paymentId", paymentId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "integer", Format: "int64"})
-	if err != nil {
-		return nil, err
-	}
-
-	serverURL, err := url.Parse(server)
-	if err != nil {
-		return nil, err
-	}
-
-	operationPath := fmt.Sprintf("/payments/%s", pathParam0)
-	if operationPath[0] == '/' {
-		operationPath = "." + operationPath
-	}
-
-	queryURL, err := serverURL.Parse(operationPath)
-	if err != nil {
-		return nil, err
-	}
-
-	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
-	if err != nil {
-		return nil, err
-	}
-
-	if params != nil {
-
-		if params.APIVersion != nil {
-			var headerParam0 string
-
-			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "API-Version", *params.APIVersion, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: ""})
-			if err != nil {
-				return nil, err
-			}
-
-			req.Header.Set("API-Version", headerParam0)
-		}
-
-	}
-
-	return req, nil
-}
-
-// NewApplyPaymentRequest calls the generic ApplyPayment builder with application/json body
-func NewApplyPaymentRequest(server string, paymentId int64, params *ApplyPaymentParams, body ApplyPaymentJSONRequestBody) (*http.Request, error) {
-	var bodyReader io.Reader
-	buf, err := json.Marshal(body)
-	if err != nil {
-		return nil, err
-	}
-	bodyReader = bytes.NewReader(buf)
-	return NewApplyPaymentRequestWithBody(server, paymentId, params, "application/json", bodyReader)
-}
-
-// NewApplyPaymentRequestWithBody generates requests for ApplyPayment with any type of body
-func NewApplyPaymentRequestWithBody(server string, paymentId int64, params *ApplyPaymentParams, contentType string, body io.Reader) (*http.Request, error) {
-	var err error
-
-	var pathParam0 string
-
-	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "paymentId", paymentId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "integer", Format: "int64"})
-	if err != nil {
-		return nil, err
-	}
-
-	serverURL, err := url.Parse(server)
-	if err != nil {
-		return nil, err
-	}
-
-	operationPath := fmt.Sprintf("/payments/%s/applications", pathParam0)
-	if operationPath[0] == '/' {
-		operationPath = "." + operationPath
-	}
-
-	queryURL, err := serverURL.Parse(operationPath)
-	if err != nil {
-		return nil, err
-	}
-
-	req, err := http.NewRequest(http.MethodPost, queryURL.String(), body)
-	if err != nil {
-		return nil, err
-	}
-
-	req.Header.Add("Content-Type", contentType)
-
-	if params != nil {
-
-		if params.APIVersion != nil {
-			var headerParam0 string
-
-			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "API-Version", *params.APIVersion, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: ""})
-			if err != nil {
-				return nil, err
-			}
-
-			req.Header.Set("API-Version", headerParam0)
-		}
-
-	}
-
-	return req, nil
-}
-
-// NewVoidPaymentRequest calls the generic VoidPayment builder with application/json body
-func NewVoidPaymentRequest(server string, paymentId int64, params *VoidPaymentParams, body VoidPaymentJSONRequestBody) (*http.Request, error) {
-	var bodyReader io.Reader
-	buf, err := json.Marshal(body)
-	if err != nil {
-		return nil, err
-	}
-	bodyReader = bytes.NewReader(buf)
-	return NewVoidPaymentRequestWithBody(server, paymentId, params, "application/json", bodyReader)
-}
-
-// NewVoidPaymentRequestWithBody generates requests for VoidPayment with any type of body
-func NewVoidPaymentRequestWithBody(server string, paymentId int64, params *VoidPaymentParams, contentType string, body io.Reader) (*http.Request, error) {
-	var err error
-
-	var pathParam0 string
-
-	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "paymentId", paymentId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "integer", Format: "int64"})
-	if err != nil {
-		return nil, err
-	}
-
-	serverURL, err := url.Parse(server)
-	if err != nil {
-		return nil, err
-	}
-
-	operationPath := fmt.Sprintf("/payments/%s/void", pathParam0)
-	if operationPath[0] == '/' {
-		operationPath = "." + operationPath
-	}
-
-	queryURL, err := serverURL.Parse(operationPath)
-	if err != nil {
-		return nil, err
-	}
-
-	req, err := http.NewRequest(http.MethodPost, queryURL.String(), body)
-	if err != nil {
-		return nil, err
-	}
-
-	req.Header.Add("Content-Type", contentType)
-
-	if params != nil {
-
-		if params.APIVersion != nil {
-			var headerParam0 string
-
-			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "API-Version", *params.APIVersion, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: ""})
-			if err != nil {
-				return nil, err
-			}
-
-			req.Header.Set("API-Version", headerParam0)
-		}
-
-	}
-
-	return req, nil
-}
-
 // NewGetPlatformStatusRequest generates requests for GetPlatformStatus
 func NewGetPlatformStatusRequest(server string, params *GetPlatformStatusParams) (*http.Request, error) {
 	var err error
@@ -14050,6 +14204,35 @@ type ClientWithResponsesInterface interface {
 	// GetVatSummary request
 	GetVatSummary(ctx context.Context, params *GetVatSummaryParams, reqEditors ...RequestEditorFn) (*GetVatSummaryResponse, error)
 
+	// GetClientStatement request
+	GetClientStatement(ctx context.Context, clientId int64, params *GetClientStatementParams, reqEditors ...RequestEditorFn) (*GetClientStatementResponse, error)
+
+	// GetClientAccountStatementPdf request
+	GetClientAccountStatementPdf(ctx context.Context, clientId int64, params *GetClientAccountStatementPdfParams, reqEditors ...RequestEditorFn) (*GetClientAccountStatementPdfResponse, error)
+
+	// CreatePaymentWithBody request with any body
+	CreatePaymentWithBody(ctx context.Context, params *CreatePaymentParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreatePaymentResponse, error)
+
+	CreatePayment(ctx context.Context, params *CreatePaymentParams, body CreatePaymentJSONRequestBody, reqEditors ...RequestEditorFn) (*CreatePaymentResponse, error)
+
+	// VoidApplicationWithBody request with any body
+	VoidApplicationWithBody(ctx context.Context, applicationId int64, params *VoidApplicationParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*VoidApplicationResponse, error)
+
+	VoidApplication(ctx context.Context, applicationId int64, params *VoidApplicationParams, body VoidApplicationJSONRequestBody, reqEditors ...RequestEditorFn) (*VoidApplicationResponse, error)
+
+	// GetPayment request
+	GetPayment(ctx context.Context, paymentId int64, params *GetPaymentParams, reqEditors ...RequestEditorFn) (*GetPaymentResponse, error)
+
+	// ApplyPaymentWithBody request with any body
+	ApplyPaymentWithBody(ctx context.Context, paymentId int64, params *ApplyPaymentParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*ApplyPaymentResponse, error)
+
+	ApplyPayment(ctx context.Context, paymentId int64, params *ApplyPaymentParams, body ApplyPaymentJSONRequestBody, reqEditors ...RequestEditorFn) (*ApplyPaymentResponse, error)
+
+	// VoidPaymentWithBody request with any body
+	VoidPaymentWithBody(ctx context.Context, paymentId int64, params *VoidPaymentParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*VoidPaymentResponse, error)
+
+	VoidPayment(ctx context.Context, paymentId int64, params *VoidPaymentParams, body VoidPaymentJSONRequestBody, reqEditors ...RequestEditorFn) (*VoidPaymentResponse, error)
+
 	// GetBranches request
 	GetBranches(ctx context.Context, params *GetBranchesParams, reqEditors ...RequestEditorFn) (*GetBranchesResponse, error)
 
@@ -14290,32 +14473,6 @@ type ClientWithResponsesInterface interface {
 
 	// SetDefaultIssuer request
 	SetDefaultIssuer(ctx context.Context, id int64, params *SetDefaultIssuerParams, reqEditors ...RequestEditorFn) (*SetDefaultIssuerResponse, error)
-
-	// CreatePaymentWithBody request with any body
-	CreatePaymentWithBody(ctx context.Context, params *CreatePaymentParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreatePaymentResponse, error)
-
-	CreatePayment(ctx context.Context, params *CreatePaymentParams, body CreatePaymentJSONRequestBody, reqEditors ...RequestEditorFn) (*CreatePaymentResponse, error)
-
-	// VoidApplicationWithBody request with any body
-	VoidApplicationWithBody(ctx context.Context, applicationId int64, params *VoidApplicationParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*VoidApplicationResponse, error)
-
-	VoidApplication(ctx context.Context, applicationId int64, params *VoidApplicationParams, body VoidApplicationJSONRequestBody, reqEditors ...RequestEditorFn) (*VoidApplicationResponse, error)
-
-	// GetClientStatement request
-	GetClientStatement(ctx context.Context, clientId int64, params *GetClientStatementParams, reqEditors ...RequestEditorFn) (*GetClientStatementResponse, error)
-
-	// GetPayment request
-	GetPayment(ctx context.Context, paymentId int64, params *GetPaymentParams, reqEditors ...RequestEditorFn) (*GetPaymentResponse, error)
-
-	// ApplyPaymentWithBody request with any body
-	ApplyPaymentWithBody(ctx context.Context, paymentId int64, params *ApplyPaymentParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*ApplyPaymentResponse, error)
-
-	ApplyPayment(ctx context.Context, paymentId int64, params *ApplyPaymentParams, body ApplyPaymentJSONRequestBody, reqEditors ...RequestEditorFn) (*ApplyPaymentResponse, error)
-
-	// VoidPaymentWithBody request with any body
-	VoidPaymentWithBody(ctx context.Context, paymentId int64, params *VoidPaymentParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*VoidPaymentResponse, error)
-
-	VoidPayment(ctx context.Context, paymentId int64, params *VoidPaymentParams, body VoidPaymentJSONRequestBody, reqEditors ...RequestEditorFn) (*VoidPaymentResponse, error)
 
 	// GetPlatformStatus request
 	GetPlatformStatus(ctx context.Context, params *GetPlatformStatusParams, reqEditors ...RequestEditorFn) (*GetPlatformStatusResponse, error)
@@ -14750,6 +14907,215 @@ func (r GetVatSummaryResponse) StatusCode() int {
 
 // ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
 func (r GetVatSummaryResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type GetClientStatementResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	JSON200      *DocumentPaymentStatementResponse
+}
+
+// Status returns HTTPResponse.Status
+func (r GetClientStatementResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r GetClientStatementResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r GetClientStatementResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type GetClientAccountStatementPdfResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+}
+
+// Status returns HTTPResponse.Status
+func (r GetClientAccountStatementPdfResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r GetClientAccountStatementPdfResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r GetClientAccountStatementPdfResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type CreatePaymentResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	JSON200      *DocumentPaymentResponse
+}
+
+// Status returns HTTPResponse.Status
+func (r CreatePaymentResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r CreatePaymentResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r CreatePaymentResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type VoidApplicationResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	JSON200      *DocumentPaymentApplicationResponse
+}
+
+// Status returns HTTPResponse.Status
+func (r VoidApplicationResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r VoidApplicationResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r VoidApplicationResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type GetPaymentResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	JSON200      *DocumentPaymentResponse
+}
+
+// Status returns HTTPResponse.Status
+func (r GetPaymentResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r GetPaymentResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r GetPaymentResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type ApplyPaymentResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	JSON200      *DocumentPaymentResponse
+}
+
+// Status returns HTTPResponse.Status
+func (r ApplyPaymentResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r ApplyPaymentResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r ApplyPaymentResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type VoidPaymentResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	JSON200      *DocumentPaymentResponse
+}
+
+// Status returns HTTPResponse.Status
+func (r VoidPaymentResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r VoidPaymentResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r VoidPaymentResponse) ContentType() string {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.Header.Get("Content-Type")
 	}
@@ -16700,186 +17066,6 @@ func (r SetDefaultIssuerResponse) ContentType() string {
 	return ""
 }
 
-type CreatePaymentResponse struct {
-	Body         []byte
-	HTTPResponse *http.Response
-	JSON200      *DocumentPaymentResponse
-}
-
-// Status returns HTTPResponse.Status
-func (r CreatePaymentResponse) Status() string {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.Status
-	}
-	return http.StatusText(0)
-}
-
-// StatusCode returns HTTPResponse.StatusCode
-func (r CreatePaymentResponse) StatusCode() int {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.StatusCode
-	}
-	return 0
-}
-
-// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
-func (r CreatePaymentResponse) ContentType() string {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.Header.Get("Content-Type")
-	}
-	return ""
-}
-
-type VoidApplicationResponse struct {
-	Body         []byte
-	HTTPResponse *http.Response
-	JSON200      *DocumentPaymentApplicationResponse
-}
-
-// Status returns HTTPResponse.Status
-func (r VoidApplicationResponse) Status() string {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.Status
-	}
-	return http.StatusText(0)
-}
-
-// StatusCode returns HTTPResponse.StatusCode
-func (r VoidApplicationResponse) StatusCode() int {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.StatusCode
-	}
-	return 0
-}
-
-// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
-func (r VoidApplicationResponse) ContentType() string {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.Header.Get("Content-Type")
-	}
-	return ""
-}
-
-type GetClientStatementResponse struct {
-	Body         []byte
-	HTTPResponse *http.Response
-	JSON200      *DocumentPaymentStatementResponse
-}
-
-// Status returns HTTPResponse.Status
-func (r GetClientStatementResponse) Status() string {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.Status
-	}
-	return http.StatusText(0)
-}
-
-// StatusCode returns HTTPResponse.StatusCode
-func (r GetClientStatementResponse) StatusCode() int {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.StatusCode
-	}
-	return 0
-}
-
-// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
-func (r GetClientStatementResponse) ContentType() string {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.Header.Get("Content-Type")
-	}
-	return ""
-}
-
-type GetPaymentResponse struct {
-	Body         []byte
-	HTTPResponse *http.Response
-	JSON200      *DocumentPaymentResponse
-}
-
-// Status returns HTTPResponse.Status
-func (r GetPaymentResponse) Status() string {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.Status
-	}
-	return http.StatusText(0)
-}
-
-// StatusCode returns HTTPResponse.StatusCode
-func (r GetPaymentResponse) StatusCode() int {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.StatusCode
-	}
-	return 0
-}
-
-// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
-func (r GetPaymentResponse) ContentType() string {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.Header.Get("Content-Type")
-	}
-	return ""
-}
-
-type ApplyPaymentResponse struct {
-	Body         []byte
-	HTTPResponse *http.Response
-	JSON200      *DocumentPaymentResponse
-}
-
-// Status returns HTTPResponse.Status
-func (r ApplyPaymentResponse) Status() string {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.Status
-	}
-	return http.StatusText(0)
-}
-
-// StatusCode returns HTTPResponse.StatusCode
-func (r ApplyPaymentResponse) StatusCode() int {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.StatusCode
-	}
-	return 0
-}
-
-// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
-func (r ApplyPaymentResponse) ContentType() string {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.Header.Get("Content-Type")
-	}
-	return ""
-}
-
-type VoidPaymentResponse struct {
-	Body         []byte
-	HTTPResponse *http.Response
-	JSON200      *DocumentPaymentResponse
-}
-
-// Status returns HTTPResponse.Status
-func (r VoidPaymentResponse) Status() string {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.Status
-	}
-	return http.StatusText(0)
-}
-
-// StatusCode returns HTTPResponse.StatusCode
-func (r VoidPaymentResponse) StatusCode() int {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.StatusCode
-	}
-	return 0
-}
-
-// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
-func (r VoidPaymentResponse) ContentType() string {
-	if r.HTTPResponse != nil {
-		return r.HTTPResponse.Header.Get("Content-Type")
-	}
-	return ""
-}
-
 type GetPlatformStatusResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
@@ -17977,6 +18163,152 @@ func (c *ClientWithResponses) GetVatSummary(ctx context.Context, params *GetVatS
 		return nil, err
 	}
 	return ParseGetVatSummaryResponse(rsp)
+}
+
+// GetClientStatementRaw performs the request and returns the raw HTTP response.
+func (c *RawClient) GetClientStatementRaw(ctx context.Context, clientId int64, params *GetClientStatementParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	return c.client.GetClientStatement(ctx, clientId, params, reqEditors...)
+}
+
+// GetClientStatement request returning *GetClientStatementResponse
+func (c *ClientWithResponses) GetClientStatement(ctx context.Context, clientId int64, params *GetClientStatementParams, reqEditors ...RequestEditorFn) (*GetClientStatementResponse, error) {
+	rsp, err := c.client.GetClientStatement(ctx, clientId, params, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseGetClientStatementResponse(rsp)
+}
+
+// GetClientAccountStatementPdfRaw performs the request and returns the raw HTTP response.
+func (c *RawClient) GetClientAccountStatementPdfRaw(ctx context.Context, clientId int64, params *GetClientAccountStatementPdfParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	return c.client.GetClientAccountStatementPdf(ctx, clientId, params, reqEditors...)
+}
+
+// GetClientAccountStatementPdf request returning *GetClientAccountStatementPdfResponse
+func (c *ClientWithResponses) GetClientAccountStatementPdf(ctx context.Context, clientId int64, params *GetClientAccountStatementPdfParams, reqEditors ...RequestEditorFn) (*GetClientAccountStatementPdfResponse, error) {
+	rsp, err := c.client.GetClientAccountStatementPdf(ctx, clientId, params, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseGetClientAccountStatementPdfResponse(rsp)
+}
+
+// CreatePaymentWithBodyRaw performs the request and returns the raw HTTP response.
+func (c *RawClient) CreatePaymentWithBodyRaw(ctx context.Context, params *CreatePaymentParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	return c.client.CreatePaymentWithBody(ctx, params, contentType, body, reqEditors...)
+}
+
+// CreatePaymentWithBody request with arbitrary body returning *CreatePaymentResponse
+func (c *ClientWithResponses) CreatePaymentWithBody(ctx context.Context, params *CreatePaymentParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreatePaymentResponse, error) {
+	rsp, err := c.client.CreatePaymentWithBody(ctx, params, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseCreatePaymentResponse(rsp)
+}
+
+func (c *RawClient) CreatePaymentRaw(ctx context.Context, params *CreatePaymentParams, body CreatePaymentJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	return c.client.CreatePayment(ctx, params, body, reqEditors...)
+}
+
+func (c *ClientWithResponses) CreatePayment(ctx context.Context, params *CreatePaymentParams, body CreatePaymentJSONRequestBody, reqEditors ...RequestEditorFn) (*CreatePaymentResponse, error) {
+	rsp, err := c.client.CreatePayment(ctx, params, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseCreatePaymentResponse(rsp)
+}
+
+// VoidApplicationWithBodyRaw performs the request and returns the raw HTTP response.
+func (c *RawClient) VoidApplicationWithBodyRaw(ctx context.Context, applicationId int64, params *VoidApplicationParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	return c.client.VoidApplicationWithBody(ctx, applicationId, params, contentType, body, reqEditors...)
+}
+
+// VoidApplicationWithBody request with arbitrary body returning *VoidApplicationResponse
+func (c *ClientWithResponses) VoidApplicationWithBody(ctx context.Context, applicationId int64, params *VoidApplicationParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*VoidApplicationResponse, error) {
+	rsp, err := c.client.VoidApplicationWithBody(ctx, applicationId, params, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseVoidApplicationResponse(rsp)
+}
+
+func (c *RawClient) VoidApplicationRaw(ctx context.Context, applicationId int64, params *VoidApplicationParams, body VoidApplicationJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	return c.client.VoidApplication(ctx, applicationId, params, body, reqEditors...)
+}
+
+func (c *ClientWithResponses) VoidApplication(ctx context.Context, applicationId int64, params *VoidApplicationParams, body VoidApplicationJSONRequestBody, reqEditors ...RequestEditorFn) (*VoidApplicationResponse, error) {
+	rsp, err := c.client.VoidApplication(ctx, applicationId, params, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseVoidApplicationResponse(rsp)
+}
+
+// GetPaymentRaw performs the request and returns the raw HTTP response.
+func (c *RawClient) GetPaymentRaw(ctx context.Context, paymentId int64, params *GetPaymentParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	return c.client.GetPayment(ctx, paymentId, params, reqEditors...)
+}
+
+// GetPayment request returning *GetPaymentResponse
+func (c *ClientWithResponses) GetPayment(ctx context.Context, paymentId int64, params *GetPaymentParams, reqEditors ...RequestEditorFn) (*GetPaymentResponse, error) {
+	rsp, err := c.client.GetPayment(ctx, paymentId, params, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseGetPaymentResponse(rsp)
+}
+
+// ApplyPaymentWithBodyRaw performs the request and returns the raw HTTP response.
+func (c *RawClient) ApplyPaymentWithBodyRaw(ctx context.Context, paymentId int64, params *ApplyPaymentParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	return c.client.ApplyPaymentWithBody(ctx, paymentId, params, contentType, body, reqEditors...)
+}
+
+// ApplyPaymentWithBody request with arbitrary body returning *ApplyPaymentResponse
+func (c *ClientWithResponses) ApplyPaymentWithBody(ctx context.Context, paymentId int64, params *ApplyPaymentParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*ApplyPaymentResponse, error) {
+	rsp, err := c.client.ApplyPaymentWithBody(ctx, paymentId, params, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseApplyPaymentResponse(rsp)
+}
+
+func (c *RawClient) ApplyPaymentRaw(ctx context.Context, paymentId int64, params *ApplyPaymentParams, body ApplyPaymentJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	return c.client.ApplyPayment(ctx, paymentId, params, body, reqEditors...)
+}
+
+func (c *ClientWithResponses) ApplyPayment(ctx context.Context, paymentId int64, params *ApplyPaymentParams, body ApplyPaymentJSONRequestBody, reqEditors ...RequestEditorFn) (*ApplyPaymentResponse, error) {
+	rsp, err := c.client.ApplyPayment(ctx, paymentId, params, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseApplyPaymentResponse(rsp)
+}
+
+// VoidPaymentWithBodyRaw performs the request and returns the raw HTTP response.
+func (c *RawClient) VoidPaymentWithBodyRaw(ctx context.Context, paymentId int64, params *VoidPaymentParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	return c.client.VoidPaymentWithBody(ctx, paymentId, params, contentType, body, reqEditors...)
+}
+
+// VoidPaymentWithBody request with arbitrary body returning *VoidPaymentResponse
+func (c *ClientWithResponses) VoidPaymentWithBody(ctx context.Context, paymentId int64, params *VoidPaymentParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*VoidPaymentResponse, error) {
+	rsp, err := c.client.VoidPaymentWithBody(ctx, paymentId, params, contentType, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseVoidPaymentResponse(rsp)
+}
+
+func (c *RawClient) VoidPaymentRaw(ctx context.Context, paymentId int64, params *VoidPaymentParams, body VoidPaymentJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	return c.client.VoidPayment(ctx, paymentId, params, body, reqEditors...)
+}
+
+func (c *ClientWithResponses) VoidPayment(ctx context.Context, paymentId int64, params *VoidPaymentParams, body VoidPaymentJSONRequestBody, reqEditors ...RequestEditorFn) (*VoidPaymentResponse, error) {
+	rsp, err := c.client.VoidPayment(ctx, paymentId, params, body, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseVoidPaymentResponse(rsp)
 }
 
 // GetBranchesRaw performs the request and returns the raw HTTP response.
@@ -19165,138 +19497,6 @@ func (c *ClientWithResponses) SetDefaultIssuer(ctx context.Context, id int64, pa
 	return ParseSetDefaultIssuerResponse(rsp)
 }
 
-// CreatePaymentWithBodyRaw performs the request and returns the raw HTTP response.
-func (c *RawClient) CreatePaymentWithBodyRaw(ctx context.Context, params *CreatePaymentParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	return c.client.CreatePaymentWithBody(ctx, params, contentType, body, reqEditors...)
-}
-
-// CreatePaymentWithBody request with arbitrary body returning *CreatePaymentResponse
-func (c *ClientWithResponses) CreatePaymentWithBody(ctx context.Context, params *CreatePaymentParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreatePaymentResponse, error) {
-	rsp, err := c.client.CreatePaymentWithBody(ctx, params, contentType, body, reqEditors...)
-	if err != nil {
-		return nil, err
-	}
-	return ParseCreatePaymentResponse(rsp)
-}
-
-func (c *RawClient) CreatePaymentRaw(ctx context.Context, params *CreatePaymentParams, body CreatePaymentJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	return c.client.CreatePayment(ctx, params, body, reqEditors...)
-}
-
-func (c *ClientWithResponses) CreatePayment(ctx context.Context, params *CreatePaymentParams, body CreatePaymentJSONRequestBody, reqEditors ...RequestEditorFn) (*CreatePaymentResponse, error) {
-	rsp, err := c.client.CreatePayment(ctx, params, body, reqEditors...)
-	if err != nil {
-		return nil, err
-	}
-	return ParseCreatePaymentResponse(rsp)
-}
-
-// VoidApplicationWithBodyRaw performs the request and returns the raw HTTP response.
-func (c *RawClient) VoidApplicationWithBodyRaw(ctx context.Context, applicationId int64, params *VoidApplicationParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	return c.client.VoidApplicationWithBody(ctx, applicationId, params, contentType, body, reqEditors...)
-}
-
-// VoidApplicationWithBody request with arbitrary body returning *VoidApplicationResponse
-func (c *ClientWithResponses) VoidApplicationWithBody(ctx context.Context, applicationId int64, params *VoidApplicationParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*VoidApplicationResponse, error) {
-	rsp, err := c.client.VoidApplicationWithBody(ctx, applicationId, params, contentType, body, reqEditors...)
-	if err != nil {
-		return nil, err
-	}
-	return ParseVoidApplicationResponse(rsp)
-}
-
-func (c *RawClient) VoidApplicationRaw(ctx context.Context, applicationId int64, params *VoidApplicationParams, body VoidApplicationJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	return c.client.VoidApplication(ctx, applicationId, params, body, reqEditors...)
-}
-
-func (c *ClientWithResponses) VoidApplication(ctx context.Context, applicationId int64, params *VoidApplicationParams, body VoidApplicationJSONRequestBody, reqEditors ...RequestEditorFn) (*VoidApplicationResponse, error) {
-	rsp, err := c.client.VoidApplication(ctx, applicationId, params, body, reqEditors...)
-	if err != nil {
-		return nil, err
-	}
-	return ParseVoidApplicationResponse(rsp)
-}
-
-// GetClientStatementRaw performs the request and returns the raw HTTP response.
-func (c *RawClient) GetClientStatementRaw(ctx context.Context, clientId int64, params *GetClientStatementParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	return c.client.GetClientStatement(ctx, clientId, params, reqEditors...)
-}
-
-// GetClientStatement request returning *GetClientStatementResponse
-func (c *ClientWithResponses) GetClientStatement(ctx context.Context, clientId int64, params *GetClientStatementParams, reqEditors ...RequestEditorFn) (*GetClientStatementResponse, error) {
-	rsp, err := c.client.GetClientStatement(ctx, clientId, params, reqEditors...)
-	if err != nil {
-		return nil, err
-	}
-	return ParseGetClientStatementResponse(rsp)
-}
-
-// GetPaymentRaw performs the request and returns the raw HTTP response.
-func (c *RawClient) GetPaymentRaw(ctx context.Context, paymentId int64, params *GetPaymentParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	return c.client.GetPayment(ctx, paymentId, params, reqEditors...)
-}
-
-// GetPayment request returning *GetPaymentResponse
-func (c *ClientWithResponses) GetPayment(ctx context.Context, paymentId int64, params *GetPaymentParams, reqEditors ...RequestEditorFn) (*GetPaymentResponse, error) {
-	rsp, err := c.client.GetPayment(ctx, paymentId, params, reqEditors...)
-	if err != nil {
-		return nil, err
-	}
-	return ParseGetPaymentResponse(rsp)
-}
-
-// ApplyPaymentWithBodyRaw performs the request and returns the raw HTTP response.
-func (c *RawClient) ApplyPaymentWithBodyRaw(ctx context.Context, paymentId int64, params *ApplyPaymentParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	return c.client.ApplyPaymentWithBody(ctx, paymentId, params, contentType, body, reqEditors...)
-}
-
-// ApplyPaymentWithBody request with arbitrary body returning *ApplyPaymentResponse
-func (c *ClientWithResponses) ApplyPaymentWithBody(ctx context.Context, paymentId int64, params *ApplyPaymentParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*ApplyPaymentResponse, error) {
-	rsp, err := c.client.ApplyPaymentWithBody(ctx, paymentId, params, contentType, body, reqEditors...)
-	if err != nil {
-		return nil, err
-	}
-	return ParseApplyPaymentResponse(rsp)
-}
-
-func (c *RawClient) ApplyPaymentRaw(ctx context.Context, paymentId int64, params *ApplyPaymentParams, body ApplyPaymentJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	return c.client.ApplyPayment(ctx, paymentId, params, body, reqEditors...)
-}
-
-func (c *ClientWithResponses) ApplyPayment(ctx context.Context, paymentId int64, params *ApplyPaymentParams, body ApplyPaymentJSONRequestBody, reqEditors ...RequestEditorFn) (*ApplyPaymentResponse, error) {
-	rsp, err := c.client.ApplyPayment(ctx, paymentId, params, body, reqEditors...)
-	if err != nil {
-		return nil, err
-	}
-	return ParseApplyPaymentResponse(rsp)
-}
-
-// VoidPaymentWithBodyRaw performs the request and returns the raw HTTP response.
-func (c *RawClient) VoidPaymentWithBodyRaw(ctx context.Context, paymentId int64, params *VoidPaymentParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	return c.client.VoidPaymentWithBody(ctx, paymentId, params, contentType, body, reqEditors...)
-}
-
-// VoidPaymentWithBody request with arbitrary body returning *VoidPaymentResponse
-func (c *ClientWithResponses) VoidPaymentWithBody(ctx context.Context, paymentId int64, params *VoidPaymentParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*VoidPaymentResponse, error) {
-	rsp, err := c.client.VoidPaymentWithBody(ctx, paymentId, params, contentType, body, reqEditors...)
-	if err != nil {
-		return nil, err
-	}
-	return ParseVoidPaymentResponse(rsp)
-}
-
-func (c *RawClient) VoidPaymentRaw(ctx context.Context, paymentId int64, params *VoidPaymentParams, body VoidPaymentJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
-	return c.client.VoidPayment(ctx, paymentId, params, body, reqEditors...)
-}
-
-func (c *ClientWithResponses) VoidPayment(ctx context.Context, paymentId int64, params *VoidPaymentParams, body VoidPaymentJSONRequestBody, reqEditors ...RequestEditorFn) (*VoidPaymentResponse, error) {
-	rsp, err := c.client.VoidPayment(ctx, paymentId, params, body, reqEditors...)
-	if err != nil {
-		return nil, err
-	}
-	return ParseVoidPaymentResponse(rsp)
-}
-
 // GetPlatformStatusRaw performs the request and returns the raw HTTP response.
 func (c *RawClient) GetPlatformStatusRaw(ctx context.Context, params *GetPlatformStatusParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	return c.client.GetPlatformStatus(ctx, params, reqEditors...)
@@ -20111,6 +20311,178 @@ func ParseGetVatSummaryResponse(rsp *http.Response) (*GetVatSummaryResponse, err
 			return nil, err
 		}
 		response.JSON400 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseGetClientStatementResponse parses an HTTP response from a GetClientStatement call
+func ParseGetClientStatementResponse(rsp *http.Response) (*GetClientStatementResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &GetClientStatementResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest DocumentPaymentStatementResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseGetClientAccountStatementPdfResponse parses an HTTP response from a GetClientAccountStatementPdf call
+func ParseGetClientAccountStatementPdfResponse(rsp *http.Response) (*GetClientAccountStatementPdfResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &GetClientAccountStatementPdfResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	return response, nil
+}
+
+// ParseCreatePaymentResponse parses an HTTP response from a CreatePayment call
+func ParseCreatePaymentResponse(rsp *http.Response) (*CreatePaymentResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &CreatePaymentResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest DocumentPaymentResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseVoidApplicationResponse parses an HTTP response from a VoidApplication call
+func ParseVoidApplicationResponse(rsp *http.Response) (*VoidApplicationResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &VoidApplicationResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest DocumentPaymentApplicationResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseGetPaymentResponse parses an HTTP response from a GetPayment call
+func ParseGetPaymentResponse(rsp *http.Response) (*GetPaymentResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &GetPaymentResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest DocumentPaymentResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseApplyPaymentResponse parses an HTTP response from a ApplyPayment call
+func ParseApplyPaymentResponse(rsp *http.Response) (*ApplyPaymentResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &ApplyPaymentResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest DocumentPaymentResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseVoidPaymentResponse parses an HTTP response from a VoidPayment call
+func ParseVoidPaymentResponse(rsp *http.Response) (*VoidPaymentResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &VoidPaymentResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
+		var dest DocumentPaymentResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON200 = &dest
 
 	}
 
@@ -21737,162 +22109,6 @@ func ParseSetDefaultIssuerResponse(rsp *http.Response) (*SetDefaultIssuerRespons
 	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
 		var dest TenantIssuerResponse
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.JSON200 = &dest
-
-	}
-
-	return response, nil
-}
-
-// ParseCreatePaymentResponse parses an HTTP response from a CreatePayment call
-func ParseCreatePaymentResponse(rsp *http.Response) (*CreatePaymentResponse, error) {
-	bodyBytes, err := io.ReadAll(rsp.Body)
-	defer func() { _ = rsp.Body.Close() }()
-	if err != nil {
-		return nil, err
-	}
-
-	response := &CreatePaymentResponse{
-		Body:         bodyBytes,
-		HTTPResponse: rsp,
-	}
-
-	switch {
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest DocumentPaymentResponse
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.JSON200 = &dest
-
-	}
-
-	return response, nil
-}
-
-// ParseVoidApplicationResponse parses an HTTP response from a VoidApplication call
-func ParseVoidApplicationResponse(rsp *http.Response) (*VoidApplicationResponse, error) {
-	bodyBytes, err := io.ReadAll(rsp.Body)
-	defer func() { _ = rsp.Body.Close() }()
-	if err != nil {
-		return nil, err
-	}
-
-	response := &VoidApplicationResponse{
-		Body:         bodyBytes,
-		HTTPResponse: rsp,
-	}
-
-	switch {
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest DocumentPaymentApplicationResponse
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.JSON200 = &dest
-
-	}
-
-	return response, nil
-}
-
-// ParseGetClientStatementResponse parses an HTTP response from a GetClientStatement call
-func ParseGetClientStatementResponse(rsp *http.Response) (*GetClientStatementResponse, error) {
-	bodyBytes, err := io.ReadAll(rsp.Body)
-	defer func() { _ = rsp.Body.Close() }()
-	if err != nil {
-		return nil, err
-	}
-
-	response := &GetClientStatementResponse{
-		Body:         bodyBytes,
-		HTTPResponse: rsp,
-	}
-
-	switch {
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest DocumentPaymentStatementResponse
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.JSON200 = &dest
-
-	}
-
-	return response, nil
-}
-
-// ParseGetPaymentResponse parses an HTTP response from a GetPayment call
-func ParseGetPaymentResponse(rsp *http.Response) (*GetPaymentResponse, error) {
-	bodyBytes, err := io.ReadAll(rsp.Body)
-	defer func() { _ = rsp.Body.Close() }()
-	if err != nil {
-		return nil, err
-	}
-
-	response := &GetPaymentResponse{
-		Body:         bodyBytes,
-		HTTPResponse: rsp,
-	}
-
-	switch {
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest DocumentPaymentResponse
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.JSON200 = &dest
-
-	}
-
-	return response, nil
-}
-
-// ParseApplyPaymentResponse parses an HTTP response from a ApplyPayment call
-func ParseApplyPaymentResponse(rsp *http.Response) (*ApplyPaymentResponse, error) {
-	bodyBytes, err := io.ReadAll(rsp.Body)
-	defer func() { _ = rsp.Body.Close() }()
-	if err != nil {
-		return nil, err
-	}
-
-	response := &ApplyPaymentResponse{
-		Body:         bodyBytes,
-		HTTPResponse: rsp,
-	}
-
-	switch {
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest DocumentPaymentResponse
-		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
-			return nil, err
-		}
-		response.JSON200 = &dest
-
-	}
-
-	return response, nil
-}
-
-// ParseVoidPaymentResponse parses an HTTP response from a VoidPayment call
-func ParseVoidPaymentResponse(rsp *http.Response) (*VoidPaymentResponse, error) {
-	bodyBytes, err := io.ReadAll(rsp.Body)
-	defer func() { _ = rsp.Body.Close() }()
-	if err != nil {
-		return nil, err
-	}
-
-	response := &VoidPaymentResponse{
-		Body:         bodyBytes,
-		HTTPResponse: rsp,
-	}
-
-	switch {
-	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 200:
-		var dest DocumentPaymentResponse
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
 			return nil, err
 		}
