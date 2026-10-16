@@ -435,6 +435,42 @@ func (e DocumentPreviewRequestCurrency) Valid() bool {
 	}
 }
 
+// Defines values for DocumentPreviewRequestType.
+const (
+	DocumentPreviewRequestTypeCREDITNOTE               DocumentPreviewRequestType = "CREDIT_NOTE"
+	DocumentPreviewRequestTypeDEBITNOTE                DocumentPreviewRequestType = "DEBIT_NOTE"
+	DocumentPreviewRequestTypeELECTRONICPAYMENTRECEIPT DocumentPreviewRequestType = "ELECTRONIC_PAYMENT_RECEIPT"
+	DocumentPreviewRequestTypeEXPORTINVOICE            DocumentPreviewRequestType = "EXPORT_INVOICE"
+	DocumentPreviewRequestTypeINVOICE                  DocumentPreviewRequestType = "INVOICE"
+	DocumentPreviewRequestTypePURCHASEINVOICE          DocumentPreviewRequestType = "PURCHASE_INVOICE"
+	DocumentPreviewRequestTypeRECEIPT                  DocumentPreviewRequestType = "RECEIPT"
+	DocumentPreviewRequestTypeRECEIVERMESSAGE          DocumentPreviewRequestType = "RECEIVER_MESSAGE"
+)
+
+// Valid indicates whether the value is a known member of the DocumentPreviewRequestType enum.
+func (e DocumentPreviewRequestType) Valid() bool {
+	switch e {
+	case DocumentPreviewRequestTypeCREDITNOTE:
+		return true
+	case DocumentPreviewRequestTypeDEBITNOTE:
+		return true
+	case DocumentPreviewRequestTypeELECTRONICPAYMENTRECEIPT:
+		return true
+	case DocumentPreviewRequestTypeEXPORTINVOICE:
+		return true
+	case DocumentPreviewRequestTypeINVOICE:
+		return true
+	case DocumentPreviewRequestTypePURCHASEINVOICE:
+		return true
+	case DocumentPreviewRequestTypeRECEIPT:
+		return true
+	case DocumentPreviewRequestTypeRECEIVERMESSAGE:
+		return true
+	default:
+		return false
+	}
+}
+
 // Defines values for DocumentRequestCurrency.
 const (
 	DocumentRequestCurrencyCRC DocumentRequestCurrency = "CRC"
@@ -701,34 +737,34 @@ func (e ReceiverMessageRequestPurchaseExpenseType) Valid() bool {
 
 // Defines values for SequenceResponseDocumentType.
 const (
-	CREDITNOTE               SequenceResponseDocumentType = "CREDIT_NOTE"
-	DEBITNOTE                SequenceResponseDocumentType = "DEBIT_NOTE"
-	ELECTRONICPAYMENTRECEIPT SequenceResponseDocumentType = "ELECTRONIC_PAYMENT_RECEIPT"
-	EXPORTINVOICE            SequenceResponseDocumentType = "EXPORT_INVOICE"
-	INVOICE                  SequenceResponseDocumentType = "INVOICE"
-	PURCHASEINVOICE          SequenceResponseDocumentType = "PURCHASE_INVOICE"
-	RECEIPT                  SequenceResponseDocumentType = "RECEIPT"
-	RECEIVERMESSAGE          SequenceResponseDocumentType = "RECEIVER_MESSAGE"
+	SequenceResponseDocumentTypeCREDITNOTE               SequenceResponseDocumentType = "CREDIT_NOTE"
+	SequenceResponseDocumentTypeDEBITNOTE                SequenceResponseDocumentType = "DEBIT_NOTE"
+	SequenceResponseDocumentTypeELECTRONICPAYMENTRECEIPT SequenceResponseDocumentType = "ELECTRONIC_PAYMENT_RECEIPT"
+	SequenceResponseDocumentTypeEXPORTINVOICE            SequenceResponseDocumentType = "EXPORT_INVOICE"
+	SequenceResponseDocumentTypeINVOICE                  SequenceResponseDocumentType = "INVOICE"
+	SequenceResponseDocumentTypePURCHASEINVOICE          SequenceResponseDocumentType = "PURCHASE_INVOICE"
+	SequenceResponseDocumentTypeRECEIPT                  SequenceResponseDocumentType = "RECEIPT"
+	SequenceResponseDocumentTypeRECEIVERMESSAGE          SequenceResponseDocumentType = "RECEIVER_MESSAGE"
 )
 
 // Valid indicates whether the value is a known member of the SequenceResponseDocumentType enum.
 func (e SequenceResponseDocumentType) Valid() bool {
 	switch e {
-	case CREDITNOTE:
+	case SequenceResponseDocumentTypeCREDITNOTE:
 		return true
-	case DEBITNOTE:
+	case SequenceResponseDocumentTypeDEBITNOTE:
 		return true
-	case ELECTRONICPAYMENTRECEIPT:
+	case SequenceResponseDocumentTypeELECTRONICPAYMENTRECEIPT:
 		return true
-	case EXPORTINVOICE:
+	case SequenceResponseDocumentTypeEXPORTINVOICE:
 		return true
-	case INVOICE:
+	case SequenceResponseDocumentTypeINVOICE:
 		return true
-	case PURCHASEINVOICE:
+	case SequenceResponseDocumentTypePURCHASEINVOICE:
 		return true
-	case RECEIPT:
+	case SequenceResponseDocumentTypeRECEIPT:
 		return true
-	case RECEIVERMESSAGE:
+	case SequenceResponseDocumentTypeRECEIVERMESSAGE:
 		return true
 	default:
 		return false
@@ -3036,14 +3072,21 @@ type DocumentPreviewLineResponseStatus string
 
 // DocumentPreviewRequest Solicitud de calculo fiscal autoritativo sin persistencia ni emision.
 type DocumentPreviewRequest struct {
-	ClientId     *int64                          `json:"clientId,omitempty"`
-	Currency     *DocumentPreviewRequestCurrency `json:"currency,omitempty"`
-	Items        []DocumentItemRequest           `json:"items"`
-	OtherCharges *[]OtherChargeRequest           `json:"otherCharges,omitempty"`
+	ClientId       *int64                          `json:"clientId,omitempty"`
+	Currency       *DocumentPreviewRequestCurrency `json:"currency,omitempty"`
+	Items          []DocumentItemRequest           `json:"items"`
+	OtherCharges   *[]OtherChargeRequest           `json:"otherCharges,omitempty"`
+	PaymentMethods *[]DocumentPaymentMethodRequest `json:"paymentMethods,omitempty"`
+
+	// Type Tipo de comprobante para el cálculo. Predeterminado INVOICE (FE).
+	Type *DocumentPreviewRequestType `json:"type,omitempty"`
 }
 
 // DocumentPreviewRequestCurrency defines model for DocumentPreviewRequest.Currency.
 type DocumentPreviewRequestCurrency string
+
+// DocumentPreviewRequestType Tipo de comprobante para el cálculo. Predeterminado INVOICE (FE).
+type DocumentPreviewRequestType string
 
 // DocumentPreviewResponse defines model for DocumentPreviewResponse.
 type DocumentPreviewResponse struct {
@@ -3054,6 +3097,7 @@ type DocumentPreviewResponse struct {
 	NetTax      *Decimal                       `json:"netTax,omitempty"`
 	Subtotal    *Decimal                       `json:"subtotal,omitempty"`
 	Total       *Decimal                       `json:"total,omitempty"`
+	VatRefunded *Decimal                       `json:"vatRefunded,omitempty"`
 }
 
 // DocumentPrintDataLineResponse defines model for DocumentPrintDataLineResponse.
@@ -3093,10 +3137,10 @@ type DocumentReferenceInformationDto struct {
 
 // DocumentReferenceRequest Referencia a otro documento. Usada principalmente en notas de credito/debito.
 type DocumentReferenceRequest struct {
-	// Code Codigo Hacienda de la razon de referencia. Use 99 para otros y envie referenceCodeOther.
+	// Code Codigo Hacienda de la razon: 01,02,04-17,99; 17 exclusivo REP, 12 exclusivo NC financiera. Use 99 para otros y envie referenceCodeOther.
 	Code *string `json:"code,omitempty"`
 
-	// DocumentType Codigo Hacienda del documento referenciado. Use 99 para otros y envie documentTypeOther.
+	// DocumentType Codigo Hacienda del documento referenciado (01-20 y 99). Use 99 para otros y envie documentTypeOther.
 	DocumentType string `json:"documentType"`
 
 	// DocumentTypeOther Opcional por defecto. Requerido cuando documentType=99.
@@ -3310,6 +3354,23 @@ type EconomicActivity struct {
 	Type        *string `json:"type,omitempty"`
 }
 
+// ErrorResponse defines model for ErrorResponse.
+type ErrorResponse struct {
+	Code             *string                            `json:"code,omitempty"`
+	Details          *string                            `json:"details,omitempty"`
+	Error            *string                            `json:"error,omitempty"`
+	FieldErrors      *[]FieldErrorResponse              `json:"fieldErrors,omitempty"`
+	Key              *string                            `json:"key,omitempty"`
+	Message          *string                            `json:"message,omitempty"`
+	Metadata         *map[string]map[string]interface{} `json:"metadata,omitempty"`
+	Path             *string                            `json:"path,omitempty"`
+	RequestId        *string                            `json:"requestId,omitempty"`
+	Retryable        *bool                              `json:"retryable,omitempty"`
+	Status           *int32                             `json:"status,omitempty"`
+	Timestamp        *time.Time                         `json:"timestamp,omitempty"`
+	ValidationErrors *map[string]string                 `json:"validationErrors,omitempty"`
+}
+
 // EuroRate defines model for EuroRate.
 type EuroRate struct {
 	Colones *Decimal            `json:"colones,omitempty"`
@@ -3322,6 +3383,13 @@ type ExchangeRateResponse struct {
 	DollarPurchase *Rate     `json:"dollarPurchase,omitempty"`
 	DollarSale     *Rate     `json:"dollarSale,omitempty"`
 	Euro           *EuroRate `json:"euro,omitempty"`
+}
+
+// FieldErrorResponse defines model for FieldErrorResponse.
+type FieldErrorResponse struct {
+	Field   *string `json:"field,omitempty"`
+	Key     *string `json:"key,omitempty"`
+	Message *string `json:"message,omitempty"`
 }
 
 // FiscalReportActivitySummaryLineResponse defines model for FiscalReportActivitySummaryLineResponse.
@@ -3337,6 +3405,7 @@ type FiscalReportActivitySummaryLineResponse struct {
 
 // FiscalReportDocumentLineResponse defines model for FiscalReportDocumentLineResponse.
 type FiscalReportDocumentLineResponse struct {
+	AffectedPeriod       *openapi_types.Date `json:"affectedPeriod,omitempty"`
 	ApplicableTaxCredit  *Decimal            `json:"applicableTaxCredit,omitempty"`
 	Consecutive          *string             `json:"consecutive,omitempty"`
 	CounterpartyIdNumber *string             `json:"counterpartyIdNumber,omitempty"`
@@ -3363,6 +3432,7 @@ type FiscalReportDocumentLineResponse struct {
 
 // FiscalReportExportItemResponse defines model for FiscalReportExportItemResponse.
 type FiscalReportExportItemResponse struct {
+	AffectedPeriod            *openapi_types.Date `json:"affectedPeriod,omitempty"`
 	ApplicableExpenseAmount   *Decimal            `json:"applicableExpenseAmount,omitempty"`
 	ApplicableTaxCredit       *Decimal            `json:"applicableTaxCredit,omitempty"`
 	ClassificationStatus      *string             `json:"classificationStatus,omitempty"`
@@ -4059,7 +4129,7 @@ type TenantSecretsUpdateRequest struct {
 	// Certificate Certificado P12. Opcional; requerido solo si se desea reemplazar certificado.
 	Certificate *openapi_types.File `json:"certificate,omitempty"`
 
-	// CertificatePin PIN del certificado. Opcional; requerido si se actualiza el certificado o el PIN.
+	// CertificatePin PIN exacto del PKCS12, conservando todos sus caracteres. Opcional: al omitirlo se valida con el PIN almacenado. Se aceptan PIN antiguos y nuevos si abren la llave privada.
 	CertificatePin *string `json:"certificatePin,omitempty"`
 }
 
@@ -14917,6 +14987,7 @@ type GetClientStatementResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
 	JSON200      *DocumentPaymentStatementResponse
+	JSON503      *ErrorResponse
 }
 
 // Status returns HTTPResponse.Status
@@ -14946,6 +15017,7 @@ func (r GetClientStatementResponse) ContentType() string {
 type GetClientAccountStatementPdfResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
+	JSON503      *ErrorResponse
 }
 
 // Status returns HTTPResponse.Status
@@ -14976,6 +15048,7 @@ type CreatePaymentResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
 	JSON200      *DocumentPaymentResponse
+	JSON503      *ErrorResponse
 }
 
 // Status returns HTTPResponse.Status
@@ -15006,6 +15079,7 @@ type VoidApplicationResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
 	JSON200      *DocumentPaymentApplicationResponse
+	JSON503      *ErrorResponse
 }
 
 // Status returns HTTPResponse.Status
@@ -15036,6 +15110,7 @@ type GetPaymentResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
 	JSON200      *DocumentPaymentResponse
+	JSON503      *ErrorResponse
 }
 
 // Status returns HTTPResponse.Status
@@ -15066,6 +15141,7 @@ type ApplyPaymentResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
 	JSON200      *DocumentPaymentResponse
+	JSON503      *ErrorResponse
 }
 
 // Status returns HTTPResponse.Status
@@ -15096,6 +15172,7 @@ type VoidPaymentResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
 	JSON200      *DocumentPaymentResponse
+	JSON503      *ErrorResponse
 }
 
 // Status returns HTTPResponse.Status
@@ -15874,6 +15951,7 @@ type GetAllClientsResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
 	JSON200      *PageResponseClientResponse
+	JSON503      *ErrorResponse
 }
 
 // Status returns HTTPResponse.Status
@@ -15904,6 +15982,7 @@ type CreateClientResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
 	JSON201      *ClientResponse
+	JSON503      *ErrorResponse
 }
 
 // Status returns HTTPResponse.Status
@@ -15934,6 +16013,7 @@ type GetExonerationsResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
 	JSON200      *[]ClientExonerationResponse
+	JSON503      *ErrorResponse
 }
 
 // Status returns HTTPResponse.Status
@@ -15964,6 +16044,7 @@ type RegisterExonerationResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
 	JSON200      *ClientExonerationResponse
+	JSON503      *ErrorResponse
 }
 
 // Status returns HTTPResponse.Status
@@ -15993,6 +16074,7 @@ func (r RegisterExonerationResponse) ContentType() string {
 type DeactivateExonerationResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
+	JSON503      *ErrorResponse
 }
 
 // Status returns HTTPResponse.Status
@@ -16023,6 +16105,7 @@ type GetClientExonerationResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
 	JSON200      *ClientExonerationResponse
+	JSON503      *ErrorResponse
 }
 
 // Status returns HTTPResponse.Status
@@ -16053,6 +16136,7 @@ type RefreshExonerationResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
 	JSON200      *ClientExonerationResponse
+	JSON503      *ErrorResponse
 }
 
 // Status returns HTTPResponse.Status
@@ -16083,6 +16167,7 @@ type GetClientReceiversResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
 	JSON200      *PageResponseClientReceiverResponse
+	JSON503      *ErrorResponse
 }
 
 // Status returns HTTPResponse.Status
@@ -16113,6 +16198,7 @@ type CreateOrUpdateReceiverResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
 	JSON200      *ClientReceiverResponse
+	JSON503      *ErrorResponse
 }
 
 // Status returns HTTPResponse.Status
@@ -16143,6 +16229,7 @@ type UpdateDefaultReceiverResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
 	JSON200      *ClientReceiverResponse
+	JSON503      *ErrorResponse
 }
 
 // Status returns HTTPResponse.Status
@@ -16172,6 +16259,7 @@ func (r UpdateDefaultReceiverResponse) ContentType() string {
 type DeleteReceiverResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
+	JSON503      *ErrorResponse
 }
 
 // Status returns HTTPResponse.Status
@@ -16202,6 +16290,7 @@ type GetReceiverByIdResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
 	JSON200      *ClientReceiverResponse
+	JSON503      *ErrorResponse
 }
 
 // Status returns HTTPResponse.Status
@@ -16232,6 +16321,7 @@ type UpdateReceiverResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
 	JSON200      *ClientReceiverResponse
+	JSON503      *ErrorResponse
 }
 
 // Status returns HTTPResponse.Status
@@ -16261,6 +16351,7 @@ func (r UpdateReceiverResponse) ContentType() string {
 type DeleteClientResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
+	JSON503      *ErrorResponse
 }
 
 // Status returns HTTPResponse.Status
@@ -16291,6 +16382,7 @@ type GetClientByIdResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
 	JSON200      *ClientResponse
+	JSON503      *ErrorResponse
 }
 
 // Status returns HTTPResponse.Status
@@ -16321,6 +16413,7 @@ type UpdateClientResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
 	JSON200      *ClientResponse
+	JSON503      *ErrorResponse
 }
 
 // Status returns HTTPResponse.Status
@@ -16351,6 +16444,7 @@ type GetAllDocumentsResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
 	JSON200      *PageResponseDocumentResponse
+	JSON503      *ErrorResponse
 }
 
 // Status returns HTTPResponse.Status
@@ -16381,6 +16475,7 @@ type CreateCreditNoteResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
 	JSON200      *DocumentResponse
+	JSON503      *ErrorResponse
 }
 
 // Status returns HTTPResponse.Status
@@ -16411,6 +16506,7 @@ type CreateDebitNoteResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
 	JSON200      *DocumentResponse
+	JSON503      *ErrorResponse
 }
 
 // Status returns HTTPResponse.Status
@@ -16441,6 +16537,7 @@ type CreateElectronicPaymentReceiptResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
 	JSON200      *DocumentResponse
+	JSON503      *ErrorResponse
 }
 
 // Status returns HTTPResponse.Status
@@ -16471,6 +16568,7 @@ type CreateExportInvoiceResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
 	JSON200      *DocumentResponse
+	JSON503      *ErrorResponse
 }
 
 // Status returns HTTPResponse.Status
@@ -16501,6 +16599,7 @@ type CreateInvoiceResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
 	JSON200      *DocumentResponse
+	JSON503      *ErrorResponse
 }
 
 // Status returns HTTPResponse.Status
@@ -16531,6 +16630,7 @@ type PreviewResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
 	JSON200      *DocumentPreviewResponse
+	JSON503      *ErrorResponse
 }
 
 // Status returns HTTPResponse.Status
@@ -16561,6 +16661,7 @@ type CreatePurchaseInvoiceResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
 	JSON200      *DocumentResponse
+	JSON503      *ErrorResponse
 }
 
 // Status returns HTTPResponse.Status
@@ -16591,6 +16692,7 @@ type CreateReceiptResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
 	JSON200      *DocumentResponse
+	JSON503      *ErrorResponse
 }
 
 // Status returns HTTPResponse.Status
@@ -16621,6 +16723,7 @@ type CreateReceiverMessageResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
 	JSON200      *DocumentResponse
+	JSON503      *ErrorResponse
 }
 
 // Status returns HTTPResponse.Status
@@ -16651,6 +16754,7 @@ type ValidateXmlResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
 	JSON200      *XmlValidationResponse
+	JSON503      *ErrorResponse
 }
 
 // Status returns HTTPResponse.Status
@@ -16681,6 +16785,7 @@ type GetDocumentByIdResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
 	JSON200      *DocumentResponse
+	JSON503      *ErrorResponse
 }
 
 // Status returns HTTPResponse.Status
@@ -16711,6 +16816,7 @@ type GetDocumentPdfResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
 	JSON200      *map[string]string
+	JSON503      *ErrorResponse
 }
 
 // Status returns HTTPResponse.Status
@@ -16741,6 +16847,7 @@ type GetDocumentPrintDataResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
 	JSON200      *DocumentPrintDataResponse
+	JSON503      *ErrorResponse
 }
 
 // Status returns HTTPResponse.Status
@@ -16771,6 +16878,7 @@ type RegenerateDocumentPdfResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
 	JSON200      *map[string]string
+	JSON503      *ErrorResponse
 }
 
 // Status returns HTTPResponse.Status
@@ -16801,6 +16909,7 @@ type SendDocumentEmailResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
 	JSON200      *map[string]interface{}
+	JSON503      *ErrorResponse
 }
 
 // Status returns HTTPResponse.Status
@@ -16831,6 +16940,7 @@ type GetIssuedXmlResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
 	XML200       *openapi_types.File
+	JSON503      *ErrorResponse
 }
 
 // Status returns HTTPResponse.Status
@@ -16861,6 +16971,7 @@ type GetTaxAuthorityResponseXmlResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
 	XML200       *openapi_types.File
+	JSON503      *ErrorResponse
 }
 
 // Status returns HTTPResponse.Status
@@ -17249,6 +17360,7 @@ type GetAgriculturalProducerResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
 	JSON200      *ProducerRegistryResponse
+	JSON503      *ErrorResponse
 }
 
 // Status returns HTTPResponse.Status
@@ -17279,6 +17391,7 @@ type SearchCabysResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
 	JSON200      *CabysQueryResponse
+	JSON503      *ErrorResponse
 }
 
 // Status returns HTTPResponse.Status
@@ -17309,6 +17422,7 @@ type GetCabysByCodeResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
 	JSON200      *CabysQueryResponse
+	JSON503      *ErrorResponse
 }
 
 // Status returns HTTPResponse.Status
@@ -17339,6 +17453,7 @@ type GetExchangeRatesResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
 	JSON200      *ExchangeRateResponse
+	JSON503      *ErrorResponse
 }
 
 // Status returns HTTPResponse.Status
@@ -17369,6 +17484,7 @@ type GetTaxAuthorityExonerationResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
 	JSON200      *TaxAuthorityExonerationResponse
+	JSON503      *ErrorResponse
 }
 
 // Status returns HTTPResponse.Status
@@ -17399,6 +17515,7 @@ type GetFishingProducerResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
 	JSON200      *ProducerRegistryResponse
+	JSON503      *ErrorResponse
 }
 
 // Status returns HTTPResponse.Status
@@ -17429,6 +17546,7 @@ type GetTaxpayerResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
 	JSON200      *TaxpayerInfoResponse
+	JSON503      *ErrorResponse
 }
 
 // Status returns HTTPResponse.Status
@@ -17459,6 +17577,7 @@ type GetTaxpayerInfoResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
 	JSON200      *TaxpayerInfoResponse
+	JSON503      *ErrorResponse
 }
 
 // Status returns HTTPResponse.Status
@@ -17489,6 +17608,7 @@ type GetTenantResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
 	JSON200      *TenantResponse
+	JSON503      *ErrorResponse
 }
 
 // Status returns HTTPResponse.Status
@@ -17519,6 +17639,7 @@ type UpdateTenantResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
 	JSON200      *TenantResponse
+	JSON503      *ErrorResponse
 }
 
 // Status returns HTTPResponse.Status
@@ -17549,6 +17670,7 @@ type GetFiscalStatusResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
 	JSON200      *TenantInvoicingStatusResponse
+	JSON503      *ErrorResponse
 }
 
 // Status returns HTTPResponse.Status
@@ -17579,6 +17701,7 @@ type VerifyTaxAuthorityCredentialsResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
 	JSON200      *TenantInvoicingStatusResponse
+	JSON503      *ErrorResponse
 }
 
 // Status returns HTTPResponse.Status
@@ -17608,6 +17731,7 @@ func (r VerifyTaxAuthorityCredentialsResponse) ContentType() string {
 type DeleteLogoResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
+	JSON503      *ErrorResponse
 }
 
 // Status returns HTTPResponse.Status
@@ -17638,6 +17762,7 @@ type GetLogoResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
 	JSON200      *TenantLogoResponse
+	JSON503      *ErrorResponse
 }
 
 // Status returns HTTPResponse.Status
@@ -17668,6 +17793,7 @@ type UploadLogoResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
 	JSON200      *TenantLogoResponse
+	JSON503      *ErrorResponse
 }
 
 // Status returns HTTPResponse.Status
@@ -17698,6 +17824,7 @@ type GetTenantProfileResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
 	JSON200      *TenantProfileResponse
+	JSON503      *ErrorResponse
 }
 
 // Status returns HTTPResponse.Status
@@ -17728,6 +17855,7 @@ type UpdateSecretsResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
 	JSON200      *TenantInvoicingStatusResponse
+	JSON503      *ErrorResponse
 }
 
 // Status returns HTTPResponse.Status
@@ -20338,6 +20466,13 @@ func ParseGetClientStatementResponse(rsp *http.Response) (*GetClientStatementRes
 		}
 		response.JSON200 = &dest
 
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 503:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON503 = &dest
+
 	}
 
 	return response, nil
@@ -20354,6 +20489,16 @@ func ParseGetClientAccountStatementPdfResponse(rsp *http.Response) (*GetClientAc
 	response := &GetClientAccountStatementPdfResponse{
 		Body:         bodyBytes,
 		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 503:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON503 = &dest
+
 	}
 
 	return response, nil
@@ -20379,6 +20524,13 @@ func ParseCreatePaymentResponse(rsp *http.Response) (*CreatePaymentResponse, err
 			return nil, err
 		}
 		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 503:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON503 = &dest
 
 	}
 
@@ -20406,6 +20558,13 @@ func ParseVoidApplicationResponse(rsp *http.Response) (*VoidApplicationResponse,
 		}
 		response.JSON200 = &dest
 
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 503:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON503 = &dest
+
 	}
 
 	return response, nil
@@ -20431,6 +20590,13 @@ func ParseGetPaymentResponse(rsp *http.Response) (*GetPaymentResponse, error) {
 			return nil, err
 		}
 		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 503:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON503 = &dest
 
 	}
 
@@ -20458,6 +20624,13 @@ func ParseApplyPaymentResponse(rsp *http.Response) (*ApplyPaymentResponse, error
 		}
 		response.JSON200 = &dest
 
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 503:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON503 = &dest
+
 	}
 
 	return response, nil
@@ -20483,6 +20656,13 @@ func ParseVoidPaymentResponse(rsp *http.Response) (*VoidPaymentResponse, error) 
 			return nil, err
 		}
 		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 503:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON503 = &dest
 
 	}
 
@@ -21140,6 +21320,13 @@ func ParseGetAllClientsResponse(rsp *http.Response) (*GetAllClientsResponse, err
 		}
 		response.JSON200 = &dest
 
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 503:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON503 = &dest
+
 	}
 
 	return response, nil
@@ -21165,6 +21352,13 @@ func ParseCreateClientResponse(rsp *http.Response) (*CreateClientResponse, error
 			return nil, err
 		}
 		response.JSON201 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 503:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON503 = &dest
 
 	}
 
@@ -21192,6 +21386,13 @@ func ParseGetExonerationsResponse(rsp *http.Response) (*GetExonerationsResponse,
 		}
 		response.JSON200 = &dest
 
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 503:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON503 = &dest
+
 	}
 
 	return response, nil
@@ -21218,6 +21419,13 @@ func ParseRegisterExonerationResponse(rsp *http.Response) (*RegisterExonerationR
 		}
 		response.JSON200 = &dest
 
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 503:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON503 = &dest
+
 	}
 
 	return response, nil
@@ -21234,6 +21442,16 @@ func ParseDeactivateExonerationResponse(rsp *http.Response) (*DeactivateExonerat
 	response := &DeactivateExonerationResponse{
 		Body:         bodyBytes,
 		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 503:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON503 = &dest
+
 	}
 
 	return response, nil
@@ -21259,6 +21477,13 @@ func ParseGetClientExonerationResponse(rsp *http.Response) (*GetClientExoneratio
 			return nil, err
 		}
 		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 503:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON503 = &dest
 
 	}
 
@@ -21286,6 +21511,13 @@ func ParseRefreshExonerationResponse(rsp *http.Response) (*RefreshExonerationRes
 		}
 		response.JSON200 = &dest
 
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 503:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON503 = &dest
+
 	}
 
 	return response, nil
@@ -21311,6 +21543,13 @@ func ParseGetClientReceiversResponse(rsp *http.Response) (*GetClientReceiversRes
 			return nil, err
 		}
 		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 503:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON503 = &dest
 
 	}
 
@@ -21338,6 +21577,13 @@ func ParseCreateOrUpdateReceiverResponse(rsp *http.Response) (*CreateOrUpdateRec
 		}
 		response.JSON200 = &dest
 
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 503:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON503 = &dest
+
 	}
 
 	return response, nil
@@ -21364,6 +21610,13 @@ func ParseUpdateDefaultReceiverResponse(rsp *http.Response) (*UpdateDefaultRecei
 		}
 		response.JSON200 = &dest
 
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 503:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON503 = &dest
+
 	}
 
 	return response, nil
@@ -21380,6 +21633,16 @@ func ParseDeleteReceiverResponse(rsp *http.Response) (*DeleteReceiverResponse, e
 	response := &DeleteReceiverResponse{
 		Body:         bodyBytes,
 		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 503:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON503 = &dest
+
 	}
 
 	return response, nil
@@ -21405,6 +21668,13 @@ func ParseGetReceiverByIdResponse(rsp *http.Response) (*GetReceiverByIdResponse,
 			return nil, err
 		}
 		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 503:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON503 = &dest
 
 	}
 
@@ -21432,6 +21702,13 @@ func ParseUpdateReceiverResponse(rsp *http.Response) (*UpdateReceiverResponse, e
 		}
 		response.JSON200 = &dest
 
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 503:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON503 = &dest
+
 	}
 
 	return response, nil
@@ -21448,6 +21725,16 @@ func ParseDeleteClientResponse(rsp *http.Response) (*DeleteClientResponse, error
 	response := &DeleteClientResponse{
 		Body:         bodyBytes,
 		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 503:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON503 = &dest
+
 	}
 
 	return response, nil
@@ -21473,6 +21760,13 @@ func ParseGetClientByIdResponse(rsp *http.Response) (*GetClientByIdResponse, err
 			return nil, err
 		}
 		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 503:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON503 = &dest
 
 	}
 
@@ -21500,6 +21794,13 @@ func ParseUpdateClientResponse(rsp *http.Response) (*UpdateClientResponse, error
 		}
 		response.JSON200 = &dest
 
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 503:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON503 = &dest
+
 	}
 
 	return response, nil
@@ -21525,6 +21826,13 @@ func ParseGetAllDocumentsResponse(rsp *http.Response) (*GetAllDocumentsResponse,
 			return nil, err
 		}
 		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 503:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON503 = &dest
 
 	}
 
@@ -21552,6 +21860,13 @@ func ParseCreateCreditNoteResponse(rsp *http.Response) (*CreateCreditNoteRespons
 		}
 		response.JSON200 = &dest
 
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 503:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON503 = &dest
+
 	}
 
 	return response, nil
@@ -21577,6 +21892,13 @@ func ParseCreateDebitNoteResponse(rsp *http.Response) (*CreateDebitNoteResponse,
 			return nil, err
 		}
 		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 503:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON503 = &dest
 
 	}
 
@@ -21604,6 +21926,13 @@ func ParseCreateElectronicPaymentReceiptResponse(rsp *http.Response) (*CreateEle
 		}
 		response.JSON200 = &dest
 
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 503:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON503 = &dest
+
 	}
 
 	return response, nil
@@ -21629,6 +21958,13 @@ func ParseCreateExportInvoiceResponse(rsp *http.Response) (*CreateExportInvoiceR
 			return nil, err
 		}
 		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 503:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON503 = &dest
 
 	}
 
@@ -21656,6 +21992,13 @@ func ParseCreateInvoiceResponse(rsp *http.Response) (*CreateInvoiceResponse, err
 		}
 		response.JSON200 = &dest
 
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 503:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON503 = &dest
+
 	}
 
 	return response, nil
@@ -21681,6 +22024,13 @@ func ParsePreviewResponse(rsp *http.Response) (*PreviewResponse, error) {
 			return nil, err
 		}
 		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 503:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON503 = &dest
 
 	}
 
@@ -21708,6 +22058,13 @@ func ParseCreatePurchaseInvoiceResponse(rsp *http.Response) (*CreatePurchaseInvo
 		}
 		response.JSON200 = &dest
 
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 503:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON503 = &dest
+
 	}
 
 	return response, nil
@@ -21733,6 +22090,13 @@ func ParseCreateReceiptResponse(rsp *http.Response) (*CreateReceiptResponse, err
 			return nil, err
 		}
 		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 503:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON503 = &dest
 
 	}
 
@@ -21760,6 +22124,13 @@ func ParseCreateReceiverMessageResponse(rsp *http.Response) (*CreateReceiverMess
 		}
 		response.JSON200 = &dest
 
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 503:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON503 = &dest
+
 	}
 
 	return response, nil
@@ -21785,6 +22156,13 @@ func ParseValidateXmlResponse(rsp *http.Response) (*ValidateXmlResponse, error) 
 			return nil, err
 		}
 		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 503:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON503 = &dest
 
 	}
 
@@ -21812,6 +22190,13 @@ func ParseGetDocumentByIdResponse(rsp *http.Response) (*GetDocumentByIdResponse,
 		}
 		response.JSON200 = &dest
 
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 503:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON503 = &dest
+
 	}
 
 	return response, nil
@@ -21837,6 +22222,13 @@ func ParseGetDocumentPdfResponse(rsp *http.Response) (*GetDocumentPdfResponse, e
 			return nil, err
 		}
 		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 503:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON503 = &dest
 
 	}
 
@@ -21864,6 +22256,13 @@ func ParseGetDocumentPrintDataResponse(rsp *http.Response) (*GetDocumentPrintDat
 		}
 		response.JSON200 = &dest
 
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 503:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON503 = &dest
+
 	}
 
 	return response, nil
@@ -21889,6 +22288,13 @@ func ParseRegenerateDocumentPdfResponse(rsp *http.Response) (*RegenerateDocument
 			return nil, err
 		}
 		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 503:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON503 = &dest
 
 	}
 
@@ -21916,6 +22322,13 @@ func ParseSendDocumentEmailResponse(rsp *http.Response) (*SendDocumentEmailRespo
 		}
 		response.JSON200 = &dest
 
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 503:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON503 = &dest
+
 	}
 
 	return response, nil
@@ -21935,6 +22348,13 @@ func ParseGetIssuedXmlResponse(rsp *http.Response) (*GetIssuedXmlResponse, error
 	}
 
 	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 503:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON503 = &dest
+
 	case strings.Contains(rsp.Header.Get("Content-Type"), "xml") && rsp.StatusCode == 200:
 		var dest openapi_types.File
 		if err := xml.Unmarshal(bodyBytes, &dest); err != nil {
@@ -21961,6 +22381,13 @@ func ParseGetTaxAuthorityResponseXmlResponse(rsp *http.Response) (*GetTaxAuthori
 	}
 
 	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 503:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON503 = &dest
+
 	case strings.Contains(rsp.Header.Get("Content-Type"), "xml") && rsp.StatusCode == 200:
 		var dest openapi_types.File
 		if err := xml.Unmarshal(bodyBytes, &dest); err != nil {
@@ -22286,6 +22713,13 @@ func ParseGetAgriculturalProducerResponse(rsp *http.Response) (*GetAgriculturalP
 		}
 		response.JSON200 = &dest
 
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 503:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON503 = &dest
+
 	}
 
 	return response, nil
@@ -22311,6 +22745,13 @@ func ParseSearchCabysResponse(rsp *http.Response) (*SearchCabysResponse, error) 
 			return nil, err
 		}
 		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 503:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON503 = &dest
 
 	}
 
@@ -22338,6 +22779,13 @@ func ParseGetCabysByCodeResponse(rsp *http.Response) (*GetCabysByCodeResponse, e
 		}
 		response.JSON200 = &dest
 
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 503:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON503 = &dest
+
 	}
 
 	return response, nil
@@ -22363,6 +22811,13 @@ func ParseGetExchangeRatesResponse(rsp *http.Response) (*GetExchangeRatesRespons
 			return nil, err
 		}
 		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 503:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON503 = &dest
 
 	}
 
@@ -22390,6 +22845,13 @@ func ParseGetTaxAuthorityExonerationResponse(rsp *http.Response) (*GetTaxAuthori
 		}
 		response.JSON200 = &dest
 
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 503:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON503 = &dest
+
 	}
 
 	return response, nil
@@ -22415,6 +22877,13 @@ func ParseGetFishingProducerResponse(rsp *http.Response) (*GetFishingProducerRes
 			return nil, err
 		}
 		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 503:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON503 = &dest
 
 	}
 
@@ -22442,6 +22911,13 @@ func ParseGetTaxpayerResponse(rsp *http.Response) (*GetTaxpayerResponse, error) 
 		}
 		response.JSON200 = &dest
 
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 503:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON503 = &dest
+
 	}
 
 	return response, nil
@@ -22467,6 +22943,13 @@ func ParseGetTaxpayerInfoResponse(rsp *http.Response) (*GetTaxpayerInfoResponse,
 			return nil, err
 		}
 		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 503:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON503 = &dest
 
 	}
 
@@ -22494,6 +22977,13 @@ func ParseGetTenantResponse(rsp *http.Response) (*GetTenantResponse, error) {
 		}
 		response.JSON200 = &dest
 
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 503:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON503 = &dest
+
 	}
 
 	return response, nil
@@ -22519,6 +23009,13 @@ func ParseUpdateTenantResponse(rsp *http.Response) (*UpdateTenantResponse, error
 			return nil, err
 		}
 		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 503:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON503 = &dest
 
 	}
 
@@ -22546,6 +23043,13 @@ func ParseGetFiscalStatusResponse(rsp *http.Response) (*GetFiscalStatusResponse,
 		}
 		response.JSON200 = &dest
 
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 503:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON503 = &dest
+
 	}
 
 	return response, nil
@@ -22572,6 +23076,13 @@ func ParseVerifyTaxAuthorityCredentialsResponse(rsp *http.Response) (*VerifyTaxA
 		}
 		response.JSON200 = &dest
 
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 503:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON503 = &dest
+
 	}
 
 	return response, nil
@@ -22588,6 +23099,16 @@ func ParseDeleteLogoResponse(rsp *http.Response) (*DeleteLogoResponse, error) {
 	response := &DeleteLogoResponse{
 		Body:         bodyBytes,
 		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 503:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON503 = &dest
+
 	}
 
 	return response, nil
@@ -22613,6 +23134,13 @@ func ParseGetLogoResponse(rsp *http.Response) (*GetLogoResponse, error) {
 			return nil, err
 		}
 		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 503:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON503 = &dest
 
 	}
 
@@ -22640,6 +23168,13 @@ func ParseUploadLogoResponse(rsp *http.Response) (*UploadLogoResponse, error) {
 		}
 		response.JSON200 = &dest
 
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 503:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON503 = &dest
+
 	}
 
 	return response, nil
@@ -22666,6 +23201,13 @@ func ParseGetTenantProfileResponse(rsp *http.Response) (*GetTenantProfileRespons
 		}
 		response.JSON200 = &dest
 
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 503:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON503 = &dest
+
 	}
 
 	return response, nil
@@ -22691,6 +23233,13 @@ func ParseUpdateSecretsResponse(rsp *http.Response) (*UpdateSecretsResponse, err
 			return nil, err
 		}
 		response.JSON200 = &dest
+
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 503:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON503 = &dest
 
 	}
 

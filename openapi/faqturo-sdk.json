@@ -199,6 +199,25 @@
                 }
               }
             }
+          },
+          "503" : {
+            "description" : "Servicio de Hacienda temporalmente indisponible (TAX_AUTHORITY_RATE_LIMIT_ERROR)",
+            "headers" : {
+              "Retry-After" : {
+                "description" : "Segundos antes de reintentar",
+                "schema" : {
+                  "type" : "integer",
+                  "format" : "int32"
+                }
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           }
         },
         "security" : [ {
@@ -226,6 +245,25 @@
               "application/json" : {
                 "schema" : {
                   "$ref" : "#/components/schemas/TenantLogoResponse"
+                }
+              }
+            }
+          },
+          "503" : {
+            "description" : "Servicio de Hacienda temporalmente indisponible (TAX_AUTHORITY_RATE_LIMIT_ERROR)",
+            "headers" : {
+              "Retry-After" : {
+                "description" : "Segundos antes de reintentar",
+                "schema" : {
+                  "type" : "integer",
+                  "format" : "int32"
+                }
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
                 }
               }
             }
@@ -274,6 +312,25 @@
                 }
               }
             }
+          },
+          "503" : {
+            "description" : "Servicio de Hacienda temporalmente indisponible (TAX_AUTHORITY_RATE_LIMIT_ERROR)",
+            "headers" : {
+              "Retry-After" : {
+                "description" : "Segundos antes de reintentar",
+                "schema" : {
+                  "type" : "integer",
+                  "format" : "int32"
+                }
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           }
         },
         "security" : [ {
@@ -295,6 +352,25 @@
         "responses" : {
           "200" : {
             "description" : "OK"
+          },
+          "503" : {
+            "description" : "Servicio de Hacienda temporalmente indisponible (TAX_AUTHORITY_RATE_LIMIT_ERROR)",
+            "headers" : {
+              "Retry-After" : {
+                "description" : "Segundos antes de reintentar",
+                "schema" : {
+                  "type" : "integer",
+                  "format" : "int32"
+                }
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           }
         },
         "security" : [ {
@@ -552,6 +628,25 @@
                 }
               }
             }
+          },
+          "503" : {
+            "description" : "Servicio de Hacienda temporalmente indisponible (TAX_AUTHORITY_RATE_LIMIT_ERROR)",
+            "headers" : {
+              "Retry-After" : {
+                "description" : "Segundos antes de reintentar",
+                "schema" : {
+                  "type" : "integer",
+                  "format" : "int32"
+                }
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           }
         },
         "security" : [ {
@@ -595,6 +690,25 @@
               "application/json" : {
                 "schema" : {
                   "$ref" : "#/components/schemas/ClientReceiverResponse"
+                }
+              }
+            }
+          },
+          "503" : {
+            "description" : "Servicio de Hacienda temporalmente indisponible (TAX_AUTHORITY_RATE_LIMIT_ERROR)",
+            "headers" : {
+              "Retry-After" : {
+                "description" : "Segundos antes de reintentar",
+                "schema" : {
+                  "type" : "integer",
+                  "format" : "int32"
+                }
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
                 }
               }
             }
@@ -647,6 +761,25 @@
               "application/json" : {
                 "schema" : {
                   "$ref" : "#/components/schemas/ClientReceiverResponse"
+                }
+              }
+            }
+          },
+          "503" : {
+            "description" : "Servicio de Hacienda temporalmente indisponible (TAX_AUTHORITY_RATE_LIMIT_ERROR)",
+            "headers" : {
+              "Retry-After" : {
+                "description" : "Segundos antes de reintentar",
+                "schema" : {
+                  "type" : "integer",
+                  "format" : "int32"
+                }
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
                 }
               }
             }
@@ -1380,6 +1513,25 @@
                 }
               }
             }
+          },
+          "503" : {
+            "description" : "Servicio de Hacienda temporalmente indisponible (TAX_AUTHORITY_RATE_LIMIT_ERROR)",
+            "headers" : {
+              "Retry-After" : {
+                "description" : "Segundos antes de reintentar",
+                "schema" : {
+                  "type" : "integer",
+                  "format" : "int32"
+                }
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           }
         },
         "security" : [ {
@@ -1418,6 +1570,25 @@
                 }
               }
             }
+          },
+          "503" : {
+            "description" : "Servicio de Hacienda temporalmente indisponible (TAX_AUTHORITY_RATE_LIMIT_ERROR)",
+            "headers" : {
+              "Retry-After" : {
+                "description" : "Segundos antes de reintentar",
+                "schema" : {
+                  "type" : "integer",
+                  "format" : "int32"
+                }
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           }
         },
         "security" : [ {
@@ -1446,6 +1617,25 @@
               "application/json" : {
                 "schema" : {
                   "$ref" : "#/components/schemas/TenantInvoicingStatusResponse"
+                }
+              }
+            }
+          },
+          "503" : {
+            "description" : "Servicio de Hacienda temporalmente indisponible (TAX_AUTHORITY_RATE_LIMIT_ERROR)",
+            "headers" : {
+              "Retry-After" : {
+                "description" : "Segundos antes de reintentar",
+                "schema" : {
+                  "type" : "integer",
+                  "format" : "int32"
+                }
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
                 }
               }
             }
@@ -1580,6 +1770,25 @@
                 }
               }
             }
+          },
+          "503" : {
+            "description" : "Servicio de Hacienda temporalmente indisponible (TAX_AUTHORITY_RATE_LIMIT_ERROR)",
+            "headers" : {
+              "Retry-After" : {
+                "description" : "Segundos antes de reintentar",
+                "schema" : {
+                  "type" : "integer",
+                  "format" : "int32"
+                }
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           }
         },
         "security" : [ {
@@ -1621,6 +1830,25 @@
                 }
               }
             }
+          },
+          "503" : {
+            "description" : "Servicio de Hacienda temporalmente indisponible (TAX_AUTHORITY_RATE_LIMIT_ERROR)",
+            "headers" : {
+              "Retry-After" : {
+                "description" : "Segundos antes de reintentar",
+                "schema" : {
+                  "type" : "integer",
+                  "format" : "int32"
+                }
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           }
         },
         "security" : [ {
@@ -1659,6 +1887,25 @@
               "application/json" : {
                 "schema" : {
                   "$ref" : "#/components/schemas/XmlValidationResponse"
+                }
+              }
+            }
+          },
+          "503" : {
+            "description" : "Servicio de Hacienda temporalmente indisponible (TAX_AUTHORITY_RATE_LIMIT_ERROR)",
+            "headers" : {
+              "Retry-After" : {
+                "description" : "Segundos antes de reintentar",
+                "schema" : {
+                  "type" : "integer",
+                  "format" : "int32"
+                }
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
                 }
               }
             }
@@ -1771,6 +2018,25 @@
                 }
               }
             }
+          },
+          "503" : {
+            "description" : "Servicio de Hacienda temporalmente indisponible (TAX_AUTHORITY_RATE_LIMIT_ERROR)",
+            "headers" : {
+              "Retry-After" : {
+                "description" : "Segundos antes de reintentar",
+                "schema" : {
+                  "type" : "integer",
+                  "format" : "int32"
+                }
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           }
         },
         "security" : [ {
@@ -1816,6 +2082,25 @@
               "application/json" : {
                 "schema" : {
                   "$ref" : "#/components/schemas/DocumentResponse"
+                }
+              }
+            }
+          },
+          "503" : {
+            "description" : "Servicio de Hacienda temporalmente indisponible (TAX_AUTHORITY_RATE_LIMIT_ERROR)",
+            "headers" : {
+              "Retry-After" : {
+                "description" : "Segundos antes de reintentar",
+                "schema" : {
+                  "type" : "integer",
+                  "format" : "int32"
+                }
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
                 }
               }
             }
@@ -1867,6 +2152,25 @@
                 }
               }
             }
+          },
+          "503" : {
+            "description" : "Servicio de Hacienda temporalmente indisponible (TAX_AUTHORITY_RATE_LIMIT_ERROR)",
+            "headers" : {
+              "Retry-After" : {
+                "description" : "Segundos antes de reintentar",
+                "schema" : {
+                  "type" : "integer",
+                  "format" : "int32"
+                }
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           }
         },
         "security" : [ {
@@ -1905,6 +2209,25 @@
               "application/json" : {
                 "schema" : {
                   "$ref" : "#/components/schemas/DocumentPreviewResponse"
+                }
+              }
+            }
+          },
+          "503" : {
+            "description" : "Servicio de Hacienda temporalmente indisponible (TAX_AUTHORITY_RATE_LIMIT_ERROR)",
+            "headers" : {
+              "Retry-After" : {
+                "description" : "Segundos antes de reintentar",
+                "schema" : {
+                  "type" : "integer",
+                  "format" : "int32"
+                }
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
                 }
               }
             }
@@ -1956,6 +2279,25 @@
                 }
               }
             }
+          },
+          "503" : {
+            "description" : "Servicio de Hacienda temporalmente indisponible (TAX_AUTHORITY_RATE_LIMIT_ERROR)",
+            "headers" : {
+              "Retry-After" : {
+                "description" : "Segundos antes de reintentar",
+                "schema" : {
+                  "type" : "integer",
+                  "format" : "int32"
+                }
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           }
         },
         "security" : [ {
@@ -2001,6 +2343,25 @@
               "application/json" : {
                 "schema" : {
                   "$ref" : "#/components/schemas/DocumentResponse"
+                }
+              }
+            }
+          },
+          "503" : {
+            "description" : "Servicio de Hacienda temporalmente indisponible (TAX_AUTHORITY_RATE_LIMIT_ERROR)",
+            "headers" : {
+              "Retry-After" : {
+                "description" : "Segundos antes de reintentar",
+                "schema" : {
+                  "type" : "integer",
+                  "format" : "int32"
+                }
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
                 }
               }
             }
@@ -2052,6 +2413,25 @@
                 }
               }
             }
+          },
+          "503" : {
+            "description" : "Servicio de Hacienda temporalmente indisponible (TAX_AUTHORITY_RATE_LIMIT_ERROR)",
+            "headers" : {
+              "Retry-After" : {
+                "description" : "Segundos antes de reintentar",
+                "schema" : {
+                  "type" : "integer",
+                  "format" : "int32"
+                }
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           }
         },
         "security" : [ {
@@ -2100,6 +2480,25 @@
                 }
               }
             }
+          },
+          "503" : {
+            "description" : "Servicio de Hacienda temporalmente indisponible (TAX_AUTHORITY_RATE_LIMIT_ERROR)",
+            "headers" : {
+              "Retry-After" : {
+                "description" : "Segundos antes de reintentar",
+                "schema" : {
+                  "type" : "integer",
+                  "format" : "int32"
+                }
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           }
         },
         "security" : [ {
@@ -2145,6 +2544,25 @@
               "application/json" : {
                 "schema" : {
                   "$ref" : "#/components/schemas/DocumentResponse"
+                }
+              }
+            }
+          },
+          "503" : {
+            "description" : "Servicio de Hacienda temporalmente indisponible (TAX_AUTHORITY_RATE_LIMIT_ERROR)",
+            "headers" : {
+              "Retry-After" : {
+                "description" : "Segundos antes de reintentar",
+                "schema" : {
+                  "type" : "integer",
+                  "format" : "int32"
+                }
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
                 }
               }
             }
@@ -2202,6 +2620,25 @@
                 }
               }
             }
+          },
+          "503" : {
+            "description" : "Servicio de Hacienda temporalmente indisponible (TAX_AUTHORITY_RATE_LIMIT_ERROR)",
+            "headers" : {
+              "Retry-After" : {
+                "description" : "Segundos antes de reintentar",
+                "schema" : {
+                  "type" : "integer",
+                  "format" : "int32"
+                }
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           }
         },
         "security" : [ {
@@ -2237,6 +2674,25 @@
               "application/json" : {
                 "schema" : {
                   "$ref" : "#/components/schemas/ClientResponse"
+                }
+              }
+            }
+          },
+          "503" : {
+            "description" : "Servicio de Hacienda temporalmente indisponible (TAX_AUTHORITY_RATE_LIMIT_ERROR)",
+            "headers" : {
+              "Retry-After" : {
+                "description" : "Segundos antes de reintentar",
+                "schema" : {
+                  "type" : "integer",
+                  "format" : "int32"
+                }
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
                 }
               }
             }
@@ -2278,6 +2734,25 @@
                   "items" : {
                     "$ref" : "#/components/schemas/ClientExonerationResponse"
                   }
+                }
+              }
+            }
+          },
+          "503" : {
+            "description" : "Servicio de Hacienda temporalmente indisponible (TAX_AUTHORITY_RATE_LIMIT_ERROR)",
+            "headers" : {
+              "Retry-After" : {
+                "description" : "Segundos antes de reintentar",
+                "schema" : {
+                  "type" : "integer",
+                  "format" : "int32"
+                }
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
                 }
               }
             }
@@ -2327,6 +2802,25 @@
                 }
               }
             }
+          },
+          "503" : {
+            "description" : "Servicio de Hacienda temporalmente indisponible (TAX_AUTHORITY_RATE_LIMIT_ERROR)",
+            "headers" : {
+              "Retry-After" : {
+                "description" : "Segundos antes de reintentar",
+                "schema" : {
+                  "type" : "integer",
+                  "format" : "int32"
+                }
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           }
         },
         "security" : [ {
@@ -2370,6 +2864,25 @@
               "application/json" : {
                 "schema" : {
                   "$ref" : "#/components/schemas/ClientExonerationResponse"
+                }
+              }
+            }
+          },
+          "503" : {
+            "description" : "Servicio de Hacienda temporalmente indisponible (TAX_AUTHORITY_RATE_LIMIT_ERROR)",
+            "headers" : {
+              "Retry-After" : {
+                "description" : "Segundos antes de reintentar",
+                "schema" : {
+                  "type" : "integer",
+                  "format" : "int32"
+                }
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
                 }
               }
             }
@@ -2572,6 +3085,25 @@
                 }
               }
             }
+          },
+          "503" : {
+            "description" : "Servicio de Hacienda temporalmente indisponible (TAX_AUTHORITY_RATE_LIMIT_ERROR)",
+            "headers" : {
+              "Retry-After" : {
+                "description" : "Segundos antes de reintentar",
+                "schema" : {
+                  "type" : "integer",
+                  "format" : "int32"
+                }
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           }
         },
         "security" : [ {
@@ -2618,6 +3150,25 @@
               "application/json" : {
                 "schema" : {
                   "$ref" : "#/components/schemas/DocumentPaymentResponse"
+                }
+              }
+            }
+          },
+          "503" : {
+            "description" : "Servicio de Hacienda temporalmente indisponible (TAX_AUTHORITY_RATE_LIMIT_ERROR)",
+            "headers" : {
+              "Retry-After" : {
+                "description" : "Segundos antes de reintentar",
+                "schema" : {
+                  "type" : "integer",
+                  "format" : "int32"
+                }
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
                 }
               }
             }
@@ -2670,6 +3221,25 @@
                 }
               }
             }
+          },
+          "503" : {
+            "description" : "Servicio de Hacienda temporalmente indisponible (TAX_AUTHORITY_RATE_LIMIT_ERROR)",
+            "headers" : {
+              "Retry-After" : {
+                "description" : "Segundos antes de reintentar",
+                "schema" : {
+                  "type" : "integer",
+                  "format" : "int32"
+                }
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           }
         },
         "security" : [ {
@@ -2716,6 +3286,25 @@
               "application/json" : {
                 "schema" : {
                   "$ref" : "#/components/schemas/DocumentPaymentApplicationResponse"
+                }
+              }
+            }
+          },
+          "503" : {
+            "description" : "Servicio de Hacienda temporalmente indisponible (TAX_AUTHORITY_RATE_LIMIT_ERROR)",
+            "headers" : {
+              "Retry-After" : {
+                "description" : "Segundos antes de reintentar",
+                "schema" : {
+                  "type" : "integer",
+                  "format" : "int32"
+                }
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
                 }
               }
             }
@@ -2912,6 +3501,25 @@
                 }
               }
             }
+          },
+          "503" : {
+            "description" : "Servicio de Hacienda temporalmente indisponible (TAX_AUTHORITY_RATE_LIMIT_ERROR)",
+            "headers" : {
+              "Retry-After" : {
+                "description" : "Segundos antes de reintentar",
+                "schema" : {
+                  "type" : "integer",
+                  "format" : "int32"
+                }
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           }
         },
         "security" : [ {
@@ -2941,6 +3549,25 @@
         "responses" : {
           "200" : {
             "description" : "OK"
+          },
+          "503" : {
+            "description" : "Servicio de Hacienda temporalmente indisponible (TAX_AUTHORITY_RATE_LIMIT_ERROR)",
+            "headers" : {
+              "Retry-After" : {
+                "description" : "Segundos antes de reintentar",
+                "schema" : {
+                  "type" : "integer",
+                  "format" : "int32"
+                }
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           }
         },
         "security" : [ {
@@ -2984,6 +3611,25 @@
               "application/json" : {
                 "schema" : {
                   "$ref" : "#/components/schemas/ClientResponse"
+                }
+              }
+            }
+          },
+          "503" : {
+            "description" : "Servicio de Hacienda temporalmente indisponible (TAX_AUTHORITY_RATE_LIMIT_ERROR)",
+            "headers" : {
+              "Retry-After" : {
+                "description" : "Segundos antes de reintentar",
+                "schema" : {
+                  "type" : "integer",
+                  "format" : "int32"
+                }
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
                 }
               }
             }
@@ -3033,6 +3679,25 @@
                 }
               }
             }
+          },
+          "503" : {
+            "description" : "Servicio de Hacienda temporalmente indisponible (TAX_AUTHORITY_RATE_LIMIT_ERROR)",
+            "headers" : {
+              "Retry-After" : {
+                "description" : "Segundos antes de reintentar",
+                "schema" : {
+                  "type" : "integer",
+                  "format" : "int32"
+                }
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           }
         },
         "security" : [ {
@@ -3070,6 +3735,25 @@
         "responses" : {
           "200" : {
             "description" : "OK"
+          },
+          "503" : {
+            "description" : "Servicio de Hacienda temporalmente indisponible (TAX_AUTHORITY_RATE_LIMIT_ERROR)",
+            "headers" : {
+              "Retry-After" : {
+                "description" : "Segundos antes de reintentar",
+                "schema" : {
+                  "type" : "integer",
+                  "format" : "int32"
+                }
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           }
         },
         "security" : [ {
@@ -3121,6 +3805,25 @@
               "application/json" : {
                 "schema" : {
                   "$ref" : "#/components/schemas/ClientReceiverResponse"
+                }
+              }
+            }
+          },
+          "503" : {
+            "description" : "Servicio de Hacienda temporalmente indisponible (TAX_AUTHORITY_RATE_LIMIT_ERROR)",
+            "headers" : {
+              "Retry-After" : {
+                "description" : "Segundos antes de reintentar",
+                "schema" : {
+                  "type" : "integer",
+                  "format" : "int32"
+                }
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
                 }
               }
             }
@@ -3197,6 +3900,25 @@
                 }
               }
             }
+          },
+          "503" : {
+            "description" : "Servicio de Hacienda temporalmente indisponible (TAX_AUTHORITY_RATE_LIMIT_ERROR)",
+            "headers" : {
+              "Retry-After" : {
+                "description" : "Segundos antes de reintentar",
+                "schema" : {
+                  "type" : "integer",
+                  "format" : "int32"
+                }
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           }
         },
         "security" : [ {
@@ -3225,6 +3947,25 @@
               "application/json" : {
                 "schema" : {
                   "$ref" : "#/components/schemas/TenantInvoicingStatusResponse"
+                }
+              }
+            }
+          },
+          "503" : {
+            "description" : "Servicio de Hacienda temporalmente indisponible (TAX_AUTHORITY_RATE_LIMIT_ERROR)",
+            "headers" : {
+              "Retry-After" : {
+                "description" : "Segundos antes de reintentar",
+                "schema" : {
+                  "type" : "integer",
+                  "format" : "int32"
+                }
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
                 }
               }
             }
@@ -3262,6 +4003,25 @@
               "application/json" : {
                 "schema" : {
                   "$ref" : "#/components/schemas/TaxpayerInfoResponse"
+                }
+              }
+            }
+          },
+          "503" : {
+            "description" : "Servicio de Hacienda temporalmente indisponible (TAX_AUTHORITY_RATE_LIMIT_ERROR)",
+            "headers" : {
+              "Retry-After" : {
+                "description" : "Segundos antes de reintentar",
+                "schema" : {
+                  "type" : "integer",
+                  "format" : "int32"
+                }
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
                 }
               }
             }
@@ -3303,6 +4063,25 @@
                 }
               }
             }
+          },
+          "503" : {
+            "description" : "Servicio de Hacienda temporalmente indisponible (TAX_AUTHORITY_RATE_LIMIT_ERROR)",
+            "headers" : {
+              "Retry-After" : {
+                "description" : "Segundos antes de reintentar",
+                "schema" : {
+                  "type" : "integer",
+                  "format" : "int32"
+                }
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           }
         },
         "security" : [ {
@@ -3338,6 +4117,25 @@
               "application/json" : {
                 "schema" : {
                   "$ref" : "#/components/schemas/ProducerRegistryResponse"
+                }
+              }
+            }
+          },
+          "503" : {
+            "description" : "Servicio de Hacienda temporalmente indisponible (TAX_AUTHORITY_RATE_LIMIT_ERROR)",
+            "headers" : {
+              "Retry-After" : {
+                "description" : "Segundos antes de reintentar",
+                "schema" : {
+                  "type" : "integer",
+                  "format" : "int32"
+                }
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
                 }
               }
             }
@@ -3380,6 +4178,25 @@
                 }
               }
             }
+          },
+          "503" : {
+            "description" : "Servicio de Hacienda temporalmente indisponible (TAX_AUTHORITY_RATE_LIMIT_ERROR)",
+            "headers" : {
+              "Retry-After" : {
+                "description" : "Segundos antes de reintentar",
+                "schema" : {
+                  "type" : "integer",
+                  "format" : "int32"
+                }
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           }
         },
         "security" : [ {
@@ -3410,6 +4227,25 @@
                 }
               }
             }
+          },
+          "503" : {
+            "description" : "Servicio de Hacienda temporalmente indisponible (TAX_AUTHORITY_RATE_LIMIT_ERROR)",
+            "headers" : {
+              "Retry-After" : {
+                "description" : "Segundos antes de reintentar",
+                "schema" : {
+                  "type" : "integer",
+                  "format" : "int32"
+                }
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           }
         },
         "security" : [ {
@@ -3428,7 +4264,7 @@
           "schema" : {
             "type" : "string",
             "maxLength" : 200,
-            "minLength" : 0
+            "minLength" : 3
           }
         }, {
           "name" : "limit",
@@ -3457,6 +4293,25 @@
               "application/json" : {
                 "schema" : {
                   "$ref" : "#/components/schemas/CabysQueryResponse"
+                }
+              }
+            }
+          },
+          "503" : {
+            "description" : "Servicio de Hacienda temporalmente indisponible (TAX_AUTHORITY_RATE_LIMIT_ERROR)",
+            "headers" : {
+              "Retry-After" : {
+                "description" : "Segundos antes de reintentar",
+                "schema" : {
+                  "type" : "integer",
+                  "format" : "int32"
+                }
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
                 }
               }
             }
@@ -3498,6 +4353,25 @@
                 }
               }
             }
+          },
+          "503" : {
+            "description" : "Servicio de Hacienda temporalmente indisponible (TAX_AUTHORITY_RATE_LIMIT_ERROR)",
+            "headers" : {
+              "Retry-After" : {
+                "description" : "Segundos antes de reintentar",
+                "schema" : {
+                  "type" : "integer",
+                  "format" : "int32"
+                }
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           }
         },
         "security" : [ {
@@ -3533,6 +4407,25 @@
               "application/json" : {
                 "schema" : {
                   "$ref" : "#/components/schemas/ProducerRegistryResponse"
+                }
+              }
+            }
+          },
+          "503" : {
+            "description" : "Servicio de Hacienda temporalmente indisponible (TAX_AUTHORITY_RATE_LIMIT_ERROR)",
+            "headers" : {
+              "Retry-After" : {
+                "description" : "Segundos antes de reintentar",
+                "schema" : {
+                  "type" : "integer",
+                  "format" : "int32"
+                }
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
                 }
               }
             }
@@ -3662,6 +4555,25 @@
                 }
               }
             }
+          },
+          "503" : {
+            "description" : "Servicio de Hacienda temporalmente indisponible (TAX_AUTHORITY_RATE_LIMIT_ERROR)",
+            "headers" : {
+              "Retry-After" : {
+                "description" : "Segundos antes de reintentar",
+                "schema" : {
+                  "type" : "integer",
+                  "format" : "int32"
+                }
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           }
         },
         "security" : [ {
@@ -3697,6 +4609,25 @@
               "application/json" : {
                 "schema" : {
                   "$ref" : "#/components/schemas/DocumentResponse"
+                }
+              }
+            }
+          },
+          "503" : {
+            "description" : "Servicio de Hacienda temporalmente indisponible (TAX_AUTHORITY_RATE_LIMIT_ERROR)",
+            "headers" : {
+              "Retry-After" : {
+                "description" : "Segundos antes de reintentar",
+                "schema" : {
+                  "type" : "integer",
+                  "format" : "int32"
+                }
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
                 }
               }
             }
@@ -3743,6 +4674,25 @@
           },
           "204" : {
             "description" : "El documento aún no tiene respuesta XML de Hacienda"
+          },
+          "503" : {
+            "description" : "Servicio de Hacienda temporalmente indisponible (TAX_AUTHORITY_RATE_LIMIT_ERROR)",
+            "headers" : {
+              "Retry-After" : {
+                "description" : "Segundos antes de reintentar",
+                "schema" : {
+                  "type" : "integer",
+                  "format" : "int32"
+                }
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           }
         },
         "security" : [ {
@@ -3786,6 +4736,25 @@
           },
           "204" : {
             "description" : "El documento aún no tiene XML firmado"
+          },
+          "503" : {
+            "description" : "Servicio de Hacienda temporalmente indisponible (TAX_AUTHORITY_RATE_LIMIT_ERROR)",
+            "headers" : {
+              "Retry-After" : {
+                "description" : "Segundos antes de reintentar",
+                "schema" : {
+                  "type" : "integer",
+                  "format" : "int32"
+                }
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           }
         },
         "security" : [ {
@@ -3823,6 +4792,25 @@
               "application/json" : {
                 "schema" : {
                   "$ref" : "#/components/schemas/DocumentPrintDataResponse"
+                }
+              }
+            }
+          },
+          "503" : {
+            "description" : "Servicio de Hacienda temporalmente indisponible (TAX_AUTHORITY_RATE_LIMIT_ERROR)",
+            "headers" : {
+              "Retry-After" : {
+                "description" : "Segundos antes de reintentar",
+                "schema" : {
+                  "type" : "integer",
+                  "format" : "int32"
+                }
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
                 }
               }
             }
@@ -3866,6 +4854,25 @@
                   "additionalProperties" : {
                     "type" : "string"
                   }
+                }
+              }
+            }
+          },
+          "503" : {
+            "description" : "Servicio de Hacienda temporalmente indisponible (TAX_AUTHORITY_RATE_LIMIT_ERROR)",
+            "headers" : {
+              "Retry-After" : {
+                "description" : "Segundos antes de reintentar",
+                "schema" : {
+                  "type" : "integer",
+                  "format" : "int32"
+                }
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
                 }
               }
             }
@@ -3915,6 +4922,25 @@
                 }
               }
             }
+          },
+          "503" : {
+            "description" : "Servicio de Hacienda temporalmente indisponible (TAX_AUTHORITY_RATE_LIMIT_ERROR)",
+            "headers" : {
+              "Retry-After" : {
+                "description" : "Segundos antes de reintentar",
+                "schema" : {
+                  "type" : "integer",
+                  "format" : "int32"
+                }
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           }
         },
         "security" : [ {
@@ -3952,6 +4978,25 @@
         "responses" : {
           "200" : {
             "description" : "OK"
+          },
+          "503" : {
+            "description" : "Servicio de Hacienda temporalmente indisponible (TAX_AUTHORITY_RATE_LIMIT_ERROR)",
+            "headers" : {
+              "Retry-After" : {
+                "description" : "Segundos antes de reintentar",
+                "schema" : {
+                  "type" : "integer",
+                  "format" : "int32"
+                }
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           }
         },
         "security" : [ {
@@ -4408,6 +5453,25 @@
                 }
               }
             }
+          },
+          "503" : {
+            "description" : "Servicio de Hacienda temporalmente indisponible (TAX_AUTHORITY_RATE_LIMIT_ERROR)",
+            "headers" : {
+              "Retry-After" : {
+                "description" : "Segundos antes de reintentar",
+                "schema" : {
+                  "type" : "integer",
+                  "format" : "int32"
+                }
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           }
         },
         "security" : [ {
@@ -4444,6 +5508,25 @@
               "application/json" : {
                 "schema" : {
                   "$ref" : "#/components/schemas/DocumentPaymentStatementResponse"
+                }
+              }
+            }
+          },
+          "503" : {
+            "description" : "Servicio de Hacienda temporalmente indisponible (TAX_AUTHORITY_RATE_LIMIT_ERROR)",
+            "headers" : {
+              "Retry-After" : {
+                "description" : "Segundos antes de reintentar",
+                "schema" : {
+                  "type" : "integer",
+                  "format" : "int32"
+                }
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
                 }
               }
             }
@@ -4516,6 +5599,25 @@
                 "schema" : {
                   "type" : "string",
                   "format" : "binary"
+                }
+              }
+            }
+          },
+          "503" : {
+            "description" : "Servicio de Hacienda temporalmente indisponible (TAX_AUTHORITY_RATE_LIMIT_ERROR)",
+            "headers" : {
+              "Retry-After" : {
+                "description" : "Segundos antes de reintentar",
+                "schema" : {
+                  "type" : "integer",
+                  "format" : "int32"
+                }
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
                 }
               }
             }
@@ -5029,8 +6131,8 @@
           },
           "certificatePin" : {
             "type" : "string",
-            "description" : "PIN del certificado. Opcional; requerido si se actualiza el certificado o el PIN.",
-            "example" : "1234"
+            "description" : "PIN exacto del PKCS12, conservando todos sus caracteres. Opcional: al omitirlo se valida con el PIN almacenado. Se aceptan PIN antiguos y nuevos si abren la llave privada.",
+            "example" : "Abc!23456789012"
           },
           "authUsername" : {
             "type" : "string",
@@ -5373,12 +6475,12 @@
           "countryCode" : {
             "type" : "string",
             "minLength" : 1,
-            "pattern" : "\\d+"
+            "pattern" : "[0-9]{1,3}"
           },
           "number" : {
             "type" : "string",
             "minLength" : 1,
-            "pattern" : "\\d+"
+            "pattern" : "[1-9][0-9]{2,19}"
           }
         },
         "required" : [ "countryCode", "number" ]
@@ -6992,7 +8094,7 @@
           "clave" : {
             "type" : "string",
             "minLength" : 1,
-            "pattern" : "\\d{50}"
+            "pattern" : "[a-zA-Z0-9]{50}"
           },
           "numeroConsecutivoReceptor" : {
             "type" : "string",
@@ -7042,7 +8144,7 @@
           "numeroCedulaEmisor" : {
             "type" : "string",
             "minLength" : 1,
-            "pattern" : "\\d{9,12}"
+            "pattern" : "[a-zA-Z0-9]{9,12}"
           },
           "fechaEmisionDoc" : {
             "type" : "string",
@@ -7431,7 +8533,7 @@
         "properties" : {
           "documentType" : {
             "type" : "string",
-            "description" : "Codigo Hacienda del documento referenciado. Use 99 para otros y envie documentTypeOther.",
+            "description" : "Codigo Hacienda del documento referenciado (01-20 y 99). Use 99 para otros y envie documentTypeOther.",
             "example" : "01",
             "minLength" : 1,
             "pattern" : "\\d{2}"
@@ -7457,7 +8559,7 @@
           },
           "code" : {
             "type" : "string",
-            "description" : "Codigo Hacienda de la razon de referencia. Use 99 para otros y envie referenceCodeOther.",
+            "description" : "Codigo Hacienda de la razon: 01,02,04-17,99; 17 exclusivo REP, 12 exclusivo NC financiera. Use 99 para otros y envie referenceCodeOther.",
             "example" : "01",
             "pattern" : "\\d{2}"
           },
@@ -7777,16 +8879,16 @@
           "specificTaxTypeValidForCode05" : {
             "type" : "boolean"
           },
-          "vatSpecialCalculationDataValid" : {
-            "type" : "boolean"
-          },
-          "otherTaxDataValid" : {
-            "type" : "boolean"
-          },
           "alcoholicBeverageCalculationDataValid" : {
             "type" : "boolean"
           },
+          "vatSpecialCalculationDataValid" : {
+            "type" : "boolean"
+          },
           "taxRatePresentWhenRequiredForCalculation" : {
+            "type" : "boolean"
+          },
+          "otherTaxDataValid" : {
             "type" : "boolean"
           }
         },
@@ -7796,6 +8898,20 @@
         "type" : "object",
         "description" : "Solicitud de calculo fiscal autoritativo sin persistencia ni emision.",
         "properties" : {
+          "type" : {
+            "type" : "string",
+            "default" : "INVOICE",
+            "description" : "Tipo de comprobante para el cálculo. Predeterminado INVOICE (FE).",
+            "enum" : [ "INVOICE", "CREDIT_NOTE", "DEBIT_NOTE", "RECEIPT", "RECEIVER_MESSAGE", "ELECTRONIC_PAYMENT_RECEIPT", "EXPORT_INVOICE", "PURCHASE_INVOICE" ]
+          },
+          "paymentMethods" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/DocumentPaymentMethodRequest"
+            },
+            "maxItems" : 4,
+            "minItems" : 0
+          },
           "clientId" : {
             "type" : "integer",
             "format" : "int64",
@@ -7974,6 +9090,10 @@
             "format" : "decimal"
           },
           "total" : {
+            "type" : "number",
+            "format" : "decimal"
+          },
+          "vatRefunded" : {
             "type" : "number",
             "format" : "decimal"
           },
@@ -9472,6 +10592,10 @@
           },
           "receiverMessageState" : {
             "type" : "string"
+          },
+          "affectedPeriod" : {
+            "type" : "string",
+            "format" : "date"
           }
         }
       },
@@ -9577,6 +10701,10 @@
           },
           "xmlReference" : {
             "type" : "string"
+          },
+          "affectedPeriod" : {
+            "type" : "string",
+            "format" : "date"
           }
         }
       },
@@ -9837,6 +10965,73 @@
             "type" : "string"
           },
           "inclusionStatus" : {
+            "type" : "string"
+          }
+        }
+      },
+      "ErrorResponse" : {
+        "properties" : {
+          "timestamp" : {
+            "type" : "string",
+            "format" : "date-time"
+          },
+          "status" : {
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "error" : {
+            "type" : "string"
+          },
+          "code" : {
+            "type" : "string"
+          },
+          "key" : {
+            "type" : "string"
+          },
+          "message" : {
+            "type" : "string"
+          },
+          "requestId" : {
+            "type" : "string"
+          },
+          "retryable" : {
+            "type" : "boolean"
+          },
+          "fieldErrors" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/components/schemas/FieldErrorResponse"
+            }
+          },
+          "path" : {
+            "type" : "string"
+          },
+          "details" : {
+            "type" : "string"
+          },
+          "validationErrors" : {
+            "type" : "object",
+            "additionalProperties" : {
+              "type" : "string"
+            }
+          },
+          "metadata" : {
+            "type" : "object",
+            "additionalProperties" : {
+              "type" : "object"
+            }
+          }
+        }
+      },
+      "FieldErrorResponse" : {
+        "properties" : {
+          "field" : {
+            "type" : "string"
+          },
+          "key" : {
+            "type" : "string"
+          },
+          "message" : {
             "type" : "string"
           }
         }
