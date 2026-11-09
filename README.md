@@ -5,7 +5,7 @@ Official Go client for Faqturo's API-key integration and internal platform surfa
 See the [changelog](CHANGELOG.md) for release notes.
 
 ```bash
-go get github.com/tinke-labs/faqturo-go-sdk@v1.1.0
+go get github.com/tinke-labs/faqturo-go-sdk/v2@v2.0.0
 ```
 
 ## Client

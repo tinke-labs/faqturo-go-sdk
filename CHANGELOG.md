@@ -1,5 +1,10 @@
 # Changelog
 
+## v2.0.0 - unreleased
+
+- Rename receiver message state fields and multipart parameter to `receiverMessageDecision`.
+- Move the Go module to `github.com/tinke-labs/faqturo-go-sdk/v2` for this breaking contract change.
+
 ## v1.1.0 - 2026-10-16
 
 - Add document type and payment methods to fiscal preview requests, and expose the calculated `vatRefunded` amount.
