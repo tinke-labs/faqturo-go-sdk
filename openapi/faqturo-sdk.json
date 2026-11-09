@@ -1929,7 +1929,7 @@
             "type" : "string"
           }
         }, {
-          "name" : "messageState",
+          "name" : "receiverMessageDecision",
           "in" : "query",
           "required" : true,
           "schema" : {
@@ -8870,9 +8870,6 @@
           "specificTaxData" : {
             "$ref" : "#/components/schemas/SpecificTaxDataRequest"
           },
-          "vatRateCodeValidForVatTax" : {
-            "type" : "boolean"
-          },
           "usedGoodsVatCalculationDataValid" : {
             "type" : "boolean"
           },
@@ -8882,10 +8879,13 @@
           "alcoholicBeverageCalculationDataValid" : {
             "type" : "boolean"
           },
+          "taxRatePresentWhenRequiredForCalculation" : {
+            "type" : "boolean"
+          },
           "vatSpecialCalculationDataValid" : {
             "type" : "boolean"
           },
-          "taxRatePresentWhenRequiredForCalculation" : {
+          "vatRateCodeValidForVatTax" : {
             "type" : "boolean"
           },
           "otherTaxDataValid" : {
@@ -9398,7 +9398,7 @@
             "type" : "integer",
             "format" : "int64"
           },
-          "messageState" : {
+          "receiverMessageDecision" : {
             "type" : "integer",
             "format" : "int32"
           },
@@ -9565,7 +9565,7 @@
           "xmlSha256" : {
             "type" : "string"
           },
-          "receiverMessageState" : {
+          "receiverMessageDecision" : {
             "type" : "integer",
             "format" : "int32"
           },
@@ -10590,7 +10590,7 @@
           "taxAuthorityState" : {
             "type" : "string"
           },
-          "receiverMessageState" : {
+          "receiverMessageDecision" : {
             "type" : "string"
           },
           "affectedPeriod" : {

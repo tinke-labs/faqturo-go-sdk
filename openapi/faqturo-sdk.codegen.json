@@ -3067,7 +3067,7 @@
           "receiverActivityCode": {
             "type": "string"
           },
-          "receiverMessageState": {
+          "receiverMessageDecision": {
             "type": "string"
           },
           "section": {
@@ -4143,13 +4143,13 @@
           "dryRun": {
             "type": "boolean"
           },
-          "messageState": {
-            "format": "int32",
-            "type": "integer"
-          },
           "purchaseExpenseType": {
             "pattern": "PURCHASE|EXPENSE",
             "type": "string"
+          },
+          "receiverMessageDecision": {
+            "format": "int32",
+            "type": "integer"
           },
           "receiverMessageDocumentId": {
             "format": "int64",
@@ -4315,12 +4315,12 @@
           "receiverIdType": {
             "type": "string"
           },
-          "receiverMessageDocumentId": {
-            "format": "int64",
+          "receiverMessageDecision": {
+            "format": "int32",
             "type": "integer"
           },
-          "receiverMessageState": {
-            "format": "int32",
+          "receiverMessageDocumentId": {
+            "format": "int64",
             "type": "integer"
           },
           "receiverName": {
@@ -9914,7 +9914,7 @@
           },
           {
             "in": "query",
-            "name": "messageState",
+            "name": "receiverMessageDecision",
             "required": true,
             "schema": {
               "format": "int32",

@@ -1,4 +1,4 @@
-module github.com/tinke-labs/faqturo-go-sdk
+module github.com/tinke-labs/faqturo-go-sdk/v2
 
 go 1.25
 

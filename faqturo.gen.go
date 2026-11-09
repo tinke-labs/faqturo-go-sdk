@@ -3405,29 +3405,29 @@ type FiscalReportActivitySummaryLineResponse struct {
 
 // FiscalReportDocumentLineResponse defines model for FiscalReportDocumentLineResponse.
 type FiscalReportDocumentLineResponse struct {
-	AffectedPeriod       *openapi_types.Date `json:"affectedPeriod,omitempty"`
-	ApplicableTaxCredit  *Decimal            `json:"applicableTaxCredit,omitempty"`
-	Consecutive          *string             `json:"consecutive,omitempty"`
-	CounterpartyIdNumber *string             `json:"counterpartyIdNumber,omitempty"`
-	CounterpartyIdType   *string             `json:"counterpartyIdType,omitempty"`
-	CounterpartyName     *string             `json:"counterpartyName,omitempty"`
-	Date                 *openapi_types.Date `json:"date,omitempty"`
-	DocumentKey          *string             `json:"documentKey,omitempty"`
-	DocumentType         *string             `json:"documentType,omitempty"`
-	IssuerActivityCode   *string             `json:"issuerActivityCode,omitempty"`
-	LineDescription      *string             `json:"lineDescription,omitempty"`
-	LineNumber           *int32              `json:"lineNumber,omitempty"`
-	PurchaseExpenseType  *string             `json:"purchaseExpenseType,omitempty"`
-	Rate                 *Decimal            `json:"rate,omitempty"`
-	ReceiverActivityCode *string             `json:"receiverActivityCode,omitempty"`
-	ReceiverMessageState *string             `json:"receiverMessageState,omitempty"`
-	Section              *string             `json:"section,omitempty"`
-	TaxAmount            *Decimal            `json:"taxAmount,omitempty"`
-	TaxAuthorityState    *string             `json:"taxAuthorityState,omitempty"`
-	TaxCode              *string             `json:"taxCode,omitempty"`
-	TaxableBase          *Decimal            `json:"taxableBase,omitempty"`
-	VatClassification    *string             `json:"vatClassification,omitempty"`
-	VatRateCode          *string             `json:"vatRateCode,omitempty"`
+	AffectedPeriod          *openapi_types.Date `json:"affectedPeriod,omitempty"`
+	ApplicableTaxCredit     *Decimal            `json:"applicableTaxCredit,omitempty"`
+	Consecutive             *string             `json:"consecutive,omitempty"`
+	CounterpartyIdNumber    *string             `json:"counterpartyIdNumber,omitempty"`
+	CounterpartyIdType      *string             `json:"counterpartyIdType,omitempty"`
+	CounterpartyName        *string             `json:"counterpartyName,omitempty"`
+	Date                    *openapi_types.Date `json:"date,omitempty"`
+	DocumentKey             *string             `json:"documentKey,omitempty"`
+	DocumentType            *string             `json:"documentType,omitempty"`
+	IssuerActivityCode      *string             `json:"issuerActivityCode,omitempty"`
+	LineDescription         *string             `json:"lineDescription,omitempty"`
+	LineNumber              *int32              `json:"lineNumber,omitempty"`
+	PurchaseExpenseType     *string             `json:"purchaseExpenseType,omitempty"`
+	Rate                    *Decimal            `json:"rate,omitempty"`
+	ReceiverActivityCode    *string             `json:"receiverActivityCode,omitempty"`
+	ReceiverMessageDecision *string             `json:"receiverMessageDecision,omitempty"`
+	Section                 *string             `json:"section,omitempty"`
+	TaxAmount               *Decimal            `json:"taxAmount,omitempty"`
+	TaxAuthorityState       *string             `json:"taxAuthorityState,omitempty"`
+	TaxCode                 *string             `json:"taxCode,omitempty"`
+	TaxableBase             *Decimal            `json:"taxableBase,omitempty"`
+	VatClassification       *string             `json:"vatClassification,omitempty"`
+	VatRateCode             *string             `json:"vatRateCode,omitempty"`
 }
 
 // FiscalReportExportItemResponse defines model for FiscalReportExportItemResponse.
@@ -3785,8 +3785,8 @@ type ReceivedFiscalDocumentImportRequest struct {
 	DeclaredCreditAmount      *Decimal `json:"declaredCreditAmount,omitempty"`
 	DeclaredExpenseAmount     *Decimal `json:"declaredExpenseAmount,omitempty"`
 	DryRun                    *bool    `json:"dryRun,omitempty"`
-	MessageState              *int32   `json:"messageState,omitempty"`
 	PurchaseExpenseType       *string  `json:"purchaseExpenseType,omitempty"`
+	ReceiverMessageDecision   *int32   `json:"receiverMessageDecision,omitempty"`
 	ReceiverMessageDocumentId *int64   `json:"receiverMessageDocumentId,omitempty"`
 	SourceReference           *string  `json:"sourceReference,omitempty"`
 	VatCondition              *string  `json:"vatCondition,omitempty"`
@@ -3836,8 +3836,8 @@ type ReceivedFiscalDocumentResponse struct {
 	ReceiverActivityCode      *string                               `json:"receiverActivityCode,omitempty"`
 	ReceiverIdNumber          *string                               `json:"receiverIdNumber,omitempty"`
 	ReceiverIdType            *string                               `json:"receiverIdType,omitempty"`
+	ReceiverMessageDecision   *int32                                `json:"receiverMessageDecision,omitempty"`
 	ReceiverMessageDocumentId *int64                                `json:"receiverMessageDocumentId,omitempty"`
-	ReceiverMessageState      *int32                                `json:"receiverMessageState,omitempty"`
 	ReceiverName              *string                               `json:"receiverName,omitempty"`
 	ReconciliationStatus      *string                               `json:"reconciliationStatus,omitempty"`
 	SourceReference           *string                               `json:"sourceReference,omitempty"`
@@ -4848,7 +4848,7 @@ type CreateReceiverMessageMultipartBody struct {
 // CreateReceiverMessageParams defines parameters for CreateReceiverMessage.
 type CreateReceiverMessageParams struct {
 	Xml                     *string                                `form:"xml,omitempty" json:"xml,omitempty"`
-	MessageState            int32                                  `form:"messageState" json:"messageState"`
+	ReceiverMessageDecision int32                                  `form:"receiverMessageDecision" json:"receiverMessageDecision"`
 	MessageDetail           *string                                `form:"messageDetail,omitempty" json:"messageDetail,omitempty"`
 	IssuerActivityCode      *string                                `form:"issuerActivityCode,omitempty" json:"issuerActivityCode,omitempty"`
 	TaxCondition            *string                                `form:"taxCondition,omitempty" json:"taxCondition,omitempty"`
@@ -11844,7 +11844,7 @@ func NewCreateReceiverMessageRequestWithBody(server string, params *CreateReceiv
 
 		}
 
-		if queryFrag, err := runtime.StyleParamWithOptions("form", true, "messageState", params.MessageState, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "integer", Format: "int32"}); err != nil {
+		if queryFrag, err := runtime.StyleParamWithOptions("form", true, "receiverMessageDecision", params.ReceiverMessageDecision, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "integer", Format: "int32"}); err != nil {
 			return nil, err
 		} else {
 			for _, qp := range strings.Split(queryFrag, "&") {
