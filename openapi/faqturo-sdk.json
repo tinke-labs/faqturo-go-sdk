@@ -8879,16 +8879,16 @@
           "alcoholicBeverageCalculationDataValid" : {
             "type" : "boolean"
           },
-          "taxRatePresentWhenRequiredForCalculation" : {
-            "type" : "boolean"
-          },
           "vatSpecialCalculationDataValid" : {
             "type" : "boolean"
           },
-          "vatRateCodeValidForVatTax" : {
+          "otherTaxDataValid" : {
             "type" : "boolean"
           },
-          "otherTaxDataValid" : {
+          "taxRatePresentWhenRequiredForCalculation" : {
+            "type" : "boolean"
+          },
+          "vatRateCodeValidForVatTax" : {
             "type" : "boolean"
           }
         },
