@@ -8870,6 +8870,9 @@
           "specificTaxData" : {
             "$ref" : "#/components/schemas/SpecificTaxDataRequest"
           },
+          "vatRateCodeValidForVatTax" : {
+            "type" : "boolean"
+          },
           "usedGoodsVatCalculationDataValid" : {
             "type" : "boolean"
           },
@@ -8886,9 +8889,6 @@
             "type" : "boolean"
           },
           "taxRatePresentWhenRequiredForCalculation" : {
-            "type" : "boolean"
-          },
-          "vatRateCodeValidForVatTax" : {
             "type" : "boolean"
           }
         },
