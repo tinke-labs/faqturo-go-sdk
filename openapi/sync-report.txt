@@ -1,4 +1,4 @@
-Backend SHA: 81103d2e2fe6c003d3d5030f86b6969405bcb003
+Backend SHA: d94c1f6d1f3ec0b270f7d0f362a7e7570c180395
  openapi/faqturo-sdk.json | 8 ++++----
- openapi/sync-report.txt  | 8 +-------
- 2 files changed, 5 insertions(+), 11 deletions(-)
+ openapi/sync-report.txt  | 5 +----
+ 2 files changed, 5 insertions(+), 8 deletions(-)
