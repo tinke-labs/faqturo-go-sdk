@@ -1023,6 +1023,21 @@ func (e GetClientAccountStatementPdfParamsAPIVersion) Valid() bool {
 	}
 }
 
+// Defines values for GetClientAccountStatementXlsxParamsAPIVersion.
+const (
+	GetClientAccountStatementXlsxParamsAPIVersionV1 GetClientAccountStatementXlsxParamsAPIVersion = "v1"
+)
+
+// Valid indicates whether the value is a known member of the GetClientAccountStatementXlsxParamsAPIVersion enum.
+func (e GetClientAccountStatementXlsxParamsAPIVersion) Valid() bool {
+	switch e {
+	case GetClientAccountStatementXlsxParamsAPIVersionV1:
+		return true
+	default:
+		return false
+	}
+}
+
 // Defines values for CreatePaymentParamsAPIVersion.
 const (
 	CreatePaymentParamsAPIVersionV1 CreatePaymentParamsAPIVersion = "v1"
@@ -1092,6 +1107,36 @@ const (
 func (e VoidPaymentParamsAPIVersion) Valid() bool {
 	switch e {
 	case VoidPaymentParamsAPIVersionV1:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for GetReceivablesReportPdfParamsAPIVersion.
+const (
+	GetReceivablesReportPdfParamsAPIVersionV1 GetReceivablesReportPdfParamsAPIVersion = "v1"
+)
+
+// Valid indicates whether the value is a known member of the GetReceivablesReportPdfParamsAPIVersion enum.
+func (e GetReceivablesReportPdfParamsAPIVersion) Valid() bool {
+	switch e {
+	case GetReceivablesReportPdfParamsAPIVersionV1:
+		return true
+	default:
+		return false
+	}
+}
+
+// Defines values for GetReceivablesReportXlsxParamsAPIVersion.
+const (
+	GetReceivablesReportXlsxParamsAPIVersionV1 GetReceivablesReportXlsxParamsAPIVersion = "v1"
+)
+
+// Valid indicates whether the value is a known member of the GetReceivablesReportXlsxParamsAPIVersion enum.
+func (e GetReceivablesReportXlsxParamsAPIVersion) Valid() bool {
+	switch e {
+	case GetReceivablesReportXlsxParamsAPIVersionV1:
 		return true
 	default:
 		return false
@@ -2453,13 +2498,13 @@ func (e GetLogsParamsAPIVersion) Valid() bool {
 
 // Defines values for TestWebhookParamsAPIVersion.
 const (
-	V1 TestWebhookParamsAPIVersion = "v1"
+	TestWebhookParamsAPIVersionV1 TestWebhookParamsAPIVersion = "v1"
 )
 
 // Valid indicates whether the value is a known member of the TestWebhookParamsAPIVersion enum.
 func (e TestWebhookParamsAPIVersion) Valid() bool {
 	switch e {
-	case V1:
+	case TestWebhookParamsAPIVersionV1:
 		return true
 	default:
 		return false
@@ -4379,9 +4424,22 @@ type GetClientAccountStatementPdfParams struct {
 // GetClientAccountStatementPdfParamsAPIVersion defines parameters for GetClientAccountStatementPdf.
 type GetClientAccountStatementPdfParamsAPIVersion string
 
+// GetClientAccountStatementXlsxParams defines parameters for GetClientAccountStatementXlsx.
+type GetClientAccountStatementXlsxParams struct {
+	ReceiverId *int64                                         `form:"receiver_id,omitempty" json:"receiver_id,omitempty"`
+	From       *openapi_types.Date                            `form:"from,omitempty" json:"from,omitempty"`
+	To         *openapi_types.Date                            `form:"to,omitempty" json:"to,omitempty"`
+	DateField  *string                                        `form:"date_field,omitempty" json:"date_field,omitempty"`
+	APIVersion *GetClientAccountStatementXlsxParamsAPIVersion `json:"API-Version,omitempty"`
+}
+
+// GetClientAccountStatementXlsxParamsAPIVersion defines parameters for GetClientAccountStatementXlsx.
+type GetClientAccountStatementXlsxParamsAPIVersion string
+
 // CreatePaymentParams defines parameters for CreatePayment.
 type CreatePaymentParams struct {
-	APIVersion *CreatePaymentParamsAPIVersion `json:"API-Version,omitempty"`
+	IdempotencyKey *string                        `json:"Idempotency-Key,omitempty"`
+	APIVersion     *CreatePaymentParamsAPIVersion `json:"API-Version,omitempty"`
 }
 
 // CreatePaymentParamsAPIVersion defines parameters for CreatePayment.
@@ -4418,6 +4476,30 @@ type VoidPaymentParams struct {
 
 // VoidPaymentParamsAPIVersion defines parameters for VoidPayment.
 type VoidPaymentParamsAPIVersion string
+
+// GetReceivablesReportPdfParams defines parameters for GetReceivablesReportPdf.
+type GetReceivablesReportPdfParams struct {
+	ClientId   *int64                                   `form:"client_id,omitempty" json:"client_id,omitempty"`
+	From       *openapi_types.Date                      `form:"from,omitempty" json:"from,omitempty"`
+	To         *openapi_types.Date                      `form:"to,omitempty" json:"to,omitempty"`
+	DateField  *string                                  `form:"date_field,omitempty" json:"date_field,omitempty"`
+	APIVersion *GetReceivablesReportPdfParamsAPIVersion `json:"API-Version,omitempty"`
+}
+
+// GetReceivablesReportPdfParamsAPIVersion defines parameters for GetReceivablesReportPdf.
+type GetReceivablesReportPdfParamsAPIVersion string
+
+// GetReceivablesReportXlsxParams defines parameters for GetReceivablesReportXlsx.
+type GetReceivablesReportXlsxParams struct {
+	ClientId   *int64                                    `form:"client_id,omitempty" json:"client_id,omitempty"`
+	From       *openapi_types.Date                       `form:"from,omitempty" json:"from,omitempty"`
+	To         *openapi_types.Date                       `form:"to,omitempty" json:"to,omitempty"`
+	DateField  *string                                   `form:"date_field,omitempty" json:"date_field,omitempty"`
+	APIVersion *GetReceivablesReportXlsxParamsAPIVersion `json:"API-Version,omitempty"`
+}
+
+// GetReceivablesReportXlsxParamsAPIVersion defines parameters for GetReceivablesReportXlsx.
+type GetReceivablesReportXlsxParamsAPIVersion string
 
 // GetBranchesParams defines parameters for GetBranches.
 type GetBranchesParams struct {
@@ -5455,6 +5537,9 @@ type ClientInterface interface {
 	// GetClientAccountStatementPdf request
 	GetClientAccountStatementPdf(ctx context.Context, clientId int64, params *GetClientAccountStatementPdfParams, reqEditors ...RequestEditorFn) (*http.Response, error)
 
+	// GetClientAccountStatementXlsx request
+	GetClientAccountStatementXlsx(ctx context.Context, clientId int64, params *GetClientAccountStatementXlsxParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+
 	// CreatePaymentWithBody request with any body
 	CreatePaymentWithBody(ctx context.Context, params *CreatePaymentParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
 
@@ -5477,6 +5562,12 @@ type ClientInterface interface {
 	VoidPaymentWithBody(ctx context.Context, paymentId int64, params *VoidPaymentParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	VoidPayment(ctx context.Context, paymentId int64, params *VoidPaymentParams, body VoidPaymentJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// GetReceivablesReportPdf request
+	GetReceivablesReportPdf(ctx context.Context, params *GetReceivablesReportPdfParams, reqEditors ...RequestEditorFn) (*http.Response, error)
+
+	// GetReceivablesReportXlsx request
+	GetReceivablesReportXlsx(ctx context.Context, params *GetReceivablesReportXlsxParams, reqEditors ...RequestEditorFn) (*http.Response, error)
 
 	// GetBranches request
 	GetBranches(ctx context.Context, params *GetBranchesParams, reqEditors ...RequestEditorFn) (*http.Response, error)
@@ -6026,6 +6117,18 @@ func (c *Client) GetClientAccountStatementPdf(ctx context.Context, clientId int6
 	return c.Client.Do(req)
 }
 
+func (c *Client) GetClientAccountStatementXlsx(ctx context.Context, clientId int64, params *GetClientAccountStatementXlsxParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewGetClientAccountStatementXlsxRequest(c.Server, clientId, params)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
 func (c *Client) CreatePaymentWithBody(ctx context.Context, params *CreatePaymentParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewCreatePaymentRequestWithBody(c.Server, params, contentType, body)
 	if err != nil {
@@ -6124,6 +6227,30 @@ func (c *Client) VoidPaymentWithBody(ctx context.Context, paymentId int64, param
 
 func (c *Client) VoidPayment(ctx context.Context, paymentId int64, params *VoidPaymentParams, body VoidPaymentJSONRequestBody, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	req, err := NewVoidPaymentRequest(c.Server, paymentId, params, body)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) GetReceivablesReportPdf(ctx context.Context, params *GetReceivablesReportPdfParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewGetReceivablesReportPdfRequest(c.Server, params)
+	if err != nil {
+		return nil, err
+	}
+	req = req.WithContext(ctx)
+	if err := c.applyEditors(ctx, req, reqEditors); err != nil {
+		return nil, err
+	}
+	return c.Client.Do(req)
+}
+
+func (c *Client) GetReceivablesReportXlsx(ctx context.Context, params *GetReceivablesReportXlsxParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	req, err := NewGetReceivablesReportXlsxRequest(c.Server, params)
 	if err != nil {
 		return nil, err
 	}
@@ -8651,6 +8778,118 @@ func NewGetClientAccountStatementPdfRequest(server string, clientId int64, param
 	return req, nil
 }
 
+// NewGetClientAccountStatementXlsxRequest generates requests for GetClientAccountStatementXlsx
+func NewGetClientAccountStatementXlsxRequest(server string, clientId int64, params *GetClientAccountStatementXlsxParams) (*http.Request, error) {
+	var err error
+
+	var pathParam0 string
+
+	pathParam0, err = runtime.StyleParamWithOptions("simple", false, "clientId", clientId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationPath, Type: "integer", Format: "int64"})
+	if err != nil {
+		return nil, err
+	}
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/accounts-receivable/clients/%s/statement.xlsx", pathParam0)
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+		// queryValues collects non-styled parameters (passthrough, JSON)
+		// that are safe to round-trip through url.Values.Encode().
+		queryValues := queryURL.Query()
+		// rawQueryFragments collects pre-encoded query fragments from
+		// styled parameters, preserving literal commas as delimiters
+		// per the OpenAPI spec (e.g. "color=blue,black,brown").
+		var rawQueryFragments []string
+
+		if params.ReceiverId != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "receiver_id", *params.ReceiverId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "integer", Format: "int64"}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.From != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "from", *params.From, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: "date"}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.To != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "to", *params.To, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: "date"}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.DateField != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "date_field", *params.DateField, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if encoded := queryValues.Encode(); encoded != "" {
+			rawQueryFragments = append(rawQueryFragments, encoded)
+		}
+		queryURL.RawQuery = strings.Join(rawQueryFragments, "&")
+	}
+
+	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+
+		if params.APIVersion != nil {
+			var headerParam0 string
+
+			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "API-Version", *params.APIVersion, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: ""})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("API-Version", headerParam0)
+		}
+
+	}
+
+	return req, nil
+}
+
 // NewCreatePaymentRequest calls the generic CreatePayment builder with application/json body
 func NewCreatePaymentRequest(server string, params *CreatePaymentParams, body CreatePaymentJSONRequestBody) (*http.Request, error) {
 	var bodyReader io.Reader
@@ -8690,15 +8929,26 @@ func NewCreatePaymentRequestWithBody(server string, params *CreatePaymentParams,
 
 	if params != nil {
 
-		if params.APIVersion != nil {
+		if params.IdempotencyKey != nil {
 			var headerParam0 string
 
-			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "API-Version", *params.APIVersion, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: ""})
+			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "Idempotency-Key", *params.IdempotencyKey, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: ""})
 			if err != nil {
 				return nil, err
 			}
 
-			req.Header.Set("API-Version", headerParam0)
+			req.Header.Set("Idempotency-Key", headerParam0)
+		}
+
+		if params.APIVersion != nil {
+			var headerParam1 string
+
+			headerParam1, err = runtime.StyleParamWithOptions("simple", false, "API-Version", *params.APIVersion, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: ""})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("API-Version", headerParam1)
 		}
 
 	}
@@ -8922,6 +9172,216 @@ func NewVoidPaymentRequestWithBody(server string, paymentId int64, params *VoidP
 	}
 
 	req.Header.Add("Content-Type", contentType)
+
+	if params != nil {
+
+		if params.APIVersion != nil {
+			var headerParam0 string
+
+			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "API-Version", *params.APIVersion, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: ""})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("API-Version", headerParam0)
+		}
+
+	}
+
+	return req, nil
+}
+
+// NewGetReceivablesReportPdfRequest generates requests for GetReceivablesReportPdf
+func NewGetReceivablesReportPdfRequest(server string, params *GetReceivablesReportPdfParams) (*http.Request, error) {
+	var err error
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/accounts-receivable/report.pdf")
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+		// queryValues collects non-styled parameters (passthrough, JSON)
+		// that are safe to round-trip through url.Values.Encode().
+		queryValues := queryURL.Query()
+		// rawQueryFragments collects pre-encoded query fragments from
+		// styled parameters, preserving literal commas as delimiters
+		// per the OpenAPI spec (e.g. "color=blue,black,brown").
+		var rawQueryFragments []string
+
+		if params.ClientId != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "client_id", *params.ClientId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "integer", Format: "int64"}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.From != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "from", *params.From, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: "date"}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.To != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "to", *params.To, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: "date"}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.DateField != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "date_field", *params.DateField, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if encoded := queryValues.Encode(); encoded != "" {
+			rawQueryFragments = append(rawQueryFragments, encoded)
+		}
+		queryURL.RawQuery = strings.Join(rawQueryFragments, "&")
+	}
+
+	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+
+		if params.APIVersion != nil {
+			var headerParam0 string
+
+			headerParam0, err = runtime.StyleParamWithOptions("simple", false, "API-Version", *params.APIVersion, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationHeader, Type: "string", Format: ""})
+			if err != nil {
+				return nil, err
+			}
+
+			req.Header.Set("API-Version", headerParam0)
+		}
+
+	}
+
+	return req, nil
+}
+
+// NewGetReceivablesReportXlsxRequest generates requests for GetReceivablesReportXlsx
+func NewGetReceivablesReportXlsxRequest(server string, params *GetReceivablesReportXlsxParams) (*http.Request, error) {
+	var err error
+
+	serverURL, err := url.Parse(server)
+	if err != nil {
+		return nil, err
+	}
+
+	operationPath := fmt.Sprintf("/accounts-receivable/report.xlsx")
+	if operationPath[0] == '/' {
+		operationPath = "." + operationPath
+	}
+
+	queryURL, err := serverURL.Parse(operationPath)
+	if err != nil {
+		return nil, err
+	}
+
+	if params != nil {
+		// queryValues collects non-styled parameters (passthrough, JSON)
+		// that are safe to round-trip through url.Values.Encode().
+		queryValues := queryURL.Query()
+		// rawQueryFragments collects pre-encoded query fragments from
+		// styled parameters, preserving literal commas as delimiters
+		// per the OpenAPI spec (e.g. "color=blue,black,brown").
+		var rawQueryFragments []string
+
+		if params.ClientId != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "client_id", *params.ClientId, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "integer", Format: "int64"}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.From != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "from", *params.From, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: "date"}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.To != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "to", *params.To, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: "date"}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if params.DateField != nil {
+
+			if queryFrag, err := runtime.StyleParamWithOptions("form", true, "date_field", *params.DateField, runtime.StyleParamOptions{ParamLocation: runtime.ParamLocationQuery, Type: "string", Format: ""}); err != nil {
+				return nil, err
+			} else {
+				for _, qp := range strings.Split(queryFrag, "&") {
+					rawQueryFragments = append(rawQueryFragments, qp)
+				}
+			}
+
+		}
+
+		if encoded := queryValues.Encode(); encoded != "" {
+			rawQueryFragments = append(rawQueryFragments, encoded)
+		}
+		queryURL.RawQuery = strings.Join(rawQueryFragments, "&")
+	}
+
+	req, err := http.NewRequest(http.MethodGet, queryURL.String(), nil)
+	if err != nil {
+		return nil, err
+	}
 
 	if params != nil {
 
@@ -14280,6 +14740,9 @@ type ClientWithResponsesInterface interface {
 	// GetClientAccountStatementPdf request
 	GetClientAccountStatementPdf(ctx context.Context, clientId int64, params *GetClientAccountStatementPdfParams, reqEditors ...RequestEditorFn) (*GetClientAccountStatementPdfResponse, error)
 
+	// GetClientAccountStatementXlsx request
+	GetClientAccountStatementXlsx(ctx context.Context, clientId int64, params *GetClientAccountStatementXlsxParams, reqEditors ...RequestEditorFn) (*GetClientAccountStatementXlsxResponse, error)
+
 	// CreatePaymentWithBody request with any body
 	CreatePaymentWithBody(ctx context.Context, params *CreatePaymentParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*CreatePaymentResponse, error)
 
@@ -14302,6 +14765,12 @@ type ClientWithResponsesInterface interface {
 	VoidPaymentWithBody(ctx context.Context, paymentId int64, params *VoidPaymentParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*VoidPaymentResponse, error)
 
 	VoidPayment(ctx context.Context, paymentId int64, params *VoidPaymentParams, body VoidPaymentJSONRequestBody, reqEditors ...RequestEditorFn) (*VoidPaymentResponse, error)
+
+	// GetReceivablesReportPdf request
+	GetReceivablesReportPdf(ctx context.Context, params *GetReceivablesReportPdfParams, reqEditors ...RequestEditorFn) (*GetReceivablesReportPdfResponse, error)
+
+	// GetReceivablesReportXlsx request
+	GetReceivablesReportXlsx(ctx context.Context, params *GetReceivablesReportXlsxParams, reqEditors ...RequestEditorFn) (*GetReceivablesReportXlsxResponse, error)
 
 	// GetBranches request
 	GetBranches(ctx context.Context, params *GetBranchesParams, reqEditors ...RequestEditorFn) (*GetBranchesResponse, error)
@@ -15044,6 +15513,36 @@ func (r GetClientAccountStatementPdfResponse) ContentType() string {
 	return ""
 }
 
+type GetClientAccountStatementXlsxResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	JSON503      *ErrorResponse
+}
+
+// Status returns HTTPResponse.Status
+func (r GetClientAccountStatementXlsxResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r GetClientAccountStatementXlsxResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r GetClientAccountStatementXlsxResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
 type CreatePaymentResponse struct {
 	Body         []byte
 	HTTPResponse *http.Response
@@ -15193,6 +15692,66 @@ func (r VoidPaymentResponse) StatusCode() int {
 
 // ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
 func (r VoidPaymentResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type GetReceivablesReportPdfResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	JSON503      *ErrorResponse
+}
+
+// Status returns HTTPResponse.Status
+func (r GetReceivablesReportPdfResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r GetReceivablesReportPdfResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r GetReceivablesReportPdfResponse) ContentType() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Header.Get("Content-Type")
+	}
+	return ""
+}
+
+type GetReceivablesReportXlsxResponse struct {
+	Body         []byte
+	HTTPResponse *http.Response
+	JSON503      *ErrorResponse
+}
+
+// Status returns HTTPResponse.Status
+func (r GetReceivablesReportXlsxResponse) Status() string {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.Status
+	}
+	return http.StatusText(0)
+}
+
+// StatusCode returns HTTPResponse.StatusCode
+func (r GetReceivablesReportXlsxResponse) StatusCode() int {
+	if r.HTTPResponse != nil {
+		return r.HTTPResponse.StatusCode
+	}
+	return 0
+}
+
+// ContentType is a convenience method to retrieve the Content-Type value from the HTTP response headers
+func (r GetReceivablesReportXlsxResponse) ContentType() string {
 	if r.HTTPResponse != nil {
 		return r.HTTPResponse.Header.Get("Content-Type")
 	}
@@ -18321,6 +18880,20 @@ func (c *ClientWithResponses) GetClientAccountStatementPdf(ctx context.Context, 
 	return ParseGetClientAccountStatementPdfResponse(rsp)
 }
 
+// GetClientAccountStatementXlsxRaw performs the request and returns the raw HTTP response.
+func (c *RawClient) GetClientAccountStatementXlsxRaw(ctx context.Context, clientId int64, params *GetClientAccountStatementXlsxParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	return c.client.GetClientAccountStatementXlsx(ctx, clientId, params, reqEditors...)
+}
+
+// GetClientAccountStatementXlsx request returning *GetClientAccountStatementXlsxResponse
+func (c *ClientWithResponses) GetClientAccountStatementXlsx(ctx context.Context, clientId int64, params *GetClientAccountStatementXlsxParams, reqEditors ...RequestEditorFn) (*GetClientAccountStatementXlsxResponse, error) {
+	rsp, err := c.client.GetClientAccountStatementXlsx(ctx, clientId, params, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseGetClientAccountStatementXlsxResponse(rsp)
+}
+
 // CreatePaymentWithBodyRaw performs the request and returns the raw HTTP response.
 func (c *RawClient) CreatePaymentWithBodyRaw(ctx context.Context, params *CreatePaymentParams, contentType string, body io.Reader, reqEditors ...RequestEditorFn) (*http.Response, error) {
 	return c.client.CreatePaymentWithBody(ctx, params, contentType, body, reqEditors...)
@@ -18437,6 +19010,34 @@ func (c *ClientWithResponses) VoidPayment(ctx context.Context, paymentId int64, 
 		return nil, err
 	}
 	return ParseVoidPaymentResponse(rsp)
+}
+
+// GetReceivablesReportPdfRaw performs the request and returns the raw HTTP response.
+func (c *RawClient) GetReceivablesReportPdfRaw(ctx context.Context, params *GetReceivablesReportPdfParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	return c.client.GetReceivablesReportPdf(ctx, params, reqEditors...)
+}
+
+// GetReceivablesReportPdf request returning *GetReceivablesReportPdfResponse
+func (c *ClientWithResponses) GetReceivablesReportPdf(ctx context.Context, params *GetReceivablesReportPdfParams, reqEditors ...RequestEditorFn) (*GetReceivablesReportPdfResponse, error) {
+	rsp, err := c.client.GetReceivablesReportPdf(ctx, params, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseGetReceivablesReportPdfResponse(rsp)
+}
+
+// GetReceivablesReportXlsxRaw performs the request and returns the raw HTTP response.
+func (c *RawClient) GetReceivablesReportXlsxRaw(ctx context.Context, params *GetReceivablesReportXlsxParams, reqEditors ...RequestEditorFn) (*http.Response, error) {
+	return c.client.GetReceivablesReportXlsx(ctx, params, reqEditors...)
+}
+
+// GetReceivablesReportXlsx request returning *GetReceivablesReportXlsxResponse
+func (c *ClientWithResponses) GetReceivablesReportXlsx(ctx context.Context, params *GetReceivablesReportXlsxParams, reqEditors ...RequestEditorFn) (*GetReceivablesReportXlsxResponse, error) {
+	rsp, err := c.client.GetReceivablesReportXlsx(ctx, params, reqEditors...)
+	if err != nil {
+		return nil, err
+	}
+	return ParseGetReceivablesReportXlsxResponse(rsp)
 }
 
 // GetBranchesRaw performs the request and returns the raw HTTP response.
@@ -20504,6 +21105,32 @@ func ParseGetClientAccountStatementPdfResponse(rsp *http.Response) (*GetClientAc
 	return response, nil
 }
 
+// ParseGetClientAccountStatementXlsxResponse parses an HTTP response from a GetClientAccountStatementXlsx call
+func ParseGetClientAccountStatementXlsxResponse(rsp *http.Response) (*GetClientAccountStatementXlsxResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &GetClientAccountStatementXlsxResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 503:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON503 = &dest
+
+	}
+
+	return response, nil
+}
+
 // ParseCreatePaymentResponse parses an HTTP response from a CreatePayment call
 func ParseCreatePaymentResponse(rsp *http.Response) (*CreatePaymentResponse, error) {
 	bodyBytes, err := io.ReadAll(rsp.Body)
@@ -20657,6 +21284,58 @@ func ParseVoidPaymentResponse(rsp *http.Response) (*VoidPaymentResponse, error) 
 		}
 		response.JSON200 = &dest
 
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 503:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON503 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseGetReceivablesReportPdfResponse parses an HTTP response from a GetReceivablesReportPdf call
+func ParseGetReceivablesReportPdfResponse(rsp *http.Response) (*GetReceivablesReportPdfResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &GetReceivablesReportPdfResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
+	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 503:
+		var dest ErrorResponse
+		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
+			return nil, err
+		}
+		response.JSON503 = &dest
+
+	}
+
+	return response, nil
+}
+
+// ParseGetReceivablesReportXlsxResponse parses an HTTP response from a GetReceivablesReportXlsx call
+func ParseGetReceivablesReportXlsxResponse(rsp *http.Response) (*GetReceivablesReportXlsxResponse, error) {
+	bodyBytes, err := io.ReadAll(rsp.Body)
+	defer func() { _ = rsp.Body.Close() }()
+	if err != nil {
+		return nil, err
+	}
+
+	response := &GetReceivablesReportXlsxResponse{
+		Body:         bodyBytes,
+		HTTPResponse: rsp,
+	}
+
+	switch {
 	case strings.Contains(rsp.Header.Get("Content-Type"), "json") && rsp.StatusCode == 503:
 		var dest ErrorResponse
 		if err := json.Unmarshal(bodyBytes, &dest); err != nil {
