@@ -3057,6 +3057,13 @@
         "summary" : "Crear pago recibido de cliente",
         "operationId" : "createPayment",
         "parameters" : [ {
+          "name" : "Idempotency-Key",
+          "in" : "header",
+          "required" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
           "name" : "API-Version",
           "in" : "header",
           "schema" : {
@@ -5421,6 +5428,172 @@
         } ]
       }
     },
+    "/accounts-receivable/report.xlsx" : {
+      "get" : {
+        "tags" : [ "Accounts Receivable" ],
+        "summary" : "Reporte de cuentas por cobrar XLSX",
+        "operationId" : "getReceivablesReportXlsx",
+        "parameters" : [ {
+          "name" : "client_id",
+          "in" : "query",
+          "required" : false,
+          "schema" : {
+            "type" : "integer",
+            "format" : "int64"
+          }
+        }, {
+          "name" : "from",
+          "in" : "query",
+          "required" : false,
+          "schema" : {
+            "type" : "string",
+            "format" : "date"
+          }
+        }, {
+          "name" : "to",
+          "in" : "query",
+          "required" : false,
+          "schema" : {
+            "type" : "string",
+            "format" : "date"
+          }
+        }, {
+          "name" : "date_field",
+          "in" : "query",
+          "required" : false,
+          "schema" : {
+            "type" : "string",
+            "default" : "issue_date"
+          }
+        }, {
+          "name" : "API-Version",
+          "in" : "header",
+          "schema" : {
+            "type" : "string",
+            "default" : "1.0.0",
+            "enum" : [ "v1" ]
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" : {
+                "schema" : {
+                  "type" : "string",
+                  "format" : "binary"
+                }
+              }
+            }
+          },
+          "503" : {
+            "description" : "Servicio de Hacienda temporalmente indisponible (TAX_AUTHORITY_RATE_LIMIT_ERROR)",
+            "headers" : {
+              "Retry-After" : {
+                "description" : "Segundos antes de reintentar",
+                "schema" : {
+                  "type" : "integer",
+                  "format" : "int32"
+                }
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "apiKeyAuth" : [ ]
+        } ]
+      }
+    },
+    "/accounts-receivable/report.pdf" : {
+      "get" : {
+        "tags" : [ "Accounts Receivable" ],
+        "summary" : "Reporte de cuentas por cobrar PDF",
+        "operationId" : "getReceivablesReportPdf",
+        "parameters" : [ {
+          "name" : "client_id",
+          "in" : "query",
+          "required" : false,
+          "schema" : {
+            "type" : "integer",
+            "format" : "int64"
+          }
+        }, {
+          "name" : "from",
+          "in" : "query",
+          "required" : false,
+          "schema" : {
+            "type" : "string",
+            "format" : "date"
+          }
+        }, {
+          "name" : "to",
+          "in" : "query",
+          "required" : false,
+          "schema" : {
+            "type" : "string",
+            "format" : "date"
+          }
+        }, {
+          "name" : "date_field",
+          "in" : "query",
+          "required" : false,
+          "schema" : {
+            "type" : "string",
+            "default" : "issue_date"
+          }
+        }, {
+          "name" : "API-Version",
+          "in" : "header",
+          "schema" : {
+            "type" : "string",
+            "default" : "1.0.0",
+            "enum" : [ "v1" ]
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/pdf" : {
+                "schema" : {
+                  "type" : "string",
+                  "format" : "binary"
+                }
+              }
+            }
+          },
+          "503" : {
+            "description" : "Servicio de Hacienda temporalmente indisponible (TAX_AUTHORITY_RATE_LIMIT_ERROR)",
+            "headers" : {
+              "Retry-After" : {
+                "description" : "Segundos antes de reintentar",
+                "schema" : {
+                  "type" : "integer",
+                  "format" : "int32"
+                }
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "apiKeyAuth" : [ ]
+        } ]
+      }
+    },
     "/accounts-receivable/payments/{paymentId}" : {
       "get" : {
         "tags" : [ "Accounts Receivable" ],
@@ -5508,6 +5681,97 @@
               "application/json" : {
                 "schema" : {
                   "$ref" : "#/components/schemas/DocumentPaymentStatementResponse"
+                }
+              }
+            }
+          },
+          "503" : {
+            "description" : "Servicio de Hacienda temporalmente indisponible (TAX_AUTHORITY_RATE_LIMIT_ERROR)",
+            "headers" : {
+              "Retry-After" : {
+                "description" : "Segundos antes de reintentar",
+                "schema" : {
+                  "type" : "integer",
+                  "format" : "int32"
+                }
+              }
+            },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security" : [ {
+          "apiKeyAuth" : [ ]
+        } ]
+      }
+    },
+    "/accounts-receivable/clients/{clientId}/statement.xlsx" : {
+      "get" : {
+        "tags" : [ "Accounts Receivable" ],
+        "summary" : "Estado de cuenta XLSX de un cliente y receptor",
+        "operationId" : "getClientAccountStatementXlsx",
+        "parameters" : [ {
+          "name" : "clientId",
+          "in" : "path",
+          "required" : true,
+          "schema" : {
+            "type" : "integer",
+            "format" : "int64"
+          }
+        }, {
+          "name" : "receiver_id",
+          "in" : "query",
+          "required" : false,
+          "schema" : {
+            "type" : "integer",
+            "format" : "int64"
+          }
+        }, {
+          "name" : "from",
+          "in" : "query",
+          "required" : false,
+          "schema" : {
+            "type" : "string",
+            "format" : "date"
+          }
+        }, {
+          "name" : "to",
+          "in" : "query",
+          "required" : false,
+          "schema" : {
+            "type" : "string",
+            "format" : "date"
+          }
+        }, {
+          "name" : "date_field",
+          "in" : "query",
+          "required" : false,
+          "schema" : {
+            "type" : "string",
+            "default" : "issue_date"
+          }
+        }, {
+          "name" : "API-Version",
+          "in" : "header",
+          "schema" : {
+            "type" : "string",
+            "default" : "1.0.0",
+            "enum" : [ "v1" ]
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" : {
+                "schema" : {
+                  "type" : "string",
+                  "format" : "binary"
                 }
               }
             }
@@ -8870,22 +9134,22 @@
           "specificTaxData" : {
             "$ref" : "#/components/schemas/SpecificTaxDataRequest"
           },
-          "usedGoodsVatCalculationDataValid" : {
-            "type" : "boolean"
-          },
           "specificTaxTypeValidForCode05" : {
             "type" : "boolean"
           },
-          "alcoholicBeverageCalculationDataValid" : {
+          "usedGoodsVatCalculationDataValid" : {
             "type" : "boolean"
           },
           "vatSpecialCalculationDataValid" : {
             "type" : "boolean"
           },
-          "otherTaxDataValid" : {
+          "alcoholicBeverageCalculationDataValid" : {
             "type" : "boolean"
           },
           "taxRatePresentWhenRequiredForCalculation" : {
+            "type" : "boolean"
+          },
+          "otherTaxDataValid" : {
             "type" : "boolean"
           },
           "vatRateCodeValidForVatTax" : {

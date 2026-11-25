@@ -6509,10 +6509,122 @@
         ]
       }
     },
+    "/accounts-receivable/clients/{clientId}/statement.xlsx": {
+      "get": {
+        "operationId": "getClientAccountStatementXlsx",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "clientId",
+            "required": true,
+            "schema": {
+              "format": "int64",
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "receiver_id",
+            "required": false,
+            "schema": {
+              "format": "int64",
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "from",
+            "required": false,
+            "schema": {
+              "format": "date",
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "to",
+            "required": false,
+            "schema": {
+              "format": "date",
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "date_field",
+            "required": false,
+            "schema": {
+              "default": "issue_date",
+              "type": "string"
+            }
+          },
+          {
+            "in": "header",
+            "name": "API-Version",
+            "schema": {
+              "default": "1.0.0",
+              "enum": [
+                "v1"
+              ],
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet": {
+                "schema": {
+                  "format": "binary",
+                  "type": "string"
+                }
+              }
+            },
+            "description": "OK"
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Servicio de Hacienda temporalmente indisponible (TAX_AUTHORITY_RATE_LIMIT_ERROR)",
+            "headers": {
+              "Retry-After": {
+                "description": "Segundos antes de reintentar",
+                "schema": {
+                  "format": "int32",
+                  "type": "integer"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ],
+        "summary": "Estado de cuenta XLSX de un cliente y receptor",
+        "tags": [
+          "Accounts Receivable"
+        ]
+      }
+    },
     "/accounts-receivable/payments": {
       "post": {
         "operationId": "createPayment",
         "parameters": [
+          {
+            "in": "header",
+            "name": "Idempotency-Key",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
           {
             "in": "header",
             "name": "API-Version",
@@ -6870,6 +6982,196 @@
           }
         ],
         "summary": "Anular pago recibido sin aplicaciones activas",
+        "tags": [
+          "Accounts Receivable"
+        ]
+      }
+    },
+    "/accounts-receivable/report.pdf": {
+      "get": {
+        "operationId": "getReceivablesReportPdf",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "client_id",
+            "required": false,
+            "schema": {
+              "format": "int64",
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "from",
+            "required": false,
+            "schema": {
+              "format": "date",
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "to",
+            "required": false,
+            "schema": {
+              "format": "date",
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "date_field",
+            "required": false,
+            "schema": {
+              "default": "issue_date",
+              "type": "string"
+            }
+          },
+          {
+            "in": "header",
+            "name": "API-Version",
+            "schema": {
+              "default": "1.0.0",
+              "enum": [
+                "v1"
+              ],
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/pdf": {
+                "schema": {
+                  "format": "binary",
+                  "type": "string"
+                }
+              }
+            },
+            "description": "OK"
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Servicio de Hacienda temporalmente indisponible (TAX_AUTHORITY_RATE_LIMIT_ERROR)",
+            "headers": {
+              "Retry-After": {
+                "description": "Segundos antes de reintentar",
+                "schema": {
+                  "format": "int32",
+                  "type": "integer"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ],
+        "summary": "Reporte de cuentas por cobrar PDF",
+        "tags": [
+          "Accounts Receivable"
+        ]
+      }
+    },
+    "/accounts-receivable/report.xlsx": {
+      "get": {
+        "operationId": "getReceivablesReportXlsx",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "client_id",
+            "required": false,
+            "schema": {
+              "format": "int64",
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "from",
+            "required": false,
+            "schema": {
+              "format": "date",
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "to",
+            "required": false,
+            "schema": {
+              "format": "date",
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "date_field",
+            "required": false,
+            "schema": {
+              "default": "issue_date",
+              "type": "string"
+            }
+          },
+          {
+            "in": "header",
+            "name": "API-Version",
+            "schema": {
+              "default": "1.0.0",
+              "enum": [
+                "v1"
+              ],
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet": {
+                "schema": {
+                  "format": "binary",
+                  "type": "string"
+                }
+              }
+            },
+            "description": "OK"
+          },
+          "503": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Servicio de Hacienda temporalmente indisponible (TAX_AUTHORITY_RATE_LIMIT_ERROR)",
+            "headers": {
+              "Retry-After": {
+                "description": "Segundos antes de reintentar",
+                "schema": {
+                  "format": "int32",
+                  "type": "integer"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ],
+        "summary": "Reporte de cuentas por cobrar XLSX",
         "tags": [
           "Accounts Receivable"
         ]
