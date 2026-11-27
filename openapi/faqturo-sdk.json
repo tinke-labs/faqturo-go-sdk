@@ -9149,10 +9149,10 @@
           "vatSpecialCalculationDataValid" : {
             "type" : "boolean"
           },
-          "taxRatePresentWhenRequiredForCalculation" : {
+          "otherTaxDataValid" : {
             "type" : "boolean"
           },
-          "otherTaxDataValid" : {
+          "taxRatePresentWhenRequiredForCalculation" : {
             "type" : "boolean"
           }
         },

@@ -1,7 +1,4 @@
-Backend SHA: 65e12b7522da5ef8dabddddc29c6b9e9c1d25b38
- endpoint_contract_test.go        |   3 +
- faqturo.gen.go                   | 733 +++++++++++++++++++++++++++++++++++++--
- openapi/faqturo-sdk.codegen.json | 302 ++++++++++++++++
- openapi/faqturo-sdk.json         | 272 ++++++++++++++-
- openapi/sync-report.txt          |   5 +-
- 5 files changed, 1280 insertions(+), 35 deletions(-)
+Backend SHA: 6667617d55d05ee3d95fc02fc5130c0f8108d2e4
+ openapi/faqturo-sdk.json | 4 ++--
+ openapi/sync-report.txt  | 8 +-------
+ 2 files changed, 3 insertions(+), 9 deletions(-)
